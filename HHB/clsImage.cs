@@ -1,0 +1,174 @@
+﻿/*
+ * Created by SharpDevelop.
+ * User: Bob Swift
+ * Date: 2016-08-11
+ * Time: 14:26
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Drawing;
+using System.IO;
+
+namespace HHBuilder
+{
+	/// <summary>
+	/// Description of ImageItem class.
+	/// </summary>
+	public class ImageItem
+	{
+		#region Private Member Variables
+		private string _id;
+		private string _fileName;
+		private string _title;
+		private string _content;
+		#endregion
+
+		#region Private Properties
+		#endregion
+		
+		#region Private Methods
+		// ==============================================================================
+		/// <summary>
+		/// Prepare a unique ID based on the current timestamp
+		/// </summary>
+		/// <returns>
+		/// Unique ID string
+		/// </returns>
+		private static string GetID()
+		{
+			// Time Based Key - should be sufficient for this application
+			System.Threading.Thread.Sleep(2);
+			return "i" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+		}
+		#endregion
+		
+		#region Constructors
+		// ==============================================================================
+		/// <summary>
+		/// Creates a new imageItem object 
+		/// </summary>
+		public ImageItem()
+		{
+			_id = GetID();
+			title = string.Format("Image ID: {0}", id);
+			_fileName = "";
+			_content = "";
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Creates a new imageItem object 
+		/// </summary>
+		/// <param name="imageFileName">Path and file name of the image</param>
+		public ImageItem(string imageFileName)
+		{
+			_id = GetID();
+			title = string.Format("Image ID: {0}", id);
+			_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+			_content = GetFileContents(imageFileName);
+		}
+		#endregion
+		
+		#region Public Properties
+		public string id
+		{
+			get{ return _id.Trim(); }
+			set{ _id = value.Trim(); }
+		}
+		
+		public string fileName
+		{
+			get{ return _fileName.Trim(); }
+			set{ _fileName = value.Trim(); }
+		}
+		
+		public string title
+		{
+			get{ return _title.Trim(); }
+			set{ _title = value.Trim(); }
+		}
+		
+		public string content
+		{
+			get{ return _content.Trim(); }
+			set{ _content = value.Trim(); }
+		}
+		
+		public Image image
+		{
+			get{ return GetImage(content); }
+		}
+		#endregion
+		
+		#region Public Methods
+		// ==============================================================================
+		/// <summary>
+		/// Reads the specified image file and updates the imageItem contents
+		/// </summary>
+		/// <param name="imageFileName">Path and file name of the image file</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool LoadFile(string imageFileName)
+		{
+			if ( System.IO.File.Exists(imageFileName) )
+			{
+				string tempContent = GetFileContents(imageFileName);
+				if ( !String.IsNullOrEmpty(tempContent) )
+				{
+					_content = tempContent;
+					_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Converts the specified image file to a Base 64 string
+		/// </summary>
+		/// <param name="imageFileName">Path and file name of the image file</param>
+		/// <returns>Base 64 string of the image file</returns>
+		public static string GetFileContents(string imageFileName)
+		{
+			string RetVal = "";
+			if (System.IO.File.Exists(imageFileName)) {
+				Byte[] bytes = System.IO.File.ReadAllBytes(imageFileName);
+				string s1 = Convert.ToBase64String(bytes);
+				RetVal = System.Text.RegularExpressions.Regex.Replace(s1, ".{128}", "$0\n");
+			}
+			return RetVal;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Converts a string to an image
+		/// </summary>
+		/// <param name="Base64String">Base 64 string of the image file content</param>
+		/// <returns>The resulting image</returns>
+		public static Image GetImage(string Base64String)
+		{
+			byte[] bArray = Convert.FromBase64String(Base64String);
+			return GetImage(bArray);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Converts a string to an image
+		/// </summary>
+		/// <param name="byteArrayIn">Byte array of the image file content</param>
+		/// <returns>The resulting image</returns>
+		public static Image GetImage(byte[] byteArrayIn)
+		{
+			using (var ms = new MemoryStream(byteArrayIn))
+			{
+				return Image.FromStream(ms);
+			}
+		}
+		#endregion
+		
+		
+		
+		
+	}
+}
