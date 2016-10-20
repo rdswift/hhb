@@ -1,22 +1,19 @@
-# HHB Specifications (v0.02) - DRAFT
+# HHB Specifications (v0.03) - DRAFT
 ## Interactive HTML Help Builder Development Specifications
 
 The following are the specifications for the development of the application. These specifications are developed and managed by the project team members and are subject to change.
 
-
+&nbsp;
 ## 1.0 License
-
 * The program will be open source and released under the ***[GNU GPL v3.0 license](http://www.gnu.org/licenses/gpl.html "http://www.gnu.org/licenses/gpl.html")***.
 
-
+&nbsp;
 ## 2.0 Development Platform
-
 * The program will be written in C#.
 * The program will be developed and compiled using ***[SharpDevelop](https://sourceforge.net/projects/sharpdevelop/ "https://sourceforge.net/projects/sharpdevelop/")*** or a compatible tool such as ***Microsoft Visual Studio***.
 
-
+&nbsp;
 ## 3.0 Overview
-
 The program will be a Windows application 
 
 It will provide the following features:
@@ -27,11 +24,11 @@ It will provide the following features:
 * all configuration and project data files stored in plain text
 * support templates for help system
 * builds CHM file by calling hhc.exe
+* manual check for updates and option setting for automatic update checks at program startup
 * **INCLUDE ANY ADDITIONAL SUGGESTED FEATURES HERE**
 
-
+&nbsp;
 ## 4.0 Distribution / Installation
-
 * source code available via git on Sourceforge (and GitHub)
 * source code available for download as ZIP file (from GitHub)
 * executable distributed via ZIP file
@@ -39,23 +36,22 @@ It will provide the following features:
 * executable distributed via EXE installer (InnoScript)
 * installers include uninstaller
 
-
+&nbsp;
 ## 5.0 Data Files
-
 Expect there may be three (or more) types of data files:
 
 * program configuration / defaults
 * help system project files (.hhb)
 * template files (.hhbt)
 
-
+&nbsp;
 ### 5.1 Program Configuration Files
-
 * INI style plain text file
 * read from the first configuration file found in the following locations (checked in order of preference): (1) program directory; (2) the current roaming user app data directory.
 * created if not found
 * written to the first directory with write access at the following locations (checked in order of preference): (1) program directory; (2) the current roaming user app data directory.
 
+&nbsp;
 Information to include in this file:
 
 * default help project author
@@ -67,17 +63,18 @@ Information to include in this file:
 * location of template files (May be relative to program directory by starting with ".\" to accommodate portable application.)
 * location of hhc.exe compiler executable (May be relative to program directory by starting with ".\" to accommodate portable application.)
 * location of working directory (May be relative to program directory by starting with ".\" to accommodate portable application. Blank entry will use the directory for all users' application-specific data.)
+* check for updates at startup indicator
 * last 5 help projects (Perhaps this would be better stored in the registry because it may not apply if application is run from a USB stick on a different computer.)
 * default template file (?)
 * other items?
 
-
+&nbsp;
 ### 5.2 Help System Project Files
-
 * one file per help system project
 * saved as plain text (xml format)
 * contains complete information for help project (except template contents)
 
+&nbsp;
 Information to include in this file:
 
 * project information:
@@ -123,9 +120,8 @@ Information to include in this file:
 	* file name
 	* file contents (stored in Base 64 format)
     
-
+&nbsp;
 ### 5.3 Template Files
-
 * stored in a zip format file with the extension changed to ".hhbt" containing the internal directory structure:
 	* \ (contains: template.txt, template.html, license.txt)
 	* \tpl_css\ (contains: all CSS files used with the template)
@@ -185,9 +181,8 @@ License=GPL v3
 	
 * For linking purposes, note that all html files generated will be placed in the root directory (same directory as the template.html file).
 
-
+&nbsp;
 ## 6.0 User Interface
-
 The user interface should contain screens for the various functions of the program including:
 
 * opening splash screen (?)
@@ -201,11 +196,11 @@ The user interface should contain screens for the various functions of the progr
 * help project compiler status screen (showing log entries?) and launcher for compiled help project file
 * about screen (include list of contributors / team members)
 
+&nbsp;
 The user interface should also include context sensitive help provided by a CHM file.  Ideally, this help system file could be developed using this application.
 
-
+&nbsp;
 ## 7.0 Other Considerations
-
 * multi language support
 * spell checking support (?)
 * wysiwyg / graphical screen editor (?)
