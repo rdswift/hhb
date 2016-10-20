@@ -1,4 +1,4 @@
-# HHB Specifications (Draft v1.1)
+# HHB Specifications (v0.02) - DRAFT
 ## Interactive HTML Help Builder Development Specifications
 
 The following are the specifications for the development of the application. These specifications are developed and managed by the project team members and are subject to change.
@@ -172,16 +172,18 @@ Version=1.00
 Date=2016-10-19
 License=GPL v3
 ~~~
-
+ 
 * license.txt is the full text of the license for the use of the template
 
 * template.html is the html file used as a basis for developing the help screens displayed.
 	* Contains sections for optional title, header, footer and references.  These can be in any order, but should appear in the order that they will be displayed. The header, footer and title sections are bounded by comment elements (e.g. "&lt;!-HEADER" above and "HEADER--&gt;" below).
 	* The references section contains "{REFERENCES}" which will be replaced by the reference titles and links, each bounded by &lt;li class="reference"&gt; ... &lt;/li&gt; tags.  Note that the CSS file should include style settings for the "reference" class.
 	* Contains "{BODY}" which will be replaced by the information provided by the help system developer for the screen.  This should appear somewhere between the normal &lt;body&gt; ... &lt;/body&gt; tags.
-	* Contains "{TITLE}" which will be replaced by the help screen title.  This can appear multiple times if required anywhere within the html document.
+	* May contain "{TITLE}" tag which will be replaced by the help screen title.  This can appear multiple times if required anywhere within the html document.
+	* May contain "{PREVLINK}", "{NEXTLINK}", "{HOMELINK}", "{PREVTEXT}", "{NEXTTEXT}" and "{HOMETEXT}" tags which will be replaced with the corresponding link and title.  If an item is unavailable, the link will be "" and the title will be "None".
+	* May contain "{NUMBER}" which will be replaced with the number of the entry in the Table of Contents (e.g. the third subtopic of the second topic would be number 2.3).  For popup screens this will be "".
 	
-* all html files generated will be placed in the root directory (same directory as the template.html file).
+* For linking purposes, note that all html files generated will be placed in the root directory (same directory as the template.html file).
 
 
 ## 6.0 User Interface
