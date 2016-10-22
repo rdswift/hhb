@@ -1,4 +1,4 @@
-# HHB Specifications (v0.03) - DRAFT
+# HHB Specifications (v0.04) - DRAFT
 ## Interactive HTML Help Builder Development Specifications
 
 The following are the specifications for the development of the application. These specifications are developed and managed by the project team members and are subject to change.
@@ -9,8 +9,8 @@ The following are the specifications for the development of the application. The
 
 &nbsp;
 ## 2.0 Development Platform
-* The program will be written in C#.
-* The program will be developed and compiled using ***[SharpDevelop](https://sourceforge.net/projects/sharpdevelop/ "https://sourceforge.net/projects/sharpdevelop/")*** or a compatible tool such as ***Microsoft Visual Studio***.
+* The program will be written in C# with the target framework of .NET Framework 4.5, 32-bit Intel-compatible processor.
+* The program will be developed and compiled using ***[SharpDevelop](https://sourceforge.net/projects/sharpdevelop/ "https://sourceforge.net/projects/sharpdevelop/")*** or a compatible tool such as ***[Microsoft Visual Studio](https://www.visualstudio.com/ "https://www.visualstudio.com/")***.
 
 &nbsp;
 ## 3.0 Overview
@@ -140,9 +140,11 @@ Information to include in this file:
 ;---------------------------------------------------------------------
 ; ID: Unique template id code (assigned by HHB when template created)
 ; Title: Title of the temple to show in the selection list
+; Description: Brief description of the template
 ;---------------------------------------------------------------------
 ID=t00000000000000000
 Title=Default Template
+Description=Basic template with index number, title and home link in the header, and previous and next links in the footer.
 
 [Developer]
 ;---------------------------------------------------------------------
@@ -166,7 +168,7 @@ Website=https://sourceforge.net/projects/oshhb/
 ;---------------------------------------------------------------------
 Version=1.00
 Date=2016-10-19
-License=GPL v3
+License=GPLv3
 ~~~
  
 * license.txt is the full text of the license for the use of the template

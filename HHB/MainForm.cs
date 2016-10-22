@@ -773,6 +773,17 @@ namespace HHBuilder
 			cbLanguage.DisplayMember = "Title";
 
 			ResetForm();
+			
+			
+//			System.Collections.Generic.IList<HHBTemplate> templateList = HHBTemplate.AvailableTemplates(@"Templates");
+//			System.Text.StringBuilder tempText = new System.Text.StringBuilder();
+//			tempText.AppendFormat("Found {0} templates.\n\n", templateList.Count);
+//			foreach (HHBTemplate tpl in templateList) {
+//				tempText.AppendFormat("ID: {0}\nTitle: {1}\nPath: {2}\nDesc: {3}\n\n", tpl.id, tpl.title, tpl.fileName, tpl.description);
+//			}
+//			MessageBox.Show(tempText.ToString(), "Templates");
+			
+			
 		}
 
 		// ---------------------------------------------------------------------------------------------
