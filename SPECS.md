@@ -123,56 +123,37 @@ Information to include in this file:
 &nbsp;
 ### 5.3 Template Files
 * stored in a zip format file with the extension changed to ".hhbt" containing the internal directory structure:
-	* \ (contains: template.txt, template.html, license.txt)
+	* \ (contains: template.xml, template.html)
 	* \tpl_css\ (contains: all CSS files used with the template)
 	* \tpl_images\ (contains: all image files used with the template)
 	* \tpl_scripts\ (contains: all script files used with the template)
 	* \tpl_other\ (contains: any other files to be included with the template)
 
-* template.txt is an INI style file with the following format:
+* template.xml is an XML file with the following format:
 
 ~~~
-;=====================================================================
-;              HTML Builder Template Information
-;=====================================================================
-
-[Identification]
-;---------------------------------------------------------------------
-; ID: Unique template id code (assigned by HHB when template created)
-; Title: Title of the temple to show in the selection list
-; Description: Brief description of the template
-;---------------------------------------------------------------------
-ID=t00000000000000000
-Title=Default Template
-Description=Basic template with index number, title and home link in the header, and previous and next links in the footer.
-
-[Developer]
-;---------------------------------------------------------------------
-; Author: Name of the person that developed the template
-; Company: Name of the company (if applicable)
-; Contact: Name of person to contact about the template
-; Email: Email address of the contact person
-; Website: Website address (if applicable)
-;---------------------------------------------------------------------
-Author=Bob Swift
-Company=R.S. Digital Solutions
-Contact=Bob Swift
-Email=bswift@rsds.ca
-Website=https://sourceforge.net/projects/oshhb/
-
-[Miscellaneous]
-;---------------------------------------------------------------------
-; Version: The version or revision number
-; Date: The date of the latest revision
-; License: The type of license for the template
-;---------------------------------------------------------------------
-Version=1.00
-Date=2016-10-19
-License=GPLv3
+<?xml version="1.0" standalone="yes"?>
+<HelpTemplate>
+  <TemplateInfo>
+    <ID>t00000000000000000</ID>
+	<Title>Default HH Builder Template</Title>
+	<Description>Basic template with the index number, title and home link in the header, and the previous and next links in the footer.
+	</Description>
+	<Author>Bob Swift</Author>
+	<Company>R.S. Digital Solutions</Company>
+	<ContactName>Bob Swift</ContactName>
+	<ContactEmail>bswift@rsds.ca</ContactEmail>
+	<ContactWebsite>https://sourceforge.net/projects/oshhb/</ContactWebsite>
+	<Version>1.00</Version>
+	<RevisionDate>2016-10-24</RevisionDate>
+	<LicenseTitle>GPLv3</LicenseTitle>
+	<LicenseText>
+This would contain the actual text of the license for the template.
+	</LicenseText>
+  </TemplateInfo>
+</HelpTemplate>
 ~~~
  
-* license.txt is the full text of the license for the use of the template
-
 * template.html is the html file used as a basis for developing the help screens displayed.
 	* Contains sections for optional title, header, footer and references.  These can be in any order, but should appear in the order that they will be displayed. The header, footer and title sections are bounded by comment elements (e.g. "&lt;!-HEADER" above and "HEADER--&gt;" below).
 	* The references section contains "{REFERENCES}" which will be replaced by the reference titles and links, each bounded by &lt;li class="reference"&gt; ... &lt;/li&gt; tags.  Note that the CSS file should include style settings for the "reference" class.
