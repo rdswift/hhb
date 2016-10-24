@@ -9,6 +9,7 @@
 using System;
 using System.IO.Compression;
 using Ini;
+using System.Data;
 
 namespace HHBuilder
 {
@@ -24,6 +25,7 @@ namespace HHBuilder
 		private string _title;
 		private string _description;
 		private string _author;
+		private string _licenseTitle;
 		private string _license;
 		private string _company;
 		private string _contact;
@@ -64,7 +66,8 @@ namespace HHBuilder
         	title = "";
         	description = "";
         	author = "";
-        	license = "";
+        	licenseTitle = "";
+        	licenseText = "";
         	company = "";
         	contactName = "";
         	contactEmail = "";
@@ -80,13 +83,25 @@ namespace HHBuilder
 		/// <returns>True on success, otherwise false</returns>
 		private bool UnpackTemplateInfo()
 		{
-			string tempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"template.txt");
+			string tempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"template.xml");
+			if ( System.IO.File.Exists(tempFile) )
+			{
+				try
+				{
+					System.IO.File.Delete(tempFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Error("Error deleting " + tempFile);
+					Log.Exception(ex);
+				}
+			}
 			
 			using (ZipArchive zip = ZipFile.OpenRead(this.fileName))
 			{
 				 foreach (ZipArchiveEntry entry in zip.Entries)
                 {
-                    if (entry.FullName.Equals("template.txt", StringComparison.OrdinalIgnoreCase))
+                    if (entry.FullName.Equals("template.xml", StringComparison.OrdinalIgnoreCase))
                     {
                     	entry.ExtractToFile(tempFile, true);
                     }
@@ -95,22 +110,126 @@ namespace HHBuilder
 			
 			if (System.IO.File.Exists(tempFile))
 			{
-				IniFile ini = new IniFile(tempFile);
-				id = ini.IniReadValue("Identification", "ID");
-				title = ini.IniReadValue("Identification", "Title");
-				description = ini.IniReadValue("Identification", "Description");
-				author = ini.IniReadValue("Developer", "Author");
-				company = ini.IniReadValue("Developer", "Company");
-				contactName = ini.IniReadValue("Developer", "Contact");
-				contactEmail = ini.IniReadValue("Developer", "Email");
-				contactWebsite = ini.IniReadValue("Developer", "Website");
-				version = ini.IniReadValue("Miscellaneous", "Version");
-				revisionDate = ini.IniReadValue("Miscellaneous", "Date");
-				license = ini.IniReadValue("Miscellaneous", "License");
-				System.IO.File.Delete(tempFile);
+				ReadInformationXML(tempFile);
+				
+//				IniFile ini = new IniFile(tempFile);
+//				id = ini.IniReadValue("Identification", "ID");
+//				title = ini.IniReadValue("Identification", "Title");
+//				description = ini.IniReadValue("Identification", "Description");
+//				author = ini.IniReadValue("Developer", "Author");
+//				company = ini.IniReadValue("Developer", "Company");
+//				contactName = ini.IniReadValue("Developer", "Contact");
+//				contactEmail = ini.IniReadValue("Developer", "Email");
+//				contactWebsite = ini.IniReadValue("Developer", "Website");
+//				version = ini.IniReadValue("Miscellaneous", "Version");
+//				revisionDate = ini.IniReadValue("Miscellaneous", "Date");
+//				license = ini.IniReadValue("Miscellaneous", "License");
+				
+				try
+				{
+					System.IO.File.Delete(tempFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Error("Error deleting information file: " + tempFile);
+					Log.Exception(ex);
+				}
 			}
 			else
 			{
+				Log.Error("Error reading information file: " + tempFile);
+				return false;
+			}
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Reads information from specified template information file
+		/// </summary>
+		/// <param name="xmlFileToRead">Full path of XML rile to read</param>
+		/// <returns>True on success, otherwise false.</returns>
+		private bool ReadInformationXML(string xmlFileToRead)
+		{
+			DataSet ds = new DataSet();
+			ds.DataSetName = "HelpTemplate";
+			
+			// Prepare Template Information DataTable
+			DataTable dt = new DataTable();
+			dt.TableName = "TemplateInfo";
+			
+			DataColumn dc;
+			
+			dc = new DataColumn("ID", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Title", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Description", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Author", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Company", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("ContactName", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("ContactEmail", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("ContactWebsite", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Version", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("RevisionDate", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("LicenseTitle", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("LicenseText", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			
+			ds.Tables.Add(dt);
+			
+			ds.Clear();
+			try
+			{
+				ds.ReadXml(xmlFileToRead);
+			}
+			catch (Exception ex)
+			{
+				Log.Error("Error reading template information file");
+				Log.Exception(ex);
+//				System.Text.StringBuilder sb = new System.Text.StringBuilder();
+//				sb.AppendFormat("Error: {0}\nSource: {1}\n\n{2}", ex.Message, ex.Source, ex.StackTrace);
+//				System.Windows.Forms.MessageBox.Show(sb.ToString());
+				return false;
+			}
+			
+			dt = ds.Tables[0];
+			if ( dt.Rows.Count > 0 )
+			{
+				DataRow dr = dt.Rows[0];
+				foreach (DataColumn tDC in dt.Columns) {
+					object value = dr[tDC.ColumnName];
+					if (value == DBNull.Value)
+					{
+						dr[tDC.ColumnName] = "";
+					}
+				}
+				id = (string) dr["ID"];
+				title = (string) dr["Title"];
+				description = (string) dr["Description"];
+				author = (string) dr["Author"];
+				company = (string) dr["Company"];
+				contactName = (string) dr["ContactName"];
+				contactEmail = (string) dr["ContactEmail"];
+				contactWebsite = (string) dr["ContactWebsite"];
+				version = (string) dr["Version"];
+				revisionDate = (string) dr["RevisionDate"];
+				licenseTitle = (string) dr["LicenseTitle"];
+				licenseText = (string) dr["LicenseText"];
+			}
+			else
+			{
+				Log.Error("No template information found in file: " + xmlFileToRead);
 				return false;
 			}
 			return true;
@@ -250,9 +369,18 @@ namespace HHBuilder
 		}
 
 		/// <summary>
+		/// Title / descripotion of the license terms for use of the HHBuilder template
+		/// </summary>
+		public string licenseTitle
+		{
+			get{ return _licenseTitle.Trim(); }
+			set{ _licenseTitle = value.Trim(); }
+		}
+
+		/// <summary>
 		/// License terms for use of the HHBuilder template
 		/// </summary>
-		public string license
+		public string licenseText
 		{
 			get{ return _license.Trim(); }
 			set{ _license = value.Trim(); }
@@ -280,23 +408,9 @@ namespace HHBuilder
 		{
 			if (!System.IO.File.Exists(fileToLoad)) { return false; }
 			
-			if (UnpackTemplateInfo())
+			if ( !UnpackTemplateInfo() )
 			{
-
-				// TODO Write the code to parse the template info file
-				
-				try
-				{
-					// Unpack INFO.txt file
-					// Parse INFO.txt file for title, description, author
-				}
-				catch
-				{
-					return false;
-				}
-			}
-			else
-			{
+				Log.Error("Error loading template information and license from " + fileToLoad);
 				return false;
 			}
 			return true;
@@ -327,7 +441,7 @@ namespace HHBuilder
 			info.AppendFormat("Title: {0}\n", title);
 			info.AppendFormat("Version: {0}\n", version);
 			info.AppendFormat("Revision Date: {0}\n", revisionDate);
-			info.AppendFormat("License: {0}\n\n", license);
+			info.AppendFormat("License: {0}\n\n", licenseTitle);
 			info.AppendFormat("Description: {0}\n\n", description);
 			info.AppendFormat("Author: {0}\n", author);
 			info.AppendFormat("Company: {0}\n", company);
@@ -339,7 +453,8 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Get list of all available templates from the specified directory<br />Note that templates located in the program directory are included automatically.
+		/// Get list of all available templates from the specified directory<br />
+		/// Note that templates located in the program directory are included automatically.
 		/// </summary>
 		/// <param name="templateDirectory">Template storage directory</param>
 		/// <returns>Array of available templates as HHBTemplate objects</returns>

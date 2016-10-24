@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="clsCSS.cs" />
     <Compile Include="clsHelpItem.cs" />
+    <Compile Include="clsHHCompile.cs" />
     <Compile Include="clsImage.cs" />
     <Compile Include="clsINI.cs" />
     <Compile Include="clsLanguage.cs" />

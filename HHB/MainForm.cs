@@ -49,6 +49,53 @@ namespace HHBuilder
 		}
 		
 		// ---------------------------------------------------------------------------------------------
+		
+		void MainFormLoad(object sender, EventArgs e)
+		{
+			string errorMessage = "";
+			if ( !HBSettings.Initialize() )
+			{
+//				errorMessage = "Unable to locate or create a configuration file.  Please check that you have write access and that the drive is not full.\n";
+				errorMessage = rmText.GetString("errorMessage001");
+			}
+			if (( String.IsNullOrEmpty(errorMessage) ) && ( !HBSettings.Read() ))
+			{
+//				errorMessage = "Unable to read the configuration file.  Please check that you have read access to:\n\n" + HBSettings.cfgFileName;
+				errorMessage = string.Format(rmText.GetString("errorMessage002"), HBSettings.cfgFileName);
+			}
+			if ( !String.IsNullOrEmpty(errorMessage) )
+			{
+				// TODO Add logging
+				RSDSUtils.ErrorBox(errorMessage);
+				Close();
+				Application.Exit();
+			}
+			
+			//HBSettings.ShowAll();			// Testing only
+			
+			Log.logFile = HBSettings.logFileName;
+			if (HBSettings.logLevel == HBSettings.LogLevel.Debug)
+			{
+				Log.Debug("Program started.");
+			}
+			cbLanguage.DataSource = Language.GetList();
+			cbLanguage.DisplayMember = "Title";
+
+			ResetForm();
+			
+			
+//			System.Collections.Generic.IList<HHBTemplate> templateList = HHBTemplate.AvailableTemplates(@"Templates");
+//			System.Text.StringBuilder tempText = new System.Text.StringBuilder();
+//			tempText.AppendFormat("Found {0} templates.\n\n", templateList.Count);
+//			foreach (HHBTemplate tpl in templateList) {
+//				tempText.AppendFormat("ID: {0}\nTitle: {1}\nPath: {2}\nDesc: {3}\n\n", tpl.id, tpl.title, tpl.fileName, tpl.description);
+//			}
+//			MessageBox.Show(tempText.ToString(), "Templates");
+			
+			
+		}
+
+		// ---------------------------------------------------------------------------------------------
 		/// <summary>
 		/// Reset the form
 		/// </summary>
@@ -739,53 +786,6 @@ namespace HHBuilder
 			treeView1.Focus();
 		}
 		
-		// ---------------------------------------------------------------------------------------------
-		
-		void MainFormLoad(object sender, EventArgs e)
-		{
-			string errorMessage = "";
-			if ( !HBSettings.Initialize() )
-			{
-//				errorMessage = "Unable to locate or create a configuration file.  Please check that you have write access and that the drive is not full.\n";
-				errorMessage = rmText.GetString("errorMessage001");
-			}
-			if (( String.IsNullOrEmpty(errorMessage) ) && ( !HBSettings.Read() ))
-			{
-//				errorMessage = "Unable to read the configuration file.  Please check that you have read access to:\n\n" + HBSettings.cfgFileName;
-				errorMessage = string.Format(rmText.GetString("errorMessage002"), HBSettings.cfgFileName);
-			}
-			if ( !String.IsNullOrEmpty(errorMessage) )
-			{
-				// TODO Add logging
-				RSDSUtils.ErrorBox(errorMessage);
-				Close();
-				Application.Exit();
-			}
-			
-			//HBSettings.ShowAll();			// Testing only
-			
-			Log.logFile = HBSettings.logFileName;
-			if (HBSettings.logLevel == HBSettings.LogLevel.Debug)
-			{
-				Log.Debug("Program started.");
-			}
-			cbLanguage.DataSource = Language.GetList();
-			cbLanguage.DisplayMember = "Title";
-
-			ResetForm();
-			
-			
-//			System.Collections.Generic.IList<HHBTemplate> templateList = HHBTemplate.AvailableTemplates(@"Templates");
-//			System.Text.StringBuilder tempText = new System.Text.StringBuilder();
-//			tempText.AppendFormat("Found {0} templates.\n\n", templateList.Count);
-//			foreach (HHBTemplate tpl in templateList) {
-//				tempText.AppendFormat("ID: {0}\nTitle: {1}\nPath: {2}\nDesc: {3}\n\n", tpl.id, tpl.title, tpl.fileName, tpl.description);
-//			}
-//			MessageBox.Show(tempText.ToString(), "Templates");
-			
-			
-		}
-
 		// ---------------------------------------------------------------------------------------------
 		
 		void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
