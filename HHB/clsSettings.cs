@@ -17,22 +17,32 @@ namespace HHBuilder
 	/// </summary>
 	public static class HBSettings
 	{
+		/// <summary>
+		/// Available levels of program logging
+		/// </summary>
 		public enum LogLevel
 		{
+			/// <summary>
+			/// Logs normal information and all errors and exceptions.
+			/// </summary>
 			Normal,
+			
+			/// <summary>
+			/// Logs all messages.
+			/// </summary>
 			Debug
 		};
 		
 		#region Private Member Variables
-		private static string _workingDir;				// Root working directory
-		private static string _templateDir;			// Directory to look for templates
-		private static string _author;
-		private static string _company;
-		private static string _copyrightTemplate;		// Copyright template
-		private static string _language;
-		private static string _cfgFileName;
-		private static string _logFileName;
-		private static LogLevel _logLevel;
+		private static string _workingDir = String.Empty;				// Root working directory
+		private static string _templateDir = String.Empty;				// Directory to look for templates
+		private static string _author = String.Empty;
+		private static string _company = String.Empty;
+		private static string _copyrightTemplate = String.Empty;		// Copyright template
+		private static string _language = String.Empty;
+		private static string _cfgFileName = String.Empty;
+		private static string _logFileName = String.Empty;
+		private static LogLevel _logLevel = LogLevel.Normal;
 
 		private static string NS = typeof(MainForm).Namespace;
 		private static string FNAME = NS + ".cfg";		
@@ -202,17 +212,6 @@ namespace HHBuilder
 		
 		#region Constructors
 		// ==============================================================================
-		
-//		public HBSettings()
-//		{
-//			workingDir = "";
-//			templateDir = "";
-//			author = "";
-//			company = "";
-//			copyrightTemplate = "";
-//			language = "";
-//			cfgFileName = GetFileName();
-//		}
 		#endregion
 		
 		#region Public Properties
@@ -387,18 +386,18 @@ namespace HHBuilder
 			
 			try
 			{
-				// Open .ini file
-				IniFile ini = new IniFile(fileToRead);
+				// Set name of configuration file to read
+				IniFile.filePath = fileToRead;
 				
 				// Read the configuration settings
-				author = ini.IniReadValue("Identification", "Author");
-				company = ini.IniReadValue("Identification", "Company");
-				copyrightTemplate = ini.IniReadValue("Copyright", "CopyrightTemplate");
-				language = ini.IniReadValue("Settings", "Language");
-				logFileName = ini.IniReadValue("Logging", "FileName");
-				workingDir = ini.IniReadValue("Directories", "Working");
-				templateDir = ini.IniReadValue("Directories", "Template");
-				string tempLogLevel = ini.IniReadValue("Logging", "LogLevel");
+				author = IniFile.IniReadValue("Identification", "Author");
+				company = IniFile.IniReadValue("Identification", "Company");
+				copyrightTemplate = IniFile.IniReadValue("Copyright", "CopyrightTemplate");
+				language = IniFile.IniReadValue("Settings", "Language");
+				logFileName = IniFile.IniReadValue("Logging", "FileName");
+				workingDir = IniFile.IniReadValue("Directories", "Working");
+				templateDir = IniFile.IniReadValue("Directories", "Template");
+				string tempLogLevel = IniFile.IniReadValue("Logging", "LogLevel");
 				if ( tempLogLevel.ToLower().Equals("debug") )
 				{
 					logLevel = LogLevel.Debug;

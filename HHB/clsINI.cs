@@ -12,20 +12,18 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-// TODO: Revise this to a static class.
-
 namespace Ini
 {
 	/// <summary>
-	/// Class to manage loading from and saving to an INI file
+	/// Class to manage loading from and saving to an INI file.
 	/// </summary>
-	public class IniFile
+	public static class IniFile
 	{
 		#region Private Member Variables
 		/// <summary>
 		/// Full path and filename of the INI file
 		/// </summary>
-		private string _path;
+		private static string _path;
 		#endregion
 
 		#region Private Properties
@@ -40,19 +38,14 @@ namespace Ini
 		#endregion
 		
 		#region Constructors
-		// ==============================================================================
-		/// <summary>
-		/// Create a new object to store or load data from an INI file
-		/// </summary>
-		/// <PARAM name="filePath">Full path and filename of the INI file</PARAM>
-		public IniFile( string filePath )
-		{
-			_path = filePath.Trim();
-		}
 		#endregion
 		
 		#region Public Properties
-		public string filePath
+		
+		/// <summary>
+		/// The full path and file name of the INI file to read / write.
+		/// </summary>
+		public static string filePath
 		{
 			get{ return _path.Trim(); }
 			set{ _path = value.Trim(); }
@@ -64,30 +57,55 @@ namespace Ini
 		/// <summary>
 		/// Write Data to the INI File
 		/// </summary>
-		/// <PARAM name="section">Section name</PARAM>
-		/// <PARAM name="key">Key name</PARAM>
-		/// <PARAM name="value">Value to write</PARAM>
-		/// 
-		public void IniWriteValue( string section, string key, string value )
+		/// <param name="section">Section name within the INI file.</param>
+		/// <param name="key">Key name within the section.</param>
+		/// <param name="value">Value to write to the INI file.</param>
+		public static void IniWriteValue( string section, string key, string value )
 		{
-			WritePrivateProfileString( section, key, value, this.filePath );
+			WritePrivateProfileString( section, key, value, filePath );
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write Data to the INI File
+		/// </summary>
+		/// <param name="section">Section name within the INI file.</param>
+		/// <param name="key">Key name within the section.</param>
+		/// <param name="value">Value to write to the INI file.</param>
+		/// <param name="fileName">File to write the specified value</param>
+		public static void IniWriteValue( string section, string key, string value, string fileName )
+		{
+			WritePrivateProfileString( section, key, value, fileName );
 		}
 		
 		// ==============================================================================
 		/// <summary>
 		/// Read Data Value From the INI File
 		/// </summary>
-		/// <PARAM name="section">Section name</PARAM>
-		/// <PARAM name="key">Key name</PARAM>
-		/// <returns>Value read</returns>
-		/// 
-		public string IniReadValue( string section, string key )
+		/// <param name="section">Section name within the INI file.</param>
+		/// <param name="key">Key name within the section.</param>
+		/// <returns>Value read from the INI file.</returns>
+		public static string IniReadValue( string section, string key )
 		{
 			StringBuilder temp = new StringBuilder( 255 );
-			GetPrivateProfileString( section, key, "", temp, 255, this.filePath );
+			GetPrivateProfileString( section, key, "", temp, 255, filePath );
+			return temp.ToString();
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Read Data Value From the INI File
+		/// </summary>
+		/// <param name="section">Section name within the INI file.</param>
+		/// <param name="key">Key name within the section.</param>
+		/// <returns>Value read from the INI file.</returns>
+		/// <param name="fileName">File to read the specified value</param>
+		public static string IniReadValue( string section, string key, string fileName )
+		{
+			StringBuilder temp = new StringBuilder( 255 );
+			GetPrivateProfileString( section, key, "", temp, 255, fileName );
 			return temp.ToString();
 		}
 		#endregion
-		
 	}
 }
