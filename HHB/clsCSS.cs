@@ -11,7 +11,8 @@ using System;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of CSSItem class.
+	/// The CSSItem class is used to manage the information associated with additional<br />
+	/// cascading style sheets used in a help project.
 	/// </summary>
 	public class CSSItem
 	{
@@ -160,9 +161,5 @@ namespace HHBuilder
 			return true;
 		}
 		#endregion
-		
-		
-		
-		
 	}
 }
