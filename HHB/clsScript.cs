@@ -11,7 +11,8 @@ using System;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of ScriptItem class.
+	/// The ScriptItem class is used to manage the information associated with additional<br />
+	/// scripts used in a help project.
 	/// </summary>
 	public class ScriptItem
 	{
@@ -175,10 +176,5 @@ namespace HHBuilder
 			return true;
 		}
 		#endregion
-	
-	
-	
-	
-		
 	}
 }
