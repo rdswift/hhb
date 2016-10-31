@@ -14,6 +14,8 @@ namespace HHBuilder
 {
 	/// <summary>
 	/// Description of ImageItem class.
+	/// The ImageItem class is used to manage the information associated with additional<br />
+	/// images used in a help project.
 	/// </summary>
 	public class ImageItem
 	{
@@ -71,30 +73,45 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		/// <summary>
+		/// Unique identifier.
+		/// </summary>
 		public string id
 		{
 			get{ return _id.Trim(); }
 			set{ _id = value.Trim(); }
 		}
 		
+		/// <summary>
+		/// Name used for the image file produced.
+		/// </summary>
 		public string fileName
 		{
 			get{ return _fileName.Trim(); }
 			set{ _fileName = value.Trim(); }
 		}
 		
+		/// <summary>
+		/// The title of the image file.
+		/// </summary>
 		public string title
 		{
 			get{ return _title.Trim(); }
 			set{ _title = value.Trim(); }
 		}
 		
+		/// <summary>
+		/// The content of the image file in Base 64 format.
+		/// </summary>
 		public string content
 		{
 			get{ return _content.Trim(); }
 			set{ _content = value.Trim(); }
 		}
 		
+		/// <summary>
+		/// The content of the image file as an image object.
+		/// </summary>
 		public Image image
 		{
 			get{ return GetImage(content); }
@@ -166,9 +183,5 @@ namespace HHBuilder
 			}
 		}
 		#endregion
-		
-		
-		
-		
 	}
 }
