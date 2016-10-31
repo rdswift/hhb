@@ -29,7 +29,7 @@ namespace HHBuilder
 		HelpItem savedHelpItem = null;
 		TreeNode savedNode = null;
 		string helpProjectFilePathAndName = "";
-		public static ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
+//		public static ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
 		
 //		public HBSettings cfgSettings = new HBSettings();
 		public const int _MaxLevels = 7;
@@ -56,12 +56,14 @@ namespace HHBuilder
 			if ( !HBSettings.Initialize() )
 			{
 //				errorMessage = "Unable to locate or create a configuration file.  Please check that you have write access and that the drive is not full.\n";
-				errorMessage = rmText.GetString("errorMessage001");
+//				errorMessage = rmText.GetString("errorMessage001");
+				errorMessage = Language.GetString("errorMessage001");
 			}
 			if (( String.IsNullOrEmpty(errorMessage) ) && ( !HBSettings.Read() ))
 			{
 //				errorMessage = "Unable to read the configuration file.  Please check that you have read access to:\n\n" + HBSettings.cfgFileName;
-				errorMessage = string.Format(rmText.GetString("errorMessage002"), HBSettings.cfgFileName);
+//				errorMessage = string.Format(rmText.GetString("errorMessage002"), HBSettings.cfgFileName);
+				errorMessage = string.Format(Language.GetString("errorMessage002"), HBSettings.cfgFileName);
 			}
 			if ( !String.IsNullOrEmpty(errorMessage) )
 			{
@@ -1664,6 +1666,15 @@ namespace HHBuilder
 				tbImageSize.Text = "";
 				pictureBox1.Image = null;
 			}
+		}
+		
+		void Button1Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+			Language.culture = "uk-UA";
+			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+			Language.culture = "en-US";
+			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
 		}
 	}
 }

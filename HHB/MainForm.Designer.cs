@@ -164,6 +164,9 @@ namespace HHBuilder
 			this.label23 = new System.Windows.Forms.Label();
 			this.tbImageContent = new System.Windows.Forms.TextBox();
 			this.tabPageScreen = new System.Windows.Forms.TabPage();
+			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
+			this.hiIncludeHeader = new System.Windows.Forms.CheckBox();
+			this.hiIncludeFooter = new System.Windows.Forms.CheckBox();
 			this.hiHasScreen = new System.Windows.Forms.CheckBox();
 			this.dgvIndexEntries = new System.Windows.Forms.DataGridView();
 			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -194,9 +197,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.hiIncludeFooter = new System.Windows.Forms.CheckBox();
-			this.hiIncludeHeader = new System.Windows.Forms.CheckBox();
-			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -827,6 +828,7 @@ namespace HHBuilder
 			// 
 			// tabPageProject
 			// 
+			this.tabPageProject.Controls.Add(this.button1);
 			this.tabPageProject.Controls.Add(this.cbFullTextSearch);
 			this.tabPageProject.Controls.Add(this.cbLanguage);
 			this.tabPageProject.Controls.Add(this.tbDefaultTopic);
@@ -1339,6 +1341,33 @@ namespace HHBuilder
 			this.tabPageScreen.Text = "Page Settings";
 			this.tabPageScreen.UseVisualStyleBackColor = true;
 			// 
+			// hiIncludeTitle
+			// 
+			this.hiIncludeTitle.Location = new System.Drawing.Point(296, 176);
+			this.hiIncludeTitle.Name = "hiIncludeTitle";
+			this.hiIncludeTitle.Size = new System.Drawing.Size(88, 24);
+			this.hiIncludeTitle.TabIndex = 29;
+			this.hiIncludeTitle.Text = "Include Title";
+			this.hiIncludeTitle.UseVisualStyleBackColor = true;
+			// 
+			// hiIncludeHeader
+			// 
+			this.hiIncludeHeader.Location = new System.Drawing.Point(408, 176);
+			this.hiIncludeHeader.Name = "hiIncludeHeader";
+			this.hiIncludeHeader.Size = new System.Drawing.Size(104, 24);
+			this.hiIncludeHeader.TabIndex = 28;
+			this.hiIncludeHeader.Text = "Include Header";
+			this.hiIncludeHeader.UseVisualStyleBackColor = true;
+			// 
+			// hiIncludeFooter
+			// 
+			this.hiIncludeFooter.Location = new System.Drawing.Point(528, 176);
+			this.hiIncludeFooter.Name = "hiIncludeFooter";
+			this.hiIncludeFooter.Size = new System.Drawing.Size(104, 24);
+			this.hiIncludeFooter.TabIndex = 27;
+			this.hiIncludeFooter.Text = "Include Footer";
+			this.hiIncludeFooter.UseVisualStyleBackColor = true;
+			// 
 			// hiHasScreen
 			// 
 			this.hiHasScreen.Location = new System.Drawing.Point(112, 176);
@@ -1572,32 +1601,15 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// hiIncludeFooter
+			// button1
 			// 
-			this.hiIncludeFooter.Location = new System.Drawing.Point(528, 176);
-			this.hiIncludeFooter.Name = "hiIncludeFooter";
-			this.hiIncludeFooter.Size = new System.Drawing.Size(104, 24);
-			this.hiIncludeFooter.TabIndex = 27;
-			this.hiIncludeFooter.Text = "Include Footer";
-			this.hiIncludeFooter.UseVisualStyleBackColor = true;
-			// 
-			// hiIncludeHeader
-			// 
-			this.hiIncludeHeader.Location = new System.Drawing.Point(408, 176);
-			this.hiIncludeHeader.Name = "hiIncludeHeader";
-			this.hiIncludeHeader.Size = new System.Drawing.Size(104, 24);
-			this.hiIncludeHeader.TabIndex = 28;
-			this.hiIncludeHeader.Text = "Include Header";
-			this.hiIncludeHeader.UseVisualStyleBackColor = true;
-			// 
-			// hiIncludeTitle
-			// 
-			this.hiIncludeTitle.Location = new System.Drawing.Point(296, 176);
-			this.hiIncludeTitle.Name = "hiIncludeTitle";
-			this.hiIncludeTitle.Size = new System.Drawing.Size(88, 24);
-			this.hiIncludeTitle.TabIndex = 29;
-			this.hiIncludeTitle.Text = "Include Title";
-			this.hiIncludeTitle.UseVisualStyleBackColor = true;
+			this.button1.Location = new System.Drawing.Point(472, 368);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 21;
+			this.button1.Text = "Test";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// MainForm
 			// 
@@ -1645,6 +1657,7 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox hiIncludeFooter;
 		private System.Windows.Forms.CheckBox hiIncludeHeader;
 		private System.Windows.Forms.CheckBox hiIncludeTitle;
