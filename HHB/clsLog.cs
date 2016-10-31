@@ -1,6 +1,6 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-10-16
  * Time: 13:46
  * 
@@ -12,7 +12,11 @@ using System.Windows.Forms;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of clsLog.
+	/// Manage the output log for the program, including:<br />
+	///  * Store the log file path and create the file if necessary<br />
+	///  * Store the preferred logging level<br />
+	///  * Log entries based on specified logging level<br />
+	///  * Display specified error messages in a standard error messagebox
 	/// </summary>
 	public static class Log
 	{
@@ -37,7 +41,7 @@ namespace HHBuilder
 				}
 				catch
 				{
-					MessageBox.Show("Unable to write to the specified log file.\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					ErrorBox("Unable to write to the specified log file.\n");
 				}
 			}
 		}
@@ -48,6 +52,10 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		
+		/// <summary>
+		/// The full path and file name of the log file.
+		/// </summary>
 		public static string logFile
 		{
 			get{ return _logFile.Trim(); }
@@ -111,6 +119,29 @@ namespace HHBuilder
 			output.Append(offset);
 			output.Append('-', 53);
 			writeToLog(output.ToString());
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Displays a standard error messagebox with an Okay button.
+		/// </summary>
+		/// <param name="message">A string containing the message to be displayed.</param>
+		/// 
+		public static void ErrorBox(string message)
+		{
+			MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Displays a standard error messagebox with an Okay button.
+		/// </summary>
+		/// <param name="message">A string containing the message to be displayed.</param>
+		/// <param name="title">A string containing the messagebox title to be displayed.</param>
+		/// 
+		public static void ErrorBox(string message, string title)
+		{
+			MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 		#endregion
 	}
