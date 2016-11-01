@@ -14,7 +14,7 @@ using System.Data;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Templates used by the HHBuilder application
+	/// Manages the templates used by the HHBuilder application.
 	/// </summary>
 	public class HHBTemplate
 	{
@@ -26,13 +26,13 @@ namespace HHBuilder
 		private string _description;
 		private string _author;
 		private string _licenseTitle;
-		private string _license;
 		private string _company;
 		private string _contact;
 		private string _email;
 		private string _website;
 		private string _version;
 		private string _date;
+		private static System.Collections.Generic.IList<HHBTemplate> _templateList = new System.Collections.Generic.List<HHBTemplate>(); 
 		#endregion
 
 		#region Private Properties
@@ -61,29 +61,29 @@ namespace HHBuilder
         private void Initialize()
         {
         	id = GetID();
-        	fileName = "";
-        	workingDir = "";
-        	title = "";
-        	description = "";
-        	author = "";
-        	licenseTitle = "";
-        	licenseText = "";
-        	company = "";
-        	contactName = "";
-        	contactEmail = "";
-        	contactWebsite = "";
-        	version = "";
-        	revisionDate = "";
+        	fileName = String.Empty;
+        	workingDir = String.Empty;
+        	title = String.Empty;
+        	description = String.Empty;
+        	author = String.Empty;
+        	licenseTitle = String.Empty;
+        	company = String.Empty;
+        	contactName = String.Empty;
+        	contactEmail = String.Empty;
+        	contactWebsite = String.Empty;
+        	version = String.Empty;
+        	revisionDate = String.Empty;
         }
 		
 		// ==============================================================================
 		/// <summary>
-		/// Unpack the template information from the archive and populate the class variables
+		/// Unpack the template license from the archive and populate the class variables
 		/// </summary>
-		/// <returns>True on success, otherwise false</returns>
-		private bool UnpackTemplateInfo()
+		/// <param name="fileNameToExtract">Name of the file to extract from the template file</param>
+		/// <returns>The path of the extracted file on success, otherwise an empty string.</returns>
+		private string UnpackTemplateFile(string fileNameToExtract)
 		{
-			string tempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), @"template.xml");
+			string tempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fileNameToExtract);
 			if ( System.IO.File.Exists(tempFile) )
 			{
 				try
@@ -101,7 +101,7 @@ namespace HHBuilder
 			{
 				 foreach (ZipArchiveEntry entry in zip.Entries)
                 {
-                    if (entry.FullName.Equals("template.xml", StringComparison.OrdinalIgnoreCase))
+                    if (entry.FullName.Equals(fileNameToExtract, StringComparison.OrdinalIgnoreCase))
                     {
                     	entry.ExtractToFile(tempFile, true);
                     }
@@ -110,20 +110,27 @@ namespace HHBuilder
 			
 			if (System.IO.File.Exists(tempFile))
 			{
+				return tempFile;
+			}
+			else
+			{
+				Log.Error("Error extracting " + fileNameToExtract + " from " + this.fileName);
+				return String.Empty;
+			}
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Unpack the template information from the archive and populate the class variables
+		/// </summary>
+		/// <returns>True on success, otherwise false</returns>
+		private bool UnpackTemplateInfo()
+		{
+			string tempFile = UnpackTemplateFile(@"template.xml");
+			
+			if ( (!String.IsNullOrWhiteSpace(tempFile)) && (System.IO.File.Exists(tempFile)) )
+			{
 				ReadInformationXML(tempFile);
-				
-//				IniFile ini = new IniFile(tempFile);
-//				id = ini.IniReadValue("Identification", "ID");
-//				title = ini.IniReadValue("Identification", "Title");
-//				description = ini.IniReadValue("Identification", "Description");
-//				author = ini.IniReadValue("Developer", "Author");
-//				company = ini.IniReadValue("Developer", "Company");
-//				contactName = ini.IniReadValue("Developer", "Contact");
-//				contactEmail = ini.IniReadValue("Developer", "Email");
-//				contactWebsite = ini.IniReadValue("Developer", "Website");
-//				version = ini.IniReadValue("Miscellaneous", "Version");
-//				revisionDate = ini.IniReadValue("Miscellaneous", "Date");
-//				license = ini.IniReadValue("Miscellaneous", "License");
 				
 				try
 				{
@@ -137,7 +144,7 @@ namespace HHBuilder
 			}
 			else
 			{
-				Log.Error("Error reading information file: " + tempFile);
+				Log.Error("Error reading information file: \"" + tempFile + "\"");
 				return false;
 			}
 			
@@ -183,8 +190,6 @@ namespace HHBuilder
 			dt.Columns.Add(dc);
 			dc = new DataColumn("LicenseTitle", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
-			dc = new DataColumn("LicenseText", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
 			
 			ds.Tables.Add(dt);
 			
@@ -197,9 +202,6 @@ namespace HHBuilder
 			{
 				Log.Error("Error reading template information file");
 				Log.Exception(ex);
-//				System.Text.StringBuilder sb = new System.Text.StringBuilder();
-//				sb.AppendFormat("Error: {0}\nSource: {1}\n\n{2}", ex.Message, ex.Source, ex.StackTrace);
-//				System.Windows.Forms.MessageBox.Show(sb.ToString());
 				return false;
 			}
 			
@@ -211,7 +213,7 @@ namespace HHBuilder
 					object value = dr[tDC.ColumnName];
 					if (value == DBNull.Value)
 					{
-						dr[tDC.ColumnName] = "";
+						dr[tDC.ColumnName] = String.Empty;
 					}
 				}
 				id = (string) dr["ID"];
@@ -225,7 +227,6 @@ namespace HHBuilder
 				version = (string) dr["Version"];
 				revisionDate = (string) dr["RevisionDate"];
 				licenseTitle = (string) dr["LicenseTitle"];
-				licenseText = (string) dr["LicenseText"];
 			}
 			else
 			{
@@ -369,21 +370,12 @@ namespace HHBuilder
 		}
 
 		/// <summary>
-		/// Title / descripotion of the license terms for use of the HHBuilder template
+		/// Title / description of the license terms for use of the HHBuilder template
 		/// </summary>
 		public string licenseTitle
 		{
 			get{ return _licenseTitle.Trim(); }
 			set{ _licenseTitle = value.Trim(); }
-		}
-
-		/// <summary>
-		/// License terms for use of the HHBuilder template
-		/// </summary>
-		public string licenseText
-		{
-			get{ return _license.Trim(); }
-			set{ _license = value.Trim(); }
 		}
 		#endregion
 		
@@ -418,16 +410,40 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
+		/// Packs the template file from the specified directory 
+		/// </summary>
+		/// <param name="workingDirectory">The directory containing the template files and subdirectories.</param>
+		/// <param name="outputPathAndFileName">Full path and filename of output template file.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool PackTemplatePackage(string workingDirectory, string outputPathAndFileName)
+		{
+			// TODO Write the code to pack the template archive from the working directory
+			//			- Confirm valid output file name
+			//			- Validate current template object information
+			//			- Create template.xml file
+			//			- Confirm template.xml file exists
+			//			- Confirm HTML template file exists
+			//			- Confirm LICENSE file exists
+			//			- Copy template files and subdirectories to specified output file 
+			
+			return false;
+		}
+		
+		// ==============================================================================
+		/// <summary>
 		/// Unpacks the template file to the working directory 
 		/// </summary>
+		/// <param name="workingDirectory">The directory used for assembling the help project.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public bool UnpackTemplatePackage()
+		public bool UnpackTemplatePackage(string workingDirectory)
 		{
 			// TODO Write the code to unpack the template archive to the working directory
+			//			- Confirm template file exists
+			//			- Confirm working directory exists
+			//			- Unpack the files and directories from the template file
+			//			- Confirm HTML template file exists
 			
-			//if (!System.IO.File.Exists(FileToLoad)) { return false; }
-			//if (!System.IO.Directory.Exists(WorkingDir)) { return false; }
-			return true;
+			return false;
 		}
 		
 		// ==============================================================================
@@ -453,12 +469,40 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
+		/// Get list of all available templates<br />
+		/// Note that templates located in the program directory are included automatically.
+		/// </summary>
+		/// <returns>Array of available templates as HHBTemplate objects</returns>
+		public static System.Collections.Generic.IList<HHBTemplate> AvailableTemplates()
+		{
+			if ( _templateList.Count < 1 )
+			{
+				ReadAvailableTemplates(String.Empty);
+			}
+			return _templateList;
+		}
+		
+		// ==============================================================================
+		/// <summary>
 		/// Get list of all available templates from the specified directory<br />
 		/// Note that templates located in the program directory are included automatically.
 		/// </summary>
 		/// <param name="templateDirectory">Template storage directory</param>
 		/// <returns>Array of available templates as HHBTemplate objects</returns>
 		public static System.Collections.Generic.IList<HHBTemplate> AvailableTemplates(string templateDirectory)
+		{
+			ReadAvailableTemplates(templateDirectory);
+			return _templateList;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Get list of all available templates from the specified directory<br />
+		/// and stores them in a static variable for delivery via the AvailableTemplates() method.<br />
+		/// Note that templates located in the program directory are included automatically.
+		/// </summary>
+		/// <param name="templateDirectory">Template storage directory</param>
+		public static void ReadAvailableTemplates(string templateDirectory)
 		{
 			System.Collections.Generic.IList<HHBTemplate> ret = new System.Collections.Generic.List<HHBTemplate>();
 			string searchDir = System.Windows.Forms.Application.StartupPath;
@@ -483,9 +527,48 @@ namespace HHBuilder
             		}
             	}
             }
-            return ret;
+            _templateList = ret;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Unpack the license information from the template archive
+		/// </summary>
+		/// <returns>The contents of the LICENSE file included with the template</returns>
+		public string License()
+		{
+			string tempFile = UnpackTemplateFile(@"LICENSE");
+			string licenseText = String.Empty;
+			if ( (!String.IsNullOrWhiteSpace(tempFile)) && (System.IO.File.Exists(tempFile)) )
+			{
+				try 
+				{
+					licenseText = System.IO.File.ReadAllText(tempFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Exception(ex);
+					licenseText = String.Empty;
+				}
+				
+				try
+				{
+					System.IO.File.Delete(tempFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Error("Error deleting information file: " + tempFile);
+					Log.Exception(ex);
+				}
+			}
+			
+			if ( String.IsNullOrWhiteSpace(licenseText) )
+			{
+				Log.Error("Error reading information file: \"" + tempFile + "\"");
+			}
+			
+			return licenseText;
 		}
 		#endregion
-		
 	}
 }
