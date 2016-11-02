@@ -278,11 +278,10 @@ namespace HHBuilder
 		}
 		
 		// ---------------------------------------------------------------------------------------------
-		
+		/// <summary>
+		/// Set up the available right-click options for the current treenode
+		/// </summary>
 		private void FilterContextMenuStrip1(int nIdx)
-			/// <summary>
-			/// Set up the available right-click options for the current treenode
-			/// </summary>
 		{
 			insertToolStripMenuItem.Enabled = false;
 			moveLeftToolStripMenuItem.Enabled = false;
@@ -1670,11 +1669,44 @@ namespace HHBuilder
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
-			Language.culture = "uk-UA";
-			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
-			Language.culture = "en-US";
-			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+//			// Test Culture code
+//			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+//			Language.culture = "uk-UA";
+//			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+//			Language.culture = "en-US";
+//			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
+			
+//			// Test unpacking a template package
+//			HHBTemplate tempTemplate = new HHBTemplate(@"C:\Development\SharpDevelop\Projects\osHHB\hhb\HHB\bin\Debug\DefaultTemplate.hhbt");
+//			tempTemplate.workingDir = @"C:\--HHB--\Working";
+//			tempTemplate.UnpackTemplatePackage();
+			
+//			// Test creating a template package
+//			HHBTemplate tempTemplate = new HHBTemplate();
+//			tempTemplate.id = @"t00000000000000000";
+//			tempTemplate.title = @"Basic HH Builder Template";
+//			tempTemplate.description = @"Basic template with the index number, title and home link in the header, and the previous and next links in the footer.";
+//			tempTemplate.author = @"Bob Swift";
+//			tempTemplate.company = @"";
+//			tempTemplate.contactName = @"Bob Swift";
+//			tempTemplate.contactEmail = @"bswift@users.sourceforge.net";
+//			tempTemplate.contactWebsite = @"https://sourceforge.net/projects/oshhb/";
+//			tempTemplate.version = @"1.00";
+//			tempTemplate.revisionDate = @"2016-11-02";
+//			tempTemplate.licenseTitle = @"GPLv3";
+//			HHBTemplate.SetWorkingDir(@"C:\--HHB--\Working");
+//			string sourceDir = @"C:\--HHB--\Source";
+//			string packageFile = @"C:\--HHB--\TestTemplate.hhbt";
+//			tempTemplate.fileName = packageFile;
+//			if ( tempTemplate.PackTemplatePackage(sourceDir) )
+//			{
+//				MessageBox.Show("Successfully created template file:\n\n" + packageFile + "\n\nfrom the files found in:\n\n" + sourceDir, "Success");
+//			}
+//			else
+//			{
+//				Log.ErrorBox("Error creating template file:\n\n" + packageFile + "\n\nfrom the files found in:\n\n" + sourceDir);
+//			}
+			
 		}
 	}
 }

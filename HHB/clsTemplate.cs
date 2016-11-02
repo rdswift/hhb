@@ -7,9 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
 using System.IO.Compression;
 using Ini;
 using System.Data;
+using System.Security;
 
 namespace HHBuilder
 {
@@ -21,7 +23,7 @@ namespace HHBuilder
 		#region Private Member Variables
 		private string _id;
 		private string _fileName;
-		private string _workingDir;
+		private static string _workingDir = "";		// Should be the same value for all template objects.  Only needs to be set once.
 		private string _title;
 		private string _description;
 		private string _author;
@@ -62,7 +64,7 @@ namespace HHBuilder
         {
         	id = GetID();
         	fileName = String.Empty;
-        	workingDir = String.Empty;
+        	//workingDir = String.Empty;
         	title = String.Empty;
         	description = String.Empty;
         	author = String.Empty;
@@ -77,7 +79,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Unpack the template license from the archive and populate the class variables
+		/// Unpack the specified file from the HTML Help template archive.
 		/// </summary>
 		/// <param name="fileNameToExtract">Name of the file to extract from the template file</param>
 		/// <returns>The path of the extracted file on success, otherwise an empty string.</returns>
@@ -121,6 +123,31 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
+		/// Deletes the specified file
+		/// </summary>
+		/// <param name="fileNameToDelete">Full path and name of the file to delete</param>
+		/// <returns>True on success, otherwise false.</returns>
+		private bool DeleteTempFile(string fileNameToDelete)
+		{
+			bool ret = true;
+			if ( !String.IsNullOrWhiteSpace(fileNameToDelete) )
+			{
+				try
+				{
+					System.IO.File.Delete(fileNameToDelete);
+				}
+				catch (Exception ex)
+				{
+					Log.Error("Error deleting file: " + fileNameToDelete);
+					Log.Exception(ex);
+					ret = false;
+				}
+			}
+			return ret;
+		}
+		
+		// ==============================================================================
+		/// <summary>
 		/// Unpack the template information from the archive and populate the class variables
 		/// </summary>
 		/// <returns>True on success, otherwise false</returns>
@@ -131,16 +158,7 @@ namespace HHBuilder
 			if ( (!String.IsNullOrWhiteSpace(tempFile)) && (System.IO.File.Exists(tempFile)) )
 			{
 				ReadInformationXML(tempFile);
-				
-				try
-				{
-					System.IO.File.Delete(tempFile);
-				}
-				catch (Exception ex)
-				{
-					Log.Error("Error deleting information file: " + tempFile);
-					Log.Exception(ex);
-				}
+				DeleteTempFile(tempFile);
 			}
 			else
 			{
@@ -151,6 +169,106 @@ namespace HHBuilder
 			return true;
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// Creates a working subdirectory and confirms that it can be properly accessed.
+		/// </summary>
+		/// <param name="workingDirectory">Base directory in which the specified subdirectory will be created.</param>
+		/// <param name="subdirectoryName">Working subdirectory to create.</param>
+		/// <returns>The full path to the working subdirectory created, or an empty string on error.</returns>
+		private string MakeWorkingSub(string workingDirectory, string subdirectoryName)
+		{
+			if ( String.IsNullOrWhiteSpace(subdirectoryName) )
+			{
+				return String.Empty;
+			}
+			
+			// Ensure proper working directory and update the current object's property
+			if ( String.IsNullOrWhiteSpace(workingDirectory) )
+			{
+				if ( String.IsNullOrWhiteSpace(workingDir) )
+				{
+					workingDir = Path.GetTempPath();
+				}
+			}
+			else
+			{
+				workingDir = workingDirectory;
+			}
+			
+			// Build program specific directory under the specified working directory
+			string workingSub = Path.Combine(workingDir, subdirectoryName);
+			
+			try
+			{
+				if ( Directory.Exists(workingSub) )
+				{
+					// Remove the existing directory to clear out any files and subdirectories
+					Directory.Delete(workingSub, true);
+				}
+				
+				// Create the working directory.
+				Directory.CreateDirectory(workingSub);
+			}
+			catch (Exception ex)
+			{
+				string errorMessage = "Unable to access working directory: " + workingDir;
+				Log.Error(errorMessage);
+				Log.Exception(ex);
+				Log.ErrorBox(errorMessage);
+				return String.Empty;
+			}
+			
+			return workingSub;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the template.xml file to the specified directory.
+		/// </summary>
+		/// <param name="workingSub">Directory to save the output file.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		private bool WriteInformationXML(string workingSub)
+		{
+			if ( String.IsNullOrWhiteSpace(workingSub) )
+			{
+				return false;
+			}
+			
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			sb.Clear();
+			sb.AppendLine("<?xml version=\"1.0\" standalone=\"yes\"?>");
+			sb.AppendLine("<HelpTemplate>");
+			sb.AppendLine("  <TemplateInfo>");
+			sb.AppendFormat("    <ID>{0}</ID>\n", SecurityElement.Escape(this.id));
+			sb.AppendFormat("    <Title>{0}</Title>\n", SecurityElement.Escape(this.title));
+			sb.AppendFormat("    <Description>{0}</Description>\n", SecurityElement.Escape(this.description));
+			sb.AppendFormat("    <Author>{0}</Author>\n", SecurityElement.Escape(this.author));
+			sb.AppendFormat("    <Company>{0}</Company>\n", SecurityElement.Escape(this.company));
+			sb.AppendFormat("    <ContactName>{0}</ContactName>\n", SecurityElement.Escape(this.contactName));
+			sb.AppendFormat("    <ContactEmail>{0}</ContactEmail>\n", SecurityElement.Escape(this.contactEmail));
+			sb.AppendFormat("    <ContactWebsite>{0}</ContactWebsite\n", SecurityElement.Escape(this.contactWebsite));
+			sb.AppendFormat("    <Version>{0}</Version>\n", SecurityElement.Escape(this.version));
+			sb.AppendFormat("    <RevisionDate>{0}</RevisionDate>\n", SecurityElement.Escape(this.revisionDate));
+			sb.AppendFormat("    <LicenseTitle>{0}</LicenseTitle>\n", SecurityElement.Escape(this.licenseTitle));
+			sb.AppendLine("  </TemplateInfo>");
+			sb.AppendLine("</HelpTemplate>");
+			
+			string outFile = Path.Combine(workingSub, "template.xml");
+			try
+			{
+				File.WriteAllText(outFile, sb.ToString());
+			}
+			catch (Exception ex)
+			{
+				Log.Error("Error writing " + outFile);
+				Log.Exception(ex);
+				return false;
+			}
+			
+			return true;
+		}
+
 		// ==============================================================================
 		/// <summary>
 		/// Reads information from specified template information file
@@ -382,6 +500,16 @@ namespace HHBuilder
 		#region Public Methods
 		// ==============================================================================
 		/// <summary>
+		/// Sets the working directory for all HHTemplate objects
+		/// </summary>
+		/// <param name="workingDirectory">Working directory to use.</param>
+		public static void SetWorkingDir(string workingDirectory)
+		{
+			_workingDir = workingDirectory.Trim();
+		}
+		
+		// ==============================================================================
+		/// <summary>
 		/// Loads information from the template file
 		/// </summary>
 		/// <returns>True on success, otherwise false.</returns>
@@ -410,23 +538,198 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Packs the template file from the specified directory 
+		/// Builds the HTML Help Builder template file (.hhbt)
+		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
+		/// workingDir property is empty, a default working directory will be used.</para>
+		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
+		/// <para>If the output file exists, it will be overwritten.</para>
 		/// </summary>
-		/// <param name="workingDirectory">The directory containing the template files and subdirectories.</param>
-		/// <param name="outputPathAndFileName">Full path and filename of output template file.</param>
+		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public bool PackTemplatePackage(string workingDirectory, string outputPathAndFileName)
+		public bool PackTemplatePackage(string htmlDirectory)
 		{
-			// TODO Write the code to pack the template archive from the working directory
-			//			- Confirm valid output file name
-			//			- Validate current template object information
-			//			- Create template.xml file
-			//			- Confirm template.xml file exists
-			//			- Confirm HTML template file exists
-			//			- Confirm LICENSE file exists
-			//			- Copy template files and subdirectories to specified output file 
+			return PackTemplatePackage(htmlDirectory, workingDir, this.fileName);
+		}
+
+		// ==============================================================================
+		/// <summary>
+		/// Builds the HTML Help Builder template file (.hhbt)
+		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
+		/// workingDir property is empty, a default working directory will be used.</para>
+		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
+		/// </summary>
+		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
+		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
+		/// <para>If the output file exists, it will be overwritten.</para>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory)
+		{
+			return PackTemplatePackage(htmlDirectory, workingDirectory, this.fileName);
+		}
+
+		// ==============================================================================
+		/// <summary>
+		/// Builds the HTML Help Builder template file (.hhbt)
+		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
+		/// workingDir property is empty, a default working directory will be used.</para>
+		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
+		/// <para>If the output file exists, it will be overwritten.</para>
+		/// </summary>
+		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
+		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
+		/// <param name="outputPathAndFileName">The full path and filename of the resulting template file.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory, string outputPathAndFileName)
+		{
+			// Confirm valid output file name
+			if ( String.IsNullOrWhiteSpace(outputPathAndFileName) )
+			{
+				string error = "Missing template output file name.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
 			
-			return false;
+			// Confirm valid HTML directory
+			if ( (String.IsNullOrWhiteSpace(htmlDirectory)) || (!Directory.Exists(htmlDirectory)) )
+			{
+				string error = "Missing or invalid HTML directory.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Confirm template.htm file exists
+			if ( !File.Exists(Path.Combine(htmlDirectory, "template.htm")) )
+			{
+				string error = "Missing template.htm file.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Confirm LICENSE file exists
+			if ( !File.Exists(Path.Combine(htmlDirectory, "LICENSE")) )
+			{
+				string error = "Missing LICENSE file.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Validate current template object information
+			if ( String.IsNullOrWhiteSpace(this.id) )
+			{
+				this.id = GetID();
+			}
+			
+			if ( String.IsNullOrWhiteSpace(this.title) )
+			{
+				this.title = "Title not specified";
+			}
+			
+			if ( String.IsNullOrWhiteSpace(this.description) )
+			{
+				this.description = "No description provided.";
+			}
+			
+			if ( String.IsNullOrWhiteSpace(this.licenseTitle) )
+			{
+				this.licenseTitle = "License type not specified";
+			}
+			
+			if ( String.IsNullOrWhiteSpace(this.version) )
+			{
+				this.version = "1.0";
+			}
+			
+			if ( String.IsNullOrWhiteSpace(this.revisionDate) )
+			{
+				this.revisionDate = DateTime.Now.ToString("yyyy-MM-dd");
+			}
+			
+			// Create the working directory for the assembly
+			string workingSub = MakeWorkingSub(workingDirectory, "HHBTemplateBuilder");
+			if ( String.IsNullOrWhiteSpace(workingSub) )
+			{
+				return false;
+			}
+			
+			// Create template.xml file
+			if ( !WriteInformationXML(workingSub) )
+			{
+				string error = "Problem writing the template information file.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Pack the LICENSE and HTML files
+			try
+			{
+				// Remove output file if it already exists
+				if ( File.Exists(outputPathAndFileName) )
+				{
+					if ( !DeleteTempFile(outputPathAndFileName) )
+					{
+						Log.ErrorBox("Unable to delete existing file: " + outputPathAndFileName);
+						return false;
+					}
+				}
+				
+				ZipFile.CreateFromDirectory(htmlDirectory, outputPathAndFileName);
+			}
+			catch (Exception ex)
+			{
+				string error = "Problem creating the HTML Help template file.";
+				Log.Error(error);
+				Log.Exception(ex);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Add the template.xml file to the template package
+			try
+			{
+				using ( ZipArchive templatePackage = ZipFile.Open(outputPathAndFileName, ZipArchiveMode.Update) )
+				{
+					templatePackage.CreateEntryFromFile(Path.Combine(workingSub, "template.xml"), "template.xml");
+				}
+			}
+			catch (Exception ex)
+			{
+				string error = "Problem adding the template information to the HTML Help template file.";
+				Log.Error(error);
+				Log.Exception(ex);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Clean up temporary working files and directory
+			try
+			{
+				Directory.Delete(workingSub, true);
+			}
+			catch (Exception ex)
+			{
+				string error = "Problem removing the temporary files and working directory: " + workingSub;
+				Log.Error(error);
+				Log.Exception(ex);
+			}
+			
+			Log.Info("HTML Help template file created successfully: " + outputPathAndFileName);
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Unpacks the template file to the working directory 
+		/// </summary>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool UnpackTemplatePackage()
+		{
+			return UnpackTemplatePackage(workingDir);
 		}
 		
 		// ==============================================================================
@@ -437,13 +740,64 @@ namespace HHBuilder
 		/// <returns>True on success, otherwise false.</returns>
 		public bool UnpackTemplatePackage(string workingDirectory)
 		{
-			// TODO Write the code to unpack the template archive to the working directory
-			//			- Confirm template file exists
-			//			- Confirm working directory exists
-			//			- Unpack the files and directories from the template file
-			//			- Confirm HTML template file exists
+			// Confirm template file exists
+			if ( !File.Exists(this.fileName) )
+			{
+				string errorMessage = "Unable to locate template file: " + this.fileName; 
+				Log.Error(errorMessage);
+				Log.ErrorBox(errorMessage);
+				return false;
+			}
 			
-			return false;
+			// Build program specific directory under the specified working directory
+			string workingSub = MakeWorkingSub(workingDirectory, "HHBuilderTemp");
+			
+			if ( String.IsNullOrWhiteSpace(workingSub) )
+			{
+				return false;
+			}
+			
+			// Remove working directory to ensure it is empty (required by ExtractToDirectory() method)
+			if ( Directory.Exists(workingSub) )
+			{
+				try 
+				{
+					Directory.Delete(workingSub, true);
+				} 
+				catch (Exception ex)
+				{
+					string errorMessage = "Unable to access working directory: " + workingDir;
+					Log.Error(errorMessage);
+					Log.Exception(ex);
+					Log.ErrorBox(errorMessage);
+					return false;
+				}
+			}
+			
+			// Unpack the files and directories from the template file
+			try
+			{
+				ZipFile.ExtractToDirectory(this.fileName, workingSub);
+			}
+			catch (Exception ex)
+			{
+				string errorMessage = "Unable to extract template files to the working directory: " + workingSub;
+				Log.Error(errorMessage);
+				Log.Exception(ex);
+				Log.ErrorBox(errorMessage);
+				return false;
+			}
+			
+			string templateFile = Path.Combine(workingSub, "template.html");
+			if ( !System.IO.File.Exists(templateFile) )
+			{
+				string errorMessage = "Missing template.html file in the working directory: " + workingSub;
+				Log.Error(errorMessage);
+				Log.ErrorBox(errorMessage);
+				return false;
+			}
+			
+			return true;
 		}
 		
 		// ==============================================================================
@@ -550,16 +904,8 @@ namespace HHBuilder
 					Log.Exception(ex);
 					licenseText = String.Empty;
 				}
-				
-				try
-				{
-					System.IO.File.Delete(tempFile);
-				}
-				catch (Exception ex)
-				{
-					Log.Error("Error deleting information file: " + tempFile);
-					Log.Exception(ex);
-				}
+
+				DeleteTempFile(tempFile);
 			}
 			
 			if ( String.IsNullOrWhiteSpace(licenseText) )
