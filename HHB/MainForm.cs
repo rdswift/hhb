@@ -68,7 +68,7 @@ namespace HHBuilder
 			if ( !String.IsNullOrEmpty(errorMessage) )
 			{
 				// TODO Add logging
-				RSDSUtils.ErrorBox(errorMessage);
+				Log.ErrorBox(errorMessage);
 				Close();
 				Application.Exit();
 			}
@@ -1627,7 +1627,7 @@ namespace HHBuilder
 			else
 			{
 				tbImageContent.Text = "";
-				RSDSUtils.ErrorBox("Unable to open the specified image file.");
+				Log.ErrorBox("Unable to open the specified image file.");
 			}
 		}
 		
