@@ -115,137 +115,14 @@ namespace HHBuilder
 		}
 		
 		
-//		// ---------------------------------------------------------------------------------------------
-//		/// <summary>
-//		/// Initialize the dataset
-//		/// </summary>
+		// ---------------------------------------------------------------------------------------------
+		/// <summary>
+		/// Initialize the dataset
+		/// </summary>
 		public void InitDataSet()
 		{
-//			ds = new DataSet();
-//			ds.DataSetName = "HelpData";
-//			
-//			// Prepare Settings DataTable
 			DataTable dt = new DataTable();
-//			dt.TableName = "Settings";
-//			
 			DataColumn dc;
-//			
-//			dc = new DataColumn("ProjectName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Author", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Company", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Copyright", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Language", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("DefaultTopic", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FullTextSearch", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Template", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			
-//			// Add Placeholder Row
-//			DataRow dr = dt.NewRow();
-//			dr["ProjectName"] = "Undefined Project";
-//			dr["FileName"] = "Undefined";
-//			dr["Author"] = HBSettings.author;
-//			dr["Company"] = HBSettings.company;
-//			dr["Copyright"] = HBSettings.Copyright();
-//			dr["Language"] = HBSettings.language;
-//			dr["DefaultTopic"] = "";
-//			dr["FullTextSearch"] = "Yes";
-//			dr["Template"] = "Default";
-//			dt.Rows.Add(dr);
-//			
-//			// Add Settings Table to DataSet
-//			ds.Tables.Add(dt);
-//			
-//			// Prepare Screens DataTable
-//			dt = new DataTable();
-//			dt.TableName = "Screens";
-//			dc = new DataColumn("ID", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("IndexPath", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("ScreenType", Type.GetType("System.String"));		// TOC or Popup
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("HasScreen", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("UseTitle", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("UseHeader", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("UseFooter", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Title", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("IndexEntries", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("LinkID", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("LinkDesc", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("LinkList", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Body", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			
-//			
-//			// Add Screens Table to DataSet
-//			ds.Tables.Add(dt);
-//			
-//			// Prepare CSS DataTable
-//			dt = new DataTable();
-//			dt.TableName = "CSS";
-//			dc = new DataColumn("ID", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Title", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//
-//			// Add CSS Table to DataSet
-//			ds.Tables.Add(dt);
-//			
-//			// Prepare Scripts DataTable
-//			dt = new DataTable();
-//			dt.TableName = "Scripts";
-//			dc = new DataColumn("ID", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Title", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//
-//			// Add Scripts Table to DataSet
-//			ds.Tables.Add(dt);
-//			
-//			// Prepare Images DataTable
-//			dt = new DataTable();
-//			dt.TableName = "Images";
-//			dc = new DataColumn("ID", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("Title", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileName", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-//			dt.Columns.Add(dc);
-//
-//			// Add CSS Table to DataSet
-//			ds.Tables.Add(dt);
-//			
 			
 			// Initialize Links DataSet
 			dsLinks = new DataSet();
@@ -278,6 +155,7 @@ namespace HHBuilder
 		/// <summary>
 		/// Set up the available right-click options for the current treenode
 		/// </summary>
+		/// <param name="nIdx">The branch index number of the current treenode.</param>
 		private void FilterContextMenuStrip1(int nIdx)
 		{
 			insertToolStripMenuItem.Enabled = false;
@@ -332,222 +210,6 @@ namespace HHBuilder
 			}
 		}
 		
-//		// ---------------------------------------------------------------------------------------------
-//		
-//		void TreeToDataset()
-//		{
-//			// Help Screens Table
-//			ds.Tables[1].Rows.Clear();
-//			foreach (TreeNode tNode in treeView1.Nodes)
-//			{
-//				RecurseTreeToDataset(tNode);
-//			}
-//			
-//			// CSS Files Table
-//			ds.Tables[2].Rows.Clear();
-//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[2].Nodes)
-//			{
-//				CSSItem tItem = (CSSItem) tNode.Tag;
-//				DataRow dr = ds.Tables[2].NewRow();
-//				dr["ID"] = tItem.id;
-//				dr["Title"] = tItem.title;
-//				dr["FileName"] = tItem.fileName;
-//				dr["FileContents"] = tItem.content;
-//				ds.Tables[2].Rows.Add(dr);
-//			}
-//			
-//			// Script Files Table
-//			ds.Tables[3].Rows.Clear();
-//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[3].Nodes)
-//			{
-//				ScriptItem tItem = (ScriptItem) tNode.Tag;
-//				DataRow dr = ds.Tables[3].NewRow();
-//				dr["ID"] = tItem.id;
-//				dr["Title"] = tItem.title;
-//				dr["FileName"] = tItem.fileName;
-//				dr["FileContents"] = tItem.content;
-//				ds.Tables[3].Rows.Add(dr);
-//			}
-//			
-//			// Image Files Table
-//			ds.Tables[4].Rows.Clear();
-//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[4].Nodes)
-//			{
-//				ImageItem tItem = (ImageItem) tNode.Tag;
-//				DataRow dr = ds.Tables[4].NewRow();
-//				dr["ID"] = tItem.id;
-//				dr["Title"] = tItem.title;
-//				dr["FileName"] = tItem.fileName;
-//				dr["FileContents"] = tItem.content;
-//				ds.Tables[4].Rows.Add(dr);
-//			}
-//			
-//		}
-//		
-//		// ---------------------------------------------------------------------------------------------
-//		
-//		void RecurseTreeToDataset(TreeNode tNode)
-//		{
-//			int nIdx = GetBranchIndex(tNode);
-//			if ((tNode.Level > 1) && (nIdx < 2))
-//			{
-//				HelpItem tnItem = (HelpItem) tNode.Tag;
-//				DataRow dr = ds.Tables[1].NewRow();
-//				dr["ID"] = tnItem.id;
-//				dr["IndexPath"] = NodeIndexPath(tNode).Split(' ')[0];
-//				//dr["ScreenType"] = tnItem.screenType.ToString();
-//				dr["ScreenType"] = ( (nIdx < 1) ? "TOC" : "Popup" );
-//				dr["FileName"] = tnItem.fileName;
-//				dr["HasScreen"] = tnItem.hasScreen.ToString();
-//				dr["UseTitle"] = tnItem.usesTitle.ToString();
-//				dr["UseHeader"] = tnItem.usesHeader.ToString();
-//				dr["UseFooter"] = tnItem.usesFooter.ToString();
-//				dr["Title"] = tnItem.title;
-//				dr["IndexEntries"] = tnItem.indexEntries;
-//				dr["LinkID"] = tnItem.linkID.ToString();
-//				dr["LinkDesc"] = tnItem.linkDescription;
-//				dr["LinkList"] = tnItem.linkList;
-//				dr["Body"] = tnItem.body;
-//				ds.Tables[1].Rows.Add(dr);
-//			}
-//			foreach (TreeNode cNode in tNode.Nodes)
-//			{
-//				RecurseTreeToDataset(cNode);
-//			}
-//		}
-		
-//		// ---------------------------------------------------------------------------------------------
-//		
-//		public void ShowDataSet()
-//		{
-//			string s1;		// Temporary string variable
-//			
-//			// General Project Information
-//			DataRow dr = ds.Tables[0].Rows[0];
-//			s1 = dr["ProjectName"].ToString().Trim();
-//			if (s1.Length < 1)
-//			{
-//				s1 = "Undefined Project";
-//				dr["ProjectName"] = s1;
-//			}
-//			treeView1.SelectedNode = treeView1.Nodes[0];
-//			treeView1.Nodes[0].Text = s1;
-//			
-//			tbProjectName.Text = s1;
-//			tbRootFileName.Text = dr["FileName"].ToString().Trim();
-//			tbAuthor.Text = dr["Author"].ToString().Trim();
-//			tbCompany.Text = dr["Company"].ToString().Trim();
-//			tbCopyright.Text = dr["Copyright"].ToString().Trim();
-//			tbTemplateUsed.Text = dr["Template"].ToString().Trim();
-//			tbLanguage.Text = dr["Language"].ToString().Trim();
-//			tbDefaultTopic.Text = dr["DefaultTopic"].ToString().Trim();
-//			cbFullTextSearch.Checked = dr["FullTextSearch"].ToString().Trim().ToUpper().StartsWith("Y");
-//			
-//			// Clear all project data nodes
-//			treeView1.Nodes[0].Nodes[0].Nodes.Clear();	// Table of Contents Items
-//			treeView1.Nodes[0].Nodes[1].Nodes.Clear();	// Popup Help Screen Items
-//			treeView1.Nodes[0].Nodes[2].Nodes.Clear();	// CSS Files (not included in the template)
-//			treeView1.Nodes[0].Nodes[3].Nodes.Clear();	// Script Files (not included in the template)
-//			treeView1.Nodes[0].Nodes[4].Nodes.Clear();	// IMage Files (not included in the template)
-//			
-//			// Sort help screen heierarchy
-//			DataView dv = ds.Tables[1].DefaultView;
-//			dv.Sort = "IndexPath";
-//			DataTable sortedDT = dv.ToTable();
-//			
-//			// Help Screens (Table of Contents and Popups)
-//			foreach (DataRow tDR in sortedDT.Rows)
-//			{
-//				// Replace all missing values with empty string
-//				foreach (DataColumn tDC in sortedDT.Columns)
-//				{
-//					object value = tDR[tDC.ColumnName];
-//					if (value == DBNull.Value)
-//					{
-//						tDR[tDC.ColumnName] = "";
-//					}
-//				}
-//				HelpItem tHI = new HelpItem();
-//				tHI.id = (string) tDR["ID"];
-//				if ( ((string) tDR["FileName"]).ToLower().Equals("toc") )
-//				{
-//					tHI.screenType = HelpItem.ScreenType.TOC;
-//				}
-//				else
-//				{
-//					tHI.screenType = HelpItem.ScreenType.Popup;
-//				}
-//				tHI.fileName = (string) tDR["FileName"];
-//				tHI.hasScreen = String.Equals(tDR["HasScreen"].ToString().Trim().ToLower(), "true");
-//				tHI.usesTitle = String.Equals(tDR["UseTitle"].ToString().Trim().ToLower(), "true");
-//				tHI.usesHeader = String.Equals(tDR["UseHeader"].ToString().Trim().ToLower(), "true");
-//				tHI.usesFooter = String.Equals(tDR["UseFooter"].ToString().Trim().ToLower(), "true");
-//				tHI.title = (string) tDR["Title"];
-//				tHI.indexEntries = (string) tDR["IndexEntries"];
-//				tHI.linkID = System.Convert.ToUInt32("0" + tDR["LinkID"].ToString().Trim());
-//				tHI.linkDescription = (string) tDR["LinkDesc"];
-//				tHI.linkList = (string) tDR["LinkList"];
-//				tHI.body = (string) tDR["Body"];
-//				TreeNode tTN = new TreeNode();
-//				tTN = treeView1.Nodes[0];
-//				string[] tArray = tDR["IndexPath"].ToString().Split('.');
-//				for (int i = 1; i < tArray.Length - 1; i++)
-//				{
-//					int j = Convert.ToInt32(tArray[i]);
-//					tTN = tTN.Nodes[j];
-//				}
-//				tTN = tTN.Nodes.Add(tHI.title);
-//				tTN.Tag = tHI;
-//				tTN.Text = tHI.title;
-//				tTN.Name = tHI.id;
-//				tTN.ContextMenuStrip = contextMenuStrip1;
-//			}
-//			
-//			// CSS Files
-//			foreach (DataRow tdr in ds.Tables[2].Rows)
-//			{
-//				CSSItem tItem = new CSSItem();
-//				tItem.id = tdr["ID"].ToString().Trim();
-//				tItem.title = tdr["Title"].ToString().Trim();
-//				tItem.fileName = tdr["FileName"].ToString().Trim();
-//				tItem.content = tdr["FileContents"].ToString().Trim();
-//				TreeNode tTN = treeView1.Nodes[0].Nodes[2].Nodes.Add(tItem.title);
-//				tTN.Tag = tItem;
-//				tTN.ContextMenuStrip = contextMenuStrip2;
-//			}
-//			
-//			// Script Files
-//			foreach (DataRow tdr in ds.Tables[3].Rows)
-//			{
-//				ScriptItem tItem = new ScriptItem();
-//				tItem.id = tdr["ID"].ToString().Trim();
-//				tItem.title = tdr["Title"].ToString().Trim();
-//				tItem.fileName = tdr["FileName"].ToString().Trim();
-//				tItem.content = tdr["FileContents"].ToString().Trim();
-//				TreeNode tTN = treeView1.Nodes[0].Nodes[3].Nodes.Add(tItem.title);
-//				tTN.Tag = tItem;
-//				tTN.ContextMenuStrip = contextMenuStrip2;
-//			}
-//			
-//			// Image Files
-//			foreach (DataRow tdr in ds.Tables[4].Rows)
-//			{
-//				ImageItem tItem = new ImageItem();
-//				tItem.id = tdr["ID"].ToString().Trim();
-//				tItem.title = tdr["Title"].ToString().Trim();
-//				tItem.fileName = tdr["FileName"].ToString().Trim();
-//				tItem.content = tdr["FileContents"].ToString().Trim();
-//				TreeNode tTN = treeView1.Nodes[0].Nodes[4].Nodes.Add(tItem.title);
-//				tTN.Tag = tItem;
-//				tTN.ContextMenuStrip = contextMenuStrip2;
-//			}
-//
-//			treeView1.SelectedNode = treeView1.Nodes[0];
-//			treeView1.Refresh();
-//			treeView1.ExpandAll();
-//			tabPageProject.Focus();
-//		}
-		
 		// ---------------------------------------------------------------------------------------------
 		
 		public int GetAncestorIndex(TreeNode NodeToCheck, int AncestorLevel)
@@ -581,30 +243,6 @@ namespace HHBuilder
 		}
 		
 		// ---------------------------------------------------------------------------------------------
-		
-		public string NodeIndexPath(TreeNode NodeToCheck)
-		{
-			if (NodeToCheck == null) 
-			{
-				return "";
-			}
-			string s1 = "";
-			string s2 = "";
-			string t1 = "";
-			string t2 = "";
-			TreeNode tempNode = NodeToCheck;
-			while (tempNode.Level > 0) {
-				s1 = String.Concat(String.Format("{0:00}", tempNode.Index), s2, s1);
-				s2 = ".";
-				t1 = String.Concat(tempNode.Text, t2, t1);
-				t2 = @"\";
-				tempNode = tempNode.Parent;
-			}
-			s1 = String.Concat(tempNode.Index.ToString().Trim(), s2, s1, "  ", tempNode.Text, t2 , t1);
-			return s1;
-		}
-		
-		// ---------------------------------------------------------------------------------------------
 
 		void MakeLinkList()
 		{
@@ -626,7 +264,7 @@ namespace HHBuilder
 				dr["ID"] = tnItem.id;
 				dr["Title"] = tnItem.title;
 				dr["Checked"] = false;
-				dr["Index"] = NodeIndexPath(tNode).Split(' ')[0];
+				dr["Index"] = HelpNode.NodeIndexPath(tNode).Split(' ')[0];
 				dsLinks.Tables[0].Rows.Add(dr);
 			}
 			
@@ -638,13 +276,15 @@ namespace HHBuilder
 		
 		
 		// ---------------------------------------------------------------------------------------------
-		
+		/// <summary>
+		/// Display the information on the appropriate tab page for the currently selected node.
+		/// </summary>
 		void DisplayNodeInfo()
 		{
 			bool bTest = false;
 			if (treeView1.SelectedNode != null)
 			{
-				toolStripStatusLabel1.Text = NodeIndexPath(treeView1.SelectedNode);
+				toolStripStatusLabel1.Text = HelpNode.NodeIndexPath(treeView1.SelectedNode);
 				if (treeView1.SelectedNode.Level > 1)
 				{
 					bTest = true;
@@ -758,7 +398,6 @@ namespace HHBuilder
 						tabControl1.SelectedTab = tabPageScreen;
 						break;
 					case (int) HelpNode.branches.textPopup:
-						// TODO: Add code to open and display popup text item tab
 						PopupTextItem tempPopupText = (PopupTextItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempPopupText.title;
 						tbPopupTextTitle.Text = tempPopupText.title;
@@ -822,7 +461,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
+		private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			int nIdx = GetBranchIndex(treeView1.SelectedNode);
 			if (nIdx < 2)
@@ -928,21 +567,21 @@ namespace HHBuilder
 
 		// ---------------------------------------------------------------------------------------------
 		
-		void InsertToolStripMenuItemClick(object sender, EventArgs e)
+		private void InsertToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			InsertNode();
 		}
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void AddChildToolStripMenuItemClick(object sender, EventArgs e)
+		private void AddChildToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			AddChildNode();
 		}
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BUpdateScreenSettingsClick(object sender, EventArgs e)
+		private void BUpdateScreenSettingsClick(object sender, EventArgs e)
 		{
 			HelpItem tempItem = (HelpItem) treeView1.SelectedNode.Tag;
 			tempItem.title = hiTitle.Text.Trim();
@@ -990,7 +629,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		private void TreeView1NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
 			treeView1.SelectedNode = e.Node;
 			int nIdx = GetBranchIndex(treeView1.SelectedNode);
@@ -999,7 +638,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void MoveUpToolStripMenuItemClick(object sender, EventArgs e)
+		private void MoveUpToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			int tempIndex = treeView1.SelectedNode.Index;
 			TreeNode tempNode = treeView1.SelectedNode;
@@ -1012,7 +651,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void MoveDownToolStripMenuItemClick(object sender, EventArgs e)
+		private void MoveDownToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			int tempIndex = treeView1.SelectedNode.Index;
 			TreeNode tempNode = treeView1.SelectedNode;
@@ -1025,7 +664,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void DeleteToolStripMenuItemClick(object sender, EventArgs e)
+		private void DeleteToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			string s1 = "";
 			if (treeView1.SelectedNode.Level > 1)
@@ -1045,7 +684,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CutNodeToolStripMenuItemClick(object sender, EventArgs e)
+		private void CutNodeToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			savedNode = CopyBranch(treeView1.SelectedNode, true);
 			savedHelpItem = null;
@@ -1055,7 +694,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CopyNodeToolStripMenuItemClick(object sender, EventArgs e)
+		private void CopyNodeToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			savedNode = CopyBranch(treeView1.SelectedNode, false);
 			savedHelpItem = null;
@@ -1064,7 +703,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void PasteNodeAboveToolStripMenuItemClick(object sender, EventArgs e)
+		private void PasteNodeAboveToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			treeView1.SelectedNode.Parent.Nodes.Insert(treeView1.SelectedNode.Index, savedNode);
 			treeView1.SelectedNode = savedNode;
@@ -1076,7 +715,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void PasteNodeBelowToolStripMenuItemClick(object sender, EventArgs e)
+		private void PasteNodeBelowToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			treeView1.SelectedNode.Parent.Nodes.Insert(treeView1.SelectedNode.Index + 1, savedNode);
 			treeView1.SelectedNode = savedNode;
@@ -1088,7 +727,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void PasteAsChildNodeToolStripMenuItemClick(object sender, EventArgs e)
+		private void PasteAsChildNodeToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			treeView1.SelectedNode.Nodes.Add(savedNode);
 			savedNode.ContextMenuStrip = contextMenuStrip1;
@@ -1100,19 +739,23 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BUpdateProjectSettingsClick(object sender, EventArgs e)
+		private void BUpdateProjectSettingsClick(object sender, EventArgs e)
 		{
-			DataRow dr = ds.Tables[0].Rows[0];
-			dr["ProjectName"] = tbProjectName.Text.Trim();
-			dr["FileName"] = tbRootFileName.Text.Trim();
-			dr["Author"] = tbAuthor.Text.Trim();
-			dr["Company"] = tbCompany.Text.Trim();
-			dr["Copyright"] = tbCopyright.Text.Trim();
-			dr["Template"] = tbTemplateUsed.Text.Trim();
-			dr["Language"] = tbLanguage.Text.Trim();
-			dr["DefaultTopic"] = tbDefaultTopic.Text.Trim();
-			dr["FullTextSearch"] = ( cbFullTextSearch.Checked ? "Yes" : "No" );
-			treeView1.Nodes[0].Text = tbProjectName.Text.Trim();
+			HHBProject tProject = (HHBProject) treeView1.Nodes[0].Tag;
+			
+			tProject.title = tbProjectName.Text;
+			tProject.filename = tbRootFileName.Text;
+			tProject.author = tbAuthor.Text;
+			tProject.company = tbCompany.Text;
+			tProject.copyright = tbCopyright.Text;
+			tProject.template = tbTemplateUsed.Text;
+			tProject.language = tbLanguage.Text;
+			tProject.defaultTopic = tbDefaultTopic.Text;
+			tProject.useFullTextSearch = cbFullTextSearch.Checked;
+			
+			treeView1.Nodes[0].Text = tProject.title;
+			treeView1.Nodes[0].Tag = tProject;
+			
 			DisplayNodeInfo();
 		}
 		
