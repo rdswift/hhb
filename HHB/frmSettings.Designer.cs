@@ -53,9 +53,13 @@ namespace HHBuilder
 			this.label7 = new System.Windows.Forms.Label();
 			this.tbLogFile = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.rbLogNormal = new System.Windows.Forms.RadioButton();
 			this.rbLogDebug = new System.Windows.Forms.RadioButton();
+			this.rbLogNormal = new System.Windows.Forms.RadioButton();
 			this.label1 = new System.Windows.Forms.Label();
+			this.rbLogNone = new System.Windows.Forms.RadioButton();
+			this.rbLogErrors = new System.Windows.Forms.RadioButton();
+			this.label8 = new System.Windows.Forms.Label();
+			this.tbFilesToKeep = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -114,7 +118,7 @@ namespace HHBuilder
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(16, 248);
+			this.label5.Location = new System.Drawing.Point(16, 304);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(112, 16);
 			this.label5.TabIndex = 8;
@@ -122,14 +126,14 @@ namespace HHBuilder
 			// 
 			// tbWorkingDir
 			// 
-			this.tbWorkingDir.Location = new System.Drawing.Point(128, 248);
+			this.tbWorkingDir.Location = new System.Drawing.Point(128, 304);
 			this.tbWorkingDir.Name = "tbWorkingDir";
 			this.tbWorkingDir.Size = new System.Drawing.Size(376, 20);
 			this.tbWorkingDir.TabIndex = 7;
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(16, 272);
+			this.label6.Location = new System.Drawing.Point(16, 328);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(112, 16);
 			this.label6.TabIndex = 10;
@@ -137,14 +141,14 @@ namespace HHBuilder
 			// 
 			// tbTemplatesDir
 			// 
-			this.tbTemplatesDir.Location = new System.Drawing.Point(128, 272);
+			this.tbTemplatesDir.Location = new System.Drawing.Point(128, 328);
 			this.tbTemplatesDir.Name = "tbTemplatesDir";
 			this.tbTemplatesDir.Size = new System.Drawing.Size(376, 20);
 			this.tbTemplatesDir.TabIndex = 9;
 			// 
 			// bSave
 			// 
-			this.bSave.Location = new System.Drawing.Point(432, 352);
+			this.bSave.Location = new System.Drawing.Point(432, 408);
 			this.bSave.Name = "bSave";
 			this.bSave.Size = new System.Drawing.Size(75, 23);
 			this.bSave.TabIndex = 11;
@@ -158,14 +162,14 @@ namespace HHBuilder
 			this.cbLanguage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLanguage.FormattingEnabled = true;
-			this.cbLanguage.Location = new System.Drawing.Point(128, 312);
+			this.cbLanguage.Location = new System.Drawing.Point(128, 368);
 			this.cbLanguage.Name = "cbLanguage";
 			this.cbLanguage.Size = new System.Drawing.Size(376, 21);
 			this.cbLanguage.TabIndex = 21;
 			// 
 			// label27
 			// 
-			this.label27.Location = new System.Drawing.Point(16, 312);
+			this.label27.Location = new System.Drawing.Point(16, 368);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(112, 16);
 			this.label27.TabIndex = 20;
@@ -177,7 +181,7 @@ namespace HHBuilder
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(112, 16);
 			this.label7.TabIndex = 23;
-			this.label7.Text = "Log File:";
+			this.label7.Text = "Log Directory:";
 			// 
 			// tbLogFile
 			// 
@@ -188,33 +192,35 @@ namespace HHBuilder
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.rbLogErrors);
+			this.groupBox1.Controls.Add(this.rbLogNone);
 			this.groupBox1.Controls.Add(this.rbLogDebug);
 			this.groupBox1.Controls.Add(this.rbLogNormal);
 			this.groupBox1.Location = new System.Drawing.Point(128, 168);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(376, 48);
+			this.groupBox1.Size = new System.Drawing.Size(128, 120);
 			this.groupBox1.TabIndex = 24;
 			this.groupBox1.TabStop = false;
 			// 
-			// rbLogNormal
-			// 
-			this.rbLogNormal.Location = new System.Drawing.Point(8, 16);
-			this.rbLogNormal.Name = "rbLogNormal";
-			this.rbLogNormal.Size = new System.Drawing.Size(104, 24);
-			this.rbLogNormal.TabIndex = 0;
-			this.rbLogNormal.TabStop = true;
-			this.rbLogNormal.Text = "Normal";
-			this.rbLogNormal.UseVisualStyleBackColor = true;
-			// 
 			// rbLogDebug
 			// 
-			this.rbLogDebug.Location = new System.Drawing.Point(112, 16);
+			this.rbLogDebug.Location = new System.Drawing.Point(8, 88);
 			this.rbLogDebug.Name = "rbLogDebug";
 			this.rbLogDebug.Size = new System.Drawing.Size(104, 24);
 			this.rbLogDebug.TabIndex = 1;
 			this.rbLogDebug.TabStop = true;
 			this.rbLogDebug.Text = "Debug";
 			this.rbLogDebug.UseVisualStyleBackColor = true;
+			// 
+			// rbLogNormal
+			// 
+			this.rbLogNormal.Location = new System.Drawing.Point(8, 64);
+			this.rbLogNormal.Name = "rbLogNormal";
+			this.rbLogNormal.Size = new System.Drawing.Size(104, 24);
+			this.rbLogNormal.TabIndex = 0;
+			this.rbLogNormal.TabStop = true;
+			this.rbLogNormal.Text = "Normal";
+			this.rbLogNormal.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
@@ -225,11 +231,49 @@ namespace HHBuilder
 			this.label1.Text = "Log Level:";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// rbLogNone
+			// 
+			this.rbLogNone.Location = new System.Drawing.Point(8, 16);
+			this.rbLogNone.Name = "rbLogNone";
+			this.rbLogNone.Size = new System.Drawing.Size(104, 24);
+			this.rbLogNone.TabIndex = 2;
+			this.rbLogNone.TabStop = true;
+			this.rbLogNone.Text = "None";
+			this.rbLogNone.UseVisualStyleBackColor = true;
+			// 
+			// rbLogErrors
+			// 
+			this.rbLogErrors.Location = new System.Drawing.Point(8, 40);
+			this.rbLogErrors.Name = "rbLogErrors";
+			this.rbLogErrors.Size = new System.Drawing.Size(104, 24);
+			this.rbLogErrors.TabIndex = 3;
+			this.rbLogErrors.TabStop = true;
+			this.rbLogErrors.Text = "Errors";
+			this.rbLogErrors.UseVisualStyleBackColor = true;
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(304, 184);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(152, 24);
+			this.label8.TabIndex = 26;
+			this.label8.Text = "Log Files to Keep:";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// tbFilesToKeep
+			// 
+			this.tbFilesToKeep.Location = new System.Drawing.Point(464, 184);
+			this.tbFilesToKeep.Name = "tbFilesToKeep";
+			this.tbFilesToKeep.Size = new System.Drawing.Size(40, 20);
+			this.tbFilesToKeep.TabIndex = 27;
+			// 
 			// frmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(520, 397);
+			this.ClientSize = new System.Drawing.Size(520, 449);
+			this.Controls.Add(this.tbFilesToKeep);
+			this.Controls.Add(this.label8);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.label7);
@@ -255,6 +299,10 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox tbFilesToKeep;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.RadioButton rbLogNone;
+		private System.Windows.Forms.RadioButton rbLogErrors;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.RadioButton rbLogNormal;
 		private System.Windows.Forms.RadioButton rbLogDebug;

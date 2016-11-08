@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using Ini;
 
@@ -17,22 +19,6 @@ namespace HHBuilder
 	/// </summary>
 	public static class HBSettings
 	{
-		/// <summary>
-		/// Available levels of program logging
-		/// </summary>
-		public enum LogLevel
-		{
-			/// <summary>
-			/// Logs normal information and all errors and exceptions.
-			/// </summary>
-			Normal,
-			
-			/// <summary>
-			/// Logs all messages.
-			/// </summary>
-			Debug
-		};
-		
 		#region Private Member Variables
 		private static string _workingDir = String.Empty;				// Root working directory
 		private static string _templateDir = String.Empty;				// Directory to look for templates
@@ -41,8 +27,9 @@ namespace HHBuilder
 		private static string _copyrightTemplate = String.Empty;		// Copyright template
 		private static string _language = String.Empty;
 		private static string _cfgFileName = String.Empty;
-		private static string _logFileName = String.Empty;
-		private static LogLevel _logLevel = LogLevel.Normal;
+		private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+		private static Log.LogLevel _logLevel = Log.LogLevel.Normal;
+		private static int _logsToKeep = 5;
 
 		private static string NS = typeof(MainForm).Namespace;
 		private static string FNAME = NS + ".cfg";		
@@ -181,15 +168,21 @@ namespace HHBuilder
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
-			filecontents.AppendLine("; FileName:  File to write log entries");
-			filecontents.AppendLine("; LogLevel:  Amount of detail to log (Normal|Debug)");
+			filecontents.AppendLine("; LogDir:  Directory to write the log file");
+			filecontents.AppendLine("; LogLevel:  Amount of detail to log:");
+			foreach (Log.LogLevel tLevel in Enum.GetValues(typeof(Log.LogLevel))) {
+				filecontents.AppendFormat(";                {0} = {1}\n", (int) tLevel, tLevel.ToString());
+			}
+			filecontents.AppendLine("; LogFileCount:  Number of session log files to keep");
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
-			filecontents.Append("FileName=");
-			filecontents.AppendLine(logFileName);
+			filecontents.Append("LogDir=");
+			filecontents.AppendLine(logDir);
 			filecontents.Append("LogLevel=");
-			filecontents.AppendLine(logLevel.ToString());
+			filecontents.AppendLine(((int) logLevel).ToString());
+			filecontents.Append("LogFileCount=");
+			filecontents.AppendLine(logsToKeep.ToString());
 			filecontents.AppendLine();
 			filecontents.AppendLine();
 			filecontents.AppendLine("[Directories]");
@@ -280,21 +273,40 @@ namespace HHBuilder
 		}
 		
 		/// <summary>
-		/// Path and name of the log file
+		/// Directory to store the log files
 		/// </summary>
-		public static string logFileName
+		public static string logDir
 		{
-			get{ return _logFileName.Trim(); }
-			set{ _logFileName = value.Trim(); }
+			get{ return _logPath.Trim(); }
+			set{ _logPath = value.Trim(); }
 		}
 		
 		/// <summary>
 		/// Amount of detail to write to log file
 		/// </summary>
-		public static LogLevel logLevel
+		public static Log.LogLevel logLevel
 		{
 			get{ return _logLevel; }
 			set{ _logLevel = value; }
+		}
+		
+		/// <summary>
+		/// Number of log files to keep
+		/// </summary>
+		public static int logsToKeep
+		{
+			get{ return _logsToKeep; }
+			set
+			{
+				if ( value < 0 )
+				{
+					_logsToKeep = 0;
+				}
+				else
+				{
+					_logsToKeep = value;
+				}
+			}
 		}
 		#endregion
 		
@@ -313,8 +325,8 @@ namespace HHBuilder
 			company = "";
 			copyrightTemplate = "";
 			language = "";
-			logFileName = "";
-			logLevel = LogLevel.Normal;
+			logDir = "";
+			logLevel = Log.LogLevel.Normal;
 			cfgFileName = GetFileName();
 			return !String.IsNullOrEmpty(cfgFileName);
 		}
@@ -394,17 +406,27 @@ namespace HHBuilder
 				company = IniFile.IniReadValue("Identification", "Company");
 				copyrightTemplate = IniFile.IniReadValue("Copyright", "CopyrightTemplate");
 				language = IniFile.IniReadValue("Settings", "Language");
-				logFileName = IniFile.IniReadValue("Logging", "FileName");
+				logDir = IniFile.IniReadValue("Logging", "LogDir");
 				workingDir = IniFile.IniReadValue("Directories", "Working");
 				templateDir = IniFile.IniReadValue("Directories", "Template");
-				string tempLogLevel = IniFile.IniReadValue("Logging", "LogLevel");
-				if ( tempLogLevel.ToLower().Equals("debug") )
-				{
-					logLevel = LogLevel.Debug;
-				}
-				else
-				{
-					logLevel = LogLevel.Normal;
+				logsToKeep = Convert.ToInt32("0" + IniFile.IniReadValue("Logging", "LogFileCount"));
+				int tempLogLevel = Convert.ToInt32("0" + IniFile.IniReadValue("Logging", "LogLevel"));
+				switch (tempLogLevel) {
+					case (int) Log.LogLevel.None:
+						logLevel = Log.LogLevel.None;
+						break;
+					case (int) Log.LogLevel.Errors:
+						logLevel = Log.LogLevel.Errors;
+						break;
+					case (int) Log.LogLevel.Normal:
+						logLevel = Log.LogLevel.Normal;
+						break;
+					case (int) Log.LogLevel.Debug:
+						logLevel = Log.LogLevel.Debug;
+						break;
+					default:
+						logLevel = Log.LogLevel.Normal;
+						break;
 				}
 				return true;
 			}

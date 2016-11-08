@@ -55,22 +55,30 @@ namespace HHBuilder
 			tbCopyright.Text = HBSettings.copyrightTemplate;
 			tbWorkingDir.Text = HBSettings.workingDir;
 			tbTemplatesDir.Text = HBSettings.templateDir;
-			tbLogFile.Text = HBSettings.logFileName;
+			tbLogFile.Text = HBSettings.logDir;
+			tbFilesToKeep.Text = HBSettings.logsToKeep.ToString();
 			cbLanguage.DataSource = Language.GetList();
 			cbLanguage.DisplayMember = "Title";
-			if ( HBSettings.logLevel == HBSettings.LogLevel.Normal )
-			{
-				rbLogNormal.Checked = true;
-			}
-			else if ( HBSettings.logLevel == HBSettings.LogLevel.Debug )
-			{
-				rbLogDebug.Checked = true;
-			}
-			else
-			{
-				string exString = String.Format("Unknown log level: {0}", HBSettings.logLevel.ToString());
-				ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException("logLevel", exString);
-				ErrorExit(ex);
+			switch (HBSettings.logLevel) {
+				case Log.LogLevel.None:
+					rbLogNone.Checked = true;
+					break;
+				case Log.LogLevel.Errors:
+					rbLogErrors.Checked = true;
+					break;
+				case Log.LogLevel.Normal:
+					rbLogNormal.Checked = true;
+					break;
+				case Log.LogLevel.Debug:
+					rbLogDebug.Checked = true;
+					break;
+				default:
+					string exString = String.Format("Unknown log level: {0}", HBSettings.logLevel.ToString());
+					ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException("logLevel", exString);
+					ex.Source = this.Name;
+					Log.ErrorExit(ex);
+					//throw new Exception("Invalid value for LogLevel");
+					break;
 			}
 			string defaultLanguage = HBSettings.language;
 			cbLanguage.SelectedIndex = -1;
@@ -98,26 +106,43 @@ namespace HHBuilder
 		/// </summary>
 		private void SaveSettings()
 		{
+			Log.Debug("Saving user settings.");
+			
 			HBSettings.author = tbAuthor.Text.Trim();
 			HBSettings.company = tbCompany.Text.Trim();
 			HBSettings.copyrightTemplate = tbCopyright.Text.Trim();
 			HBSettings.workingDir = tbWorkingDir.Text.Trim();
 			HBSettings.templateDir = tbTemplatesDir.Text.Trim();
-			HBSettings.logFileName = tbLogFile.Text.Trim();
+			HBSettings.logDir = tbLogFile.Text.Trim();
+			HBSettings.logsToKeep = Convert.ToInt32("0" + tbFilesToKeep.Text.Trim());
+			
+			Log.logDir = HBSettings.logDir;
+			Log.filesToKeep = HBSettings.logsToKeep;
 
-			if ( rbLogNormal.Checked )
+			if ( rbLogNone.Checked )
 			{
-				HBSettings.logLevel = HBSettings.LogLevel.Normal;
+				HBSettings.logLevel = Log.LogLevel.None;
+			}
+			else if ( rbLogErrors.Checked )
+			{
+				HBSettings.logLevel = Log.LogLevel.Errors;
+			}
+			else if ( rbLogNormal.Checked )
+			{
+				HBSettings.logLevel = Log.LogLevel.Normal;
 			}
 			else if ( rbLogDebug.Checked )
 			{
-				HBSettings.logLevel = HBSettings.LogLevel.Debug;
+				HBSettings.logLevel = Log.LogLevel.Debug;
 			}
 			else
 			{
 				ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException("logLevel", "Unknown or unspecified log level.");
-				ErrorExit(ex);
+				ex.Source = this.Name;
+				Log.ErrorExit(ex);
 			}
+			
+			Log.level = HBSettings.logLevel;
 
 			if (cbLanguage.SelectedIndex < 0)
 			{
@@ -127,8 +152,17 @@ namespace HHBuilder
 			{
 				HBSettings.language = ((Language) cbLanguage.SelectedItem).CodeText();
 			}
+			Log.Debug("- Author: " + HBSettings.author);
+			Log.Debug("- Company: " + HBSettings.company);
+			Log.Debug("- Copyright Template: " + HBSettings.copyrightTemplate);
+			Log.Debug("- Working Directory: " + HBSettings.workingDir);
+			Log.Debug("- Template Directory: " + HBSettings.templateDir);
+			Log.Debug("- Log Directory: " + HBSettings.logDir);
+			Log.Debug("- Log Level: " + HBSettings.logLevel.ToString());
+			Log.Debug("- Log Files to Keep: " + HBSettings.logsToKeep.ToString());
 			if ( HBSettings.Write() )
 			{
+				Log.Debug("Program settings saved successfully.");
 				Close();
 			}
 			else
@@ -139,29 +173,5 @@ namespace HHBuilder
 		}
 		
 		
-		// ==============================================================================
-		/// <summary>
-		/// Log fatal error and exit with message to the user
-		/// </summary>
-		/// <param name="ex">Exception to log and display</param>
-		private void ErrorExit(Exception ex)
-		{
-			if ( String.IsNullOrEmpty(ex.Source) )
-			{
-				ex.Source = this.Name;
-			}
-			Log.Exception(ex);
-			System.Text.StringBuilder errorMessage = new System.Text.StringBuilder();
-			errorMessage.Append("The program has encountered an error, and will now shut down.\n\nException: ");
-			errorMessage.AppendLine(ex.Message);
-			errorMessage.Append("Source: ");
-			errorMessage.AppendLine(ex.Source);
-			if ( !String.IsNullOrEmpty(ex.StackTrace) )
-			{
-				errorMessage.AppendLine(ex.StackTrace);
-			}
-			MessageBox.Show(errorMessage.ToString(), rmText.GetString("errorMessage000"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-			Application.Exit();
-		}
 	}
 }

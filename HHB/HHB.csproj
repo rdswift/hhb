@@ -68,11 +68,14 @@
   <ItemGroup>
     <Compile Include="clsCSS.cs" />
     <Compile Include="clsHelpItem.cs" />
+    <Compile Include="clsHelpNode.cs" />
     <Compile Include="clsHHCompile.cs" />
     <Compile Include="clsImage.cs" />
     <Compile Include="clsINI.cs" />
     <Compile Include="clsLanguage.cs" />
     <Compile Include="clsLog.cs" />
+    <Compile Include="clsPopupText.cs" />
+    <Compile Include="clsProject.cs" />
     <Compile Include="clsScript.cs" />
     <Compile Include="clsSettings.cs" />
     <Compile Include="clsTemplate.cs" />

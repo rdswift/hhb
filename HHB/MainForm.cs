@@ -41,11 +41,7 @@ namespace HHBuilder
 			//
 			InitializeComponent();
 			AssemblyName tempAssembly = Assembly.GetExecutingAssembly().GetName();
-			this.Text = String.Format("{0} v{1}.{2:00}", tempAssembly.Name, tempAssembly.Version.Major, tempAssembly.Version.Minor);
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+			this.Text = String.Format("HTML Help Builder ({0} v{1}.{2:00})", tempAssembly.Name, tempAssembly.Version.Major, tempAssembly.Version.Minor);
 		}
 		
 		// ---------------------------------------------------------------------------------------------
@@ -75,11 +71,10 @@ namespace HHBuilder
 			
 			//HBSettings.ShowAll();			// Testing only
 			
-			Log.logFile = HBSettings.logFileName;
-			if (HBSettings.logLevel == HBSettings.LogLevel.Debug)
-			{
-				Log.Debug("Program started.");
-			}
+			Log.logDir = HBSettings.logDir;
+			Log.level = HBSettings.logLevel;
+			Log.filesToKeep = HBSettings.logsToKeep;
+			Log.Debug("Program started.");
 			cbLanguage.DataSource = Language.GetList();
 			cbLanguage.DisplayMember = "Title";
 
@@ -103,6 +98,11 @@ namespace HHBuilder
 		/// </summary>
 		public void ResetForm()
 		{
+			treeView1.Nodes.Clear();
+			treeView1.Nodes.Add(HelpNode.Initialize());
+			SetTreeContextMenuStrips();
+			treeView1.ExpandAll();
+			
 			InitDataSet();
 			string defaultLanguage = HBSettings.language;
 			cbLanguage.SelectedIndex = -1;
@@ -110,145 +110,142 @@ namespace HHBuilder
 			{
 				cbLanguage.SelectedIndex = cbLanguage.FindString(defaultLanguage.Substring(7).Trim());
 			}
-			if (HBSettings.logLevel == HBSettings.LogLevel.Debug)
-			{
-				Log.Debug("Project form reset.");
-			}
-			ShowDataSet();
+			Log.Debug("Project form reset.");
+//			ShowDataSet();
 		}
 		
 		
-		// ---------------------------------------------------------------------------------------------
-		/// <summary>
-		/// Initialize the dataset
-		/// </summary>
+//		// ---------------------------------------------------------------------------------------------
+//		/// <summary>
+//		/// Initialize the dataset
+//		/// </summary>
 		public void InitDataSet()
 		{
-			ds = new DataSet();
-			ds.DataSetName = "HelpData";
-			
-			// Prepare Settings DataTable
+//			ds = new DataSet();
+//			ds.DataSetName = "HelpData";
+//			
+//			// Prepare Settings DataTable
 			DataTable dt = new DataTable();
-			dt.TableName = "Settings";
-			
+//			dt.TableName = "Settings";
+//			
 			DataColumn dc;
-			
-			dc = new DataColumn("ProjectName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Author", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Company", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Copyright", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Language", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("DefaultTopic", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FullTextSearch", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Template", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			
-			// Add Placeholder Row
-			DataRow dr = dt.NewRow();
-			dr["ProjectName"] = "Undefined Project";
-			dr["FileName"] = "Undefined";
-			dr["Author"] = HBSettings.author;
-			dr["Company"] = HBSettings.company;
-			dr["Copyright"] = HBSettings.Copyright();
-			dr["Language"] = HBSettings.language;
-			dr["DefaultTopic"] = "";
-			dr["FullTextSearch"] = "Yes";
-			dr["Template"] = "Default";
-			dt.Rows.Add(dr);
-			
-			// Add Settings Table to DataSet
-			ds.Tables.Add(dt);
-			
-			// Prepare Screens DataTable
-			dt = new DataTable();
-			dt.TableName = "Screens";
-			dc = new DataColumn("ID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("IndexPath", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("ScreenType", Type.GetType("System.String"));		// TOC or Popup
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("HasScreen", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("UseTitle", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("UseHeader", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("UseFooter", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Title", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("IndexEntries", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("LinkID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("LinkDesc", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("LinkList", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Body", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			
-			
-			// Add Screens Table to DataSet
-			ds.Tables.Add(dt);
-			
-			// Prepare CSS DataTable
-			dt = new DataTable();
-			dt.TableName = "CSS";
-			dc = new DataColumn("ID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Title", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-
-			// Add CSS Table to DataSet
-			ds.Tables.Add(dt);
-			
-			// Prepare Scripts DataTable
-			dt = new DataTable();
-			dt.TableName = "Scripts";
-			dc = new DataColumn("ID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Title", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-
-			// Add Scripts Table to DataSet
-			ds.Tables.Add(dt);
-			
-			// Prepare Images DataTable
-			dt = new DataTable();
-			dt.TableName = "Images";
-			dc = new DataColumn("ID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Title", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileName", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("FileContents", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-
-			// Add CSS Table to DataSet
-			ds.Tables.Add(dt);
-			
+//			
+//			dc = new DataColumn("ProjectName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Author", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Company", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Copyright", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Language", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("DefaultTopic", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FullTextSearch", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Template", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			
+//			// Add Placeholder Row
+//			DataRow dr = dt.NewRow();
+//			dr["ProjectName"] = "Undefined Project";
+//			dr["FileName"] = "Undefined";
+//			dr["Author"] = HBSettings.author;
+//			dr["Company"] = HBSettings.company;
+//			dr["Copyright"] = HBSettings.Copyright();
+//			dr["Language"] = HBSettings.language;
+//			dr["DefaultTopic"] = "";
+//			dr["FullTextSearch"] = "Yes";
+//			dr["Template"] = "Default";
+//			dt.Rows.Add(dr);
+//			
+//			// Add Settings Table to DataSet
+//			ds.Tables.Add(dt);
+//			
+//			// Prepare Screens DataTable
+//			dt = new DataTable();
+//			dt.TableName = "Screens";
+//			dc = new DataColumn("ID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("IndexPath", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("ScreenType", Type.GetType("System.String"));		// TOC or Popup
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("HasScreen", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("UseTitle", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("UseHeader", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("UseFooter", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Title", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("IndexEntries", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("LinkID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("LinkDesc", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("LinkList", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Body", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			
+//			
+//			// Add Screens Table to DataSet
+//			ds.Tables.Add(dt);
+//			
+//			// Prepare CSS DataTable
+//			dt = new DataTable();
+//			dt.TableName = "CSS";
+//			dc = new DataColumn("ID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Title", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//
+//			// Add CSS Table to DataSet
+//			ds.Tables.Add(dt);
+//			
+//			// Prepare Scripts DataTable
+//			dt = new DataTable();
+//			dt.TableName = "Scripts";
+//			dc = new DataColumn("ID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Title", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//
+//			// Add Scripts Table to DataSet
+//			ds.Tables.Add(dt);
+//			
+//			// Prepare Images DataTable
+//			dt = new DataTable();
+//			dt.TableName = "Images";
+//			dc = new DataColumn("ID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Title", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileName", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("FileContents", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//
+//			// Add CSS Table to DataSet
+//			ds.Tables.Add(dt);
+//			
 			
 			// Initialize Links DataSet
 			dsLinks = new DataSet();
@@ -335,221 +332,221 @@ namespace HHBuilder
 			}
 		}
 		
-		// ---------------------------------------------------------------------------------------------
+//		// ---------------------------------------------------------------------------------------------
+//		
+//		void TreeToDataset()
+//		{
+//			// Help Screens Table
+//			ds.Tables[1].Rows.Clear();
+//			foreach (TreeNode tNode in treeView1.Nodes)
+//			{
+//				RecurseTreeToDataset(tNode);
+//			}
+//			
+//			// CSS Files Table
+//			ds.Tables[2].Rows.Clear();
+//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[2].Nodes)
+//			{
+//				CSSItem tItem = (CSSItem) tNode.Tag;
+//				DataRow dr = ds.Tables[2].NewRow();
+//				dr["ID"] = tItem.id;
+//				dr["Title"] = tItem.title;
+//				dr["FileName"] = tItem.fileName;
+//				dr["FileContents"] = tItem.content;
+//				ds.Tables[2].Rows.Add(dr);
+//			}
+//			
+//			// Script Files Table
+//			ds.Tables[3].Rows.Clear();
+//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[3].Nodes)
+//			{
+//				ScriptItem tItem = (ScriptItem) tNode.Tag;
+//				DataRow dr = ds.Tables[3].NewRow();
+//				dr["ID"] = tItem.id;
+//				dr["Title"] = tItem.title;
+//				dr["FileName"] = tItem.fileName;
+//				dr["FileContents"] = tItem.content;
+//				ds.Tables[3].Rows.Add(dr);
+//			}
+//			
+//			// Image Files Table
+//			ds.Tables[4].Rows.Clear();
+//			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[4].Nodes)
+//			{
+//				ImageItem tItem = (ImageItem) tNode.Tag;
+//				DataRow dr = ds.Tables[4].NewRow();
+//				dr["ID"] = tItem.id;
+//				dr["Title"] = tItem.title;
+//				dr["FileName"] = tItem.fileName;
+//				dr["FileContents"] = tItem.content;
+//				ds.Tables[4].Rows.Add(dr);
+//			}
+//			
+//		}
+//		
+//		// ---------------------------------------------------------------------------------------------
+//		
+//		void RecurseTreeToDataset(TreeNode tNode)
+//		{
+//			int nIdx = GetBranchIndex(tNode);
+//			if ((tNode.Level > 1) && (nIdx < 2))
+//			{
+//				HelpItem tnItem = (HelpItem) tNode.Tag;
+//				DataRow dr = ds.Tables[1].NewRow();
+//				dr["ID"] = tnItem.id;
+//				dr["IndexPath"] = NodeIndexPath(tNode).Split(' ')[0];
+//				//dr["ScreenType"] = tnItem.screenType.ToString();
+//				dr["ScreenType"] = ( (nIdx < 1) ? "TOC" : "Popup" );
+//				dr["FileName"] = tnItem.fileName;
+//				dr["HasScreen"] = tnItem.hasScreen.ToString();
+//				dr["UseTitle"] = tnItem.usesTitle.ToString();
+//				dr["UseHeader"] = tnItem.usesHeader.ToString();
+//				dr["UseFooter"] = tnItem.usesFooter.ToString();
+//				dr["Title"] = tnItem.title;
+//				dr["IndexEntries"] = tnItem.indexEntries;
+//				dr["LinkID"] = tnItem.linkID.ToString();
+//				dr["LinkDesc"] = tnItem.linkDescription;
+//				dr["LinkList"] = tnItem.linkList;
+//				dr["Body"] = tnItem.body;
+//				ds.Tables[1].Rows.Add(dr);
+//			}
+//			foreach (TreeNode cNode in tNode.Nodes)
+//			{
+//				RecurseTreeToDataset(cNode);
+//			}
+//		}
 		
-		void TreeToDataset()
-		{
-			// Help Screens Table
-			ds.Tables[1].Rows.Clear();
-			foreach (TreeNode tNode in treeView1.Nodes)
-			{
-				RecurseTreeToDataset(tNode);
-			}
-			
-			// CSS Files Table
-			ds.Tables[2].Rows.Clear();
-			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[2].Nodes)
-			{
-				CSSItem tItem = (CSSItem) tNode.Tag;
-				DataRow dr = ds.Tables[2].NewRow();
-				dr["ID"] = tItem.id;
-				dr["Title"] = tItem.title;
-				dr["FileName"] = tItem.fileName;
-				dr["FileContents"] = tItem.content;
-				ds.Tables[2].Rows.Add(dr);
-			}
-			
-			// Script Files Table
-			ds.Tables[3].Rows.Clear();
-			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[3].Nodes)
-			{
-				ScriptItem tItem = (ScriptItem) tNode.Tag;
-				DataRow dr = ds.Tables[3].NewRow();
-				dr["ID"] = tItem.id;
-				dr["Title"] = tItem.title;
-				dr["FileName"] = tItem.fileName;
-				dr["FileContents"] = tItem.content;
-				ds.Tables[3].Rows.Add(dr);
-			}
-			
-			// Image Files Table
-			ds.Tables[4].Rows.Clear();
-			foreach (TreeNode tNode in treeView1.Nodes[0].Nodes[4].Nodes)
-			{
-				ImageItem tItem = (ImageItem) tNode.Tag;
-				DataRow dr = ds.Tables[4].NewRow();
-				dr["ID"] = tItem.id;
-				dr["Title"] = tItem.title;
-				dr["FileName"] = tItem.fileName;
-				dr["FileContents"] = tItem.content;
-				ds.Tables[4].Rows.Add(dr);
-			}
-			
-		}
-		
-		// ---------------------------------------------------------------------------------------------
-		
-		void RecurseTreeToDataset(TreeNode tNode)
-		{
-			int nIdx = GetBranchIndex(tNode);
-			if ((tNode.Level > 1) && (nIdx < 2))
-			{
-				HelpItem tnItem = (HelpItem) tNode.Tag;
-				DataRow dr = ds.Tables[1].NewRow();
-				dr["ID"] = tnItem.id;
-				dr["IndexPath"] = NodeIndexPath(tNode).Split(' ')[0];
-				//dr["ScreenType"] = tnItem.screenType.ToString();
-				dr["ScreenType"] = ( (nIdx < 1) ? "TOC" : "Popup" );
-				dr["FileName"] = tnItem.fileName;
-				dr["HasScreen"] = tnItem.hasScreen.ToString();
-				dr["UseTitle"] = tnItem.usesTitle.ToString();
-				dr["UseHeader"] = tnItem.usesHeader.ToString();
-				dr["UseFooter"] = tnItem.usesFooter.ToString();
-				dr["Title"] = tnItem.title;
-				dr["IndexEntries"] = tnItem.indexEntries;
-				dr["LinkID"] = tnItem.linkID.ToString();
-				dr["LinkDesc"] = tnItem.linkDescription;
-				dr["LinkList"] = tnItem.linkList;
-				dr["Body"] = tnItem.body;
-				ds.Tables[1].Rows.Add(dr);
-			}
-			foreach (TreeNode cNode in tNode.Nodes)
-			{
-				RecurseTreeToDataset(cNode);
-			}
-		}
-		
-		// ---------------------------------------------------------------------------------------------
-		
-		public void ShowDataSet()
-		{
-			string s1;		// Temporary string variable
-			
-			// General Project Information
-			DataRow dr = ds.Tables[0].Rows[0];
-			s1 = dr["ProjectName"].ToString().Trim();
-			if (s1.Length < 1)
-			{
-				s1 = "Undefined Project";
-				dr["ProjectName"] = s1;
-			}
-			treeView1.SelectedNode = treeView1.Nodes[0];
-			treeView1.Nodes[0].Text = s1;
-			
-			tbProjectName.Text = s1;
-			tbRootFileName.Text = dr["FileName"].ToString().Trim();
-			tbAuthor.Text = dr["Author"].ToString().Trim();
-			tbCompany.Text = dr["Company"].ToString().Trim();
-			tbCopyright.Text = dr["Copyright"].ToString().Trim();
-			tbTemplateUsed.Text = dr["Template"].ToString().Trim();
-			tbLanguage.Text = dr["Language"].ToString().Trim();
-			tbDefaultTopic.Text = dr["DefaultTopic"].ToString().Trim();
-			cbFullTextSearch.Checked = dr["FullTextSearch"].ToString().Trim().ToUpper().StartsWith("Y");
-			
-			// Clear all project data nodes
-			treeView1.Nodes[0].Nodes[0].Nodes.Clear();	// Table of Contents Items
-			treeView1.Nodes[0].Nodes[1].Nodes.Clear();	// Popup Help Screen Items
-			treeView1.Nodes[0].Nodes[2].Nodes.Clear();	// CSS Files (not included in the template)
-			treeView1.Nodes[0].Nodes[3].Nodes.Clear();	// Script Files (not included in the template)
-			treeView1.Nodes[0].Nodes[4].Nodes.Clear();	// IMage Files (not included in the template)
-			
-			// Sort help screen heierarchy
-			DataView dv = ds.Tables[1].DefaultView;
-			dv.Sort = "IndexPath";
-			DataTable sortedDT = dv.ToTable();
-			
-			// Help Screens (Table of Contents and Popups)
-			foreach (DataRow tDR in sortedDT.Rows)
-			{
-				// Replace all missing values with empty string
-				foreach (DataColumn tDC in sortedDT.Columns)
-				{
-					object value = tDR[tDC.ColumnName];
-					if (value == DBNull.Value)
-					{
-						tDR[tDC.ColumnName] = "";
-					}
-				}
-				HelpItem tHI = new HelpItem();
-				tHI.id = (string) tDR["ID"];
-				if ( ((string) tDR["FileName"]).ToLower().Equals("toc") )
-				{
-					tHI.screenType = HelpItem.ScreenType.TOC;
-				}
-				else
-				{
-					tHI.screenType = HelpItem.ScreenType.Popup;
-				}
-				tHI.fileName = (string) tDR["FileName"];
-				tHI.hasScreen = String.Equals(tDR["HasScreen"].ToString().Trim().ToLower(), "true");
-				tHI.usesTitle = String.Equals(tDR["UseTitle"].ToString().Trim().ToLower(), "true");
-				tHI.usesHeader = String.Equals(tDR["UseHeader"].ToString().Trim().ToLower(), "true");
-				tHI.usesFooter = String.Equals(tDR["UseFooter"].ToString().Trim().ToLower(), "true");
-				tHI.title = (string) tDR["Title"];
-				tHI.indexEntries = (string) tDR["IndexEntries"];
-				tHI.linkID = System.Convert.ToUInt32("0" + tDR["LinkID"].ToString().Trim());
-				tHI.linkDescription = (string) tDR["LinkDesc"];
-				tHI.linkList = (string) tDR["LinkList"];
-				tHI.body = (string) tDR["Body"];
-				TreeNode tTN = new TreeNode();
-				tTN = treeView1.Nodes[0];
-				string[] tArray = tDR["IndexPath"].ToString().Split('.');
-				for (int i = 1; i < tArray.Length - 1; i++)
-				{
-					int j = Convert.ToInt32(tArray[i]);
-					tTN = tTN.Nodes[j];
-				}
-				tTN = tTN.Nodes.Add(tHI.title);
-				tTN.Tag = tHI;
-				tTN.Text = tHI.title;
-				tTN.Name = tHI.id;
-				tTN.ContextMenuStrip = contextMenuStrip1;
-			}
-			
-			// CSS Files
-			foreach (DataRow tdr in ds.Tables[2].Rows)
-			{
-				CSSItem tItem = new CSSItem();
-				tItem.id = tdr["ID"].ToString().Trim();
-				tItem.title = tdr["Title"].ToString().Trim();
-				tItem.fileName = tdr["FileName"].ToString().Trim();
-				tItem.content = tdr["FileContents"].ToString().Trim();
-				TreeNode tTN = treeView1.Nodes[0].Nodes[2].Nodes.Add(tItem.title);
-				tTN.Tag = tItem;
-				tTN.ContextMenuStrip = contextMenuStrip2;
-			}
-			
-			// Script Files
-			foreach (DataRow tdr in ds.Tables[3].Rows)
-			{
-				ScriptItem tItem = new ScriptItem();
-				tItem.id = tdr["ID"].ToString().Trim();
-				tItem.title = tdr["Title"].ToString().Trim();
-				tItem.fileName = tdr["FileName"].ToString().Trim();
-				tItem.content = tdr["FileContents"].ToString().Trim();
-				TreeNode tTN = treeView1.Nodes[0].Nodes[3].Nodes.Add(tItem.title);
-				tTN.Tag = tItem;
-				tTN.ContextMenuStrip = contextMenuStrip2;
-			}
-			
-			// Image Files
-			foreach (DataRow tdr in ds.Tables[4].Rows)
-			{
-				ImageItem tItem = new ImageItem();
-				tItem.id = tdr["ID"].ToString().Trim();
-				tItem.title = tdr["Title"].ToString().Trim();
-				tItem.fileName = tdr["FileName"].ToString().Trim();
-				tItem.content = tdr["FileContents"].ToString().Trim();
-				TreeNode tTN = treeView1.Nodes[0].Nodes[4].Nodes.Add(tItem.title);
-				tTN.Tag = tItem;
-				tTN.ContextMenuStrip = contextMenuStrip2;
-			}
-
-			treeView1.SelectedNode = treeView1.Nodes[0];
-			treeView1.Refresh();
-			treeView1.ExpandAll();
-			tabPageProject.Focus();
-		}
+//		// ---------------------------------------------------------------------------------------------
+//		
+//		public void ShowDataSet()
+//		{
+//			string s1;		// Temporary string variable
+//			
+//			// General Project Information
+//			DataRow dr = ds.Tables[0].Rows[0];
+//			s1 = dr["ProjectName"].ToString().Trim();
+//			if (s1.Length < 1)
+//			{
+//				s1 = "Undefined Project";
+//				dr["ProjectName"] = s1;
+//			}
+//			treeView1.SelectedNode = treeView1.Nodes[0];
+//			treeView1.Nodes[0].Text = s1;
+//			
+//			tbProjectName.Text = s1;
+//			tbRootFileName.Text = dr["FileName"].ToString().Trim();
+//			tbAuthor.Text = dr["Author"].ToString().Trim();
+//			tbCompany.Text = dr["Company"].ToString().Trim();
+//			tbCopyright.Text = dr["Copyright"].ToString().Trim();
+//			tbTemplateUsed.Text = dr["Template"].ToString().Trim();
+//			tbLanguage.Text = dr["Language"].ToString().Trim();
+//			tbDefaultTopic.Text = dr["DefaultTopic"].ToString().Trim();
+//			cbFullTextSearch.Checked = dr["FullTextSearch"].ToString().Trim().ToUpper().StartsWith("Y");
+//			
+//			// Clear all project data nodes
+//			treeView1.Nodes[0].Nodes[0].Nodes.Clear();	// Table of Contents Items
+//			treeView1.Nodes[0].Nodes[1].Nodes.Clear();	// Popup Help Screen Items
+//			treeView1.Nodes[0].Nodes[2].Nodes.Clear();	// CSS Files (not included in the template)
+//			treeView1.Nodes[0].Nodes[3].Nodes.Clear();	// Script Files (not included in the template)
+//			treeView1.Nodes[0].Nodes[4].Nodes.Clear();	// IMage Files (not included in the template)
+//			
+//			// Sort help screen heierarchy
+//			DataView dv = ds.Tables[1].DefaultView;
+//			dv.Sort = "IndexPath";
+//			DataTable sortedDT = dv.ToTable();
+//			
+//			// Help Screens (Table of Contents and Popups)
+//			foreach (DataRow tDR in sortedDT.Rows)
+//			{
+//				// Replace all missing values with empty string
+//				foreach (DataColumn tDC in sortedDT.Columns)
+//				{
+//					object value = tDR[tDC.ColumnName];
+//					if (value == DBNull.Value)
+//					{
+//						tDR[tDC.ColumnName] = "";
+//					}
+//				}
+//				HelpItem tHI = new HelpItem();
+//				tHI.id = (string) tDR["ID"];
+//				if ( ((string) tDR["FileName"]).ToLower().Equals("toc") )
+//				{
+//					tHI.screenType = HelpItem.ScreenType.TOC;
+//				}
+//				else
+//				{
+//					tHI.screenType = HelpItem.ScreenType.Popup;
+//				}
+//				tHI.fileName = (string) tDR["FileName"];
+//				tHI.hasScreen = String.Equals(tDR["HasScreen"].ToString().Trim().ToLower(), "true");
+//				tHI.usesTitle = String.Equals(tDR["UseTitle"].ToString().Trim().ToLower(), "true");
+//				tHI.usesHeader = String.Equals(tDR["UseHeader"].ToString().Trim().ToLower(), "true");
+//				tHI.usesFooter = String.Equals(tDR["UseFooter"].ToString().Trim().ToLower(), "true");
+//				tHI.title = (string) tDR["Title"];
+//				tHI.indexEntries = (string) tDR["IndexEntries"];
+//				tHI.linkID = System.Convert.ToUInt32("0" + tDR["LinkID"].ToString().Trim());
+//				tHI.linkDescription = (string) tDR["LinkDesc"];
+//				tHI.linkList = (string) tDR["LinkList"];
+//				tHI.body = (string) tDR["Body"];
+//				TreeNode tTN = new TreeNode();
+//				tTN = treeView1.Nodes[0];
+//				string[] tArray = tDR["IndexPath"].ToString().Split('.');
+//				for (int i = 1; i < tArray.Length - 1; i++)
+//				{
+//					int j = Convert.ToInt32(tArray[i]);
+//					tTN = tTN.Nodes[j];
+//				}
+//				tTN = tTN.Nodes.Add(tHI.title);
+//				tTN.Tag = tHI;
+//				tTN.Text = tHI.title;
+//				tTN.Name = tHI.id;
+//				tTN.ContextMenuStrip = contextMenuStrip1;
+//			}
+//			
+//			// CSS Files
+//			foreach (DataRow tdr in ds.Tables[2].Rows)
+//			{
+//				CSSItem tItem = new CSSItem();
+//				tItem.id = tdr["ID"].ToString().Trim();
+//				tItem.title = tdr["Title"].ToString().Trim();
+//				tItem.fileName = tdr["FileName"].ToString().Trim();
+//				tItem.content = tdr["FileContents"].ToString().Trim();
+//				TreeNode tTN = treeView1.Nodes[0].Nodes[2].Nodes.Add(tItem.title);
+//				tTN.Tag = tItem;
+//				tTN.ContextMenuStrip = contextMenuStrip2;
+//			}
+//			
+//			// Script Files
+//			foreach (DataRow tdr in ds.Tables[3].Rows)
+//			{
+//				ScriptItem tItem = new ScriptItem();
+//				tItem.id = tdr["ID"].ToString().Trim();
+//				tItem.title = tdr["Title"].ToString().Trim();
+//				tItem.fileName = tdr["FileName"].ToString().Trim();
+//				tItem.content = tdr["FileContents"].ToString().Trim();
+//				TreeNode tTN = treeView1.Nodes[0].Nodes[3].Nodes.Add(tItem.title);
+//				tTN.Tag = tItem;
+//				tTN.ContextMenuStrip = contextMenuStrip2;
+//			}
+//			
+//			// Image Files
+//			foreach (DataRow tdr in ds.Tables[4].Rows)
+//			{
+//				ImageItem tItem = new ImageItem();
+//				tItem.id = tdr["ID"].ToString().Trim();
+//				tItem.title = tdr["Title"].ToString().Trim();
+//				tItem.fileName = tdr["FileName"].ToString().Trim();
+//				tItem.content = tdr["FileContents"].ToString().Trim();
+//				TreeNode tTN = treeView1.Nodes[0].Nodes[4].Nodes.Add(tItem.title);
+//				tTN.Tag = tItem;
+//				tTN.ContextMenuStrip = contextMenuStrip2;
+//			}
+//
+//			treeView1.SelectedNode = treeView1.Nodes[0];
+//			treeView1.Refresh();
+//			treeView1.ExpandAll();
+//			tabPageProject.Focus();
+//		}
 		
 		// ---------------------------------------------------------------------------------------------
 		
@@ -661,6 +658,10 @@ namespace HHBuilder
 			{
 				tabControl1.TabPages.Remove(tabPagePreview);
 			}
+			if (tabControl1.TabPages.Contains(tabPagePopupText) == true)
+			{
+				tabControl1.TabPages.Remove(tabPagePopupText);
+			}
 			if (tabControl1.TabPages.Contains(tabPageCSS) == true)
 			{
 				tabControl1.TabPages.Remove(tabPageCSS);
@@ -673,13 +674,30 @@ namespace HHBuilder
 			{
 				tabControl1.TabPages.Remove(tabPageImages);
 			}
+			
+			if (treeView1.SelectedNode.Level < 1)
+			{
+				HHBProject tProject = (HHBProject) treeView1.Nodes[0].Tag;
+				treeView1.Nodes[0].Text = tProject.title;
+				
+				tbProjectName.Text = tProject.title;
+				tbRootFileName.Text = tProject.filename;
+				tbAuthor.Text = tProject.author;
+				tbCompany.Text = tProject.company;
+				tbCopyright.Text = tProject.copyright;
+				tbTemplateUsed.Text = tProject.template;
+				tbLanguage.Text = tProject.language;
+				tbDefaultTopic.Text = tProject.defaultTopic;
+				cbFullTextSearch.Checked = tProject.useFullTextSearch;
+			}
+			
 			if (bTest)
 			{
 				int nIdx = GetBranchIndex(treeView1.SelectedNode);
 				switch (nIdx)
 				{
-					case 0:
-					case 1:
+					case (int) HelpNode.branches.tocEntry:
+					case (int) HelpNode.branches.htmlPopup:
 						HelpItem tempItem = (HelpItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempItem.title;
 						hiTitle.Text = tempItem.title;
@@ -739,7 +757,21 @@ namespace HHBuilder
 						}
 						tabControl1.SelectedTab = tabPageScreen;
 						break;
-					case 2:
+					case (int) HelpNode.branches.textPopup:
+						// TODO: Add code to open and display popup text item tab
+						PopupTextItem tempPopupText = (PopupTextItem) treeView1.SelectedNode.Tag;
+						treeView1.SelectedNode.Text = tempPopupText.title;
+						tbPopupTextTitle.Text = tempPopupText.title;
+						tbPopupTextID.Text = tempPopupText.id;
+						tbPopupTextLinkID.Text = tempPopupText.linkID.ToString().Trim();
+						tbPopupTextText.Text = tempPopupText.helpText;
+						if (tabControl1.TabPages.Contains(tabPagePopupText) == false)
+						{
+							tabControl1.TabPages.Add(tabPagePopupText);
+						}
+						tabControl1.SelectedTab = tabPagePopupText;
+						break;
+					case (int) HelpNode.branches.cssFile:
 						CSSItem tempCSS = (CSSItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempCSS.title;
 						tbCssTitle.Text = tempCSS.title;
@@ -751,7 +783,7 @@ namespace HHBuilder
 						}
 						tabControl1.SelectedTab = tabPageCSS;
 						break;
-					case 3:
+					case (int) HelpNode.branches.scriptFile:
 						ScriptItem tempScript = (ScriptItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempScript.title;
 						tbScriptTitle.Text = tempScript.title;
@@ -763,7 +795,7 @@ namespace HHBuilder
 						}
 						tabControl1.SelectedTab = tabPageScripts;
 						break;
-					case 4:
+					case (int) HelpNode.branches.imageFile:
 						ImageItem tempImage = (ImageItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempImage.title;
 						tbImageTitle.Text = tempImage.title;
@@ -783,6 +815,7 @@ namespace HHBuilder
 				}
 			}
 			tabControl1.Refresh();
+			SetTreeContextMenuStrips();
 			treeView1.SelectedNode.ExpandAll();
 			treeView1.Focus();
 		}
@@ -1252,8 +1285,9 @@ namespace HHBuilder
 		
 		void SaveProjectFile()
 		{
-			TreeToDataset();
-			ds.WriteXml(helpProjectFilePathAndName);
+			//TreeToDataset();
+			//ds.WriteXml(helpProjectFilePathAndName);
+			HelpNode.Save(treeView1.Nodes[0], helpProjectFilePathAndName);
 		}
 		
 		// ---------------------------------------------------------------------------------------------
@@ -1317,9 +1351,24 @@ namespace HHBuilder
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				helpProjectFilePathAndName = openFileDialog1.FileName;
-				ds.Clear();
-				ds.ReadXml(helpProjectFilePathAndName);
-				ShowDataSet();
+				//ds.Clear();
+				//ds.ReadXml(helpProjectFilePathAndName);
+				//ShowDataSet();
+				TreeNode tNode;
+				try
+				{
+					tNode = HelpNode.Load(helpProjectFilePathAndName);
+					treeView1.Nodes.Clear();
+					treeView1.Nodes.Add(tNode);
+					treeView1.ExpandAll();
+					treeView1.SelectedNode = treeView1.Nodes[0];
+					DisplayNodeInfo();
+				}
+				catch (Exception)
+				{
+					Log.ErrorBox("Problem reading the selected project file.");
+					//throw;
+				}
 			}
 		}
 		
@@ -1328,7 +1377,21 @@ namespace HHBuilder
 		void NewProject(object sender, EventArgs e)
 		{
 			InitDataSet();
-			ShowDataSet();
+//			ShowDataSet();
+			
+			TreeNode tNode;
+			try
+			{
+				tNode = HelpNode.Initialize();
+				treeView1.Nodes.Clear();
+				treeView1.Nodes.Add(tNode);
+				treeView1.ExpandAll();
+			}
+			catch (Exception)
+			{
+				Log.ErrorBox("Problem initializing the project file.");
+				//throw;
+			}
 		}
 		
 		// ---------------------------------------------------------------------------------------------
@@ -1339,17 +1402,24 @@ namespace HHBuilder
 			if (nIdx > 1)
 			{
 				TreeNode tNode = treeView1.Nodes[0].Nodes[nIdx].Nodes.Add("new file");
-				if (nIdx == 2)
-				{
-					tNode.Tag = new CSSItem();
-				}
-				if (nIdx == 3)
-				{
-					tNode.Tag = new ScriptItem();
-				}
-				if (nIdx == 4)
-				{
-					tNode.Tag = new ImageItem();
+				switch (nIdx) {
+					case (int) HelpNode.branches.textPopup:
+						tNode.Tag = new PopupTextItem();
+						break;
+					case (int) HelpNode.branches.cssFile:
+						tNode.Tag = new CSSItem();
+						break;
+					case (int) HelpNode.branches.scriptFile:
+						tNode.Tag = new ScriptItem();
+						break;
+					case (int) HelpNode.branches.imageFile:
+						tNode.Tag = new ImageItem();
+						break;
+					default:
+						ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException("Branch Type", "Unknown or unspecified project branch type.");
+						ex.Source = this.Name;
+						Log.ErrorExit(ex);
+						break;
 				}
 				treeView1.SelectedNode = tNode;
 				treeView1.SelectedNode.ContextMenuStrip = contextMenuStrip2;
@@ -1392,6 +1462,18 @@ namespace HHBuilder
 			treeView1.SelectedNode.Text = tbImageTitle.Text.Trim();
 		}
 		
+		// ---------------------------------------------------------------------------------------------
+		
+		void BUpdatePopupTextClick(object sender, EventArgs e)
+		{
+			PopupTextItem tItem = (PopupTextItem) treeView1.SelectedNode.Tag;
+			tItem.title = tbPopupTextTitle.Text.Trim();
+			tItem.linkID = Convert.ToUInt32(tbPopupTextLinkID.Text.Trim());
+			tItem.helpText = tbPopupTextText.Text;
+			treeView1.SelectedNode.Tag = tItem;
+			treeView1.SelectedNode.Text = tItem.title;
+		}
+
 		// ---------------------------------------------------------------------------------------------
 		
 		void RemoveFileToolStripMenuItemClick(object sender, EventArgs e)
@@ -1667,6 +1749,37 @@ namespace HHBuilder
 			}
 		}
 		
+		void SetTreeContextMenuStrips()
+		{
+			RecurseContextMenuStrip1(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.tocEntry]);
+			RecurseContextMenuStrip1(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.htmlPopup]);
+			RecurseContextMenuStrip2(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.textPopup]);
+			RecurseContextMenuStrip2(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.cssFile]);
+			RecurseContextMenuStrip2(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.scriptFile]);
+			RecurseContextMenuStrip2(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.imageFile]);
+		}
+		
+		void RecurseContextMenuStrip1(TreeNode tNode)
+		{
+			tNode.ContextMenuStrip = contextMenuStrip1;
+			foreach (TreeNode tempNode in tNode.Nodes) {
+				RecurseContextMenuStrip1(tempNode);
+			}
+		}
+		
+		void RecurseContextMenuStrip2(TreeNode tNode)
+		{
+			tNode.ContextMenuStrip = contextMenuStrip2;
+			foreach (TreeNode tempNode in tNode.Nodes) {
+				RecurseContextMenuStrip2(tempNode);
+			}
+		}
+		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			Log.CleanLogFiles();
+		}
+		
 		void Button1Click(object sender, EventArgs e)
 		{
 //			// Test Culture code
@@ -1707,6 +1820,33 @@ namespace HHBuilder
 //				Log.ErrorBox("Error creating template file:\n\n" + packageFile + "\n\nfrom the files found in:\n\n" + sourceDir);
 //			}
 			
+//			// Test node count and list string methods
+//			Log.ErrorBox("Treeview has " + HelpNode.NodeCount(treeView1.Nodes[0]).ToString() + " Nodes.\n\n" + HelpNode.NodeList(treeView1.Nodes[0], 2));
+			
+//			// Test treenode initialize
+//			TreeNode tempNode = HelpNode.Initialize();
+//			Log.ErrorBox("Treeview has " + HelpNode.NodeCount(tempNode).ToString() + " Nodes.\n\n" + HelpNode.NodeList(tempNode, 2));
+//			treeView1.Nodes.Clear();
+//			treeView1.Nodes.Add(tempNode);
+//			treeView1.ExpandAll();
+//			Log.ErrorBox("TreeView updated.");
+			
+//			// Test project load
+//			try
+//			{
+//				TreeNode tempNode = HelpNode.Load("ProjectFileName.hhb");
+//				Log.ErrorBox("Success loading the file.");
+//			}
+//			catch (Exception ex)
+//			{
+//				Log.ErrorBox("Error: " + ex.Message);
+//				//throw;
+//			}
+			
+			
+			
 		}
+		
+		
 	}
 }

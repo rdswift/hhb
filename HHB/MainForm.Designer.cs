@@ -39,16 +39,18 @@ namespace HHBuilder
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Table of Contents");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Popups");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("CSS Files");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Scripts");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Images");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Popup Text");
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("CSS Files");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Script Files");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Image Files");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
 									treeNode1,
 									treeNode2,
 									treeNode3,
 									treeNode4,
-									treeNode5});
+									treeNode5,
+									treeNode6});
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +116,7 @@ namespace HHBuilder
 			this.label15 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageProject = new System.Windows.Forms.TabPage();
+			this.button1 = new System.Windows.Forms.Button();
 			this.cbFullTextSearch = new System.Windows.Forms.CheckBox();
 			this.cbLanguage = new System.Windows.Forms.ComboBox();
 			this.tbDefaultTopic = new System.Windows.Forms.TextBox();
@@ -194,10 +197,19 @@ namespace HHBuilder
 			this.label7 = new System.Windows.Forms.Label();
 			this.hiTitle = new System.Windows.Forms.TextBox();
 			this.tabPagePreview = new System.Windows.Forms.TabPage();
+			this.tabPagePopupText = new System.Windows.Forms.TabPage();
+			this.bUpdatePopupText = new System.Windows.Forms.Button();
+			this.label34 = new System.Windows.Forms.Label();
+			this.tbPopupTextText = new System.Windows.Forms.TextBox();
+			this.label33 = new System.Windows.Forms.Label();
+			this.tbPopupTextLinkID = new System.Windows.Forms.TextBox();
+			this.tbPopupTextID = new System.Windows.Forms.TextBox();
+			this.label31 = new System.Windows.Forms.Label();
+			this.label32 = new System.Windows.Forms.Label();
+			this.tbPopupTextTitle = new System.Windows.Forms.TextBox();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.button1 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -219,6 +231,7 @@ namespace HHBuilder
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tabPageScreen.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).BeginInit();
+			this.tabPagePopupText.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// contextMenuStrip1
@@ -710,7 +723,7 @@ namespace HHBuilder
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 587);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 592);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(979, 22);
 			this.statusStrip1.TabIndex = 2;
@@ -735,7 +748,7 @@ namespace HHBuilder
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-			this.splitContainer1.Size = new System.Drawing.Size(979, 538);
+			this.splitContainer1.Size = new System.Drawing.Size(979, 543);
 			this.splitContainer1.SplitterDistance = 326;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -754,9 +767,10 @@ namespace HHBuilder
 			// 
 			// splitContainer2.Panel2
 			// 
+			this.splitContainer2.Panel2.AutoScroll = true;
 			this.splitContainer2.Panel2.Controls.Add(this.label15);
-			this.splitContainer2.Size = new System.Drawing.Size(326, 538);
-			this.splitContainer2.SplitterDistance = 506;
+			this.splitContainer2.Size = new System.Drawing.Size(326, 543);
+			this.splitContainer2.SplitterDistance = 512;
 			this.splitContainer2.TabIndex = 0;
 			// 
 			// treeView1
@@ -772,26 +786,29 @@ namespace HHBuilder
 			treeNode2.ContextMenuStrip = this.contextMenuStrip1;
 			treeNode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			treeNode2.Name = "Node1";
-			treeNode2.Text = "Popups";
+			treeNode2.Text = "Popup HTML Screens";
 			treeNode3.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode3.ForeColor = System.Drawing.Color.Green;
-			treeNode3.Name = "Node2";
-			treeNode3.Text = "CSS Files";
+			treeNode3.Name = "Node0";
+			treeNode3.Text = "Popup Text";
 			treeNode4.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode4.ForeColor = System.Drawing.Color.Purple;
-			treeNode4.Name = "Node3";
-			treeNode4.Text = "Scripts";
+			treeNode4.ForeColor = System.Drawing.Color.Green;
+			treeNode4.Name = "Node2";
+			treeNode4.Text = "CSS Files";
 			treeNode5.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode5.ForeColor = System.Drawing.Color.Blue;
-			treeNode5.Name = "Node5";
-			treeNode5.Text = "Images";
-			treeNode6.BackColor = System.Drawing.Color.White;
+			treeNode5.ForeColor = System.Drawing.Color.Purple;
+			treeNode5.Name = "Node3";
+			treeNode5.Text = "Script Files";
+			treeNode6.ContextMenuStrip = this.contextMenuStrip2;
 			treeNode6.ForeColor = System.Drawing.Color.Blue;
-			treeNode6.Name = "Node0";
-			treeNode6.Text = "New Project";
+			treeNode6.Name = "Node5";
+			treeNode6.Text = "Image Files";
+			treeNode7.BackColor = System.Drawing.Color.White;
+			treeNode7.ForeColor = System.Drawing.Color.Blue;
+			treeNode7.Name = "Node0";
+			treeNode7.Text = "New Project";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-									treeNode6});
-			this.treeView1.Size = new System.Drawing.Size(326, 506);
+									treeNode7});
+			this.treeView1.Size = new System.Drawing.Size(326, 512);
 			this.treeView1.TabIndex = 0;
 			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1ItemDrag);
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1AfterSelect);
@@ -802,11 +819,13 @@ namespace HHBuilder
 			// 
 			// label15
 			// 
+			this.label15.AutoEllipsis = true;
 			this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label15.Location = new System.Drawing.Point(0, 0);
+			this.label15.MinimumSize = new System.Drawing.Size(0, 25);
 			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(326, 28);
+			this.label15.Size = new System.Drawing.Size(326, 27);
 			this.label15.TabIndex = 1;
 			this.label15.Text = "Right click a node to add, edit or delete";
 			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -819,11 +838,12 @@ namespace HHBuilder
 			this.tabControl1.Controls.Add(this.tabPageImages);
 			this.tabControl1.Controls.Add(this.tabPageScreen);
 			this.tabControl1.Controls.Add(this.tabPagePreview);
+			this.tabControl1.Controls.Add(this.tabPagePopupText);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(649, 538);
+			this.tabControl1.Size = new System.Drawing.Size(649, 543);
 			this.tabControl1.TabIndex = 0;
 			// 
 			// tabPageProject
@@ -851,10 +871,20 @@ namespace HHBuilder
 			this.tabPageProject.Location = new System.Drawing.Point(4, 22);
 			this.tabPageProject.Name = "tabPageProject";
 			this.tabPageProject.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageProject.Size = new System.Drawing.Size(641, 512);
+			this.tabPageProject.Size = new System.Drawing.Size(641, 517);
 			this.tabPageProject.TabIndex = 0;
 			this.tabPageProject.Text = "Project Settings";
 			this.tabPageProject.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(472, 368);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 21;
+			this.button1.Text = "Test";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// cbFullTextSearch
 			// 
@@ -1021,7 +1051,7 @@ namespace HHBuilder
 			this.tabPageCSS.Location = new System.Drawing.Point(4, 22);
 			this.tabPageCSS.Name = "tabPageCSS";
 			this.tabPageCSS.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageCSS.Size = new System.Drawing.Size(641, 512);
+			this.tabPageCSS.Size = new System.Drawing.Size(641, 517);
 			this.tabPageCSS.TabIndex = 3;
 			this.tabPageCSS.Text = "Additional CSS";
 			this.tabPageCSS.UseVisualStyleBackColor = true;
@@ -1096,7 +1126,7 @@ namespace HHBuilder
 			this.tabPageScripts.Location = new System.Drawing.Point(4, 22);
 			this.tabPageScripts.Name = "tabPageScripts";
 			this.tabPageScripts.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageScripts.Size = new System.Drawing.Size(641, 512);
+			this.tabPageScripts.Size = new System.Drawing.Size(641, 517);
 			this.tabPageScripts.TabIndex = 4;
 			this.tabPageScripts.Text = "Scripts";
 			this.tabPageScripts.UseVisualStyleBackColor = true;
@@ -1177,7 +1207,7 @@ namespace HHBuilder
 			this.tabPageImages.Location = new System.Drawing.Point(4, 22);
 			this.tabPageImages.Name = "tabPageImages";
 			this.tabPageImages.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageImages.Size = new System.Drawing.Size(641, 512);
+			this.tabPageImages.Size = new System.Drawing.Size(641, 517);
 			this.tabPageImages.TabIndex = 5;
 			this.tabPageImages.Text = "Images";
 			this.tabPageImages.UseVisualStyleBackColor = true;
@@ -1336,7 +1366,7 @@ namespace HHBuilder
 			this.tabPageScreen.Location = new System.Drawing.Point(4, 22);
 			this.tabPageScreen.Name = "tabPageScreen";
 			this.tabPageScreen.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageScreen.Size = new System.Drawing.Size(641, 512);
+			this.tabPageScreen.Size = new System.Drawing.Size(641, 517);
 			this.tabPageScreen.TabIndex = 1;
 			this.tabPageScreen.Text = "Page Settings";
 			this.tabPageScreen.UseVisualStyleBackColor = true;
@@ -1592,31 +1622,117 @@ namespace HHBuilder
 			this.tabPagePreview.Location = new System.Drawing.Point(4, 22);
 			this.tabPagePreview.Name = "tabPagePreview";
 			this.tabPagePreview.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPagePreview.Size = new System.Drawing.Size(641, 512);
+			this.tabPagePreview.Size = new System.Drawing.Size(641, 517);
 			this.tabPagePreview.TabIndex = 2;
 			this.tabPagePreview.Text = "Preview";
 			this.tabPagePreview.UseVisualStyleBackColor = true;
 			// 
+			// tabPagePopupText
+			// 
+			this.tabPagePopupText.Controls.Add(this.bUpdatePopupText);
+			this.tabPagePopupText.Controls.Add(this.label34);
+			this.tabPagePopupText.Controls.Add(this.tbPopupTextText);
+			this.tabPagePopupText.Controls.Add(this.label33);
+			this.tabPagePopupText.Controls.Add(this.tbPopupTextLinkID);
+			this.tabPagePopupText.Controls.Add(this.tbPopupTextID);
+			this.tabPagePopupText.Controls.Add(this.label31);
+			this.tabPagePopupText.Controls.Add(this.label32);
+			this.tabPagePopupText.Controls.Add(this.tbPopupTextTitle);
+			this.tabPagePopupText.Location = new System.Drawing.Point(4, 22);
+			this.tabPagePopupText.Name = "tabPagePopupText";
+			this.tabPagePopupText.Size = new System.Drawing.Size(641, 517);
+			this.tabPagePopupText.TabIndex = 6;
+			this.tabPagePopupText.Text = "Popup Text";
+			this.tabPagePopupText.UseVisualStyleBackColor = true;
+			// 
+			// bUpdatePopupText
+			// 
+			this.bUpdatePopupText.Location = new System.Drawing.Point(560, 200);
+			this.bUpdatePopupText.Name = "bUpdatePopupText";
+			this.bUpdatePopupText.Size = new System.Drawing.Size(75, 23);
+			this.bUpdatePopupText.TabIndex = 29;
+			this.bUpdatePopupText.Text = "Update";
+			this.bUpdatePopupText.UseVisualStyleBackColor = true;
+			this.bUpdatePopupText.Click += new System.EventHandler(this.BUpdatePopupTextClick);
+			// 
+			// label34
+			// 
+			this.label34.Location = new System.Drawing.Point(8, 32);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(112, 16);
+			this.label34.TabIndex = 28;
+			this.label34.Text = "Help Item Text:";
+			// 
+			// tbPopupTextText
+			// 
+			this.tbPopupTextText.AcceptsReturn = true;
+			this.tbPopupTextText.Location = new System.Drawing.Point(120, 32);
+			this.tbPopupTextText.Multiline = true;
+			this.tbPopupTextText.Name = "tbPopupTextText";
+			this.tbPopupTextText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.tbPopupTextText.Size = new System.Drawing.Size(328, 184);
+			this.tbPopupTextText.TabIndex = 27;
+			// 
+			// label33
+			// 
+			this.label33.Location = new System.Drawing.Point(456, 32);
+			this.label33.Name = "label33";
+			this.label33.Size = new System.Drawing.Size(50, 16);
+			this.label33.TabIndex = 26;
+			this.label33.Text = "Link ID:";
+			this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// tbPopupTextLinkID
+			// 
+			this.tbPopupTextLinkID.Location = new System.Drawing.Point(512, 32);
+			this.tbPopupTextLinkID.Name = "tbPopupTextLinkID";
+			this.tbPopupTextLinkID.Size = new System.Drawing.Size(120, 20);
+			this.tbPopupTextLinkID.TabIndex = 25;
+			this.tbPopupTextLinkID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// tbPopupTextID
+			// 
+			this.tbPopupTextID.Enabled = false;
+			this.tbPopupTextID.Location = new System.Drawing.Point(512, 8);
+			this.tbPopupTextID.Name = "tbPopupTextID";
+			this.tbPopupTextID.Size = new System.Drawing.Size(120, 20);
+			this.tbPopupTextID.TabIndex = 24;
+			this.tbPopupTextID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label31
+			// 
+			this.label31.Location = new System.Drawing.Point(480, 8);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(28, 16);
+			this.label31.TabIndex = 23;
+			this.label31.Text = "ID:";
+			this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label32
+			// 
+			this.label32.Location = new System.Drawing.Point(8, 8);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(112, 16);
+			this.label32.TabIndex = 22;
+			this.label32.Text = "Help Item Title:";
+			// 
+			// tbPopupTextTitle
+			// 
+			this.tbPopupTextTitle.Location = new System.Drawing.Point(120, 8);
+			this.tbPopupTextTitle.Name = "tbPopupTextTitle";
+			this.tbPopupTextTitle.Size = new System.Drawing.Size(328, 20);
+			this.tbPopupTextTitle.TabIndex = 21;
+			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(472, 368);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 21;
-			this.button1.Text = "Test";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(979, 609);
+			this.ClientSize = new System.Drawing.Size(979, 614);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
@@ -1624,6 +1740,7 @@ namespace HHBuilder
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.Text = "HHBuilder";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.contextMenuStrip2.ResumeLayout(false);
@@ -1654,9 +1771,21 @@ namespace HHBuilder
 			this.tabPageScreen.ResumeLayout(false);
 			this.tabPageScreen.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).EndInit();
+			this.tabPagePopupText.ResumeLayout(false);
+			this.tabPagePopupText.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox tbPopupTextTitle;
+		private System.Windows.Forms.Label label32;
+		private System.Windows.Forms.Label label31;
+		private System.Windows.Forms.TextBox tbPopupTextID;
+		private System.Windows.Forms.TextBox tbPopupTextLinkID;
+		private System.Windows.Forms.Label label33;
+		private System.Windows.Forms.TextBox tbPopupTextText;
+		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.Button bUpdatePopupText;
+		private System.Windows.Forms.TabPage tabPagePopupText;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox hiIncludeFooter;
 		private System.Windows.Forms.CheckBox hiIncludeHeader;
