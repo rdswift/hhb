@@ -128,13 +128,14 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Converts an HTML Help project tree to a dataset
+		/// Converts an HTML Help project tree to a dataset.
 		/// </summary>
-		/// <param name="topNode">Root node of the HTML Help project tree</param>
+		/// <param name="node">Node in the HTML Help project tree.</param>
 		/// <returns>The dataset representing the project tree.</returns>
-		private static DataSet TreeToDataset(TreeNode topNode)
+		private static DataSet TreeToDataset(TreeNode node)
 		{
 			DataSet ds = InitializeDataset();
+			TreeNode topNode = GetRootNode(node);
 			
 			// Settings Table
 			HHBProject proj = (HHBProject) topNode.Tag;
@@ -568,6 +569,21 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Methods
+		/// <summary>
+		/// Gets the root (level 0) ancestor of the specified node.
+		/// </summary>
+		/// <param name="node">Node to process.</param>
+		/// <returns>The level 0 ancestor node.</returns>
+		// ==============================================================================
+		public static System.Windows.Forms.TreeNode GetRootNode(System.Windows.Forms.TreeNode node)
+		{
+			System.Windows.Forms.TreeNode tNode = node;
+			while (tNode.Level > 0) {
+				tNode = tNode.Parent;
+			}
+			return tNode;
+		}
+		
 		// ==============================================================================
 		/// <summary>
 		/// Provides a list of the nodes starting at the specified node. 
@@ -749,11 +765,12 @@ namespace HHBuilder
 		/// Save the HTML Help Builder project to a file.
 		/// <para>If the file name is not specified, it will be extracted from the project settings in the root node's tag property.</para>
 		/// </summary>
-		/// <param name="topNode">The root node of the help project tree.</param>
+		/// <param name="node">Node in the help project tree.</param>
 		/// <exception cref="Exception">Project file name not specified.</exception>
 		/// <exception cref="Exception">Unable to save the project file.</exception>
-		public static void Save(TreeNode topNode)
+		public static void Save(TreeNode node)
 		{
+			TreeNode topNode = GetRootNode(node);
 			string fileName = ((HHBProject) topNode.Tag).filename;
 			Save(topNode, fileName);
 		}
@@ -762,12 +779,13 @@ namespace HHBuilder
 		/// <summary>
 		/// Save the HTML Help Builder project to a file.
 		/// </summary>
-		/// <param name="topNode">The root node of the help project tree.</param>
+		/// <param name="node">Node in the help project tree.</param>
 		/// <param name="projectFileName">Full path and name of file to save.</param>
 		/// <exception cref="Exception">Project file name not specified.</exception>
 		/// <exception cref="Exception">Unable to save the project file.</exception>
-		public static void Save(TreeNode topNode, string projectFileName)
+		public static void Save(TreeNode node, string projectFileName)
 		{
+			TreeNode topNode = GetRootNode(node);
 			if ( String.IsNullOrWhiteSpace(projectFileName) )
 			{
 				throw new Exception("Project file name not specified.");
@@ -787,6 +805,67 @@ namespace HHBuilder
 				throw new Exception(error);
 			}
 		}
+		
+		// ==============================================================================
+		public static DataSet ScreenLinks(TreeNode node)
+		{
+			DataSet ds = new DataSet();
+			ds.DataSetName = "HelpLinks";
+			DataTable dt = new DataTable();
+			dt.TableName = "Links";
+			DataColumn dc = new DataColumn("ID", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Title", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Checked", Type.GetType("System.Boolean"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Index", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
+			ds.Tables.Add(dt);
+			
+			TreeNode tNode = new TreeNode();
+//			tNode = topNode.Nodes[0];
+			tNode = GetRootNode(node);
+			RecurseTreeToLinkList(ref ds, tNode);
+			
+			return ds;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Recurses the project tree to a dataset of links.  Used by the ScreenLinks method.
+		/// </summary>
+		/// <param name="dsLinks">Dataset to update.  Passed by reference.</param>
+		/// <param name="tNode">Node to process.</param>
+		private static void RecurseTreeToLinkList(ref DataSet dsLinks, TreeNode tNode)
+		{
+			int nIdx = HelpNode.GetBranchIndex(tNode);
+//			if ((tNode.Level > 1) && ((HelpNode.GetBranchIndex == branches.tocEntry) || (HelpNode.GetBranchIndex == branches.htmlPopup)))
+			if ((tNode.Level > 1) && ((nIdx == (int) branches.tocEntry) || (nIdx == (int) branches.htmlPopup)))
+			{
+				HelpItem tnItem = (HelpItem) tNode.Tag;
+				DataRow dr = dsLinks.Tables[0].NewRow();
+				dr["ID"] = tnItem.id;
+				dr["Title"] = tnItem.title;
+				dr["Checked"] = false;
+				if (nIdx == (int) branches.tocEntry)
+				{
+					dr["Index"] = HelpNode.NodeTocIndex(tNode);
+				}
+				else
+				{
+					dr["Index"] = "Popup";
+				}
+				dsLinks.Tables[0].Rows.Add(dr);
+			}
+			
+			foreach (TreeNode cNode in tNode.Nodes)
+			{
+				RecurseTreeToLinkList(ref dsLinks, cNode);
+			}
+		}
+		
 		
 		// ==============================================================================
 		#endregion

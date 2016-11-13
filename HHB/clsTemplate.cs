@@ -23,7 +23,7 @@ namespace HHBuilder
 		#region Private Member Variables
 		private string _id;
 		private string _fileName;
-		private static string _workingDir = "";		// Should be the same value for all template objects.  Only needs to be set once.
+		//private static string _workingDir = "";		// Should be the same value for all template objects.  Only needs to be set once.
 		private string _title;
 		private string _description;
 		private string _author;
@@ -64,7 +64,6 @@ namespace HHBuilder
         {
         	id = GetID();
         	fileName = String.Empty;
-        	//workingDir = String.Empty;
         	title = String.Empty;
         	description = String.Empty;
         	author = String.Empty;
@@ -85,7 +84,7 @@ namespace HHBuilder
 		/// <returns>The path of the extracted file on success, otherwise an empty string.</returns>
 		private string UnpackTemplateFile(string fileNameToExtract)
 		{
-			string tempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fileNameToExtract);
+			string tempFile = System.IO.Path.Combine(HBSettings.templateExtractDir, fileNameToExtract);
 			if ( System.IO.File.Exists(tempFile) )
 			{
 				try
@@ -96,6 +95,21 @@ namespace HHBuilder
 				{
 					Log.Error("Error deleting " + tempFile);
 					Log.Exception(ex);
+				}
+			}
+			
+			if ( !Directory.Exists(HBSettings.templateExtractDir) )
+			{
+				Log.Debug(String.Format("Creating temporary directory {0}", HBSettings.templateExtractDir));
+				try
+				{
+					Directory.CreateDirectory(HBSettings.templateExtractDir);
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Error creating directory {0}", HBSettings.templateExtractDir));
+					Log.Exception(ex);
+					//throw;
 				}
 			}
 			
@@ -173,53 +187,36 @@ namespace HHBuilder
 		/// <summary>
 		/// Creates a working subdirectory and confirms that it can be properly accessed.
 		/// </summary>
-		/// <param name="workingDirectory">Base directory in which the specified subdirectory will be created.</param>
 		/// <param name="subdirectoryName">Working subdirectory to create.</param>
 		/// <returns>The full path to the working subdirectory created, or an empty string on error.</returns>
-		private string MakeWorkingSub(string workingDirectory, string subdirectoryName)
+		private string MakeWorkingSub(string subdirectoryName)
 		{
 			if ( String.IsNullOrWhiteSpace(subdirectoryName) )
 			{
 				return String.Empty;
 			}
 			
-			// Ensure proper working directory and update the current object's property
-			if ( String.IsNullOrWhiteSpace(workingDirectory) )
-			{
-				if ( String.IsNullOrWhiteSpace(workingDir) )
-				{
-					workingDir = Path.GetTempPath();
-				}
-			}
-			else
-			{
-				workingDir = workingDirectory;
-			}
-			
-			// Build program specific directory under the specified working directory
-			string workingSub = Path.Combine(workingDir, subdirectoryName);
-			
 			try
 			{
-				if ( Directory.Exists(workingSub) )
+				if ( Directory.Exists(subdirectoryName) )
 				{
 					// Remove the existing directory to clear out any files and subdirectories
-					Directory.Delete(workingSub, true);
+					Directory.Delete(subdirectoryName, true);
 				}
 				
 				// Create the working directory.
-				Directory.CreateDirectory(workingSub);
+				Directory.CreateDirectory(subdirectoryName);
 			}
 			catch (Exception ex)
 			{
-				string errorMessage = "Unable to access working directory: " + workingDir;
+				string errorMessage = "Unable to access working directory: " + HBSettings.workingDir;
 				Log.Error(errorMessage);
 				Log.Exception(ex);
 				Log.ErrorBox(errorMessage);
 				return String.Empty;
 			}
 			
-			return workingSub;
+			return subdirectoryName;
 		}
 		
 		// ==============================================================================
@@ -353,6 +350,34 @@ namespace HHBuilder
 			}
 			return true;
 		}
+		
+		// ==============================================================================
+		private static bool RemoveDir(string dirToRemove)
+		{
+			Log.Debug("Removing directory: " + dirToRemove);
+			if ( !Directory.Exists(dirToRemove) )
+			{
+				Log.Debug(dirToRemove + " does not exist.");
+				return true;
+			}
+			else
+			{
+				try
+				{
+					Directory.Delete(dirToRemove, true);
+				}
+				catch (Exception ex)
+				{
+					string error = "Error removing working directory: " + dirToRemove;
+					Log.Error(error);
+					Log.Exception(ex);
+					return false;
+				}
+			}
+			Log.Debug(dirToRemove + " removed successfully.");
+			return true;
+		}
+		
 		#endregion
 		
 		#region Constructors
@@ -397,15 +422,6 @@ namespace HHBuilder
 			set{ _fileName = value.Trim(); }
 		}
 			
-		/// <summary>
-		/// Full path to the working directory
-		/// </summary>
-		public string workingDir
-		{
-			get{ return _workingDir.Trim(); }
-			set{ _workingDir = value.Trim(); }
-		}
-		
 		/// <summary>
 		/// Title of the HHBuilder template
 		/// </summary>
@@ -498,15 +514,15 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Methods
-		// ==============================================================================
-		/// <summary>
-		/// Sets the working directory for all HHTemplate objects
-		/// </summary>
-		/// <param name="workingDirectory">Working directory to use.</param>
-		public static void SetWorkingDir(string workingDirectory)
-		{
-			_workingDir = workingDirectory.Trim();
-		}
+//		// ==============================================================================
+//		/// <summary>
+//		/// Sets the working directory for all HHTemplate objects
+//		/// </summary>
+//		/// <param name="workingDirectory">Working directory to use.</param>
+//		public static void SetWorkingDir(string workingDirectory)
+//		{
+//			_workingDir = workingDirectory.Trim();
+//		}
 		
 		// ==============================================================================
 		/// <summary>
@@ -548,8 +564,24 @@ namespace HHBuilder
 		/// <returns>True on success, otherwise false.</returns>
 		public bool PackTemplatePackage(string htmlDirectory)
 		{
-			return PackTemplatePackage(htmlDirectory, workingDir, this.fileName);
+			return PackTemplatePackage(htmlDirectory, this.fileName);
 		}
+
+//		// ==============================================================================
+//		/// <summary>
+//		/// Builds the HTML Help Builder template file (.hhbt)
+//		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
+//		/// workingDir property is empty, a default working directory will be used.</para>
+//		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
+//		/// </summary>
+//		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
+//		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
+//		/// <para>If the output file exists, it will be overwritten.</para>
+//		/// <returns>True on success, otherwise false.</returns>
+//		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory)
+//		{
+//			return PackTemplatePackage(htmlDirectory, workingDirectory, this.fileName);
+//		}
 
 		// ==============================================================================
 		/// <summary>
@@ -557,29 +589,12 @@ namespace HHBuilder
 		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
 		/// workingDir property is empty, a default working directory will be used.</para>
 		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
-		/// </summary>
-		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
-		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
-		/// <para>If the output file exists, it will be overwritten.</para>
-		/// <returns>True on success, otherwise false.</returns>
-		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory)
-		{
-			return PackTemplatePackage(htmlDirectory, workingDirectory, this.fileName);
-		}
-
-		// ==============================================================================
-		/// <summary>
-		/// Builds the HTML Help Builder template file (.hhbt)
-		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
-		/// workingDir property is empty, a default working directory will be used.</para>
-		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
 		/// <para>If the output file exists, it will be overwritten.</para>
 		/// </summary>
 		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
-		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
 		/// <param name="outputPathAndFileName">The full path and filename of the resulting template file.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory, string outputPathAndFileName)
+		public bool PackTemplatePackage(string htmlDirectory, string outputPathAndFileName)
 		{
 			// Confirm valid output file name
 			if ( String.IsNullOrWhiteSpace(outputPathAndFileName) )
@@ -649,7 +664,7 @@ namespace HHBuilder
 			}
 			
 			// Create the working directory for the assembly
-			string workingSub = MakeWorkingSub(workingDirectory, "HHBTemplateBuilder");
+			string workingSub = MakeWorkingSub(HBSettings.templateBuildDir);
 			if ( String.IsNullOrWhiteSpace(workingSub) )
 			{
 				return false;
@@ -706,15 +721,10 @@ namespace HHBuilder
 			}
 			
 			// Clean up temporary working files and directory
-			try
-			{
-				Directory.Delete(workingSub, true);
-			}
-			catch (Exception ex)
+			if ( !Cleanup() )
 			{
 				string error = "Problem removing the temporary files and working directory: " + workingSub;
 				Log.Error(error);
-				Log.Exception(ex);
 			}
 			
 			Log.Info("HTML Help template file created successfully: " + outputPathAndFileName);
@@ -724,49 +734,81 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Unpacks the template file to the working directory 
+		/// Removes working directory and all contents (files and subdirectories)
 		/// </summary>
 		/// <returns>True on success, otherwise false.</returns>
-		public bool UnpackTemplatePackage()
+		public static bool Cleanup()
 		{
-			return UnpackTemplatePackage(workingDir);
+			Log.Debug("Cleaning up temporary template build files and directories.");
+			bool ret = true;
+			foreach ( string tDir in new string[] { HBSettings.templateBuildDir, HBSettings.templateExtractDir } ) 
+			{
+				ret = ret & RemoveDir(tDir);
+			}
+			
+			return ret;
 		}
 		
 		// ==============================================================================
 		/// <summary>
-		/// Unpacks the template file to the working directory 
+		/// Unpacks the template file to the project build working directory.  If the directory<br />
+		/// exists, it will be deleted as required by theExtractToDirectory() method.
 		/// </summary>
-		/// <param name="workingDirectory">The directory used for assembling the help project.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public bool UnpackTemplatePackage(string workingDirectory)
+		public bool UnpackTemplatePackage()
 		{
+			return UnpackTemplatePackage(HBSettings.projectBuildDir);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Unpacks the template file to the specified output directory.  If the directory<br />
+		/// exists, it will be deleted as required by theExtractToDirectory() method.
+		/// </summary>
+		/// <param name="unpackToDir">Directory to place the unpacked template file.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public bool UnpackTemplatePackage(string unpackToDir)
+		{
+			Log.Debug(String.Format("Unpacking template {0}: {1}", this.id, this.title));
+			Log.Debug(String.Format("Unpacking to directory {0}", unpackToDir));
+			
+			string errorMessage = String.Empty;
+			
 			// Confirm template file exists
 			if ( !File.Exists(this.fileName) )
 			{
-				string errorMessage = "Unable to locate template file: " + this.fileName; 
+				errorMessage = "Unable to locate template file: " + this.fileName; 
+			}
+			
+			// Confirm output directory specified is not null
+			if ( ( String.IsNullOrWhiteSpace(errorMessage) ) && ( String.IsNullOrWhiteSpace(unpackToDir) ) )
+			{
+				errorMessage = "Output directory not specified."; 
+			}
+			
+//			// Confirm output directory exists
+//			if ( ( String.IsNullOrWhiteSpace(errorMessage) ) && ( !Directory.Exists(unpackToDir) ) )
+//			{
+//				errorMessage = String.Format("Output directory {0} does not exist.", unpackToDir);
+//			}
+			
+			if ( !String.IsNullOrWhiteSpace(errorMessage) )
+			{
 				Log.Error(errorMessage);
 				Log.ErrorBox(errorMessage);
 				return false;
 			}
 			
-			// Build program specific directory under the specified working directory
-			string workingSub = MakeWorkingSub(workingDirectory, "HHBuilderTemp");
-			
-			if ( String.IsNullOrWhiteSpace(workingSub) )
-			{
-				return false;
-			}
-			
 			// Remove working directory to ensure it is empty (required by ExtractToDirectory() method)
-			if ( Directory.Exists(workingSub) )
+			if ( Directory.Exists(unpackToDir) )
 			{
 				try 
 				{
-					Directory.Delete(workingSub, true);
+					Directory.Delete(unpackToDir, true);
 				} 
 				catch (Exception ex)
 				{
-					string errorMessage = "Unable to access working directory: " + workingDir;
+					errorMessage = "Unable to access working directory: " + unpackToDir;
 					Log.Error(errorMessage);
 					Log.Exception(ex);
 					Log.ErrorBox(errorMessage);
@@ -777,21 +819,21 @@ namespace HHBuilder
 			// Unpack the files and directories from the template file
 			try
 			{
-				ZipFile.ExtractToDirectory(this.fileName, workingSub);
+				ZipFile.ExtractToDirectory(this.fileName, unpackToDir);
 			}
 			catch (Exception ex)
 			{
-				string errorMessage = "Unable to extract template files to the working directory: " + workingSub;
+				errorMessage = "Unable to extract template files to the working directory: " + unpackToDir;
 				Log.Error(errorMessage);
 				Log.Exception(ex);
 				Log.ErrorBox(errorMessage);
 				return false;
 			}
 			
-			string templateFile = Path.Combine(workingSub, "template.html");
+			string templateFile = Path.Combine(unpackToDir, "template.html");
 			if ( !System.IO.File.Exists(templateFile) )
 			{
-				string errorMessage = "Missing template.html file in the working directory: " + workingSub;
+				errorMessage = "Missing template.html file in the working directory: " + unpackToDir;
 				Log.Error(errorMessage);
 				Log.ErrorBox(errorMessage);
 				return false;
@@ -823,6 +865,23 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
+		/// Gets the specified template.
+		/// </summary>
+		/// <param name="templateID">ID code of the template to get.</param>
+		/// <returns>The specified template if found, otherwise a new empty template.</returns>
+		public static HHBTemplate GetTemplate(string templateID)
+		{
+			foreach (HHBTemplate tTemplate in HHBTemplate.AvailableTemplates()) {
+				if (tTemplate.id == templateID)
+				{
+					return tTemplate;
+				}
+			}
+			return new HHBTemplate();
+		}
+		
+		// ==============================================================================
+		/// <summary>
 		/// Get list of all available templates<br />
 		/// Note that templates located in the program directory are included automatically.
 		/// </summary>
@@ -831,57 +890,51 @@ namespace HHBuilder
 		{
 			if ( _templateList.Count < 1 )
 			{
-				ReadAvailableTemplates(String.Empty);
+				ReadAvailableTemplates();
 			}
 			return _templateList;
 		}
 		
-		// ==============================================================================
-		/// <summary>
-		/// Get list of all available templates from the specified directory<br />
-		/// Note that templates located in the program directory are included automatically.
-		/// </summary>
-		/// <param name="templateDirectory">Template storage directory</param>
-		/// <returns>Array of available templates as HHBTemplate objects</returns>
-		public static System.Collections.Generic.IList<HHBTemplate> AvailableTemplates(string templateDirectory)
-		{
-			ReadAvailableTemplates(templateDirectory);
-			return _templateList;
-		}
+//		// ==============================================================================
+//		/// <summary>
+//		/// Get list of all available templates from the specified directory<br />
+//		/// Note that templates located in the program directory are included automatically.
+//		/// </summary>
+//		/// <param name="templateDirectory">Template storage directory</param>
+//		/// <returns>Array of available templates as HHBTemplate objects</returns>
+//		public static System.Collections.Generic.IList<HHBTemplate> AvailableTemplates(string templateDirectory)
+//		{
+//			ReadAvailableTemplates(templateDirectory);
+//			return _templateList;
+//		}
 		
 		// ==============================================================================
 		/// <summary>
-		/// Get list of all available templates from the specified directory<br />
-		/// and stores them in a static variable for delivery via the AvailableTemplates() method.<br />
+		/// Get list of all available templates from the templates directory specified in the program<br />
+		/// settings and stores them in a static variable for delivery via the AvailableTemplates() method.<br />
 		/// Note that templates located in the program directory are included automatically.
 		/// </summary>
-		/// <param name="templateDirectory">Template storage directory</param>
-		public static void ReadAvailableTemplates(string templateDirectory)
+		public static void ReadAvailableTemplates()
 		{
+			Log.Debug("Getting list of available templates found.");
 			System.Collections.Generic.IList<HHBTemplate> ret = new System.Collections.Generic.List<HHBTemplate>();
-			string searchDir = System.Windows.Forms.Application.StartupPath;
-			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(searchDir);
-            foreach (System.IO.FileInfo templateFile in directorySelected.GetFiles("*.hhbt"))
-            {
-            	HHBTemplate tempTemplate = new HHBTemplate(templateFile.FullName);
-            	if ( !String.IsNullOrEmpty(tempTemplate.title) )
-            	{
-            		ret.Add(tempTemplate);
-            	}
-            }
-            if ( (!String.IsNullOrEmpty(templateDirectory)) && (System.IO.Directory.Exists(templateDirectory)) )
-            {
-            	directorySelected = new System.IO.DirectoryInfo(templateDirectory);
-            	foreach (System.IO.FileInfo templateFile in directorySelected.GetFiles("*.hhbt"))
-            	{
-            		HHBTemplate tempTemplate = new HHBTemplate(templateFile.FullName);
-            		if ( !String.IsNullOrEmpty(tempTemplate.title) )
-            		{
-            			ret.Add(tempTemplate);
-            		}
-            	}
-            }
-            _templateList = ret;
+			string[] dirsToSearch = { System.Windows.Forms.Application.StartupPath, HBSettings.templateDir };
+			foreach (string searchDir in dirsToSearch) {
+				if ( (!String.IsNullOrEmpty(searchDir)) && (System.IO.Directory.Exists(searchDir)) )
+				{
+					System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(searchDir);
+					foreach (System.IO.FileInfo templateFile in directorySelected.GetFiles("*.hhbt"))
+					{
+						HHBTemplate tempTemplate = new HHBTemplate(templateFile.FullName);
+						if ( !String.IsNullOrEmpty(tempTemplate.title) )
+						{
+							ret.Add(tempTemplate);
+						}
+					}
+				}
+			}
+			
+			_templateList = ret;
 		}
 		
 		// ==============================================================================
@@ -891,6 +944,7 @@ namespace HHBuilder
 		/// <returns>The contents of the LICENSE file included with the template</returns>
 		public string License()
 		{
+			Log.Debug(String.Format("Getting the license for template {0}: {1}", this.id, this.title));
 			string tempFile = UnpackTemplateFile(@"LICENSE");
 			string licenseText = String.Empty;
 			if ( (!String.IsNullOrWhiteSpace(tempFile)) && (System.IO.File.Exists(tempFile)) )

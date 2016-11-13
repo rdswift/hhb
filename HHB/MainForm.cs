@@ -23,15 +23,12 @@ namespace HHBuilder
 	
 	public partial class MainForm : Form
 	{
-		DataSet ds = new DataSet();
-		DataSet dsLinks = new DataSet();
+//		DataSet dsLinks = new DataSet();
 		DataSet dsIndexEntries = new DataSet();
 		HelpItem savedHelpItem = null;
 		TreeNode savedNode = null;
 		string helpProjectFilePathAndName = "";
 //		public static ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
-		
-//		public HBSettings cfgSettings = new HBSettings();
 		public const int _MaxLevels = 7;
 		
 		public MainForm()
@@ -75,6 +72,10 @@ namespace HHBuilder
 			Log.level = HBSettings.logLevel;
 			Log.filesToKeep = HBSettings.logsToKeep;
 			Log.Debug("Program started.");
+			if ( !String.IsNullOrWhiteSpace(HBSettings.uiCulture) )
+			{
+				Language.culture = HBSettings.uiCulture;
+			}
 			cbLanguage.DataSource = Language.GetList();
 			cbLanguage.DisplayMember = "Title";
 
@@ -124,21 +125,21 @@ namespace HHBuilder
 			DataTable dt = new DataTable();
 			DataColumn dc;
 			
-			// Initialize Links DataSet
-			dsLinks = new DataSet();
-			dsLinks.DataSetName = "HelpLinks";
-			dt = new DataTable();
-			dt.TableName = "Links";
-			dc = new DataColumn("ID", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Title", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Checked", Type.GetType("System.Boolean"));
-			dt.Columns.Add(dc);
-			dc = new DataColumn("Index", Type.GetType("System.String"));
-			dt.Columns.Add(dc);
-			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
-			dsLinks.Tables.Add(dt);
+//			// Initialize Links DataSet
+//			dsLinks = new DataSet();
+//			dsLinks.DataSetName = "HelpLinks";
+//			dt = new DataTable();
+//			dt.TableName = "Links";
+//			dc = new DataColumn("ID", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Title", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Checked", Type.GetType("System.Boolean"));
+//			dt.Columns.Add(dc);
+//			dc = new DataColumn("Index", Type.GetType("System.String"));
+//			dt.Columns.Add(dc);
+//			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
+//			dsLinks.Tables.Add(dt);
 			
 			// Create table for index entries on help screens
 			dsIndexEntries = new DataSet();
@@ -226,54 +227,21 @@ namespace HHBuilder
 			return tempNode.Index;
 		}
 		
-		// ---------------------------------------------------------------------------------------------
-		
-		public int GetBranchIndex(TreeNode NodeToCheck)
-		{
-			if ((NodeToCheck == null) || (NodeToCheck.Level < 1))
-			{
-				return -1;
-			}
-			TreeNode tempNode = NodeToCheck;
-			while (tempNode.Level > 1)
-			{
-				tempNode = tempNode.Parent;
-			}
-			return tempNode.Index;
-		}
-		
-		// ---------------------------------------------------------------------------------------------
-
-		void MakeLinkList()
-		{
-			dsLinks.Tables[0].Rows.Clear();
-			TreeNode tNode = new TreeNode();
-			tNode = treeView1.Nodes[0].Nodes[0];
-			RecurseTreeToLinkList(tNode);
-		}
-		
-		// ---------------------------------------------------------------------------------------------
-		
-		void RecurseTreeToLinkList(TreeNode tNode)
-		{
-			//int nIdx = GetBranchIndex(tNode);
-			if (tNode.Level > 1)
-			{
-				HelpItem tnItem = (HelpItem) tNode.Tag;
-				DataRow dr = dsLinks.Tables[0].NewRow();
-				dr["ID"] = tnItem.id;
-				dr["Title"] = tnItem.title;
-				dr["Checked"] = false;
-				dr["Index"] = HelpNode.NodeIndexPath(tNode).Split(' ')[0];
-				dsLinks.Tables[0].Rows.Add(dr);
-			}
-			
-			foreach (TreeNode cNode in tNode.Nodes)
-			{
-				RecurseTreeToLinkList(cNode);
-			}
-		}
-		
+//		// ---------------------------------------------------------------------------------------------
+//		
+//		public int GetBranchIndex(TreeNode NodeToCheck)
+//		{
+//			if ((NodeToCheck == null) || (NodeToCheck.Level < 1))
+//			{
+//				return -1;
+//			}
+//			TreeNode tempNode = NodeToCheck;
+//			while (tempNode.Level > 1)
+//			{
+//				tempNode = tempNode.Parent;
+//			}
+//			return tempNode.Index;
+//		}
 		
 		// ---------------------------------------------------------------------------------------------
 		/// <summary>
@@ -284,7 +252,7 @@ namespace HHBuilder
 			bool bTest = false;
 			if (treeView1.SelectedNode != null)
 			{
-				toolStripStatusLabel1.Text = HelpNode.NodeIndexPath(treeView1.SelectedNode);
+				toolStripStatusLabel1.Text = HelpNode.NodeIndexPath(treeView1.SelectedNode, true);
 				if (treeView1.SelectedNode.Level > 1)
 				{
 					bTest = true;
@@ -333,7 +301,7 @@ namespace HHBuilder
 			
 			if (bTest)
 			{
-				int nIdx = GetBranchIndex(treeView1.SelectedNode);
+				int nIdx = HelpNode.GetBranchIndex(treeView1.SelectedNode);
 				switch (nIdx)
 				{
 					case (int) HelpNode.branches.tocEntry:
@@ -368,12 +336,11 @@ namespace HHBuilder
 						}
 						dgvIndexEntries.DataSource = dsIndexEntries.Tables[0];
 						
-						MakeLinkList();
-						
 						lvLinks.Items.Clear();
-						if (nIdx < 1)
+//						if (nIdx < 1)		// Uncomment this to disallow links on HTML Popup screens
 						{
-							foreach (DataRow dsRow in dsLinks.Tables[0].Rows)
+							DataSet ds = HelpNode.ScreenLinks(treeView1.Nodes[0]);
+							foreach (DataRow dsRow in ds.Tables[0].Rows)
 							{
 								if (dsRow["ID"].ToString() != tempItem.id)
 								{
@@ -463,7 +430,7 @@ namespace HHBuilder
 		
 		private void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			int nIdx = GetBranchIndex(treeView1.SelectedNode);
+			int nIdx = HelpNode.GetBranchIndex(treeView1.SelectedNode);
 			if (nIdx < 2)
 			{
 				FilterContextMenuStrip1(nIdx);
@@ -632,7 +599,7 @@ namespace HHBuilder
 		private void TreeView1NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
 			treeView1.SelectedNode = e.Node;
-			int nIdx = GetBranchIndex(treeView1.SelectedNode);
+			int nIdx = HelpNode.GetBranchIndex(treeView1.SelectedNode);
 			FilterContextMenuStrip1(nIdx);
 		}
 		
@@ -800,7 +767,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1ItemDrag(object sender, ItemDragEventArgs e)
+		private void TreeView1ItemDrag(object sender, ItemDragEventArgs e)
 		{
 			TreeNode draggedNode = (TreeNode) e.Item;
 			if (draggedNode.Level > 1)
@@ -811,7 +778,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1DragEnter(object sender, DragEventArgs e)
+		private void TreeView1DragEnter(object sender, DragEventArgs e)
 		{
 			if ((ModifierKeys & Keys.Control) == Keys.Control)
 			{
@@ -825,7 +792,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1DragDrop(object sender, DragEventArgs e)
+		private void TreeView1DragDrop(object sender, DragEventArgs e)
 		{
 			// Retrieve the client coordinates of the drop location.
 			Point targetPoint = treeView1.PointToClient(new Point(e.X, e.Y));
@@ -867,7 +834,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void TreeView1DragOver(object sender, DragEventArgs e)
+		private void TreeView1DragOver(object sender, DragEventArgs e)
 		{
 			// Retrieve the client coordinates of the drop location.
 			Point targetPoint = treeView1.PointToClient(new Point(e.X, e.Y));
@@ -926,7 +893,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void SaveProjectFile()
+		private void SaveProjectFile()
 		{
 			//TreeToDataset();
 			//ds.WriteXml(helpProjectFilePathAndName);
@@ -935,7 +902,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		bool GetProjectSaveAsName()
+		private bool GetProjectSaveAsName()
 		{
 			saveFileDialog1.Filter = "Help Project files (*.hhb)|*.hhb|All files (*.*)|*.*";
 			saveFileDialog1.FilterIndex = 1;
@@ -958,7 +925,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void SaveProject(object sender, EventArgs e)
+		private void SaveProject(object sender, EventArgs e)
 		{
 			if (helpProjectFilePathAndName.Trim().Length < 1)
 			{
@@ -972,7 +939,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+		private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			if (GetProjectSaveAsName() == true)
 			{
@@ -982,7 +949,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void OpenProject(object sender, EventArgs e)
+		private void OpenProject(object sender, EventArgs e)
 		{
 			openFileDialog1.Filter = "Help Project files (*.hhb)|*.hhb|All files (*.*)|*.*";
 			openFileDialog1.FilterIndex = 1;
@@ -994,9 +961,6 @@ namespace HHBuilder
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				helpProjectFilePathAndName = openFileDialog1.FileName;
-				//ds.Clear();
-				//ds.ReadXml(helpProjectFilePathAndName);
-				//ShowDataSet();
 				TreeNode tNode;
 				try
 				{
@@ -1017,10 +981,9 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void NewProject(object sender, EventArgs e)
+		private void NewProject(object sender, EventArgs e)
 		{
 			InitDataSet();
-//			ShowDataSet();
 			
 			TreeNode tNode;
 			try
@@ -1039,9 +1002,9 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void AddFileToolStripMenuItemClick(object sender, EventArgs e)
+		private void AddFileToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			int nIdx = GetBranchIndex(treeView1.SelectedNode);
+			int nIdx = HelpNode.GetBranchIndex(treeView1.SelectedNode);
 			if (nIdx > 1)
 			{
 				TreeNode tNode = treeView1.Nodes[0].Nodes[nIdx].Nodes.Add("new file");
@@ -1071,7 +1034,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BCssSaveClick(object sender, EventArgs e)
+		private void BCssSaveClick(object sender, EventArgs e)
 		{
 			CSSItem tItem = (CSSItem) treeView1.SelectedNode.Tag;
 			tItem.fileName = tbCssFilename.Text.Trim();
@@ -1083,7 +1046,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BScriptSaveClick(object sender, EventArgs e)
+		private void BScriptSaveClick(object sender, EventArgs e)
 		{
 			ScriptItem tItem = (ScriptItem) treeView1.SelectedNode.Tag;
 			tItem.fileName = tbScriptFilename.Text.Trim();
@@ -1095,7 +1058,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BImageSaveClick(object sender, EventArgs e)
+		private void BImageSaveClick(object sender, EventArgs e)
 		{
 			ImageItem tItem = (ImageItem) treeView1.SelectedNode.Tag;
 			tItem.fileName = tbImageFilename.Text.Trim();
@@ -1107,7 +1070,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void BUpdatePopupTextClick(object sender, EventArgs e)
+		private void BUpdatePopupTextClick(object sender, EventArgs e)
 		{
 			PopupTextItem tItem = (PopupTextItem) treeView1.SelectedNode.Tag;
 			tItem.title = tbPopupTextTitle.Text.Trim();
@@ -1119,7 +1082,7 @@ namespace HHBuilder
 
 		// ---------------------------------------------------------------------------------------------
 		
-		void RemoveFileToolStripMenuItemClick(object sender, EventArgs e)
+		private void RemoveFileToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			if (treeView1.SelectedNode.Level > 1)
 			{
@@ -1134,7 +1097,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void ExitToolStripMenuItemClick(object sender, EventArgs e)
+		private void ExitToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			CleanTempFiles();
 			Application.Exit();
@@ -1142,7 +1105,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CleanTempFiles()
+		private void CleanTempFiles()
 		{
 			// Add code to remove all temporary files and directories.
 			// This should also be called when exiting via the close button in the header.
@@ -1150,14 +1113,14 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void ShowLinks()
+		private void ShowLinks()
 		{
 			
 		}
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void MakeTempDirs()
+		private void MakeTempDirs()
 		{
 			string TempRoot = System.IO.Path.GetTempPath() + "HHB";
 			MessageBox.Show(TempRoot);
@@ -1165,7 +1128,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CleanTempDirs()
+		private void CleanTempDirs()
 		{
 			
 		}
@@ -1188,7 +1151,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void OptionsToolStripMenuItemClick(object sender, EventArgs e)
+		private void OptionsToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			Form frm = new frmSettings();
 			frm.ShowDialog();
@@ -1196,7 +1159,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CbLanguageSelectedIndexChanged(object sender, EventArgs e)
+		private void CbLanguageSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (cbLanguage.SelectedIndex < 0)
 			{
@@ -1226,7 +1189,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CutButton(object sender, EventArgs e)
+		private void CutButton(object sender, EventArgs e)
 		{
 			Control tControl = FindFocusedControl(this);
 			if (tControl.GetType() == typeof(TextBox))
@@ -1238,7 +1201,7 @@ namespace HHBuilder
 			{
 				TreeView tTV = (TreeView) tControl;
 				TreeNode tNode = tTV.SelectedNode;
-				if ((GetBranchIndex(tNode) < 2) && (tNode.Level > 1))
+				if ((HelpNode.GetBranchIndex(tNode) < 2) && (tNode.Level > 1))
 				{
 					savedNode = CopyBranch(tNode, true);
 					savedHelpItem = null;
@@ -1250,7 +1213,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void CopyButton(object sender, EventArgs e)
+		private void CopyButton(object sender, EventArgs e)
 		{
 			Control tControl = FindFocusedControl(this);
 			if (tControl.GetType() == typeof(TextBox))
@@ -1261,7 +1224,7 @@ namespace HHBuilder
 			{
 				TreeView tTV = (TreeView) tControl;
 				TreeNode tNode = tTV.SelectedNode;
-				if ((GetBranchIndex(tNode) < 2) && (tNode.Level > 1))
+				if ((HelpNode.GetBranchIndex(tNode) < 2) && (tNode.Level > 1))
 				{
 					savedNode = CopyBranch(tNode, false);
 					savedHelpItem = null;
@@ -1272,7 +1235,7 @@ namespace HHBuilder
 
 		// ---------------------------------------------------------------------------------------------
 		
-		void PasteButton(object sender, EventArgs e)
+		private void PasteButton(object sender, EventArgs e)
 		{
 			Control tControl = FindFocusedControl(this);
 			if (tControl.GetType() == typeof(TextBox))
@@ -1283,7 +1246,7 @@ namespace HHBuilder
 			{
 				TreeView tTV = (TreeView) tControl;
 				TreeNode tNode = tTV.SelectedNode;
-				int iIdx = GetBranchIndex(tNode);
+				int iIdx = HelpNode.GetBranchIndex(tNode);
 				if ((iIdx < 2) && (tNode.Level > 0) && (savedNode != null))
 				{
 					if ((iIdx == 0) && (tNode.Level > 0))
@@ -1304,7 +1267,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void PastePopupNodes(TreeView tvTree, TreeNode tvNode)
+		private void PastePopupNodes(TreeView tvTree, TreeNode tvNode)
 		{
 			TreeNode cNode = (TreeNode) tvNode.Clone();
 			cNode.Nodes.Clear();
@@ -1319,7 +1282,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		bool ProcessProject()
+		private bool ProcessProject()
 		{
 			// TODO Prepare Image Collection
 			// TODO Prepare CSS Collection
@@ -1331,7 +1294,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void LPictureBoxDragDrop(object sender, DragEventArgs e)
+		private void LPictureBoxDragDrop(object sender, DragEventArgs e)
 		{
 			string[] theFiles = (string[]) e.Data.GetData("FileDrop", true);
 			if (theFiles.Length > 0)
@@ -1342,7 +1305,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void LoadImageFile(string ImageFileName)
+		private void LoadImageFile(string ImageFileName)
 		{
 			if (System.IO.File.Exists(ImageFileName.Trim())) {
 				tbImageFilename.Text = "Img_" + tbImageID.Text.Trim() + System.IO.Path.GetExtension(ImageFileName);
@@ -1358,7 +1321,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void LPictureBoxDragEnter(object sender, DragEventArgs e)
+		private void LPictureBoxDragEnter(object sender, DragEventArgs e)
 		{
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
@@ -1368,7 +1331,7 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		void DisplayImage()
+		private void DisplayImage()
 		{
 			if (tbImageContent.Text.Trim().Length > 0)
 			{
@@ -1392,7 +1355,7 @@ namespace HHBuilder
 			}
 		}
 		
-		void SetTreeContextMenuStrips()
+		private void SetTreeContextMenuStrips()
 		{
 			RecurseContextMenuStrip1(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.tocEntry]);
 			RecurseContextMenuStrip1(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.htmlPopup]);
@@ -1402,7 +1365,7 @@ namespace HHBuilder
 			RecurseContextMenuStrip2(treeView1.Nodes[0].Nodes[(int) HelpNode.branches.imageFile]);
 		}
 		
-		void RecurseContextMenuStrip1(TreeNode tNode)
+		private void RecurseContextMenuStrip1(TreeNode tNode)
 		{
 			tNode.ContextMenuStrip = contextMenuStrip1;
 			foreach (TreeNode tempNode in tNode.Nodes) {
@@ -1410,7 +1373,7 @@ namespace HHBuilder
 			}
 		}
 		
-		void RecurseContextMenuStrip2(TreeNode tNode)
+		private void RecurseContextMenuStrip2(TreeNode tNode)
 		{
 			tNode.ContextMenuStrip = contextMenuStrip2;
 			foreach (TreeNode tempNode in tNode.Nodes) {
@@ -1418,12 +1381,15 @@ namespace HHBuilder
 			}
 		}
 		
-		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
+			HHBTemplate.Cleanup();
+			HHCompile.Cleanup();
 			Log.CleanLogFiles();
+			Log.Debug("Exiting the program.");
 		}
 		
-		void Button1Click(object sender, EventArgs e)
+		private void ToolStripButton1Click(object sender, EventArgs e)
 		{
 //			// Test Culture code
 //			MessageBox.Show(String.Format("Current Language: {0}\nMessage: {1}\n", Language.culture, Language.GetString("errorMessage001")));
@@ -1486,10 +1452,10 @@ namespace HHBuilder
 //				//throw;
 //			}
 			
-			
+			// Test saving project items
+			TreeNode node = treeView1.Nodes[0];
+			HHCompile.MakeFiles(node);
 			
 		}
-		
-		
 	}
 }

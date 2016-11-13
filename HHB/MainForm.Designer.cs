@@ -108,6 +108,7 @@ namespace HHBuilder
 			this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -116,7 +117,6 @@ namespace HHBuilder
 			this.label15 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageProject = new System.Windows.Forms.TabPage();
-			this.button1 = new System.Windows.Forms.Button();
 			this.cbFullTextSearch = new System.Windows.Forms.CheckBox();
 			this.cbLanguage = new System.Windows.Forms.ComboBox();
 			this.tbDefaultTopic = new System.Windows.Forms.TextBox();
@@ -210,6 +210,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -623,7 +624,9 @@ namespace HHBuilder
 									this.copyToolStripButton,
 									this.pasteToolStripButton,
 									this.toolStripSeparator7,
-									this.helpToolStripButton});
+									this.helpToolStripButton,
+									this.toolStripSeparator8,
+									this.toolStripButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(979, 25);
@@ -718,6 +721,15 @@ namespace HHBuilder
 			this.helpToolStripButton.Name = "helpToolStripButton";
 			this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.helpToolStripButton.Text = "He&lp";
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(87, 22);
+			this.toolStripButton1.Text = "Debug Test";
+			this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
 			// 
 			// statusStrip1
 			// 
@@ -848,7 +860,6 @@ namespace HHBuilder
 			// 
 			// tabPageProject
 			// 
-			this.tabPageProject.Controls.Add(this.button1);
 			this.tabPageProject.Controls.Add(this.cbFullTextSearch);
 			this.tabPageProject.Controls.Add(this.cbLanguage);
 			this.tabPageProject.Controls.Add(this.tbDefaultTopic);
@@ -876,19 +887,9 @@ namespace HHBuilder
 			this.tabPageProject.Text = "Project Settings";
 			this.tabPageProject.UseVisualStyleBackColor = true;
 			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(472, 368);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 21;
-			this.button1.Text = "Test";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.Button1Click);
-			// 
 			// cbFullTextSearch
 			// 
-			this.cbFullTextSearch.Location = new System.Drawing.Point(120, 288);
+			this.cbFullTextSearch.Location = new System.Drawing.Point(120, 256);
 			this.cbFullTextSearch.Name = "cbFullTextSearch";
 			this.cbFullTextSearch.Size = new System.Drawing.Size(192, 24);
 			this.cbFullTextSearch.TabIndex = 20;
@@ -901,7 +902,7 @@ namespace HHBuilder
 			this.cbLanguage.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLanguage.FormattingEnabled = true;
-			this.cbLanguage.Location = new System.Drawing.Point(120, 192);
+			this.cbLanguage.Location = new System.Drawing.Point(120, 160);
 			this.cbLanguage.Name = "cbLanguage";
 			this.cbLanguage.Size = new System.Drawing.Size(328, 21);
 			this.cbLanguage.TabIndex = 19;
@@ -909,14 +910,14 @@ namespace HHBuilder
 			// 
 			// tbDefaultTopic
 			// 
-			this.tbDefaultTopic.Location = new System.Drawing.Point(120, 224);
+			this.tbDefaultTopic.Location = new System.Drawing.Point(120, 192);
 			this.tbDefaultTopic.Name = "tbDefaultTopic";
 			this.tbDefaultTopic.Size = new System.Drawing.Size(328, 20);
 			this.tbDefaultTopic.TabIndex = 16;
 			// 
 			// label28
 			// 
-			this.label28.Location = new System.Drawing.Point(8, 224);
+			this.label28.Location = new System.Drawing.Point(8, 192);
 			this.label28.Name = "label28";
 			this.label28.Size = new System.Drawing.Size(112, 16);
 			this.label28.TabIndex = 15;
@@ -933,7 +934,7 @@ namespace HHBuilder
 			// 
 			// label27
 			// 
-			this.label27.Location = new System.Drawing.Point(8, 192);
+			this.label27.Location = new System.Drawing.Point(8, 160);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(112, 16);
 			this.label27.TabIndex = 13;
@@ -951,35 +952,35 @@ namespace HHBuilder
 			// 
 			// tbTemplateUsed
 			// 
-			this.tbTemplateUsed.Location = new System.Drawing.Point(120, 256);
+			this.tbTemplateUsed.Location = new System.Drawing.Point(120, 224);
 			this.tbTemplateUsed.Name = "tbTemplateUsed";
 			this.tbTemplateUsed.Size = new System.Drawing.Size(328, 20);
 			this.tbTemplateUsed.TabIndex = 11;
 			// 
 			// tbCopyright
 			// 
-			this.tbCopyright.Location = new System.Drawing.Point(120, 160);
+			this.tbCopyright.Location = new System.Drawing.Point(120, 128);
 			this.tbCopyright.Name = "tbCopyright";
 			this.tbCopyright.Size = new System.Drawing.Size(328, 20);
 			this.tbCopyright.TabIndex = 10;
 			// 
 			// tbCompany
 			// 
-			this.tbCompany.Location = new System.Drawing.Point(120, 128);
+			this.tbCompany.Location = new System.Drawing.Point(120, 96);
 			this.tbCompany.Name = "tbCompany";
 			this.tbCompany.Size = new System.Drawing.Size(328, 20);
 			this.tbCompany.TabIndex = 9;
 			// 
 			// tbAuthor
 			// 
-			this.tbAuthor.Location = new System.Drawing.Point(120, 96);
+			this.tbAuthor.Location = new System.Drawing.Point(120, 64);
 			this.tbAuthor.Name = "tbAuthor";
 			this.tbAuthor.Size = new System.Drawing.Size(328, 20);
 			this.tbAuthor.TabIndex = 8;
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(8, 256);
+			this.label6.Location = new System.Drawing.Point(8, 224);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(112, 16);
 			this.label6.TabIndex = 7;
@@ -987,7 +988,7 @@ namespace HHBuilder
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(8, 160);
+			this.label5.Location = new System.Drawing.Point(8, 128);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(112, 16);
 			this.label5.TabIndex = 6;
@@ -995,7 +996,7 @@ namespace HHBuilder
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(8, 128);
+			this.label4.Location = new System.Drawing.Point(8, 96);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(112, 16);
 			this.label4.TabIndex = 5;
@@ -1003,7 +1004,7 @@ namespace HHBuilder
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(8, 96);
+			this.label3.Location = new System.Drawing.Point(8, 64);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(112, 16);
 			this.label3.TabIndex = 4;
@@ -1011,11 +1012,12 @@ namespace HHBuilder
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 64);
+			this.label2.Location = new System.Drawing.Point(8, 288);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(112, 16);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Root File Name:";
+			this.label2.Visible = false;
 			// 
 			// label1
 			// 
@@ -1027,10 +1029,11 @@ namespace HHBuilder
 			// 
 			// tbRootFileName
 			// 
-			this.tbRootFileName.Location = new System.Drawing.Point(120, 64);
+			this.tbRootFileName.Location = new System.Drawing.Point(120, 288);
 			this.tbRootFileName.Name = "tbRootFileName";
 			this.tbRootFileName.Size = new System.Drawing.Size(328, 20);
 			this.tbRootFileName.TabIndex = 1;
+			this.tbRootFileName.Visible = false;
 			// 
 			// tbProjectName
 			// 
@@ -1447,7 +1450,7 @@ namespace HHBuilder
 			// 
 			// lvLinksIndex
 			// 
-			this.lvLinksIndex.Text = "Index";
+			this.lvLinksIndex.Text = "ToC Index";
 			this.lvLinksIndex.Width = 100;
 			// 
 			// lvLinksTitle
@@ -1727,6 +1730,11 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -1776,6 +1784,8 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.TextBox tbPopupTextTitle;
 		private System.Windows.Forms.Label label32;
 		private System.Windows.Forms.Label label31;
@@ -1786,7 +1796,6 @@ namespace HHBuilder
 		private System.Windows.Forms.Label label34;
 		private System.Windows.Forms.Button bUpdatePopupText;
 		private System.Windows.Forms.TabPage tabPagePopupText;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox hiIncludeFooter;
 		private System.Windows.Forms.CheckBox hiIncludeHeader;
 		private System.Windows.Forms.CheckBox hiIncludeTitle;

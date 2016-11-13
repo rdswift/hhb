@@ -30,6 +30,7 @@ namespace HHBuilder
 		private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
 		private static Log.LogLevel _logLevel = Log.LogLevel.Normal;
 		private static int _logsToKeep = 5;
+		private static string _uiCulture = String.Empty;
 
 		private static string NS = typeof(MainForm).Namespace;
 		private static string FNAME = NS + ".cfg";		
@@ -47,26 +48,16 @@ namespace HHBuilder
 		/// <returns>The full path and file name of the program configuration file.</returns>
 		private static string GetFileName()
 		{
-			string testFilePath = "";
-			string testStartupPath = Application.StartupPath;
-			if (!testStartupPath.EndsWith(@"\"))
-			{
-				testStartupPath += @"\";
-			}
-			testStartupPath += FNAME;
+			string testFilePath = String.Empty;
+			string testStartupPath = Path.Combine(Application.StartupPath, FNAME);
 			if (System.IO.File.Exists(testStartupPath))
 			{
 				testFilePath = testStartupPath;
 			}
 			
-			string testAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string testAppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), FNAME);
 			if (String.IsNullOrEmpty(testFilePath))
 			{
-				if (!testAppDataPath.EndsWith(@"\"))
-				{
-					testAppDataPath += @"\";
-				}
-				testAppDataPath += FNAME;
 				if (System.IO.File.Exists(testAppDataPath))
 				{
 					testFilePath = testAppDataPath;
@@ -84,7 +75,7 @@ namespace HHBuilder
 				}
 				catch
 				{
-					testFilePath = "";
+					testFilePath = String.Empty;
 				}
 			}
 			
@@ -97,7 +88,7 @@ namespace HHBuilder
 				}
 				catch
 				{
-					testFilePath = "";
+					testFilePath = String.Empty;
 				}
 			}
 			
@@ -157,11 +148,14 @@ namespace HHBuilder
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
 			filecontents.AppendLine("; Language:  The default language code");
+			filecontents.AppendLine("; UserInterface:  The user interface language code (blank for current Windows setting)");
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
 			filecontents.Append("Language=");
 			filecontents.AppendLine(language);
+			filecontents.Append("UserInterface=");
+			filecontents.AppendLine(uiCulture);
 			filecontents.AppendLine();
 			filecontents.AppendLine();
 			filecontents.AppendLine("[Logging]");
@@ -214,8 +208,49 @@ namespace HHBuilder
 		/// </summary>
 		public static string workingDir
 		{
-			get{ return _workingDir.Trim(); }
-			set{ _workingDir = value.Trim(); }
+			get
+			{
+				if ( String.IsNullOrWhiteSpace(_workingDir) ) {
+					return Path.Combine( System.IO.Path.GetTempPath(), typeof(MainForm).Namespace + "_working" );
+				}
+				else
+				{
+					return _workingDir.Trim();
+				}
+			}
+			set
+			{
+				if ( workingDir != value.Trim() )
+				{
+					HHBTemplate.Cleanup();
+					HHCompile.Cleanup();
+				}
+				_workingDir = value.Trim();
+			}
+		}
+		
+		/// <summary>
+		/// Working directory used for building templates
+		/// </summary>
+		public static string templateBuildDir
+		{
+			get{ return Path.Combine(workingDir, "BuildTemplate"); }
+		}
+		
+		/// <summary>
+		/// Working directory used for extracting tgemplates
+		/// </summary>
+		public static string templateExtractDir
+		{
+			get{ return Path.Combine(workingDir, "ExtractTemplate"); }
+		}
+		
+		/// <summary>
+		/// Working directory used for building projects
+		/// </summary>
+		public static string projectBuildDir
+		{
+			get{ return Path.Combine(workingDir, "BuildProject"); }
 		}
 		
 		/// <summary>
@@ -224,7 +259,11 @@ namespace HHBuilder
 		public static string templateDir
 		{
 			get{ return _templateDir.Trim(); }
-			set{ _templateDir = value.Trim(); }
+			set
+			{
+				_templateDir = value.Trim();
+				HHBTemplate.ReadAvailableTemplates();
+			}
 		}
 		
 		/// <summary>
@@ -261,6 +300,15 @@ namespace HHBuilder
 		{
 			get{ return _language.Trim(); }
 			set{ _language = value.Trim(); }
+		}
+		
+		/// <summary>
+		/// Default program user interface culture
+		/// </summary>
+		public static string uiCulture
+		{
+			get{ return _uiCulture.Trim(); }
+			set{ _uiCulture = value.Trim(); }
 		}
 		
 		/// <summary>
@@ -319,14 +367,16 @@ namespace HHBuilder
 		/// <returns>True on success, otherwise false.</returns>
 		public static bool Initialize()
 		{
-			workingDir = "";
-			templateDir = "";
-			author = "";
-			company = "";
-			copyrightTemplate = "";
-			language = "";
-			logDir = "";
+			workingDir = String.Empty;
+			templateDir = String.Empty;
+			author = String.Empty;
+			company = String.Empty;
+			copyrightTemplate = String.Empty;
+			language = String.Empty;
+			logDir = String.Empty;
 			logLevel = Log.LogLevel.Normal;
+			logsToKeep = 5;
+			uiCulture = String.Empty;
 			cfgFileName = GetFileName();
 			return !String.IsNullOrEmpty(cfgFileName);
 		}
@@ -406,6 +456,7 @@ namespace HHBuilder
 				company = IniFile.IniReadValue("Identification", "Company");
 				copyrightTemplate = IniFile.IniReadValue("Copyright", "CopyrightTemplate");
 				language = IniFile.IniReadValue("Settings", "Language");
+				uiCulture = IniFile.IniReadValue("Settings", "UserInterface");
 				logDir = IniFile.IniReadValue("Logging", "LogDir");
 				workingDir = IniFile.IniReadValue("Directories", "Working");
 				templateDir = IniFile.IniReadValue("Directories", "Template");
@@ -479,6 +530,10 @@ namespace HHBuilder
 			tempString.AppendLine(workingDir);
 			tempString.Append("Template Dir: ");
 			tempString.AppendLine(templateDir);
+			tempString.Append("Default Project Language: ");
+			tempString.AppendLine(language);
+			tempString.Append("User Interface Language: ");
+			tempString.AppendLine(uiCulture);
 			MessageBox.Show( tempString.ToString(), "Current Settings");
 		}
 		#endregion
