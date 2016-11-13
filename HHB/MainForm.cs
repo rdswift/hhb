@@ -71,7 +71,7 @@ namespace HHBuilder
 			Log.logDir = HBSettings.logDir;
 			Log.level = HBSettings.logLevel;
 			Log.filesToKeep = HBSettings.logsToKeep;
-			Log.Debug("Program started.");
+			Log.Debug("Session started.");
 			if ( !String.IsNullOrWhiteSpace(HBSettings.uiCulture) )
 			{
 				Language.culture = HBSettings.uiCulture;
@@ -1383,10 +1383,13 @@ namespace HHBuilder
 		
 		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			HHBTemplate.Cleanup();
-			HHCompile.Cleanup();
+			if (HBSettings.cleanOnExit )
+			{
+				HHBTemplate.Cleanup();
+				HHCompile.Cleanup();
+			}
 			Log.CleanLogFiles();
-			Log.Debug("Exiting the program.");
+			Log.Debug("Session ended.  Exiting the program.");
 		}
 		
 		private void ToolStripButton1Click(object sender, EventArgs e)

@@ -31,6 +31,7 @@ namespace HHBuilder
 		private static Log.LogLevel _logLevel = Log.LogLevel.Normal;
 		private static int _logsToKeep = 5;
 		private static string _uiCulture = String.Empty;
+		private static bool _cleanup = true;
 
 		private static string NS = typeof(MainForm).Namespace;
 		private static string FNAME = NS + ".cfg";		
@@ -149,6 +150,7 @@ namespace HHBuilder
 			filecontents.AppendLine();
 			filecontents.AppendLine("; Language:  The default language code");
 			filecontents.AppendLine("; UserInterface:  The user interface language code (blank for current Windows setting)");
+			filecontents.AppendLine("; CleanOnExit:  Remove temporary files and directories at program shutdown (Yes|No)");
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
@@ -156,6 +158,15 @@ namespace HHBuilder
 			filecontents.AppendLine(language);
 			filecontents.Append("UserInterface=");
 			filecontents.AppendLine(uiCulture);
+			filecontents.Append("CleanOnExit=");
+			if ( cleanOnExit )
+			{
+				filecontents.AppendLine("Yes");
+			}
+			else
+			{
+				filecontents.AppendLine("No");
+			}
 			filecontents.AppendLine();
 			filecontents.AppendLine();
 			filecontents.AppendLine("[Logging]");
@@ -356,6 +367,15 @@ namespace HHBuilder
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Whether to remove working files and directories during program shutdown.
+		/// </summary>
+		public static bool cleanOnExit
+		{
+			get{ return _cleanup; }
+			set{ _cleanup = value; }
+		}
 		#endregion
 		
 		#region Public Methods
@@ -378,6 +398,7 @@ namespace HHBuilder
 			logsToKeep = 5;
 			uiCulture = String.Empty;
 			cfgFileName = GetFileName();
+			cleanOnExit = true;
 			return !String.IsNullOrEmpty(cfgFileName);
 		}
 		
@@ -479,6 +500,8 @@ namespace HHBuilder
 						logLevel = Log.LogLevel.Normal;
 						break;
 				}
+				string tCleanup = IniFile.IniReadValue("Settings", "CleanOnExit");
+				cleanOnExit = (tCleanup.Trim() + "Y").ToUpper().StartsWith("Y");
 				return true;
 			}
 			catch (Exception ex)
@@ -534,6 +557,15 @@ namespace HHBuilder
 			tempString.AppendLine(language);
 			tempString.Append("User Interface Language: ");
 			tempString.AppendLine(uiCulture);
+			tempString.Append("Remove working files on exit: ");
+			if ( cleanOnExit )
+			{
+				tempString.AppendLine("Yes");
+			}
+			else
+			{
+				tempString.AppendLine("No");
+			}
 			MessageBox.Show( tempString.ToString(), "Current Settings");
 		}
 		#endregion

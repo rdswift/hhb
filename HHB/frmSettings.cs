@@ -86,6 +86,7 @@ namespace HHBuilder
 			{
 				cbLanguage.SelectedIndex = cbLanguage.FindString(defaultLanguage.Substring(7).Trim());
 			}
+			cbCleanOnExit.Checked = HBSettings.cleanOnExit;
 		}
 		
 		// ==============================================================================
@@ -152,10 +153,13 @@ namespace HHBuilder
 			{
 				HBSettings.language = ((Language) cbLanguage.SelectedItem).CodeText();
 			}
+			HBSettings.cleanOnExit = cbCleanOnExit.Checked;
+			
 			Log.Debug("- Author: " + HBSettings.author);
 			Log.Debug("- Company: " + HBSettings.company);
 			Log.Debug("- Copyright Template: " + HBSettings.copyrightTemplate);
 			Log.Debug("- Working Directory: " + HBSettings.workingDir);
+			Log.Debug("- Cleanup on Program Exit: " + cbCleanOnExit.Checked.ToString());
 			Log.Debug("- Template Directory: " + HBSettings.templateDir);
 			Log.Debug("- Log Directory: " + HBSettings.logDir);
 			Log.Debug("- Log Level: " + HBSettings.logLevel.ToString());
