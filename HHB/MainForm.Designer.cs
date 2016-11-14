@@ -108,6 +108,7 @@ namespace HHBuilder
 			this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -167,6 +168,7 @@ namespace HHBuilder
 			this.label23 = new System.Windows.Forms.Label();
 			this.tbImageContent = new System.Windows.Forms.TextBox();
 			this.tabPageScreen = new System.Windows.Forms.TabPage();
+			this.bPreviewScreen = new System.Windows.Forms.Button();
 			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
 			this.hiIncludeHeader = new System.Windows.Forms.CheckBox();
 			this.hiIncludeFooter = new System.Windows.Forms.CheckBox();
@@ -196,7 +198,6 @@ namespace HHBuilder
 			this.label9 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.hiTitle = new System.Windows.Forms.TextBox();
-			this.tabPagePreview = new System.Windows.Forms.TabPage();
 			this.tabPagePopupText = new System.Windows.Forms.TabPage();
 			this.bUpdatePopupText = new System.Windows.Forms.Button();
 			this.label34 = new System.Windows.Forms.Label();
@@ -210,7 +211,6 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -722,6 +722,11 @@ namespace HHBuilder
 			this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
 			this.helpToolStripButton.Text = "He&lp";
 			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+			// 
 			// toolStripButton1
 			// 
 			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
@@ -789,6 +794,7 @@ namespace HHBuilder
 			// 
 			this.treeView1.AllowDrop = true;
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView1.HideSelection = false;
 			this.treeView1.Location = new System.Drawing.Point(0, 0);
 			this.treeView1.Name = "treeView1";
 			treeNode1.ContextMenuStrip = this.contextMenuStrip1;
@@ -849,7 +855,6 @@ namespace HHBuilder
 			this.tabControl1.Controls.Add(this.tabPageScripts);
 			this.tabControl1.Controls.Add(this.tabPageImages);
 			this.tabControl1.Controls.Add(this.tabPageScreen);
-			this.tabControl1.Controls.Add(this.tabPagePreview);
 			this.tabControl1.Controls.Add(this.tabPagePopupText);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -1341,6 +1346,7 @@ namespace HHBuilder
 			// 
 			// tabPageScreen
 			// 
+			this.tabPageScreen.Controls.Add(this.bPreviewScreen);
 			this.tabPageScreen.Controls.Add(this.hiIncludeTitle);
 			this.tabPageScreen.Controls.Add(this.hiIncludeHeader);
 			this.tabPageScreen.Controls.Add(this.hiIncludeFooter);
@@ -1373,6 +1379,16 @@ namespace HHBuilder
 			this.tabPageScreen.TabIndex = 1;
 			this.tabPageScreen.Text = "Page Settings";
 			this.tabPageScreen.UseVisualStyleBackColor = true;
+			// 
+			// bPreviewScreen
+			// 
+			this.bPreviewScreen.Location = new System.Drawing.Point(472, 480);
+			this.bPreviewScreen.Name = "bPreviewScreen";
+			this.bPreviewScreen.Size = new System.Drawing.Size(75, 23);
+			this.bPreviewScreen.TabIndex = 30;
+			this.bPreviewScreen.Text = "Preview";
+			this.bPreviewScreen.UseVisualStyleBackColor = true;
+			this.bPreviewScreen.Click += new System.EventHandler(this.BPreviewScreenClick);
 			// 
 			// hiIncludeTitle
 			// 
@@ -1620,16 +1636,6 @@ namespace HHBuilder
 			this.hiTitle.Size = new System.Drawing.Size(328, 20);
 			this.hiTitle.TabIndex = 3;
 			// 
-			// tabPagePreview
-			// 
-			this.tabPagePreview.Location = new System.Drawing.Point(4, 22);
-			this.tabPagePreview.Name = "tabPagePreview";
-			this.tabPagePreview.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPagePreview.Size = new System.Drawing.Size(641, 517);
-			this.tabPagePreview.TabIndex = 2;
-			this.tabPagePreview.Text = "Preview";
-			this.tabPagePreview.UseVisualStyleBackColor = true;
-			// 
 			// tabPagePopupText
 			// 
 			this.tabPagePopupText.Controls.Add(this.bUpdatePopupText);
@@ -1730,11 +1736,6 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// toolStripSeparator8
-			// 
-			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -1784,6 +1785,7 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button bPreviewScreen;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.TextBox tbPopupTextTitle;
@@ -1892,7 +1894,6 @@ namespace HHBuilder
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.TextBox hiBody;
 		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.TabPage tabPagePreview;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.TextBox tbProjectName;
 		private System.Windows.Forms.TextBox tbRootFileName;

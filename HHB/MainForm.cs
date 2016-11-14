@@ -262,10 +262,6 @@ namespace HHBuilder
 			{
 				tabControl1.TabPages.Remove(tabPageScreen);
 			}
-			if (tabControl1.TabPages.Contains(tabPagePreview) == true)
-			{
-				tabControl1.TabPages.Remove(tabPagePreview);
-			}
 			if (tabControl1.TabPages.Contains(tabPagePopupText) == true)
 			{
 				tabControl1.TabPages.Remove(tabPagePopupText);
@@ -357,10 +353,6 @@ namespace HHBuilder
 						if (tabControl1.TabPages.Contains(tabPageScreen) == false)
 						{
 							tabControl1.TabPages.Add(tabPageScreen);
-						}
-						if (tabControl1.TabPages.Contains(tabPagePreview) == false)
-						{
-							tabControl1.TabPages.Add(tabPagePreview);
 						}
 						tabControl1.SelectedTab = tabPageScreen;
 						break;
@@ -1392,6 +1384,24 @@ namespace HHBuilder
 			Log.Debug("Session ended.  Exiting the program.");
 		}
 		
+		private void BPreviewScreenClick(object sender, EventArgs e)
+		{
+			TreeNode node = treeView1.Nodes[0];
+			HHCompile.MakeFiles(node);
+			TreeNode tNode = treeView1.SelectedNode;
+			HelpItem tHelp = (HelpItem) tNode.Tag;
+			string fileName = System.IO.Path.Combine(HBSettings.projectBuildDir, tHelp.fileName);
+			if ( System.IO.File.Exists(fileName) )
+			{
+				Form frm = new PreviewHTML(fileName);
+				frm.ShowDialog();
+			}
+			else
+			{
+				Log.ErrorBox("Unable to load the HTML file " + fileName);
+			}
+		}
+		
 		private void ToolStripButton1Click(object sender, EventArgs e)
 		{
 //			// Test Culture code
@@ -1460,5 +1470,6 @@ namespace HHBuilder
 			HHCompile.MakeFiles(node);
 			
 		}
+		
 	}
 }

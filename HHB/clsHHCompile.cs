@@ -28,20 +28,6 @@ namespace HHBuilder
 		#endregion
 
 		#region Private Properties
-		private static string cssDir
-		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "css"); }
-		}
-		
-		private static string scriptDir
-		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "scripts"); }
-		}
-		
-		private static string imageDir
-		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "images"); }
-		}
 		#endregion
 		
 		#region Private Methods
@@ -68,11 +54,13 @@ namespace HHBuilder
 			
 			string homeLink = String.Empty;
 			string homeText = String.Empty;
+			string homeNumber = String.Empty;
 			DataRow tHomeDR = _nodeDS.Tables[0].Rows.Find(_homeID);
 			if ( tHomeDR != null )
 			{
 				homeLink = tHomeDR["FileName"].ToString();
 				homeText = tHomeDR["Title"].ToString();
+				homeNumber = tHomeDR["IndexPath"].ToString().TrimStart('0');
 			}
 			
 			// Process each row in the HTML items dataset
@@ -84,6 +72,7 @@ namespace HHBuilder
 					{
 						homeLink = dr["FileName"].ToString();
 						homeText = dr["Title"].ToString();
+						homeNumber = dr["IndexPath"].ToString().TrimStart('0');
 					}
 					
 					// Create style entry to hide unwanted sections
@@ -161,6 +150,8 @@ namespace HHBuilder
 					tHTML = tHTML.Replace("{NEXTLINK}", dr["NextLink"].ToString());
 					tHTML = tHTML.Replace("{PREVTEXT}", dr["PrevText"].ToString());
 					tHTML = tHTML.Replace("{NEXTTEXT}", dr["NextText"].ToString());
+					tHTML = tHTML.Replace("{PREVNUMBER}", dr["PrevNumber"].ToString());
+					tHTML = tHTML.Replace("{NEXTNUMBER}", dr["NextNumber"].ToString());
 					tHTML = tHTML.Replace("{NUMBER}", dr["IndexPath"].ToString().TrimStart('0'));
 					//tHTML = tHTML.Replace("{}", dr[""]);					// TODO: Accommodate processing picture links.
 					//tHTML = tHTML.Replace("{}", dr[""]);
@@ -170,6 +161,7 @@ namespace HHBuilder
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					tHTML = tHTML.Replace("{HOMELINK}", homeLink);
 					tHTML = tHTML.Replace("{HOMETEXT}", homeText);
+					tHTML = tHTML.Replace("{HOMENUMBER}", homeNumber);
 					tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
 					tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
 					tHTML = tHTML.Replace("{REFERENCES}", references);
@@ -210,9 +202,13 @@ namespace HHBuilder
 			dt.Columns.Add(dc);
 			dc = new DataColumn("PrevText", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
+			dc = new DataColumn("PrevNumber", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
 			dc = new DataColumn("NextLink", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("NextText", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("NextNumber", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("Title", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
@@ -256,6 +252,7 @@ namespace HHBuilder
 			// Populate next screen links (ignoring ToC items without a screen to display)
 			string nextLink = String.Empty;
 			string nextText = String.Empty;
+			string nextNumber = String.Empty;
 			
 			// Sort help screen heierarchy
 			DataView dv = _nodeDS.Tables[0].DefaultView;
@@ -269,8 +266,10 @@ namespace HHBuilder
 				{
 					tDR["NextLink"] = nextLink;
 					tDR["NextText"] = nextText;
+					tDR["NextNumber"] = nextNumber;
 					nextLink = tDR["FileName"].ToString();
 					nextText = tDR["Title"].ToString();
+					nextNumber = tDR["IndexPath"].ToString().TrimStart('0');
 				}
 			}
 			_nodeDS.Tables.Clear();
@@ -281,6 +280,7 @@ namespace HHBuilder
 			// Populate previous screen links (ignoring ToC items without a screen to display)
 			string prevLink = String.Empty;
 			string prevText = String.Empty;
+			string prevNumber = String.Empty;
 			
 			// Sort help screen heierarchy
 			dv.Sort = "IndexPath";
@@ -293,8 +293,10 @@ namespace HHBuilder
 				{
 					tDR["PrevLink"] = prevLink;
 					tDR["PrevText"] = prevText;
+					tDR["PrevNumber"] = prevNumber;
 					prevLink = tDR["FileName"].ToString();
 					prevText = tDR["Title"].ToString();
+					prevNumber = tDR["IndexPath"].ToString().TrimStart('0');
 				}
 			}
 			_nodeDS.Tables.Clear();
@@ -311,8 +313,10 @@ namespace HHBuilder
 			dr["IndexPath"] = HelpNode.NodeTocIndex(node);
 			dr["PrevLink"] = String.Empty;
 			dr["PrevText"] = String.Empty;
+			dr["PrevNumber"] = String.Empty;
 			dr["NextLink"] = String.Empty;
 			dr["NextText"] = String.Empty;
+			dr["NextNumber"] = String.Empty;
 			dr["Title"] = tItem.title;
 			dr["IndexEntries"] = tItem.indexEntries;
 			dr["ReferenceLinks"] = tItem.linkList;
@@ -343,8 +347,10 @@ namespace HHBuilder
 				dr["IndexPath"] = String.Empty;
 				dr["PrevLink"] = String.Empty;
 				dr["PrevText"] = String.Empty;
+				dr["PrevNumber"] = String.Empty;
 				dr["NextLink"] = String.Empty;
 				dr["NextText"] = String.Empty;
+				dr["NextNumber"] = String.Empty;
 				dr["Title"] = tItem.title;
 				dr["IndexEntries"] = tItem.indexEntries;
 				dr["ReferenceLinks"] = tItem.linkList;
@@ -622,6 +628,20 @@ namespace HHBuilder
 			}
 		}
 		
+		public static string cssDir
+		{
+			get{ return Path.Combine(HBSettings.projectBuildDir, "css"); }
+		}
+		
+		public static string scriptDir
+		{
+			get{ return Path.Combine(HBSettings.projectBuildDir, "scripts"); }
+		}
+		
+		public static string imageDir
+		{
+			get{ return Path.Combine(HBSettings.projectBuildDir, "images"); }
+		}
 		
 		
 		#endregion
