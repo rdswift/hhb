@@ -113,7 +113,7 @@ namespace HHBuilder
 							if ( tRefDR != null )
 							{
 								tRefLink = tRefDR["FileName"].ToString();
-								tRefText = tRefDR["LinkDesc"].ToString();
+								tRefText = System.Net.WebUtility.HtmlEncode(tRefDR["LinkDesc"].ToString());
 							}
 							sbRef.AppendFormat("<li class=\"reference\"><a href=\"{0}\">{1}</a></li>\n", tRefLink, tRefText);
 						}
@@ -145,23 +145,23 @@ namespace HHBuilder
 					string tHTML = htmlTemplate;
 					tHTML = tHTML.Replace("</head>", _headerScripts + _headerCSS + hideItems + "</head>");
 					tHTML = tHTML.Replace("{BODY}", repBody);
-					tHTML = tHTML.Replace("{TITLE}", dr["Title"].ToString());
-					tHTML = tHTML.Replace("{PREVLINK}", dr["PrevLink"].ToString());
-					tHTML = tHTML.Replace("{NEXTLINK}", dr["NextLink"].ToString());
-					tHTML = tHTML.Replace("{PREVTEXT}", dr["PrevText"].ToString());
-					tHTML = tHTML.Replace("{NEXTTEXT}", dr["NextText"].ToString());
-					tHTML = tHTML.Replace("{PREVNUMBER}", dr["PrevNumber"].ToString());
-					tHTML = tHTML.Replace("{NEXTNUMBER}", dr["NextNumber"].ToString());
-					tHTML = tHTML.Replace("{NUMBER}", dr["IndexPath"].ToString().TrimStart('0'));
+					tHTML = tHTML.Replace("{TITLE}", System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
+					tHTML = tHTML.Replace("{PREVLINK}", System.Net.WebUtility.HtmlEncode(dr["PrevLink"].ToString()));
+					tHTML = tHTML.Replace("{NEXTLINK}", System.Net.WebUtility.HtmlEncode(dr["NextLink"].ToString()));
+					tHTML = tHTML.Replace("{PREVTEXT}", System.Net.WebUtility.HtmlEncode(dr["PrevText"].ToString()));
+					tHTML = tHTML.Replace("{NEXTTEXT}", System.Net.WebUtility.HtmlEncode(dr["NextText"].ToString()));
+					tHTML = tHTML.Replace("{PREVNUMBER}", System.Net.WebUtility.HtmlEncode(dr["PrevNumber"].ToString()));
+					tHTML = tHTML.Replace("{NEXTNUMBER}", System.Net.WebUtility.HtmlEncode(dr["NextNumber"].ToString()));
+					tHTML = tHTML.Replace("{NUMBER}", System.Net.WebUtility.HtmlEncode(dr["IndexPath"].ToString().TrimStart('0')));
 					//tHTML = tHTML.Replace("{}", dr[""]);					// TODO: Accommodate processing picture links.
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
-					tHTML = tHTML.Replace("{HOMELINK}", homeLink);
-					tHTML = tHTML.Replace("{HOMETEXT}", homeText);
-					tHTML = tHTML.Replace("{HOMENUMBER}", homeNumber);
+					tHTML = tHTML.Replace("{HOMELINK}", System.Net.WebUtility.HtmlEncode(homeLink));
+					tHTML = tHTML.Replace("{HOMETEXT}", System.Net.WebUtility.HtmlEncode(homeText));
+					tHTML = tHTML.Replace("{HOMENUMBER}", System.Net.WebUtility.HtmlEncode(homeNumber));
 					tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
 					tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
 					tHTML = tHTML.Replace("{REFERENCES}", references);
