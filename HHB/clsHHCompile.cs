@@ -10,6 +10,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace HHBuilder
 {
@@ -23,6 +24,7 @@ namespace HHBuilder
 		private static string _templateFile = String.Empty;
 		private static string _homeID = String.Empty;
 		private static DataSet _nodeDS = InitializeNodeDataset();
+		private static DataSet _imageDS = InitializeImageDataset();
 		#endregion
 
 		#region Private Properties
@@ -30,9 +32,11 @@ namespace HHBuilder
 		
 		#region Private Methods
 		// ==============================================================================
-		private static bool MakeHTMLFiles()
+		private static bool MakeHTMLFiles(TreeNode node)
 		{
 			bool ret = true;	// Return code
+			
+			HHBProject project = (HHBProject) HelpNode.GetRootNode(node).Tag;
 			
 			// Load template file
 			string htmlTemplate = String.Empty;
@@ -134,7 +138,7 @@ namespace HHBuilder
 						{
 							if ( File.Exists(Path.Combine(cssDir, tCSS + ".css")) )
 							{
-								sbCSS.AppendFormat("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/{0}\" />\n", tCSS + ".css");
+								sbCSS.AppendFormat("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}/{1}\" />\n", cssDirName, tCSS + ".css");
 							}
 							else
 							{
@@ -154,7 +158,7 @@ namespace HHBuilder
 						{
 							if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
 							{
-								sbScript.AppendFormat("<script type=\"text/javascript\" src=\"scripts/{0}\"></script>\n", tScript + ".js");
+								sbScript.AppendFormat("<script type=\"text/javascript\" src=\"{0}/{1}\"></script>\n", scriptDirName, tScript + ".js");
 							}
 							else
 							{
@@ -179,6 +183,13 @@ namespace HHBuilder
 					
 					
 					
+					
+					
+					
+					
+					// Process image links
+					repBody = ProcessImageLinks(repBody);
+					
 					string tHTML = htmlTemplate;
 					tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
 					tHTML = tHTML.Replace("{BODY}", repBody);
@@ -190,7 +201,7 @@ namespace HHBuilder
 					tHTML = tHTML.Replace("{PREVNUMBER}", System.Net.WebUtility.HtmlEncode(dr["PrevNumber"].ToString()));
 					tHTML = tHTML.Replace("{NEXTNUMBER}", System.Net.WebUtility.HtmlEncode(dr["NextNumber"].ToString()));
 					tHTML = tHTML.Replace("{NUMBER}", System.Net.WebUtility.HtmlEncode(dr["IndexPath"].ToString().TrimStart('0')));
-					//tHTML = tHTML.Replace("{}", dr[""]);					// TODO: Accommodate processing picture links.
+					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
 					//tHTML = tHTML.Replace("{}", dr[""]);
@@ -199,6 +210,9 @@ namespace HHBuilder
 					tHTML = tHTML.Replace("{HOMELINK}", System.Net.WebUtility.HtmlEncode(homeLink));
 					tHTML = tHTML.Replace("{HOMETEXT}", System.Net.WebUtility.HtmlEncode(homeText));
 					tHTML = tHTML.Replace("{HOMENUMBER}", System.Net.WebUtility.HtmlEncode(homeNumber));
+					tHTML = tHTML.Replace("{AUTHOR}", System.Net.WebUtility.HtmlEncode(project.author));
+					tHTML = tHTML.Replace("{COMPANY}", System.Net.WebUtility.HtmlEncode(project.company));
+					tHTML = tHTML.Replace("{COPYRIGHT}", System.Net.WebUtility.HtmlEncode(project.copyright));
 					tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
 					tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
 					tHTML = tHTML.Replace("{REFERENCES}", references);
@@ -219,6 +233,57 @@ namespace HHBuilder
 			}
 			
 			return ret;
+		}
+		
+		// ==============================================================================
+		private static string ProcessImageLinks(string bodyText)
+		{
+			string repBody = bodyText;
+			Regex regExImages = new System.Text.RegularExpressions.Regex(@"\{Image:([^\}]*)\}", RegexOptions.IgnoreCase);
+			MatchCollection matches = regExImages.Matches(repBody);
+			foreach (Match match in matches)
+			{
+				//Log.ErrorBox("Found: " + match.Groups[1].Value);
+				string imageID = match.Groups[1].Value;
+				string sOld = String.Format("{0}Image:{1}{2}", "{", imageID, "}");
+				string sNew;
+				DataRow dr = _imageDS.Tables[0].Rows.Find(imageID);
+				if ( dr == null )
+				{
+					sNew = String.Format("<img src=\"{0}/{1}\" alt=\"{2}\">", imageDirName, imageID, "Image not found");
+				}
+				else
+				{
+					sNew = String.Format("<img src=\"{0}/{1}\" alt=\"{2}\">", imageDirName, dr["FileName"].ToString(), System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
+				}
+				//Log.ErrorBox(String.Format("Old: {0}\nNew: {1}\n", sOld, sNew));
+				repBody = repBody.Replace(sOld, sNew);
+			}
+			return repBody;
+		}
+		
+		// ==============================================================================
+		private static DataSet InitializeImageDataset()
+		{
+			DataSet ds = new DataSet();
+			DataTable dt = new DataTable();
+			DataColumn dc;
+			
+			ds.DataSetName = "ImageInfo";
+			dt = new DataTable();
+			dt.TableName = "Images";
+			dc = new DataColumn("ID", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Title", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("FileName", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			
+			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
+			
+			ds.Tables.Add(dt);
+			
+			return ds;
 		}
 		
 		// ==============================================================================
@@ -419,7 +484,7 @@ namespace HHBuilder
 			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes) {
 				CSSItem tItem = (CSSItem) tNode.Tag;
 				string fileToWrite = Path.Combine(cssDir, tItem.fileName);
-				Log.Debug(String.Format("Writing CSS file {0}", fileToWrite));
+				Log.Debug(String.Format("Saving CSS file {0} - {1}", tItem.fileName, tItem.title));
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
@@ -444,7 +509,7 @@ namespace HHBuilder
 			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes) {
 				ScriptItem tItem = (ScriptItem) tNode.Tag;
 				string fileToWrite = Path.Combine(scriptDir, tItem.fileName);
-				Log.Debug(String.Format("Writing script file {0}", fileToWrite));
+				Log.Debug(String.Format("Saving script file {0} - {1}", tItem.fileName, tItem.title));
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
@@ -464,12 +529,18 @@ namespace HHBuilder
 		// ==============================================================================
 		private static bool SaveImages(TreeNode node)
 		{
+			_imageDS = InitializeImageDataset();
 			bool ret = true;
 			TreeNode topNode =  HelpNode.GetRootNode(node);
 			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes) {
 				ImageItem tItem = (ImageItem) tNode.Tag;
+				DataRow dr = _imageDS.Tables[0].NewRow();
+				dr["ID"] = tItem.id;
+				dr["Title"] = tItem.title;
+				dr["FileName"] = tItem.fileName;
+				_imageDS.Tables[0].Rows.Add(dr);
 				string fileToWrite = Path.Combine(imageDir, tItem.fileName);
-				Log.Debug(String.Format("Writing image file {0}", fileToWrite));
+				Log.Debug(String.Format("Saving image file {0} - {1}", tItem.fileName, tItem.title));
 				try
 				{
 					byte[] imageBytes = Convert.FromBase64String(tItem.content);
@@ -669,19 +740,34 @@ namespace HHBuilder
 			}
 		}
 		
+		public static string cssDirName
+		{
+			get{ return "css"; }
+		}
+		
+		public static string scriptDirName
+		{
+			get{ return "scripts"; }
+		}
+		
+		public static string imageDirName
+		{
+			get{ return "images"; }
+		}
+		
 		public static string cssDir
 		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "css"); }
+			get{ return Path.Combine(HBSettings.projectBuildDir, cssDirName); }
 		}
 		
 		public static string scriptDir
 		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "scripts"); }
+			get{ return Path.Combine(HBSettings.projectBuildDir, scriptDirName); }
 		}
 		
 		public static string imageDir
 		{
-			get{ return Path.Combine(HBSettings.projectBuildDir, "images"); }
+			get{ return Path.Combine(HBSettings.projectBuildDir, imageDirName); }
 		}
 		
 		
@@ -702,6 +788,7 @@ namespace HHBuilder
 			{
 				ret = ret & RemoveDir(tDir);
 			}
+			System.Threading.Thread.Sleep(1000);
 			
 			return ret;
 		}
@@ -741,14 +828,6 @@ namespace HHBuilder
 				return false;
 			}
 			
-			// Save CSS files
-			ret = ret & ( SaveCSS(node) );
-//			if ( !SaveCSS(node) )
-//			{
-//				Cleanup();
-//				return false;
-//			}
-			
 			// Save Script files
 			ret = ret & ( SaveScripts(node) );
 //			if ( !SaveScripts(node) )
@@ -765,6 +844,14 @@ namespace HHBuilder
 //				return false;
 //			}
 			
+			// Save CSS files
+			ret = ret & ( SaveCSS(node) );
+//			if ( !SaveCSS(node) )
+//			{
+//				Cleanup();
+//				return false;
+//			}
+			
 			if ( !ret )
 			{
 				Log.ErrorBox("Problem saving one or more files.  Please see the log file for details.");
@@ -776,7 +863,7 @@ namespace HHBuilder
 			DatasetAddPopup(node);
 			
 			// Create HTML files
-			if ( !MakeHTMLFiles() )
+			if ( !MakeHTMLFiles(node) )
 			{
 				Log.ErrorBox("Problem creating one or more HTML files.  Please see the log file for details.");
 				ret = false;

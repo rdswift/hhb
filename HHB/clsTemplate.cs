@@ -800,8 +800,10 @@ namespace HHBuilder
 			}
 			
 			// Remove working directory to ensure it is empty (required by ExtractToDirectory() method)
-			if ( Directory.Exists(unpackToDir) )
+			int retryCount = 3;
+			while ( (retryCount > 0) && (Directory.Exists(unpackToDir)) )
 			{
+				retryCount--;
 				try 
 				{
 					Directory.Delete(unpackToDir, true);
@@ -811,8 +813,12 @@ namespace HHBuilder
 					errorMessage = "Unable to access working directory: " + unpackToDir;
 					Log.Error(errorMessage);
 					Log.Exception(ex);
-					Log.ErrorBox(errorMessage);
-					return false;
+					if (retryCount < 1)
+					{
+						Log.ErrorBox(errorMessage);
+						return false;
+					}
+					System.Threading.Thread.Sleep(250);
 				}
 			}
 			

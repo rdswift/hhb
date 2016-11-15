@@ -241,7 +241,7 @@ namespace HHBuilder
 			Array.Sort(logFiles, (f1, f2) => f1.Name.CompareTo(f2.Name));
 			for (int i = 0; i < logFiles.Length - filesToKeep; i++)
 			{
-				Log.Debug("Deleting logFiles[" + i.ToString() + "]: " + logFiles[i].FullName);
+				Log.Debug("Deleting old log file: " + logFiles[i].FullName);
 				try
 				{
 					File.Delete(logFiles[i].FullName);

@@ -532,7 +532,7 @@ namespace HHBuilder
 				CSSItem tItem = new CSSItem();
 				tItem.id = tdr["ID"].ToString().Trim();
 				tItem.title = tdr["Title"].ToString().Trim();
-				tItem.fileName = tdr["FileName"].ToString().Trim();
+				//tItem.fileName = tdr["FileName"].ToString().Trim();
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes.Add(tItem.title);
 				tTN.Tag = tItem;

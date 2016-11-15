@@ -23,14 +23,14 @@ namespace HHBuilder
 	
 	public partial class MainForm : Form
 	{
-//		DataSet dsLinks = new DataSet();
-		DataSet dsIndexEntries = new DataSet();
-		HelpItem savedHelpItem = null;
-		TreeNode savedNode = null;
-		string helpProjectFilePathAndName = "";
-//		public static ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
-		public const int _MaxLevels = 7;
+		private DataSet dsIndexEntries = new DataSet();
+		private HelpItem savedHelpItem = null;
+		private TreeNode savedNode = null;
+		private string helpProjectFilePathAndName = "";
 		private static string _returnedString;
+		private bool _showScreenSettingsPage = true;
+		
+		public const int _MaxLevels = 7;
 		
 		public static string parameterString
 		{
@@ -86,6 +86,9 @@ namespace HHBuilder
 			cbLanguage.DataSource = Language.GetList();
 			cbLanguage.DisplayMember = "Title";
 
+			HHBTemplate.Cleanup();
+			HHCompile.Cleanup();
+			
 			ResetForm();
 			
 			
@@ -299,6 +302,10 @@ namespace HHBuilder
 			{
 				tabControl1.TabPages.Remove(tabPageScreen);
 			}
+			if (tabControl1.TabPages.Contains(tabPageScreen2) == true)
+			{
+				tabControl1.TabPages.Remove(tabPageScreen2);
+			}
 			if (tabControl1.TabPages.Contains(tabPagePopupText) == true)
 			{
 				tabControl1.TabPages.Remove(tabPagePopupText);
@@ -342,8 +349,10 @@ namespace HHBuilder
 						HelpItem tempItem = (HelpItem) treeView1.SelectedNode.Tag;
 						treeView1.SelectedNode.Text = tempItem.title;
 						hiTitle.Text = tempItem.title;
+						hiTitle2.Text = tempItem.title;
 						hiFileName.Text = tempItem.fileName;
 						hiID.Text = tempItem.id;
+						hiID2.Text = tempItem.id;
 						hiLinkID.Text = tempItem.linkID.ToString();
 						hiLinkDesc.Text = tempItem.linkDescription;
 						hiBody.Text = tempItem.body;
@@ -369,6 +378,7 @@ namespace HHBuilder
 						}
 						dgvIndexEntries.DataSource = dsIndexEntries.Tables[0];
 						
+						// Populate Links ListView
 						lvLinks.Items.Clear();
 //						if (nIdx < 1)		// Uncomment this to disallow links on HTML Popup screens
 						{
@@ -378,7 +388,7 @@ namespace HHBuilder
 								if (dsRow["ID"].ToString() != tempItem.id)
 								{
 									ListViewItem lvI = new ListViewItem(dsRow["ID"].ToString());
-									lvI.SubItems.Add(dsRow["Index"].ToString());
+									lvI.SubItems.Add(dsRow["Index"].ToString().TrimStart('0'));
 									lvI.SubItems.Add(dsRow["Title"].ToString());
 									lvI.Checked = (bool) tempItem.linkList.Contains(lvI.Text);
 									lvLinks.Items.Add(lvI);
@@ -387,11 +397,45 @@ namespace HHBuilder
 						}
 						lvLinks.Refresh();
 						
+						// Populate CSS ListView
+						lvCSS.Items.Clear();
+						foreach (TreeNode cssNode in HelpNode.GetRootNode(treeView1.SelectedNode).Nodes[(int) HelpNode.branches.cssFile].Nodes)
+						{
+							CSSItem tItem = (CSSItem) cssNode.Tag;
+							ListViewItem lvI = new ListViewItem(tItem.id);
+							lvI.SubItems.Add(tItem.title);
+							lvI.Checked = (bool) tempItem.cssList.Contains(tItem.id);
+							lvCSS.Items.Add(lvI);
+						}
+						lvCSS.Refresh();
+						
+						// Populate Scripts ListView
+						lvScripts.Items.Clear();
+						foreach (TreeNode scriptNode in HelpNode.GetRootNode(treeView1.SelectedNode).Nodes[(int) HelpNode.branches.scriptFile].Nodes)
+						{
+							ScriptItem tItem = (ScriptItem) scriptNode.Tag;
+							ListViewItem lvI = new ListViewItem(tItem.id);
+							lvI.SubItems.Add(tItem.title);
+							lvI.Checked = (bool) tempItem.scriptList.Contains(tItem.id);
+							lvScripts.Items.Add(lvI);
+						}
+						
 						if (tabControl1.TabPages.Contains(tabPageScreen) == false)
 						{
 							tabControl1.TabPages.Add(tabPageScreen);
 						}
-						tabControl1.SelectedTab = tabPageScreen;
+						if (tabControl1.TabPages.Contains(tabPageScreen2) == false)
+						{
+							tabControl1.TabPages.Add(tabPageScreen2);
+						}
+						if ( _showScreenSettingsPage )
+						{
+							tabControl1.SelectedTab = tabPageScreen;
+						}
+						else
+						{
+							tabControl1.SelectedTab = tabPageScreen2;
+						}
 						break;
 					case (int) HelpNode.branches.textPopup:
 						PopupTextItem tempPopupText = (PopupTextItem) treeView1.SelectedNode.Tag;
@@ -577,7 +621,17 @@ namespace HHBuilder
 		
 		// ---------------------------------------------------------------------------------------------
 		
+		private void BUpdateScreenSettings2Click(object sender, EventArgs e)
+		{
+			UpdateScreenSettings();
+		}
+		
 		private void BUpdateScreenSettingsClick(object sender, EventArgs e)
+		{
+			UpdateScreenSettings();
+		}
+		
+		private void UpdateScreenSettings()
 		{
 			HelpItem tempItem = (HelpItem) treeView1.SelectedNode.Tag;
 			tempItem.title = hiTitle.Text.Trim();
@@ -617,6 +671,35 @@ namespace HHBuilder
 				}
 			}
 			tempItem.linkList = s1.Trim();
+			
+			s1 = "";
+			foreach (ListViewItem lvI in lvCSS.Items)
+			{
+				if ((Boolean) lvI.Checked)
+				{
+					if (s1.Length > 0)
+					{
+						s1 += "|";
+					}
+					s1 += lvI.Text.Trim();
+				}
+			}
+			tempItem.cssList = s1.Trim();
+			
+			s1 = "";
+			foreach (ListViewItem lvI in lvScripts.Items)
+			{
+				if ((Boolean) lvI.Checked)
+				{
+					if (s1.Length > 0)
+					{
+						s1 += "|";
+					}
+					s1 += lvI.Text.Trim();
+				}
+			}
+			tempItem.scriptList = s1.Trim();
+			
 			hiLinkID.Text = tempItem.linkID.ToString().Trim();
 			treeView1.SelectedNode.Tag = tempItem;
 			treeView1.SelectedNode.Text = hiTitle.Text.Trim();
@@ -1066,7 +1149,7 @@ namespace HHBuilder
 		private void BCssSaveClick(object sender, EventArgs e)
 		{
 			CSSItem tItem = (CSSItem) treeView1.SelectedNode.Tag;
-			tItem.fileName = tbCssFilename.Text.Trim();
+			//tItem.fileName = tbCssFilename.Text.Trim();
 			tItem.title = tbCssTitle.Text.Trim();
 			tItem.content = tbCssContents.Text.Trim();
 			treeView1.SelectedNode.Tag = tItem;
@@ -1432,6 +1515,16 @@ namespace HHBuilder
 		
 		private void BPreviewScreenClick(object sender, EventArgs e)
 		{
+			PreviewScreen();
+		}
+		
+		private void BPreviewScreen2Click(object sender, EventArgs e)
+		{
+			PreviewScreen();
+		}
+		
+		private void PreviewScreen()
+		{
 			TreeNode node = treeView1.Nodes[0];
 			HHCompile.MakeFiles(node);
 			TreeNode tNode = treeView1.SelectedNode;
@@ -1448,7 +1541,7 @@ namespace HHBuilder
 			}
 		}
 		
-		void BTemplateSelectClick(object sender, EventArgs e)
+		private void BTemplateSelectClick(object sender, EventArgs e)
 		{
 			parameterString = String.Empty;
 			Form frm = new TemplateSelector();
@@ -1462,6 +1555,23 @@ namespace HHBuilder
 				parameterString = String.Empty;
 				UpdateTemplateTab();
 			}
+		}
+		
+		private void HiTitleLeave(object sender, EventArgs e)
+		{
+			hiTitle.Text = hiTitle.Text.Trim();
+			hiTitle2.Text = hiTitle.Text;
+		}
+		
+		private void HiTitle2Leave(object sender, EventArgs e)
+		{
+			hiTitle2.Text = hiTitle2.Text.Trim();
+			hiTitle.Text = hiTitle2.Text;
+		}
+		
+		private void HiLinkIDLeave(object sender, EventArgs e)
+		{
+			hiLinkID.Text = Convert.ToUInt32("0" + hiLinkID.Text.Trim()).ToString().Trim();
 		}
 		
 		private void ToolStripButton1Click(object sender, EventArgs e)
@@ -1532,6 +1642,8 @@ namespace HHBuilder
 			HHCompile.MakeFiles(node);
 			
 		}
+		
+		
 		
 		
 		

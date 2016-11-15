@@ -165,11 +165,11 @@ namespace HHBuilder
 			this.tbTemplateID = new System.Windows.Forms.TextBox();
 			this.label35 = new System.Windows.Forms.Label();
 			this.tabPageScreen = new System.Windows.Forms.TabPage();
+			this.lvCSS = new System.Windows.Forms.ListView();
+			this.lvCSSID = new System.Windows.Forms.ColumnHeader();
+			this.lvCSSTitle = new System.Windows.Forms.ColumnHeader();
+			this.label10 = new System.Windows.Forms.Label();
 			this.bPreviewScreen = new System.Windows.Forms.Button();
-			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
-			this.hiIncludeHeader = new System.Windows.Forms.CheckBox();
-			this.hiIncludeFooter = new System.Windows.Forms.CheckBox();
-			this.hiHasScreen = new System.Windows.Forms.CheckBox();
 			this.dgvIndexEntries = new System.Windows.Forms.DataGridView();
 			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lvLinks = new System.Windows.Forms.ListView();
@@ -177,24 +177,31 @@ namespace HHBuilder
 			this.lvLinksIndex = new System.Windows.Forms.ColumnHeader();
 			this.lvLinksTitle = new System.Windows.Forms.ColumnHeader();
 			this.label26 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.hiFileName = new System.Windows.Forms.TextBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.hiLinkDesc = new System.Windows.Forms.TextBox();
-			this.label11 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.label25 = new System.Windows.Forms.Label();
 			this.hiID = new System.Windows.Forms.TextBox();
 			this.hiLinkID = new System.Windows.Forms.TextBox();
 			this.label14 = new System.Windows.Forms.Label();
 			this.bUpdateScreenSettings = new System.Windows.Forms.Button();
-			this.label13 = new System.Windows.Forms.Label();
-			this.hiBody = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.hiTitle = new System.Windows.Forms.TextBox();
+			this.tabPageScreen2 = new System.Windows.Forms.TabPage();
+			this.bPreviewScreen2 = new System.Windows.Forms.Button();
+			this.bUpdateScreenSettings2 = new System.Windows.Forms.Button();
+			this.hiID2 = new System.Windows.Forms.TextBox();
+			this.label49 = new System.Windows.Forms.Label();
+			this.label50 = new System.Windows.Forms.Label();
+			this.hiTitle2 = new System.Windows.Forms.TextBox();
+			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
+			this.hiIncludeHeader = new System.Windows.Forms.CheckBox();
+			this.hiIncludeFooter = new System.Windows.Forms.CheckBox();
+			this.hiHasScreen = new System.Windows.Forms.CheckBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.hiFileName = new System.Windows.Forms.TextBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.hiBody = new System.Windows.Forms.TextBox();
 			this.tabPagePopupText = new System.Windows.Forms.TabPage();
 			this.bUpdatePopupText = new System.Windows.Forms.Button();
 			this.label34 = new System.Windows.Forms.Label();
@@ -238,6 +245,10 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.lvScripts = new System.Windows.Forms.ListView();
+			this.lvScriptsID = new System.Windows.Forms.ColumnHeader();
+			this.lvScriptsTitle = new System.Windows.Forms.ColumnHeader();
+			this.label11 = new System.Windows.Forms.Label();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -256,6 +267,7 @@ namespace HHBuilder
 			this.tabPageTemplate.SuspendLayout();
 			this.tabPageScreen.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).BeginInit();
+			this.tabPageScreen2.SuspendLayout();
 			this.tabPagePopupText.SuspendLayout();
 			this.tabPageCSS.SuspendLayout();
 			this.tabPageScripts.SuspendLayout();
@@ -882,6 +894,7 @@ namespace HHBuilder
 			this.tabControl1.Controls.Add(this.tabPageProject);
 			this.tabControl1.Controls.Add(this.tabPageTemplate);
 			this.tabControl1.Controls.Add(this.tabPageScreen);
+			this.tabControl1.Controls.Add(this.tabPageScreen2);
 			this.tabControl1.Controls.Add(this.tabPagePopupText);
 			this.tabControl1.Controls.Add(this.tabPageCSS);
 			this.tabControl1.Controls.Add(this.tabPageScripts);
@@ -1348,29 +1361,21 @@ namespace HHBuilder
 			// 
 			// tabPageScreen
 			// 
+			this.tabPageScreen.Controls.Add(this.lvScripts);
+			this.tabPageScreen.Controls.Add(this.label11);
+			this.tabPageScreen.Controls.Add(this.lvCSS);
+			this.tabPageScreen.Controls.Add(this.label10);
 			this.tabPageScreen.Controls.Add(this.bPreviewScreen);
-			this.tabPageScreen.Controls.Add(this.hiIncludeTitle);
-			this.tabPageScreen.Controls.Add(this.hiIncludeHeader);
-			this.tabPageScreen.Controls.Add(this.hiIncludeFooter);
-			this.tabPageScreen.Controls.Add(this.hiHasScreen);
 			this.tabPageScreen.Controls.Add(this.dgvIndexEntries);
 			this.tabPageScreen.Controls.Add(this.lvLinks);
 			this.tabPageScreen.Controls.Add(this.label26);
-			this.tabPageScreen.Controls.Add(this.label8);
-			this.tabPageScreen.Controls.Add(this.hiFileName);
 			this.tabPageScreen.Controls.Add(this.label12);
 			this.tabPageScreen.Controls.Add(this.hiLinkDesc);
-			this.tabPageScreen.Controls.Add(this.label11);
-			this.tabPageScreen.Controls.Add(this.textBox4);
-			this.tabPageScreen.Controls.Add(this.label10);
-			this.tabPageScreen.Controls.Add(this.textBox3);
 			this.tabPageScreen.Controls.Add(this.label25);
 			this.tabPageScreen.Controls.Add(this.hiID);
 			this.tabPageScreen.Controls.Add(this.hiLinkID);
 			this.tabPageScreen.Controls.Add(this.label14);
 			this.tabPageScreen.Controls.Add(this.bUpdateScreenSettings);
-			this.tabPageScreen.Controls.Add(this.label13);
-			this.tabPageScreen.Controls.Add(this.hiBody);
 			this.tabPageScreen.Controls.Add(this.label9);
 			this.tabPageScreen.Controls.Add(this.label7);
 			this.tabPageScreen.Controls.Add(this.hiTitle);
@@ -1382,6 +1387,39 @@ namespace HHBuilder
 			this.tabPageScreen.Text = "Page Settings";
 			this.tabPageScreen.UseVisualStyleBackColor = true;
 			// 
+			// lvCSS
+			// 
+			this.lvCSS.CheckBoxes = true;
+			this.lvCSS.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.lvCSSID,
+									this.lvCSSTitle});
+			this.lvCSS.GridLines = true;
+			this.lvCSS.Location = new System.Drawing.Point(8, 216);
+			this.lvCSS.Name = "lvCSS";
+			this.lvCSS.Size = new System.Drawing.Size(280, 120);
+			this.lvCSS.TabIndex = 32;
+			this.lvCSS.UseCompatibleStateImageBehavior = false;
+			this.lvCSS.View = System.Windows.Forms.View.Details;
+			// 
+			// lvCSSID
+			// 
+			this.lvCSSID.Text = "";
+			this.lvCSSID.Width = 20;
+			// 
+			// lvCSSTitle
+			// 
+			this.lvCSSTitle.Text = "Title";
+			this.lvCSSTitle.Width = 260;
+			// 
+			// label10
+			// 
+			this.label10.Location = new System.Drawing.Point(8, 200);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(176, 16);
+			this.label10.TabIndex = 31;
+			this.label10.Text = "CSS Files to Load:";
+			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// bPreviewScreen
 			// 
 			this.bPreviewScreen.Location = new System.Drawing.Point(472, 480);
@@ -1391,42 +1429,6 @@ namespace HHBuilder
 			this.bPreviewScreen.Text = "Preview";
 			this.bPreviewScreen.UseVisualStyleBackColor = true;
 			this.bPreviewScreen.Click += new System.EventHandler(this.BPreviewScreenClick);
-			// 
-			// hiIncludeTitle
-			// 
-			this.hiIncludeTitle.Location = new System.Drawing.Point(296, 176);
-			this.hiIncludeTitle.Name = "hiIncludeTitle";
-			this.hiIncludeTitle.Size = new System.Drawing.Size(88, 24);
-			this.hiIncludeTitle.TabIndex = 29;
-			this.hiIncludeTitle.Text = "Include Title";
-			this.hiIncludeTitle.UseVisualStyleBackColor = true;
-			// 
-			// hiIncludeHeader
-			// 
-			this.hiIncludeHeader.Location = new System.Drawing.Point(408, 176);
-			this.hiIncludeHeader.Name = "hiIncludeHeader";
-			this.hiIncludeHeader.Size = new System.Drawing.Size(104, 24);
-			this.hiIncludeHeader.TabIndex = 28;
-			this.hiIncludeHeader.Text = "Include Header";
-			this.hiIncludeHeader.UseVisualStyleBackColor = true;
-			// 
-			// hiIncludeFooter
-			// 
-			this.hiIncludeFooter.Location = new System.Drawing.Point(528, 176);
-			this.hiIncludeFooter.Name = "hiIncludeFooter";
-			this.hiIncludeFooter.Size = new System.Drawing.Size(104, 24);
-			this.hiIncludeFooter.TabIndex = 27;
-			this.hiIncludeFooter.Text = "Include Footer";
-			this.hiIncludeFooter.UseVisualStyleBackColor = true;
-			// 
-			// hiHasScreen
-			// 
-			this.hiHasScreen.Location = new System.Drawing.Point(112, 176);
-			this.hiHasScreen.Name = "hiHasScreen";
-			this.hiHasScreen.Size = new System.Drawing.Size(96, 24);
-			this.hiHasScreen.TabIndex = 26;
-			this.hiHasScreen.Text = "Has Screen";
-			this.hiHasScreen.UseVisualStyleBackColor = true;
 			// 
 			// dgvIndexEntries
 			// 
@@ -1456,7 +1458,7 @@ namespace HHBuilder
 			this.lvLinks.GridLines = true;
 			this.lvLinks.Location = new System.Drawing.Point(296, 80);
 			this.lvLinks.Name = "lvLinks";
-			this.lvLinks.Size = new System.Drawing.Size(336, 96);
+			this.lvLinks.Size = new System.Drawing.Size(336, 392);
 			this.lvLinks.TabIndex = 24;
 			this.lvLinks.UseCompatibleStateImageBehavior = false;
 			this.lvLinks.View = System.Windows.Forms.View.Details;
@@ -1478,29 +1480,12 @@ namespace HHBuilder
 			// 
 			// label26
 			// 
-			this.label26.Location = new System.Drawing.Point(288, 64);
+			this.label26.Location = new System.Drawing.Point(296, 64);
 			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(50, 16);
+			this.label26.Size = new System.Drawing.Size(136, 16);
 			this.label26.TabIndex = 22;
 			this.label26.Text = "Link To:";
-			this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label8
-			// 
-			this.label8.Location = new System.Drawing.Point(168, 256);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(112, 16);
-			this.label8.TabIndex = 6;
-			this.label8.Text = "HTML File Name:";
-			this.label8.Visible = false;
-			// 
-			// hiFileName
-			// 
-			this.hiFileName.Location = new System.Drawing.Point(280, 256);
-			this.hiFileName.Name = "hiFileName";
-			this.hiFileName.Size = new System.Drawing.Size(328, 20);
-			this.hiFileName.TabIndex = 5;
-			this.hiFileName.Visible = false;
+			this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// label12
 			// 
@@ -1516,40 +1501,6 @@ namespace HHBuilder
 			this.hiLinkDesc.Name = "hiLinkDesc";
 			this.hiLinkDesc.Size = new System.Drawing.Size(328, 20);
 			this.hiLinkDesc.TabIndex = 13;
-			// 
-			// label11
-			// 
-			this.label11.Location = new System.Drawing.Point(168, 304);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(112, 16);
-			this.label11.TabIndex = 12;
-			this.label11.Text = "Project Name:";
-			this.label11.Visible = false;
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(280, 304);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(328, 20);
-			this.textBox4.TabIndex = 11;
-			this.textBox4.Visible = false;
-			// 
-			// label10
-			// 
-			this.label10.Location = new System.Drawing.Point(168, 280);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(112, 16);
-			this.label10.TabIndex = 10;
-			this.label10.Text = "Project Name:";
-			this.label10.Visible = false;
-			// 
-			// textBox3
-			// 
-			this.textBox3.Location = new System.Drawing.Point(280, 280);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(328, 20);
-			this.textBox3.TabIndex = 9;
-			this.textBox3.Visible = false;
 			// 
 			// label25
 			// 
@@ -1576,6 +1527,7 @@ namespace HHBuilder
 			this.hiLinkID.Size = new System.Drawing.Size(120, 20);
 			this.hiLinkID.TabIndex = 19;
 			this.hiLinkID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.hiLinkID.Leave += new System.EventHandler(this.HiLinkIDLeave);
 			// 
 			// label14
 			// 
@@ -1595,26 +1547,6 @@ namespace HHBuilder
 			this.bUpdateScreenSettings.Text = "Update";
 			this.bUpdateScreenSettings.UseVisualStyleBackColor = true;
 			this.bUpdateScreenSettings.Click += new System.EventHandler(this.BUpdateScreenSettingsClick);
-			// 
-			// label13
-			// 
-			this.label13.Location = new System.Drawing.Point(8, 184);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(112, 16);
-			this.label13.TabIndex = 16;
-			this.label13.Text = "Body Contents:";
-			// 
-			// hiBody
-			// 
-			this.hiBody.AcceptsReturn = true;
-			this.hiBody.AcceptsTab = true;
-			this.hiBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.hiBody.Location = new System.Drawing.Point(8, 200);
-			this.hiBody.Multiline = true;
-			this.hiBody.Name = "hiBody";
-			this.hiBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.hiBody.Size = new System.Drawing.Size(624, 272);
-			this.hiBody.TabIndex = 15;
 			// 
 			// label9
 			// 
@@ -1638,6 +1570,157 @@ namespace HHBuilder
 			this.hiTitle.Name = "hiTitle";
 			this.hiTitle.Size = new System.Drawing.Size(328, 20);
 			this.hiTitle.TabIndex = 3;
+			this.hiTitle.Leave += new System.EventHandler(this.HiTitleLeave);
+			// 
+			// tabPageScreen2
+			// 
+			this.tabPageScreen2.Controls.Add(this.bPreviewScreen2);
+			this.tabPageScreen2.Controls.Add(this.bUpdateScreenSettings2);
+			this.tabPageScreen2.Controls.Add(this.hiID2);
+			this.tabPageScreen2.Controls.Add(this.label49);
+			this.tabPageScreen2.Controls.Add(this.label50);
+			this.tabPageScreen2.Controls.Add(this.hiTitle2);
+			this.tabPageScreen2.Controls.Add(this.hiIncludeTitle);
+			this.tabPageScreen2.Controls.Add(this.hiIncludeHeader);
+			this.tabPageScreen2.Controls.Add(this.hiIncludeFooter);
+			this.tabPageScreen2.Controls.Add(this.hiHasScreen);
+			this.tabPageScreen2.Controls.Add(this.label8);
+			this.tabPageScreen2.Controls.Add(this.hiFileName);
+			this.tabPageScreen2.Controls.Add(this.label13);
+			this.tabPageScreen2.Controls.Add(this.hiBody);
+			this.tabPageScreen2.Location = new System.Drawing.Point(4, 22);
+			this.tabPageScreen2.Name = "tabPageScreen2";
+			this.tabPageScreen2.Size = new System.Drawing.Size(641, 517);
+			this.tabPageScreen2.TabIndex = 8;
+			this.tabPageScreen2.Text = "Page Content";
+			this.tabPageScreen2.UseVisualStyleBackColor = true;
+			// 
+			// bPreviewScreen2
+			// 
+			this.bPreviewScreen2.Location = new System.Drawing.Point(472, 480);
+			this.bPreviewScreen2.Name = "bPreviewScreen2";
+			this.bPreviewScreen2.Size = new System.Drawing.Size(75, 23);
+			this.bPreviewScreen2.TabIndex = 50;
+			this.bPreviewScreen2.Text = "Preview";
+			this.bPreviewScreen2.UseVisualStyleBackColor = true;
+			this.bPreviewScreen2.Click += new System.EventHandler(this.BPreviewScreen2Click);
+			// 
+			// bUpdateScreenSettings2
+			// 
+			this.bUpdateScreenSettings2.Location = new System.Drawing.Point(560, 480);
+			this.bUpdateScreenSettings2.Name = "bUpdateScreenSettings2";
+			this.bUpdateScreenSettings2.Size = new System.Drawing.Size(75, 23);
+			this.bUpdateScreenSettings2.TabIndex = 49;
+			this.bUpdateScreenSettings2.Text = "Update";
+			this.bUpdateScreenSettings2.UseVisualStyleBackColor = true;
+			this.bUpdateScreenSettings2.Click += new System.EventHandler(this.BUpdateScreenSettings2Click);
+			// 
+			// hiID2
+			// 
+			this.hiID2.Enabled = false;
+			this.hiID2.Location = new System.Drawing.Point(512, 16);
+			this.hiID2.Name = "hiID2";
+			this.hiID2.Size = new System.Drawing.Size(120, 20);
+			this.hiID2.TabIndex = 48;
+			this.hiID2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label49
+			// 
+			this.label49.Location = new System.Drawing.Point(480, 16);
+			this.label49.Name = "label49";
+			this.label49.Size = new System.Drawing.Size(28, 16);
+			this.label49.TabIndex = 46;
+			this.label49.Text = "ID:";
+			this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label50
+			// 
+			this.label50.Location = new System.Drawing.Point(8, 16);
+			this.label50.Name = "label50";
+			this.label50.Size = new System.Drawing.Size(112, 16);
+			this.label50.TabIndex = 43;
+			this.label50.Text = "Help Item Title:";
+			// 
+			// hiTitle2
+			// 
+			this.hiTitle2.Location = new System.Drawing.Point(120, 16);
+			this.hiTitle2.Name = "hiTitle2";
+			this.hiTitle2.Size = new System.Drawing.Size(328, 20);
+			this.hiTitle2.TabIndex = 42;
+			this.hiTitle2.Leave += new System.EventHandler(this.HiTitle2Leave);
+			// 
+			// hiIncludeTitle
+			// 
+			this.hiIncludeTitle.Location = new System.Drawing.Point(296, 40);
+			this.hiIncludeTitle.Name = "hiIncludeTitle";
+			this.hiIncludeTitle.Size = new System.Drawing.Size(88, 24);
+			this.hiIncludeTitle.TabIndex = 41;
+			this.hiIncludeTitle.Text = "Include Title";
+			this.hiIncludeTitle.UseVisualStyleBackColor = true;
+			// 
+			// hiIncludeHeader
+			// 
+			this.hiIncludeHeader.Location = new System.Drawing.Point(408, 40);
+			this.hiIncludeHeader.Name = "hiIncludeHeader";
+			this.hiIncludeHeader.Size = new System.Drawing.Size(104, 24);
+			this.hiIncludeHeader.TabIndex = 40;
+			this.hiIncludeHeader.Text = "Include Header";
+			this.hiIncludeHeader.UseVisualStyleBackColor = true;
+			// 
+			// hiIncludeFooter
+			// 
+			this.hiIncludeFooter.Location = new System.Drawing.Point(528, 40);
+			this.hiIncludeFooter.Name = "hiIncludeFooter";
+			this.hiIncludeFooter.Size = new System.Drawing.Size(104, 24);
+			this.hiIncludeFooter.TabIndex = 39;
+			this.hiIncludeFooter.Text = "Include Footer";
+			this.hiIncludeFooter.UseVisualStyleBackColor = true;
+			// 
+			// hiHasScreen
+			// 
+			this.hiHasScreen.Location = new System.Drawing.Point(112, 40);
+			this.hiHasScreen.Name = "hiHasScreen";
+			this.hiHasScreen.Size = new System.Drawing.Size(96, 24);
+			this.hiHasScreen.TabIndex = 38;
+			this.hiHasScreen.Text = "Has Screen";
+			this.hiHasScreen.UseVisualStyleBackColor = true;
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(8, 480);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(112, 16);
+			this.label8.TabIndex = 31;
+			this.label8.Text = "HTML File Name:";
+			this.label8.Visible = false;
+			// 
+			// hiFileName
+			// 
+			this.hiFileName.Location = new System.Drawing.Point(120, 480);
+			this.hiFileName.Name = "hiFileName";
+			this.hiFileName.Size = new System.Drawing.Size(328, 20);
+			this.hiFileName.TabIndex = 30;
+			this.hiFileName.Visible = false;
+			// 
+			// label13
+			// 
+			this.label13.Location = new System.Drawing.Point(8, 48);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(112, 16);
+			this.label13.TabIndex = 37;
+			this.label13.Text = "Body Contents:";
+			// 
+			// hiBody
+			// 
+			this.hiBody.AcceptsReturn = true;
+			this.hiBody.AcceptsTab = true;
+			this.hiBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.hiBody.Location = new System.Drawing.Point(8, 64);
+			this.hiBody.Multiline = true;
+			this.hiBody.Name = "hiBody";
+			this.hiBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.hiBody.Size = new System.Drawing.Size(624, 408);
+			this.hiBody.TabIndex = 36;
 			// 
 			// tabPagePopupText
 			// 
@@ -2038,6 +2121,39 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// lvScripts
+			// 
+			this.lvScripts.CheckBoxes = true;
+			this.lvScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.lvScriptsID,
+									this.lvScriptsTitle});
+			this.lvScripts.GridLines = true;
+			this.lvScripts.Location = new System.Drawing.Point(8, 360);
+			this.lvScripts.Name = "lvScripts";
+			this.lvScripts.Size = new System.Drawing.Size(280, 112);
+			this.lvScripts.TabIndex = 34;
+			this.lvScripts.UseCompatibleStateImageBehavior = false;
+			this.lvScripts.View = System.Windows.Forms.View.Details;
+			// 
+			// lvScriptsID
+			// 
+			this.lvScriptsID.Text = "";
+			this.lvScriptsID.Width = 20;
+			// 
+			// lvScriptsTitle
+			// 
+			this.lvScriptsTitle.Text = "Title";
+			this.lvScriptsTitle.Width = 260;
+			// 
+			// label11
+			// 
+			this.label11.Location = new System.Drawing.Point(8, 344);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(176, 16);
+			this.label11.TabIndex = 33;
+			this.label11.Text = "Script Files to Load:";
+			this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -2077,6 +2193,8 @@ namespace HHBuilder
 			this.tabPageScreen.ResumeLayout(false);
 			this.tabPageScreen.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).EndInit();
+			this.tabPageScreen2.ResumeLayout(false);
+			this.tabPageScreen2.PerformLayout();
 			this.tabPagePopupText.ResumeLayout(false);
 			this.tabPagePopupText.PerformLayout();
 			this.tabPageCSS.ResumeLayout(false);
@@ -2089,6 +2207,21 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.ColumnHeader lvScriptsTitle;
+		private System.Windows.Forms.ColumnHeader lvScriptsID;
+		private System.Windows.Forms.ListView lvScripts;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.ColumnHeader lvCSSTitle;
+		private System.Windows.Forms.ColumnHeader lvCSSID;
+		private System.Windows.Forms.ListView lvCSS;
+		private System.Windows.Forms.Button bUpdateScreenSettings2;
+		private System.Windows.Forms.Button bPreviewScreen2;
+		private System.Windows.Forms.TextBox hiTitle2;
+		private System.Windows.Forms.Label label50;
+		private System.Windows.Forms.Label label49;
+		private System.Windows.Forms.TextBox hiID2;
+		private System.Windows.Forms.TabPage tabPageScreen2;
 		private System.Windows.Forms.Label label35;
 		private System.Windows.Forms.TextBox tbTemplateID;
 		private System.Windows.Forms.Label label36;
@@ -2217,10 +2350,6 @@ namespace HHBuilder
 		private System.Windows.Forms.TextBox hiFileName;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox hiLinkDesc;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.TextBox hiBody;

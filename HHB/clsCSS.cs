@@ -18,7 +18,7 @@ namespace HHBuilder
 	{
 		#region Private Member Variables
 		private string _id;
-		private string _fileName;
+		//private string _fileName;
 		private string _title;
 		private string _content;
 		#endregion
@@ -50,7 +50,7 @@ namespace HHBuilder
 		public CSSItem()
 		{
 			id = GetID();
-			fileName = "CSS_" + id + ".css";
+			//fileName = "CSS_" + id + ".css";
 			title = string.Format("CSS ID: {0}", id);
 			content = "/* User-Defined Additional CSS File */\n\n";
 		}
@@ -64,7 +64,7 @@ namespace HHBuilder
 		public CSSItem(string itemTitle, string itemContent)
 		{
 			id = GetID();
-			fileName = "CSS_" + id + ".css";
+			//fileName = "CSS_" + id + ".css";
 			title = itemTitle;
 			content = itemContent;
 		}
@@ -80,7 +80,7 @@ namespace HHBuilder
 		public CSSItem(string itemID, string itemFileName, string itemTitle, string itemContent)
 		{
 			id = itemID;
-			fileName = itemFileName;
+			//fileName = itemFileName;
 			title = itemTitle;
 			content = itemContent;
 		}
@@ -101,8 +101,8 @@ namespace HHBuilder
 		/// </summary>
 		public string fileName
 		{
-			get{ return _fileName.Trim(); }
-			set{ _fileName = value.Trim(); }
+			get{ return (id + ".css"); }
+			//set{ _fileName = value.Trim(); }
 		}
 		
 		/// <summary>
