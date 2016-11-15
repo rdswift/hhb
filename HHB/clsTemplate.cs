@@ -895,19 +895,6 @@ namespace HHBuilder
 			return _templateList;
 		}
 		
-//		// ==============================================================================
-//		/// <summary>
-//		/// Get list of all available templates from the specified directory<br />
-//		/// Note that templates located in the program directory are included automatically.
-//		/// </summary>
-//		/// <param name="templateDirectory">Template storage directory</param>
-//		/// <returns>Array of available templates as HHBTemplate objects</returns>
-//		public static System.Collections.Generic.IList<HHBTemplate> AvailableTemplates(string templateDirectory)
-//		{
-//			ReadAvailableTemplates(templateDirectory);
-//			return _templateList;
-//		}
-		
 		// ==============================================================================
 		/// <summary>
 		/// Get list of all available templates from the templates directory specified in the program<br />
@@ -955,6 +942,7 @@ namespace HHBuilder
 				}
 				catch (Exception ex)
 				{
+					Log.Error(String.Format("Problem getting the license for template {0}: {1}", this.id, this.title));
 					Log.Exception(ex);
 					licenseText = String.Empty;
 				}
@@ -962,12 +950,36 @@ namespace HHBuilder
 				DeleteTempFile(tempFile);
 			}
 			
-			if ( String.IsNullOrWhiteSpace(licenseText) )
+			return licenseText;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Unpack the README information from the template archive
+		/// </summary>
+		/// <returns>The contents of the README file included with the template</returns>
+		public string Notes()
+		{
+			Log.Debug(String.Format("Getting the notes for template {0}: {1}", this.id, this.title));
+			string tempFile = UnpackTemplateFile(@"README");
+			string notesText = String.Empty;
+			if ( (!String.IsNullOrWhiteSpace(tempFile)) && (System.IO.File.Exists(tempFile)) )
 			{
-				Log.Error("Error reading information file: \"" + tempFile + "\"");
+				try 
+				{
+					notesText = System.IO.File.ReadAllText(tempFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Problem getting the notes for template {0}: {1}", this.id, this.title));
+					Log.Exception(ex);
+					notesText = String.Empty;
+				}
+
+				DeleteTempFile(tempFile);
 			}
 			
-			return licenseText;
+			return notesText;
 		}
 		#endregion
 	}

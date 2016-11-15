@@ -255,6 +255,8 @@ namespace HHBuilder
 				dr["LinkID"] = tnItem.linkID.ToString();
 				dr["LinkDesc"] = tnItem.linkDescription;
 				dr["LinkList"] = tnItem.linkList;
+				dr["CssList"] = tnItem.cssList;
+				dr["ScriptList"] = tnItem.scriptList;
 				dr["Body"] = tnItem.body;
 				ds.Tables[1].Rows.Add(dr);
 			}
@@ -344,6 +346,10 @@ namespace HHBuilder
 			dc = new DataColumn("LinkDesc", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("LinkList", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("CssList", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("ScriptList", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("Body", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
@@ -481,7 +487,7 @@ namespace HHBuilder
 				{
 					tHI.screenType = HelpItem.ScreenType.Popup;
 				}
-				tHI.fileName = (string) tDR["FileName"];
+				//tHI.fileName = (string) tDR["FileName"];
 				tHI.hasScreen = String.Equals(tDR["HasScreen"].ToString().Trim().ToLower(), "true");
 				tHI.usesTitle = String.Equals(tDR["UseTitle"].ToString().Trim().ToLower(), "true");
 				tHI.usesHeader = String.Equals(tDR["UseHeader"].ToString().Trim().ToLower(), "true");
@@ -491,6 +497,8 @@ namespace HHBuilder
 				tHI.linkID = System.Convert.ToUInt32("0" + tDR["LinkID"].ToString().Trim());
 				tHI.linkDescription = (string) tDR["LinkDesc"];
 				tHI.linkList = (string) tDR["LinkList"];
+				tHI.cssList = (string) tDR["CssList"];
+				tHI.scriptList = (string) tDR["ScriptList"];
 				tHI.body = (string) tDR["Body"];
 				TreeNode tTN = new TreeNode();
 				tTN = topNode;
@@ -548,7 +556,8 @@ namespace HHBuilder
 				ImageItem tItem = new ImageItem();
 				tItem.id = tdr["ID"].ToString().Trim();
 				tItem.title = tdr["Title"].ToString().Trim();
-				tItem.fileName = tdr["FileName"].ToString().Trim();
+				//tItem.fileName = tdr["FileName"].ToString().Trim();
+				tItem.extension = Path.GetExtension(tdr["FileName"].ToString().Trim());
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes.Add(tItem.title);
 				tTN.Tag = tItem;

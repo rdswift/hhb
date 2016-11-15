@@ -93,6 +93,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateSelector.cs" />
+    <Compile Include="TemplateSelector.Designer.cs">
+      <DependentUpon>TemplateSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewLicense.cs" />
+    <Compile Include="ViewLicense.Designer.cs">
+      <DependentUpon>ViewLicense.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmSettings.resx">
@@ -104,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PreviewHTML.resx">
       <DependentUpon>PreviewHTML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TemplateSelector.resx">
+      <DependentUpon>TemplateSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewLicense.resx">
+      <DependentUpon>ViewLicense.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

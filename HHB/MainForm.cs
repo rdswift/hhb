@@ -30,6 +30,13 @@ namespace HHBuilder
 		string helpProjectFilePathAndName = "";
 //		public static ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
 		public const int _MaxLevels = 7;
+		private static string _returnedString;
+		
+		public static string parameterString
+		{
+			get{ return _returnedString.Trim(); }
+			set{ _returnedString = value.Trim(); }
+		}
 		
 		public MainForm()
 		{
@@ -111,6 +118,7 @@ namespace HHBuilder
 			{
 				cbLanguage.SelectedIndex = cbLanguage.FindString(defaultLanguage.Substring(7).Trim());
 			}
+			UpdateTemplateTab();
 			Log.Debug("Project form reset.");
 //			ShowDataSet();
 		}
@@ -244,11 +252,40 @@ namespace HHBuilder
 //		}
 		
 		// ---------------------------------------------------------------------------------------------
+		void UpdateTemplateTab()
+		{
+			if (treeView1.SelectedNode != null)
+			{
+				TreeNode tNode = HelpNode.GetRootNode(treeView1.SelectedNode);
+				HHBProject tProject = (HHBProject) tNode.Tag;
+				if ( tbTemplateID.Text != tProject.template)
+				{
+					HHBTemplate tTemplate = HHBTemplate.GetTemplate(tProject.template);
+					tbTemplateID.Text = tTemplate.id;
+					tbTemplateTitle.Text = tTemplate.title;
+					tbTemplateAuthor.Text = tTemplate.author;
+					tbTemplateCompany.Text = tTemplate.company;
+					tbTemplateContact.Text = tTemplate.contactName;
+					tbTemplateEmail.Text = tTemplate.contactEmail;
+					tbTemplateWebsite.Text = tTemplate.contactWebsite;
+					tbTemplateDescription.Text = tTemplate.description;
+					tbTemplateVersion.Text = tTemplate.version;
+					tbTemplateDate.Text = tTemplate.revisionDate;
+					tbTemplateLicense.Text = tTemplate.licenseTitle;
+					tbTemplateNotes.Text = tTemplate.Notes();
+				}
+			}
+			
+		}
+		
+		// ---------------------------------------------------------------------------------------------
 		/// <summary>
 		/// Display the information on the appropriate tab page for the currently selected node.
 		/// </summary>
 		void DisplayNodeInfo()
 		{
+			UpdateTemplateTab();
+			
 			bool bTest = false;
 			if (treeView1.SelectedNode != null)
 			{
@@ -544,7 +581,7 @@ namespace HHBuilder
 		{
 			HelpItem tempItem = (HelpItem) treeView1.SelectedNode.Tag;
 			tempItem.title = hiTitle.Text.Trim();
-			tempItem.fileName = hiFileName.Text.Trim();
+			//tempItem.fileName = hiFileName.Text.Trim();
 			tempItem.hasScreen = hiHasScreen.Checked;
 			tempItem.usesTitle = hiIncludeTitle.Checked;
 			tempItem.usesHeader = hiIncludeHeader.Checked;
@@ -1053,7 +1090,8 @@ namespace HHBuilder
 		private void BImageSaveClick(object sender, EventArgs e)
 		{
 			ImageItem tItem = (ImageItem) treeView1.SelectedNode.Tag;
-			tItem.fileName = tbImageFilename.Text.Trim();
+			//tItem.fileName = tbImageFilename.Text.Trim();
+			tItem.extension = System.IO.Path.GetExtension(tbImageFilename.Text.Trim());
 			tItem.title = tbImageTitle.Text.Trim();
 			tItem.content = tbImageContent.Text;
 			treeView1.SelectedNode.Tag = tItem;
@@ -1300,7 +1338,7 @@ namespace HHBuilder
 		private void LoadImageFile(string ImageFileName)
 		{
 			if (System.IO.File.Exists(ImageFileName.Trim())) {
-				tbImageFilename.Text = "Img_" + tbImageID.Text.Trim() + System.IO.Path.GetExtension(ImageFileName);
+				tbImageFilename.Text = tbImageID.Text.Trim() + System.IO.Path.GetExtension(ImageFileName);
 				tbImageContent.Text = ImageItem.GetFileContents(ImageFileName.Trim());
 				DisplayImage();
 			}
@@ -1384,6 +1422,14 @@ namespace HHBuilder
 			Log.Debug("Session ended.  Exiting the program.");
 		}
 		
+		private void BViewTemplateLicenseClick(object sender, EventArgs e)
+		{
+			HHBTemplate tTemplate = HHBTemplate.GetTemplate(tbTemplateID.Text.Trim());
+			string tLicense = tTemplate.License();
+			Form frm = new ViewLicense(tLicense);
+			frm.ShowDialog();
+		}
+		
 		private void BPreviewScreenClick(object sender, EventArgs e)
 		{
 			TreeNode node = treeView1.Nodes[0];
@@ -1399,6 +1445,22 @@ namespace HHBuilder
 			else
 			{
 				Log.ErrorBox("Unable to load the HTML file " + fileName);
+			}
+		}
+		
+		void BTemplateSelectClick(object sender, EventArgs e)
+		{
+			parameterString = String.Empty;
+			Form frm = new TemplateSelector();
+			frm.ShowDialog();
+			if ( !String.IsNullOrWhiteSpace(parameterString) )
+			{
+				TreeNode tNode = HelpNode.GetRootNode(treeView1.SelectedNode);
+				HHBProject tProject = (HHBProject) tNode.Tag;
+				tProject.template = parameterString;
+				tNode.Tag = tProject;
+				parameterString = String.Empty;
+				UpdateTemplateTab();
 			}
 		}
 		
@@ -1470,6 +1532,8 @@ namespace HHBuilder
 			HHCompile.MakeFiles(node);
 			
 		}
+		
+		
 		
 	}
 }

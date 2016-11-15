@@ -137,36 +137,33 @@ namespace HHBuilder
 			this.label1 = new System.Windows.Forms.Label();
 			this.tbRootFileName = new System.Windows.Forms.TextBox();
 			this.tbProjectName = new System.Windows.Forms.TextBox();
-			this.tabPageCSS = new System.Windows.Forms.TabPage();
-			this.label18 = new System.Windows.Forms.Label();
-			this.tbCssTitle = new System.Windows.Forms.TextBox();
-			this.bCssSave = new System.Windows.Forms.Button();
-			this.label17 = new System.Windows.Forms.Label();
-			this.label16 = new System.Windows.Forms.Label();
-			this.tbCssFilename = new System.Windows.Forms.TextBox();
-			this.tbCssContents = new System.Windows.Forms.TextBox();
-			this.tabPageScripts = new System.Windows.Forms.TabPage();
-			this.label19 = new System.Windows.Forms.Label();
-			this.tbScriptTitle = new System.Windows.Forms.TextBox();
-			this.bScriptSave = new System.Windows.Forms.Button();
-			this.label20 = new System.Windows.Forms.Label();
-			this.label21 = new System.Windows.Forms.Label();
-			this.tbScriptFilename = new System.Windows.Forms.TextBox();
-			this.tbScriptContent = new System.Windows.Forms.TextBox();
-			this.tabPageImages = new System.Windows.Forms.TabPage();
-			this.label30 = new System.Windows.Forms.Label();
-			this.tbImageSize = new System.Windows.Forms.TextBox();
-			this.label24 = new System.Windows.Forms.Label();
-			this.tbImageFilename = new System.Windows.Forms.TextBox();
-			this.lPictureBox = new System.Windows.Forms.Label();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.tbImageID = new System.Windows.Forms.TextBox();
-			this.label29 = new System.Windows.Forms.Label();
-			this.label22 = new System.Windows.Forms.Label();
-			this.tbImageTitle = new System.Windows.Forms.TextBox();
-			this.bImageSave = new System.Windows.Forms.Button();
-			this.label23 = new System.Windows.Forms.Label();
-			this.tbImageContent = new System.Windows.Forms.TextBox();
+			this.tabPageTemplate = new System.Windows.Forms.TabPage();
+			this.bTemplateSelect = new System.Windows.Forms.Button();
+			this.label46 = new System.Windows.Forms.Label();
+			this.tbTemplateNotes = new System.Windows.Forms.TextBox();
+			this.label45 = new System.Windows.Forms.Label();
+			this.bViewTemplateLicense = new System.Windows.Forms.Button();
+			this.tbTemplateLicense = new System.Windows.Forms.TextBox();
+			this.label38 = new System.Windows.Forms.Label();
+			this.tbTemplateDate = new System.Windows.Forms.TextBox();
+			this.label44 = new System.Windows.Forms.Label();
+			this.tbTemplateWebsite = new System.Windows.Forms.TextBox();
+			this.label43 = new System.Windows.Forms.Label();
+			this.tbTemplateEmail = new System.Windows.Forms.TextBox();
+			this.label42 = new System.Windows.Forms.Label();
+			this.tbTemplateContact = new System.Windows.Forms.TextBox();
+			this.label41 = new System.Windows.Forms.Label();
+			this.tbTemplateCompany = new System.Windows.Forms.TextBox();
+			this.label40 = new System.Windows.Forms.Label();
+			this.tbTemplateDescription = new System.Windows.Forms.TextBox();
+			this.label39 = new System.Windows.Forms.Label();
+			this.tbTemplateVersion = new System.Windows.Forms.TextBox();
+			this.tbTemplateAuthor = new System.Windows.Forms.TextBox();
+			this.label37 = new System.Windows.Forms.Label();
+			this.tbTemplateTitle = new System.Windows.Forms.TextBox();
+			this.label36 = new System.Windows.Forms.Label();
+			this.tbTemplateID = new System.Windows.Forms.TextBox();
+			this.label35 = new System.Windows.Forms.Label();
 			this.tabPageScreen = new System.Windows.Forms.TabPage();
 			this.bPreviewScreen = new System.Windows.Forms.Button();
 			this.hiIncludeTitle = new System.Windows.Forms.CheckBox();
@@ -208,6 +205,36 @@ namespace HHBuilder
 			this.label31 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
 			this.tbPopupTextTitle = new System.Windows.Forms.TextBox();
+			this.tabPageCSS = new System.Windows.Forms.TabPage();
+			this.label18 = new System.Windows.Forms.Label();
+			this.tbCssTitle = new System.Windows.Forms.TextBox();
+			this.bCssSave = new System.Windows.Forms.Button();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label16 = new System.Windows.Forms.Label();
+			this.tbCssFilename = new System.Windows.Forms.TextBox();
+			this.tbCssContents = new System.Windows.Forms.TextBox();
+			this.tabPageScripts = new System.Windows.Forms.TabPage();
+			this.label19 = new System.Windows.Forms.Label();
+			this.tbScriptTitle = new System.Windows.Forms.TextBox();
+			this.bScriptSave = new System.Windows.Forms.Button();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.tbScriptFilename = new System.Windows.Forms.TextBox();
+			this.tbScriptContent = new System.Windows.Forms.TextBox();
+			this.tabPageImages = new System.Windows.Forms.TabPage();
+			this.label30 = new System.Windows.Forms.Label();
+			this.tbImageSize = new System.Windows.Forms.TextBox();
+			this.label24 = new System.Windows.Forms.Label();
+			this.tbImageFilename = new System.Windows.Forms.TextBox();
+			this.lPictureBox = new System.Windows.Forms.Label();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.tbImageID = new System.Windows.Forms.TextBox();
+			this.label29 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.tbImageTitle = new System.Windows.Forms.TextBox();
+			this.bImageSave = new System.Windows.Forms.Button();
+			this.label23 = new System.Windows.Forms.Label();
+			this.tbImageContent = new System.Windows.Forms.TextBox();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
@@ -226,13 +253,14 @@ namespace HHBuilder
 			this.splitContainer2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPageProject.SuspendLayout();
+			this.tabPageTemplate.SuspendLayout();
+			this.tabPageScreen.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).BeginInit();
+			this.tabPagePopupText.SuspendLayout();
 			this.tabPageCSS.SuspendLayout();
 			this.tabPageScripts.SuspendLayout();
 			this.tabPageImages.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-			this.tabPageScreen.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).BeginInit();
-			this.tabPagePopupText.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// contextMenuStrip1
@@ -729,6 +757,7 @@ namespace HHBuilder
 			// 
 			// toolStripButton1
 			// 
+			this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
 			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton1.Name = "toolStripButton1";
@@ -851,11 +880,12 @@ namespace HHBuilder
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.tabPageProject);
+			this.tabControl1.Controls.Add(this.tabPageTemplate);
+			this.tabControl1.Controls.Add(this.tabPageScreen);
+			this.tabControl1.Controls.Add(this.tabPagePopupText);
 			this.tabControl1.Controls.Add(this.tabPageCSS);
 			this.tabControl1.Controls.Add(this.tabPageScripts);
 			this.tabControl1.Controls.Add(this.tabPageImages);
-			this.tabControl1.Controls.Add(this.tabPageScreen);
-			this.tabControl1.Controls.Add(this.tabPagePopupText);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
@@ -961,6 +991,7 @@ namespace HHBuilder
 			this.tbTemplateUsed.Name = "tbTemplateUsed";
 			this.tbTemplateUsed.Size = new System.Drawing.Size(328, 20);
 			this.tbTemplateUsed.TabIndex = 11;
+			this.tbTemplateUsed.Visible = false;
 			// 
 			// tbCopyright
 			// 
@@ -990,6 +1021,7 @@ namespace HHBuilder
 			this.label6.Size = new System.Drawing.Size(112, 16);
 			this.label6.TabIndex = 7;
 			this.label6.Text = "Template Used:";
+			this.label6.Visible = false;
 			// 
 			// label5
 			// 
@@ -1047,302 +1079,272 @@ namespace HHBuilder
 			this.tbProjectName.Size = new System.Drawing.Size(328, 20);
 			this.tbProjectName.TabIndex = 0;
 			// 
-			// tabPageCSS
+			// tabPageTemplate
 			// 
-			this.tabPageCSS.Controls.Add(this.label18);
-			this.tabPageCSS.Controls.Add(this.tbCssTitle);
-			this.tabPageCSS.Controls.Add(this.bCssSave);
-			this.tabPageCSS.Controls.Add(this.label17);
-			this.tabPageCSS.Controls.Add(this.label16);
-			this.tabPageCSS.Controls.Add(this.tbCssFilename);
-			this.tabPageCSS.Controls.Add(this.tbCssContents);
-			this.tabPageCSS.Location = new System.Drawing.Point(4, 22);
-			this.tabPageCSS.Name = "tabPageCSS";
-			this.tabPageCSS.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageCSS.Size = new System.Drawing.Size(641, 517);
-			this.tabPageCSS.TabIndex = 3;
-			this.tabPageCSS.Text = "Additional CSS";
-			this.tabPageCSS.UseVisualStyleBackColor = true;
+			this.tabPageTemplate.Controls.Add(this.bTemplateSelect);
+			this.tabPageTemplate.Controls.Add(this.label46);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateNotes);
+			this.tabPageTemplate.Controls.Add(this.label45);
+			this.tabPageTemplate.Controls.Add(this.bViewTemplateLicense);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateLicense);
+			this.tabPageTemplate.Controls.Add(this.label38);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateDate);
+			this.tabPageTemplate.Controls.Add(this.label44);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateWebsite);
+			this.tabPageTemplate.Controls.Add(this.label43);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateEmail);
+			this.tabPageTemplate.Controls.Add(this.label42);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateContact);
+			this.tabPageTemplate.Controls.Add(this.label41);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateCompany);
+			this.tabPageTemplate.Controls.Add(this.label40);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateDescription);
+			this.tabPageTemplate.Controls.Add(this.label39);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateVersion);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateAuthor);
+			this.tabPageTemplate.Controls.Add(this.label37);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateTitle);
+			this.tabPageTemplate.Controls.Add(this.label36);
+			this.tabPageTemplate.Controls.Add(this.tbTemplateID);
+			this.tabPageTemplate.Controls.Add(this.label35);
+			this.tabPageTemplate.Location = new System.Drawing.Point(4, 22);
+			this.tabPageTemplate.Name = "tabPageTemplate";
+			this.tabPageTemplate.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTemplate.Size = new System.Drawing.Size(641, 517);
+			this.tabPageTemplate.TabIndex = 7;
+			this.tabPageTemplate.Text = "Template";
+			this.tabPageTemplate.UseVisualStyleBackColor = true;
 			// 
-			// label18
+			// bTemplateSelect
 			// 
-			this.label18.Location = new System.Drawing.Point(8, 8);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(64, 24);
-			this.label18.TabIndex = 9;
-			this.label18.Text = "Title:";
+			this.bTemplateSelect.Location = new System.Drawing.Point(584, 16);
+			this.bTemplateSelect.Name = "bTemplateSelect";
+			this.bTemplateSelect.Size = new System.Drawing.Size(48, 23);
+			this.bTemplateSelect.TabIndex = 38;
+			this.bTemplateSelect.Text = "Select";
+			this.bTemplateSelect.UseVisualStyleBackColor = true;
+			this.bTemplateSelect.Click += new System.EventHandler(this.BTemplateSelectClick);
 			// 
-			// tbCssTitle
+			// label46
 			// 
-			this.tbCssTitle.Location = new System.Drawing.Point(72, 8);
-			this.tbCssTitle.Name = "tbCssTitle";
-			this.tbCssTitle.Size = new System.Drawing.Size(312, 20);
-			this.tbCssTitle.TabIndex = 8;
+			this.label46.Location = new System.Drawing.Point(152, 112);
+			this.label46.Name = "label46";
+			this.label46.Size = new System.Drawing.Size(40, 16);
+			this.label46.TabIndex = 37;
+			this.label46.Text = "Date:";
+			this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// bCssSave
+			// tbTemplateNotes
 			// 
-			this.bCssSave.Location = new System.Drawing.Point(528, 40);
-			this.bCssSave.Name = "bCssSave";
-			this.bCssSave.Size = new System.Drawing.Size(104, 23);
-			this.bCssSave.TabIndex = 7;
-			this.bCssSave.Text = "Update";
-			this.bCssSave.UseVisualStyleBackColor = true;
-			this.bCssSave.Click += new System.EventHandler(this.BCssSaveClick);
+			this.tbTemplateNotes.Location = new System.Drawing.Point(80, 168);
+			this.tbTemplateNotes.Multiline = true;
+			this.tbTemplateNotes.Name = "tbTemplateNotes";
+			this.tbTemplateNotes.ReadOnly = true;
+			this.tbTemplateNotes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.tbTemplateNotes.Size = new System.Drawing.Size(552, 336);
+			this.tbTemplateNotes.TabIndex = 36;
 			// 
-			// label17
+			// label45
 			// 
-			this.label17.Location = new System.Drawing.Point(8, 56);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(64, 16);
-			this.label17.TabIndex = 5;
-			this.label17.Text = "Contents:";
+			this.label45.Location = new System.Drawing.Point(8, 168);
+			this.label45.Name = "label45";
+			this.label45.Size = new System.Drawing.Size(72, 16);
+			this.label45.TabIndex = 35;
+			this.label45.Text = "Notes:";
+			this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label16
+			// bViewTemplateLicense
 			// 
-			this.label16.Location = new System.Drawing.Point(8, 32);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(64, 24);
-			this.label16.TabIndex = 4;
-			this.label16.Text = "File Name:";
+			this.bViewTemplateLicense.Location = new System.Drawing.Point(272, 136);
+			this.bViewTemplateLicense.Name = "bViewTemplateLicense";
+			this.bViewTemplateLicense.Size = new System.Drawing.Size(48, 23);
+			this.bViewTemplateLicense.TabIndex = 34;
+			this.bViewTemplateLicense.Text = "View";
+			this.bViewTemplateLicense.UseVisualStyleBackColor = true;
+			this.bViewTemplateLicense.Click += new System.EventHandler(this.BViewTemplateLicenseClick);
 			// 
-			// tbCssFilename
+			// tbTemplateLicense
 			// 
-			this.tbCssFilename.Location = new System.Drawing.Point(72, 32);
-			this.tbCssFilename.Name = "tbCssFilename";
-			this.tbCssFilename.Size = new System.Drawing.Size(312, 20);
-			this.tbCssFilename.TabIndex = 2;
+			this.tbTemplateLicense.Location = new System.Drawing.Point(80, 136);
+			this.tbTemplateLicense.Name = "tbTemplateLicense";
+			this.tbTemplateLicense.ReadOnly = true;
+			this.tbTemplateLicense.Size = new System.Drawing.Size(184, 20);
+			this.tbTemplateLicense.TabIndex = 33;
 			// 
-			// tbCssContents
+			// label38
 			// 
-			this.tbCssContents.AcceptsReturn = true;
-			this.tbCssContents.AcceptsTab = true;
-			this.tbCssContents.Location = new System.Drawing.Point(8, 72);
-			this.tbCssContents.Multiline = true;
-			this.tbCssContents.Name = "tbCssContents";
-			this.tbCssContents.Size = new System.Drawing.Size(624, 432);
-			this.tbCssContents.TabIndex = 1;
+			this.label38.Location = new System.Drawing.Point(8, 136);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(64, 16);
+			this.label38.TabIndex = 32;
+			this.label38.Text = "License:";
+			this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tabPageScripts
+			// tbTemplateDate
 			// 
-			this.tabPageScripts.Controls.Add(this.label19);
-			this.tabPageScripts.Controls.Add(this.tbScriptTitle);
-			this.tabPageScripts.Controls.Add(this.bScriptSave);
-			this.tabPageScripts.Controls.Add(this.label20);
-			this.tabPageScripts.Controls.Add(this.label21);
-			this.tabPageScripts.Controls.Add(this.tbScriptFilename);
-			this.tabPageScripts.Controls.Add(this.tbScriptContent);
-			this.tabPageScripts.Location = new System.Drawing.Point(4, 22);
-			this.tabPageScripts.Name = "tabPageScripts";
-			this.tabPageScripts.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageScripts.Size = new System.Drawing.Size(641, 517);
-			this.tabPageScripts.TabIndex = 4;
-			this.tabPageScripts.Text = "Scripts";
-			this.tabPageScripts.UseVisualStyleBackColor = true;
+			this.tbTemplateDate.Location = new System.Drawing.Point(200, 112);
+			this.tbTemplateDate.Name = "tbTemplateDate";
+			this.tbTemplateDate.ReadOnly = true;
+			this.tbTemplateDate.Size = new System.Drawing.Size(120, 20);
+			this.tbTemplateDate.TabIndex = 31;
+			this.tbTemplateDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// label19
+			// label44
 			// 
-			this.label19.Location = new System.Drawing.Point(8, 8);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(64, 24);
-			this.label19.TabIndex = 16;
-			this.label19.Text = "Title:";
+			this.label44.Location = new System.Drawing.Point(8, 112);
+			this.label44.Name = "label44";
+			this.label44.Size = new System.Drawing.Size(64, 16);
+			this.label44.TabIndex = 30;
+			this.label44.Text = "Version:";
+			this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tbScriptTitle
+			// tbTemplateWebsite
 			// 
-			this.tbScriptTitle.Location = new System.Drawing.Point(72, 8);
-			this.tbScriptTitle.Name = "tbScriptTitle";
-			this.tbScriptTitle.Size = new System.Drawing.Size(312, 20);
-			this.tbScriptTitle.TabIndex = 15;
+			this.tbTemplateWebsite.Location = new System.Drawing.Point(432, 136);
+			this.tbTemplateWebsite.Name = "tbTemplateWebsite";
+			this.tbTemplateWebsite.ReadOnly = true;
+			this.tbTemplateWebsite.Size = new System.Drawing.Size(200, 20);
+			this.tbTemplateWebsite.TabIndex = 29;
 			// 
-			// bScriptSave
+			// label43
 			// 
-			this.bScriptSave.Location = new System.Drawing.Point(528, 40);
-			this.bScriptSave.Name = "bScriptSave";
-			this.bScriptSave.Size = new System.Drawing.Size(104, 23);
-			this.bScriptSave.TabIndex = 14;
-			this.bScriptSave.Text = "Update";
-			this.bScriptSave.UseVisualStyleBackColor = true;
-			this.bScriptSave.Click += new System.EventHandler(this.BScriptSaveClick);
+			this.label43.Location = new System.Drawing.Point(360, 136);
+			this.label43.Name = "label43";
+			this.label43.Size = new System.Drawing.Size(72, 16);
+			this.label43.TabIndex = 28;
+			this.label43.Text = "Website:";
+			this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label20
+			// tbTemplateEmail
 			// 
-			this.label20.Location = new System.Drawing.Point(8, 56);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(64, 16);
-			this.label20.TabIndex = 13;
-			this.label20.Text = "Contents:";
+			this.tbTemplateEmail.Location = new System.Drawing.Point(432, 112);
+			this.tbTemplateEmail.Name = "tbTemplateEmail";
+			this.tbTemplateEmail.ReadOnly = true;
+			this.tbTemplateEmail.Size = new System.Drawing.Size(200, 20);
+			this.tbTemplateEmail.TabIndex = 27;
 			// 
-			// label21
+			// label42
 			// 
-			this.label21.Location = new System.Drawing.Point(8, 32);
-			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(64, 24);
-			this.label21.TabIndex = 12;
-			this.label21.Text = "File Name:";
+			this.label42.Location = new System.Drawing.Point(360, 112);
+			this.label42.Name = "label42";
+			this.label42.Size = new System.Drawing.Size(72, 16);
+			this.label42.TabIndex = 26;
+			this.label42.Text = "Email:";
+			this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tbScriptFilename
+			// tbTemplateContact
 			// 
-			this.tbScriptFilename.Location = new System.Drawing.Point(72, 32);
-			this.tbScriptFilename.Name = "tbScriptFilename";
-			this.tbScriptFilename.Size = new System.Drawing.Size(312, 20);
-			this.tbScriptFilename.TabIndex = 11;
+			this.tbTemplateContact.Location = new System.Drawing.Point(432, 88);
+			this.tbTemplateContact.Name = "tbTemplateContact";
+			this.tbTemplateContact.ReadOnly = true;
+			this.tbTemplateContact.Size = new System.Drawing.Size(200, 20);
+			this.tbTemplateContact.TabIndex = 25;
 			// 
-			// tbScriptContent
+			// label41
 			// 
-			this.tbScriptContent.AcceptsReturn = true;
-			this.tbScriptContent.AcceptsTab = true;
-			this.tbScriptContent.Location = new System.Drawing.Point(8, 72);
-			this.tbScriptContent.Multiline = true;
-			this.tbScriptContent.Name = "tbScriptContent";
-			this.tbScriptContent.Size = new System.Drawing.Size(624, 432);
-			this.tbScriptContent.TabIndex = 10;
+			this.label41.Location = new System.Drawing.Point(360, 88);
+			this.label41.Name = "label41";
+			this.label41.Size = new System.Drawing.Size(72, 16);
+			this.label41.TabIndex = 24;
+			this.label41.Text = "Contact:";
+			this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tabPageImages
+			// tbTemplateCompany
 			// 
-			this.tabPageImages.Controls.Add(this.label30);
-			this.tabPageImages.Controls.Add(this.tbImageSize);
-			this.tabPageImages.Controls.Add(this.label24);
-			this.tabPageImages.Controls.Add(this.tbImageFilename);
-			this.tabPageImages.Controls.Add(this.lPictureBox);
-			this.tabPageImages.Controls.Add(this.pictureBox1);
-			this.tabPageImages.Controls.Add(this.tbImageID);
-			this.tabPageImages.Controls.Add(this.label29);
-			this.tabPageImages.Controls.Add(this.label22);
-			this.tabPageImages.Controls.Add(this.tbImageTitle);
-			this.tabPageImages.Controls.Add(this.bImageSave);
-			this.tabPageImages.Controls.Add(this.label23);
-			this.tabPageImages.Controls.Add(this.tbImageContent);
-			this.tabPageImages.Location = new System.Drawing.Point(4, 22);
-			this.tabPageImages.Name = "tabPageImages";
-			this.tabPageImages.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageImages.Size = new System.Drawing.Size(641, 517);
-			this.tabPageImages.TabIndex = 5;
-			this.tabPageImages.Text = "Images";
-			this.tabPageImages.UseVisualStyleBackColor = true;
+			this.tbTemplateCompany.Location = new System.Drawing.Point(432, 64);
+			this.tbTemplateCompany.Name = "tbTemplateCompany";
+			this.tbTemplateCompany.ReadOnly = true;
+			this.tbTemplateCompany.Size = new System.Drawing.Size(200, 20);
+			this.tbTemplateCompany.TabIndex = 23;
 			// 
-			// label30
+			// label40
 			// 
-			this.label30.Location = new System.Drawing.Point(8, 32);
-			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(64, 24);
-			this.label30.TabIndex = 26;
-			this.label30.Text = "Image Size:";
+			this.label40.Location = new System.Drawing.Point(360, 64);
+			this.label40.Name = "label40";
+			this.label40.Size = new System.Drawing.Size(72, 16);
+			this.label40.TabIndex = 22;
+			this.label40.Text = "Company:";
+			this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tbImageSize
+			// tbTemplateDescription
 			// 
-			this.tbImageSize.AllowDrop = true;
-			this.tbImageSize.Location = new System.Drawing.Point(72, 32);
-			this.tbImageSize.Name = "tbImageSize";
-			this.tbImageSize.ReadOnly = true;
-			this.tbImageSize.Size = new System.Drawing.Size(128, 20);
-			this.tbImageSize.TabIndex = 25;
-			this.tbImageSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbTemplateDescription.Location = new System.Drawing.Point(80, 40);
+			this.tbTemplateDescription.Multiline = true;
+			this.tbTemplateDescription.Name = "tbTemplateDescription";
+			this.tbTemplateDescription.ReadOnly = true;
+			this.tbTemplateDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.tbTemplateDescription.Size = new System.Drawing.Size(240, 64);
+			this.tbTemplateDescription.TabIndex = 21;
 			// 
-			// label24
+			// label39
 			// 
-			this.label24.Location = new System.Drawing.Point(112, 128);
-			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(64, 24);
-			this.label24.TabIndex = 12;
-			this.label24.Text = "File Name:";
-			this.label24.Visible = false;
+			this.label39.Location = new System.Drawing.Point(8, 40);
+			this.label39.Name = "label39";
+			this.label39.Size = new System.Drawing.Size(64, 16);
+			this.label39.TabIndex = 20;
+			this.label39.Text = "Description:";
+			this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tbImageFilename
+			// tbTemplateVersion
 			// 
-			this.tbImageFilename.AllowDrop = true;
-			this.tbImageFilename.Location = new System.Drawing.Point(176, 128);
-			this.tbImageFilename.Name = "tbImageFilename";
-			this.tbImageFilename.Size = new System.Drawing.Size(368, 20);
-			this.tbImageFilename.TabIndex = 11;
-			this.tbImageFilename.Visible = false;
+			this.tbTemplateVersion.Location = new System.Drawing.Point(80, 112);
+			this.tbTemplateVersion.Name = "tbTemplateVersion";
+			this.tbTemplateVersion.ReadOnly = true;
+			this.tbTemplateVersion.Size = new System.Drawing.Size(64, 20);
+			this.tbTemplateVersion.TabIndex = 19;
+			this.tbTemplateVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// lPictureBox
+			// tbTemplateAuthor
 			// 
-			this.lPictureBox.AllowDrop = true;
-			this.lPictureBox.BackColor = System.Drawing.SystemColors.Window;
-			this.lPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lPictureBox.Location = new System.Drawing.Point(336, 40);
-			this.lPictureBox.Name = "lPictureBox";
-			this.lPictureBox.Size = new System.Drawing.Size(104, 24);
-			this.lPictureBox.TabIndex = 24;
-			this.lPictureBox.Text = "Drop File Here";
-			this.lPictureBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.lPictureBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.LPictureBoxDragDrop);
-			this.lPictureBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.LPictureBoxDragEnter);
+			this.tbTemplateAuthor.Location = new System.Drawing.Point(432, 40);
+			this.tbTemplateAuthor.Name = "tbTemplateAuthor";
+			this.tbTemplateAuthor.ReadOnly = true;
+			this.tbTemplateAuthor.Size = new System.Drawing.Size(200, 20);
+			this.tbTemplateAuthor.TabIndex = 17;
 			// 
-			// pictureBox1
+			// label37
 			// 
-			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pictureBox1.Location = new System.Drawing.Point(8, 72);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(624, 432);
-			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.pictureBox1.TabIndex = 23;
-			this.pictureBox1.TabStop = false;
+			this.label37.Location = new System.Drawing.Point(360, 40);
+			this.label37.Name = "label37";
+			this.label37.Size = new System.Drawing.Size(72, 16);
+			this.label37.TabIndex = 16;
+			this.label37.Text = "Author:";
+			this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tbImageID
+			// tbTemplateTitle
 			// 
-			this.tbImageID.Enabled = false;
-			this.tbImageID.Location = new System.Drawing.Point(512, 8);
-			this.tbImageID.Name = "tbImageID";
-			this.tbImageID.Size = new System.Drawing.Size(120, 20);
-			this.tbImageID.TabIndex = 22;
-			this.tbImageID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbTemplateTitle.Location = new System.Drawing.Point(80, 16);
+			this.tbTemplateTitle.Name = "tbTemplateTitle";
+			this.tbTemplateTitle.ReadOnly = true;
+			this.tbTemplateTitle.Size = new System.Drawing.Size(240, 20);
+			this.tbTemplateTitle.TabIndex = 15;
 			// 
-			// label29
+			// label36
 			// 
-			this.label29.Location = new System.Drawing.Point(480, 8);
-			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(28, 16);
-			this.label29.TabIndex = 21;
-			this.label29.Text = "ID:";
-			this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label36.Location = new System.Drawing.Point(8, 16);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(64, 16);
+			this.label36.TabIndex = 14;
+			this.label36.Text = "Title:";
+			this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label22
+			// tbTemplateID
 			// 
-			this.label22.Location = new System.Drawing.Point(8, 8);
-			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(64, 24);
-			this.label22.TabIndex = 16;
-			this.label22.Text = "Title:";
+			this.tbTemplateID.Location = new System.Drawing.Point(432, 16);
+			this.tbTemplateID.Name = "tbTemplateID";
+			this.tbTemplateID.ReadOnly = true;
+			this.tbTemplateID.Size = new System.Drawing.Size(144, 20);
+			this.tbTemplateID.TabIndex = 13;
+			this.tbTemplateID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// tbImageTitle
+			// label35
 			// 
-			this.tbImageTitle.Location = new System.Drawing.Point(72, 8);
-			this.tbImageTitle.Name = "tbImageTitle";
-			this.tbImageTitle.Size = new System.Drawing.Size(368, 20);
-			this.tbImageTitle.TabIndex = 15;
-			// 
-			// bImageSave
-			// 
-			this.bImageSave.Location = new System.Drawing.Point(528, 40);
-			this.bImageSave.Name = "bImageSave";
-			this.bImageSave.Size = new System.Drawing.Size(104, 23);
-			this.bImageSave.TabIndex = 14;
-			this.bImageSave.Text = "Update";
-			this.bImageSave.UseVisualStyleBackColor = true;
-			this.bImageSave.Click += new System.EventHandler(this.BImageSaveClick);
-			// 
-			// label23
-			// 
-			this.label23.Location = new System.Drawing.Point(8, 56);
-			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(64, 16);
-			this.label23.TabIndex = 13;
-			this.label23.Text = "Contents:";
-			// 
-			// tbImageContent
-			// 
-			this.tbImageContent.AcceptsReturn = true;
-			this.tbImageContent.AcceptsTab = true;
-			this.tbImageContent.Location = new System.Drawing.Point(8, 72);
-			this.tbImageContent.Multiline = true;
-			this.tbImageContent.Name = "tbImageContent";
-			this.tbImageContent.ReadOnly = true;
-			this.tbImageContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.tbImageContent.Size = new System.Drawing.Size(624, 136);
-			this.tbImageContent.TabIndex = 10;
-			this.tbImageContent.Visible = false;
+			this.label35.Location = new System.Drawing.Point(360, 16);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(72, 16);
+			this.label35.TabIndex = 12;
+			this.label35.Text = "Template ID:";
+			this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tabPageScreen
 			// 
@@ -1606,6 +1608,7 @@ namespace HHBuilder
 			// 
 			this.hiBody.AcceptsReturn = true;
 			this.hiBody.AcceptsTab = true;
+			this.hiBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.hiBody.Location = new System.Drawing.Point(8, 200);
 			this.hiBody.Multiline = true;
 			this.hiBody.Name = "hiBody";
@@ -1732,6 +1735,305 @@ namespace HHBuilder
 			this.tbPopupTextTitle.Size = new System.Drawing.Size(328, 20);
 			this.tbPopupTextTitle.TabIndex = 21;
 			// 
+			// tabPageCSS
+			// 
+			this.tabPageCSS.Controls.Add(this.label18);
+			this.tabPageCSS.Controls.Add(this.tbCssTitle);
+			this.tabPageCSS.Controls.Add(this.bCssSave);
+			this.tabPageCSS.Controls.Add(this.label17);
+			this.tabPageCSS.Controls.Add(this.label16);
+			this.tabPageCSS.Controls.Add(this.tbCssFilename);
+			this.tabPageCSS.Controls.Add(this.tbCssContents);
+			this.tabPageCSS.Location = new System.Drawing.Point(4, 22);
+			this.tabPageCSS.Name = "tabPageCSS";
+			this.tabPageCSS.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageCSS.Size = new System.Drawing.Size(641, 517);
+			this.tabPageCSS.TabIndex = 3;
+			this.tabPageCSS.Text = "Additional CSS";
+			this.tabPageCSS.UseVisualStyleBackColor = true;
+			// 
+			// label18
+			// 
+			this.label18.Location = new System.Drawing.Point(8, 8);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(64, 24);
+			this.label18.TabIndex = 9;
+			this.label18.Text = "Title:";
+			// 
+			// tbCssTitle
+			// 
+			this.tbCssTitle.Location = new System.Drawing.Point(72, 8);
+			this.tbCssTitle.Name = "tbCssTitle";
+			this.tbCssTitle.Size = new System.Drawing.Size(312, 20);
+			this.tbCssTitle.TabIndex = 8;
+			// 
+			// bCssSave
+			// 
+			this.bCssSave.Location = new System.Drawing.Point(528, 40);
+			this.bCssSave.Name = "bCssSave";
+			this.bCssSave.Size = new System.Drawing.Size(104, 23);
+			this.bCssSave.TabIndex = 7;
+			this.bCssSave.Text = "Update";
+			this.bCssSave.UseVisualStyleBackColor = true;
+			this.bCssSave.Click += new System.EventHandler(this.BCssSaveClick);
+			// 
+			// label17
+			// 
+			this.label17.Location = new System.Drawing.Point(8, 56);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(64, 16);
+			this.label17.TabIndex = 5;
+			this.label17.Text = "Contents:";
+			// 
+			// label16
+			// 
+			this.label16.Location = new System.Drawing.Point(8, 32);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(64, 24);
+			this.label16.TabIndex = 4;
+			this.label16.Text = "File Name:";
+			this.label16.Visible = false;
+			// 
+			// tbCssFilename
+			// 
+			this.tbCssFilename.Location = new System.Drawing.Point(72, 32);
+			this.tbCssFilename.Name = "tbCssFilename";
+			this.tbCssFilename.Size = new System.Drawing.Size(312, 20);
+			this.tbCssFilename.TabIndex = 2;
+			this.tbCssFilename.Visible = false;
+			// 
+			// tbCssContents
+			// 
+			this.tbCssContents.AcceptsReturn = true;
+			this.tbCssContents.AcceptsTab = true;
+			this.tbCssContents.Location = new System.Drawing.Point(8, 72);
+			this.tbCssContents.Multiline = true;
+			this.tbCssContents.Name = "tbCssContents";
+			this.tbCssContents.Size = new System.Drawing.Size(624, 432);
+			this.tbCssContents.TabIndex = 1;
+			// 
+			// tabPageScripts
+			// 
+			this.tabPageScripts.Controls.Add(this.label19);
+			this.tabPageScripts.Controls.Add(this.tbScriptTitle);
+			this.tabPageScripts.Controls.Add(this.bScriptSave);
+			this.tabPageScripts.Controls.Add(this.label20);
+			this.tabPageScripts.Controls.Add(this.label21);
+			this.tabPageScripts.Controls.Add(this.tbScriptFilename);
+			this.tabPageScripts.Controls.Add(this.tbScriptContent);
+			this.tabPageScripts.Location = new System.Drawing.Point(4, 22);
+			this.tabPageScripts.Name = "tabPageScripts";
+			this.tabPageScripts.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageScripts.Size = new System.Drawing.Size(641, 517);
+			this.tabPageScripts.TabIndex = 4;
+			this.tabPageScripts.Text = "Scripts";
+			this.tabPageScripts.UseVisualStyleBackColor = true;
+			// 
+			// label19
+			// 
+			this.label19.Location = new System.Drawing.Point(8, 8);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(64, 24);
+			this.label19.TabIndex = 16;
+			this.label19.Text = "Title:";
+			// 
+			// tbScriptTitle
+			// 
+			this.tbScriptTitle.Location = new System.Drawing.Point(72, 8);
+			this.tbScriptTitle.Name = "tbScriptTitle";
+			this.tbScriptTitle.Size = new System.Drawing.Size(312, 20);
+			this.tbScriptTitle.TabIndex = 15;
+			// 
+			// bScriptSave
+			// 
+			this.bScriptSave.Location = new System.Drawing.Point(528, 40);
+			this.bScriptSave.Name = "bScriptSave";
+			this.bScriptSave.Size = new System.Drawing.Size(104, 23);
+			this.bScriptSave.TabIndex = 14;
+			this.bScriptSave.Text = "Update";
+			this.bScriptSave.UseVisualStyleBackColor = true;
+			this.bScriptSave.Click += new System.EventHandler(this.BScriptSaveClick);
+			// 
+			// label20
+			// 
+			this.label20.Location = new System.Drawing.Point(8, 56);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(64, 16);
+			this.label20.TabIndex = 13;
+			this.label20.Text = "Contents:";
+			// 
+			// label21
+			// 
+			this.label21.Location = new System.Drawing.Point(8, 32);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(64, 24);
+			this.label21.TabIndex = 12;
+			this.label21.Text = "File Name:";
+			// 
+			// tbScriptFilename
+			// 
+			this.tbScriptFilename.Location = new System.Drawing.Point(72, 32);
+			this.tbScriptFilename.Name = "tbScriptFilename";
+			this.tbScriptFilename.Size = new System.Drawing.Size(312, 20);
+			this.tbScriptFilename.TabIndex = 11;
+			// 
+			// tbScriptContent
+			// 
+			this.tbScriptContent.AcceptsReturn = true;
+			this.tbScriptContent.AcceptsTab = true;
+			this.tbScriptContent.Location = new System.Drawing.Point(8, 72);
+			this.tbScriptContent.Multiline = true;
+			this.tbScriptContent.Name = "tbScriptContent";
+			this.tbScriptContent.Size = new System.Drawing.Size(624, 432);
+			this.tbScriptContent.TabIndex = 10;
+			// 
+			// tabPageImages
+			// 
+			this.tabPageImages.Controls.Add(this.label30);
+			this.tabPageImages.Controls.Add(this.tbImageSize);
+			this.tabPageImages.Controls.Add(this.label24);
+			this.tabPageImages.Controls.Add(this.tbImageFilename);
+			this.tabPageImages.Controls.Add(this.lPictureBox);
+			this.tabPageImages.Controls.Add(this.pictureBox1);
+			this.tabPageImages.Controls.Add(this.tbImageID);
+			this.tabPageImages.Controls.Add(this.label29);
+			this.tabPageImages.Controls.Add(this.label22);
+			this.tabPageImages.Controls.Add(this.tbImageTitle);
+			this.tabPageImages.Controls.Add(this.bImageSave);
+			this.tabPageImages.Controls.Add(this.label23);
+			this.tabPageImages.Controls.Add(this.tbImageContent);
+			this.tabPageImages.Location = new System.Drawing.Point(4, 22);
+			this.tabPageImages.Name = "tabPageImages";
+			this.tabPageImages.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageImages.Size = new System.Drawing.Size(641, 517);
+			this.tabPageImages.TabIndex = 5;
+			this.tabPageImages.Text = "Images";
+			this.tabPageImages.UseVisualStyleBackColor = true;
+			// 
+			// label30
+			// 
+			this.label30.Location = new System.Drawing.Point(8, 32);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(64, 24);
+			this.label30.TabIndex = 26;
+			this.label30.Text = "Image Size:";
+			// 
+			// tbImageSize
+			// 
+			this.tbImageSize.AllowDrop = true;
+			this.tbImageSize.Location = new System.Drawing.Point(72, 32);
+			this.tbImageSize.Name = "tbImageSize";
+			this.tbImageSize.ReadOnly = true;
+			this.tbImageSize.Size = new System.Drawing.Size(128, 20);
+			this.tbImageSize.TabIndex = 25;
+			this.tbImageSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label24
+			// 
+			this.label24.Location = new System.Drawing.Point(112, 128);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(64, 24);
+			this.label24.TabIndex = 12;
+			this.label24.Text = "File Name:";
+			this.label24.Visible = false;
+			// 
+			// tbImageFilename
+			// 
+			this.tbImageFilename.AllowDrop = true;
+			this.tbImageFilename.Location = new System.Drawing.Point(176, 128);
+			this.tbImageFilename.Name = "tbImageFilename";
+			this.tbImageFilename.Size = new System.Drawing.Size(368, 20);
+			this.tbImageFilename.TabIndex = 11;
+			this.tbImageFilename.Visible = false;
+			// 
+			// lPictureBox
+			// 
+			this.lPictureBox.AllowDrop = true;
+			this.lPictureBox.BackColor = System.Drawing.SystemColors.Window;
+			this.lPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.lPictureBox.Location = new System.Drawing.Point(336, 40);
+			this.lPictureBox.Name = "lPictureBox";
+			this.lPictureBox.Size = new System.Drawing.Size(104, 24);
+			this.lPictureBox.TabIndex = 24;
+			this.lPictureBox.Text = "Drop File Here";
+			this.lPictureBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lPictureBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.LPictureBoxDragDrop);
+			this.lPictureBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.LPictureBoxDragEnter);
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pictureBox1.Location = new System.Drawing.Point(8, 72);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(624, 432);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBox1.TabIndex = 23;
+			this.pictureBox1.TabStop = false;
+			// 
+			// tbImageID
+			// 
+			this.tbImageID.Enabled = false;
+			this.tbImageID.Location = new System.Drawing.Point(512, 8);
+			this.tbImageID.Name = "tbImageID";
+			this.tbImageID.Size = new System.Drawing.Size(120, 20);
+			this.tbImageID.TabIndex = 22;
+			this.tbImageID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label29
+			// 
+			this.label29.Location = new System.Drawing.Point(480, 8);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(28, 16);
+			this.label29.TabIndex = 21;
+			this.label29.Text = "ID:";
+			this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label22
+			// 
+			this.label22.Location = new System.Drawing.Point(8, 8);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(64, 24);
+			this.label22.TabIndex = 16;
+			this.label22.Text = "Title:";
+			// 
+			// tbImageTitle
+			// 
+			this.tbImageTitle.Location = new System.Drawing.Point(72, 8);
+			this.tbImageTitle.Name = "tbImageTitle";
+			this.tbImageTitle.Size = new System.Drawing.Size(368, 20);
+			this.tbImageTitle.TabIndex = 15;
+			// 
+			// bImageSave
+			// 
+			this.bImageSave.Location = new System.Drawing.Point(528, 40);
+			this.bImageSave.Name = "bImageSave";
+			this.bImageSave.Size = new System.Drawing.Size(104, 23);
+			this.bImageSave.TabIndex = 14;
+			this.bImageSave.Text = "Update";
+			this.bImageSave.UseVisualStyleBackColor = true;
+			this.bImageSave.Click += new System.EventHandler(this.BImageSaveClick);
+			// 
+			// label23
+			// 
+			this.label23.Location = new System.Drawing.Point(8, 56);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(64, 16);
+			this.label23.TabIndex = 13;
+			this.label23.Text = "Contents:";
+			// 
+			// tbImageContent
+			// 
+			this.tbImageContent.AcceptsReturn = true;
+			this.tbImageContent.AcceptsTab = true;
+			this.tbImageContent.Location = new System.Drawing.Point(8, 72);
+			this.tbImageContent.Multiline = true;
+			this.tbImageContent.Name = "tbImageContent";
+			this.tbImageContent.ReadOnly = true;
+			this.tbImageContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.tbImageContent.Size = new System.Drawing.Size(624, 136);
+			this.tbImageContent.TabIndex = 10;
+			this.tbImageContent.Visible = false;
+			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
@@ -1770,6 +2072,13 @@ namespace HHBuilder
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageProject.ResumeLayout(false);
 			this.tabPageProject.PerformLayout();
+			this.tabPageTemplate.ResumeLayout(false);
+			this.tabPageTemplate.PerformLayout();
+			this.tabPageScreen.ResumeLayout(false);
+			this.tabPageScreen.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).EndInit();
+			this.tabPagePopupText.ResumeLayout(false);
+			this.tabPagePopupText.PerformLayout();
 			this.tabPageCSS.ResumeLayout(false);
 			this.tabPageCSS.PerformLayout();
 			this.tabPageScripts.ResumeLayout(false);
@@ -1777,14 +2086,36 @@ namespace HHBuilder
 			this.tabPageImages.ResumeLayout(false);
 			this.tabPageImages.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-			this.tabPageScreen.ResumeLayout(false);
-			this.tabPageScreen.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).EndInit();
-			this.tabPagePopupText.ResumeLayout(false);
-			this.tabPagePopupText.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label35;
+		private System.Windows.Forms.TextBox tbTemplateID;
+		private System.Windows.Forms.Label label36;
+		private System.Windows.Forms.TextBox tbTemplateTitle;
+		private System.Windows.Forms.Label label37;
+		private System.Windows.Forms.TextBox tbTemplateAuthor;
+		private System.Windows.Forms.TextBox tbTemplateVersion;
+		private System.Windows.Forms.Label label39;
+		private System.Windows.Forms.TextBox tbTemplateDescription;
+		private System.Windows.Forms.Label label40;
+		private System.Windows.Forms.TextBox tbTemplateCompany;
+		private System.Windows.Forms.Label label41;
+		private System.Windows.Forms.TextBox tbTemplateContact;
+		private System.Windows.Forms.Label label42;
+		private System.Windows.Forms.TextBox tbTemplateEmail;
+		private System.Windows.Forms.Label label43;
+		private System.Windows.Forms.TextBox tbTemplateWebsite;
+		private System.Windows.Forms.Label label44;
+		private System.Windows.Forms.TextBox tbTemplateDate;
+		private System.Windows.Forms.Label label38;
+		private System.Windows.Forms.TextBox tbTemplateLicense;
+		private System.Windows.Forms.Button bViewTemplateLicense;
+		private System.Windows.Forms.Label label45;
+		private System.Windows.Forms.TextBox tbTemplateNotes;
+		private System.Windows.Forms.Label label46;
+		private System.Windows.Forms.Button bTemplateSelect;
+		private System.Windows.Forms.TabPage tabPageTemplate;
 		private System.Windows.Forms.Button bPreviewScreen;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;

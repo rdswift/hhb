@@ -21,7 +21,7 @@ namespace HHBuilder
 	{
 		#region Private Member Variables
 		private string _id;
-		private string _fileName;
+		private string _extension;
 		private string _title;
 		private string _content;
 		#endregion
@@ -54,7 +54,7 @@ namespace HHBuilder
 		{
 			_id = GetID();
 			title = string.Format("Image ID: {0}", id);
-			_fileName = "";
+			_extension = "";
 			_content = "";
 		}
 		
@@ -67,7 +67,8 @@ namespace HHBuilder
 		{
 			_id = GetID();
 			title = string.Format("Image ID: {0}", id);
-			_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+			//_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+			_extension = System.IO.Path.GetExtension(imageFileName);
 			_content = GetFileContents(imageFileName);
 		}
 		#endregion
@@ -87,8 +88,16 @@ namespace HHBuilder
 		/// </summary>
 		public string fileName
 		{
-			get{ return _fileName.Trim(); }
-			set{ _fileName = value.Trim(); }
+			get{ return id + extension; }
+		}
+		
+		/// <summary>
+		/// The extension of the image file (including the period).
+		/// </summary>
+		public string extension
+		{
+			get{ return _extension.Trim(); }
+			set{ _extension = value.Trim(); }
 		}
 		
 		/// <summary>
@@ -133,7 +142,8 @@ namespace HHBuilder
 				if ( !String.IsNullOrEmpty(tempContent) )
 				{
 					_content = tempContent;
-					_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+					//_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
+					_extension = System.IO.Path.GetExtension(imageFileName);
 					return true;
 				}
 			}

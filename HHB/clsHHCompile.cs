@@ -22,8 +22,6 @@ namespace HHBuilder
 		//private static string _workingDir;
 		private static string _templateFile = String.Empty;
 		private static string _homeID = String.Empty;
-		private static string _headerCSS = String.Empty;
-		private static string _headerScripts = String.Empty;
 		private static DataSet _nodeDS = InitializeNodeDataset();
 		#endregion
 
@@ -115,7 +113,7 @@ namespace HHBuilder
 								tRefLink = tRefDR["FileName"].ToString();
 								tRefText = System.Net.WebUtility.HtmlEncode(tRefDR["LinkDesc"].ToString());
 							}
-							sbRef.AppendFormat("<li class=\"reference\"><a href=\"{0}\">{1}</a></li>\n", tRefLink, tRefText);
+							sbRef.AppendFormat("<li class=\"REFERENCE\"><a href=\"{0}\">{1}</a></li>\n", tRefLink, tRefText);
 						}
 						references = sbRef.ToString();
 					}
@@ -125,6 +123,45 @@ namespace HHBuilder
 					if ( bTest )
 					{
 						hideItems = sb.ToString();
+					}
+					
+					string headerCSS = String.Empty;
+					if ( !String.IsNullOrWhiteSpace(dr["CssLinks"].ToString()) )
+					{
+						System.Text.StringBuilder sbCSS = new System.Text.StringBuilder();
+						string[] CssArray = dr["CssLinks"].ToString().Split('|');
+						foreach (string tCSS in CssArray)
+						{
+							if ( File.Exists(Path.Combine(cssDir, tCSS + ".css")) )
+							{
+								sbCSS.AppendFormat("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/{0}\" />\n", tCSS + ".css");
+							}
+							else
+							{
+								Log.Error("Missing CSS file " + tCSS + ".css");
+							}
+						}
+						headerCSS = sbCSS.ToString();
+					}
+					
+					
+					string headerScripts = String.Empty;
+					if ( !String.IsNullOrWhiteSpace(dr["ScriptLinks"].ToString()) )
+					{
+						System.Text.StringBuilder sbScript = new System.Text.StringBuilder();
+						string[] scriptArray = dr["ScriptLinks"].ToString().Split('|');
+						foreach (string tScript in scriptArray)
+						{
+							if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+							{
+								sbScript.AppendFormat("<script type=\"text/javascript\" src=\"scripts/{0}\"></script>\n", tScript + ".js");
+							}
+							else
+							{
+								Log.Error("Missing script file " + tScript + ".js");
+							}
+						}
+						headerScripts = sbScript.ToString();
 					}
 					
 					string repBody = dr["Body"].ToString();
@@ -143,7 +180,7 @@ namespace HHBuilder
 					
 					
 					string tHTML = htmlTemplate;
-					tHTML = tHTML.Replace("</head>", _headerScripts + _headerCSS + hideItems + "</head>");
+					tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
 					tHTML = tHTML.Replace("{BODY}", repBody);
 					tHTML = tHTML.Replace("{TITLE}", System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
 					tHTML = tHTML.Replace("{PREVLINK}", System.Net.WebUtility.HtmlEncode(dr["PrevLink"].ToString()));
@@ -215,6 +252,10 @@ namespace HHBuilder
 			dc = new DataColumn("IndexEntries", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("ReferenceLinks", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("CssLinks", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("ScriptLinks", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("ShowScreen", Type.GetType("System.Boolean"));
 			dt.Columns.Add(dc);
@@ -319,6 +360,8 @@ namespace HHBuilder
 			dr["NextNumber"] = String.Empty;
 			dr["Title"] = tItem.title;
 			dr["IndexEntries"] = tItem.indexEntries;
+			dr["CssLinks"] = tItem.cssList;
+			dr["ScriptLinks"] = tItem.scriptList;
 			dr["ReferenceLinks"] = tItem.linkList;
 			dr["ShowScreen"] = tItem.hasScreen;
 			dr["ShowTitle"] = tItem.usesTitle;
@@ -354,6 +397,8 @@ namespace HHBuilder
 				dr["Title"] = tItem.title;
 				dr["IndexEntries"] = tItem.indexEntries;
 				dr["ReferenceLinks"] = tItem.linkList;
+				dr["ScriptLinks"] = tItem.scriptList;
+				dr["ReferenceLinks"] = tItem.linkList;
 				dr["ShowScreen"] = true;
 				dr["ShowTitle"] = tItem.usesTitle;
 				dr["ShowHeader"] = tItem.usesHeader;
@@ -370,7 +415,6 @@ namespace HHBuilder
 		private static bool SaveCSS(TreeNode node)
 		{
 			bool ret = true;
-			_headerCSS = "\n";
 			TreeNode topNode =  HelpNode.GetRootNode(node);
 			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes) {
 				CSSItem tItem = (CSSItem) tNode.Tag;
@@ -379,7 +423,6 @@ namespace HHBuilder
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
-					_headerCSS = String.Format("{0}<link rel=\"stylesheet\" type=\"text/css\" href=\"css/{1}\" />\n", _headerCSS, tItem.fileName);
 				}
 				catch (Exception ex)
 				{
@@ -397,7 +440,6 @@ namespace HHBuilder
 		private static bool SaveScripts(TreeNode node)
 		{
 			bool ret = true;
-			_headerScripts = "\n";
 			TreeNode topNode =  HelpNode.GetRootNode(node);
 			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes) {
 				ScriptItem tItem = (ScriptItem) tNode.Tag;
@@ -406,7 +448,6 @@ namespace HHBuilder
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
-					_headerScripts = String.Format("{0}<script type=\"text/javascript\" src=\"scripts/{1}\"></script>\n", _headerScripts, tItem.fileName);
 				}
 				catch (Exception ex)
 				{
@@ -657,8 +698,6 @@ namespace HHBuilder
 			Log.Debug("Cleaning up temporary project build files and directories.");
 			bool ret = true;
 			templateFile = String.Empty;
-			_headerCSS = String.Empty;
-			_headerScripts = String.Empty;
 			foreach ( string tDir in new string[] { HBSettings.projectBuildDir } ) 
 			{
 				ret = ret & RemoveDir(tDir);

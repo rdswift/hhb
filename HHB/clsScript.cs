@@ -64,7 +64,7 @@ namespace HHBuilder
 		public ScriptItem(string itemTitle, string itemContent)
 		{
 			id = GetID();
-			fileName = "Scr_" + id + ".js";
+			fileName = id + ".js";
 			title = itemTitle;
 			content = itemContent;
 		}

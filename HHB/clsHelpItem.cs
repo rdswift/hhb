@@ -25,7 +25,6 @@ namespace HHBuilder
 		#region Private Member Variables
 		private string _id;
 		private ScreenType _screenType;
-		private string _fileName;
 		//private int _level;
 		private bool _hasScreen;
 		private bool _usesTitle;
@@ -37,6 +36,8 @@ namespace HHBuilder
 		private string _linkList;
 		private string _indexEntries;
 		private string _body;
+		private string _cssList;
+		private string _scriptList;
 		#endregion
 
 		#region Private Properties
@@ -88,11 +89,12 @@ namespace HHBuilder
 		{
 			id = GetID();
 			screenType = ScreenType.TOC;
-			fileName = String.Format("Hlp_{0}.html", id);
 			title = String.Format("New Item ID: {0}", id);
 			linkID = 0;
 			linkDescription = title;
 			linkList = String.Empty;
+			cssList = String.Empty;
+			scriptList = String.Empty;
 			indexEntries = String.Empty;
 			body = String.Empty;
 			hasScreen = true;
@@ -117,8 +119,7 @@ namespace HHBuilder
 		
 		public string fileName
 		{
-			get{ return _fileName.Trim(); }
-			set{ _fileName = value.Trim(); }
+			get{ return String.Format("{0}.html", id); }
 		}
 		
 		public bool hasScreen
@@ -186,6 +187,58 @@ namespace HHBuilder
 			set
 			{
 				_linkList = CleanList(String.Join("|", value));
+			}
+		}
+		
+		public string cssList
+		{
+			get{ return CleanList(_cssList); }
+			set{ _cssList = CleanList(value); }
+		}
+		
+		public string[] cssArray
+		{
+			get
+			{
+				if ( String.IsNullOrWhiteSpace(_cssList) )
+				{
+					return new string[0];
+				}
+				else
+				{
+					return CleanList(_cssList).Split('|');
+				}
+			}
+			
+			set
+			{
+				_cssList = CleanList(String.Join("|", value));
+			}
+		}
+		
+		public string scriptList
+		{
+			get{ return CleanList(_scriptList); }
+			set{ _scriptList = CleanList(value); }
+		}
+		
+		public string[] scriptArray
+		{
+			get
+			{
+				if ( String.IsNullOrWhiteSpace(_scriptList) )
+				{
+					return new string[0];
+				}
+				else
+				{
+					return CleanList(_scriptList).Split('|');
+				}
+			}
+			
+			set
+			{
+				_scriptList = CleanList(String.Join("|", value));
 			}
 		}
 		
