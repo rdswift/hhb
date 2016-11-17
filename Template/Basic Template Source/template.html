@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{TITLE}</title>
+<meta name="author" content="Bob Swift" />
+<meta name="copyright" content="Copyright 2016, Bob Swift" />
+<meta name="license" content="GNU GENERAL PUBLIC LICENSE" />
+<meta name="description" content="HTML Help Builder Template" />
+<meta name="keywords" content="HHB, HHBuilder, HTML Help Builder, Template" />
+<script type="text/javascript" src="tpl_scripts/template.js"></script>
+<link rel="stylesheet" type="text/css" href="tpl_css/template.css" />
+</head>
+<body>
+<!-- This is the Header section -->
+<div class="HEADER" style="width: 100%; font-size: 75%; clear: both;"><span style="width: 49%; float: left; text-align: left;"><span class="HEADERNUMBER">{NUMBER}:</span> {TITLE}</span><span style="width: 49%; float: right; text-align: right;"><script type="text/javascript" language="javascript">
+  PrintHome("{HOMELINK}", "{HOMETEXT}", "{HOMENUMBER}");
+</script></span>
+<hr style="clear: both;" /></div>
+
+<!-- This is the Title section -->
+<div class="TITLE" style="width: 100%;"><h3><span class="TITLENUMBER">{NUMBER}</span> {TITLE}</h3></div>
+
+<!-- This is the Body section -->
+<div class="SCREENBODY">{BODY}</div>
+
+<!-- This is the References section -->
+<div class="REFERENCES" style="width: 100%;"><p>References:
+<ul>
+{REFERENCES}
+</ul>
+</p></div>
+
+<!-- This is the Footer section -->
+<div class="FOOTER" style="width: 100%;"><hr />
+<div style="width: 100%; font-size: 75%; clear: both;"><span style="width: 49%; float: left; text-align: left;"><script type="text/javascript" language="javascript">
+  PrintPrevious("{PREVLINK}", "{PREVTEXT}", "{PREVNUMBER}");
+</script></span><span style="width: 49%; float: right; text-align: right;"><script type="text/javascript" language="javascript">
+  PrintNext("{NEXTLINK}", "{NEXTTEXT}", "{NEXTNUMBER}");
+</script></span></div></div>
+</body>
+</html>
