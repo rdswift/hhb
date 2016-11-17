@@ -76,7 +76,7 @@ namespace HHBuilder
 				CultureInfo tempUiCulture = _cultureUiInfo;
 				try 
 				{
-					_cultureInfo = new CultureInfo(value.Trim(), false);;
+					_cultureInfo = new CultureInfo(value.Trim(), false);
 					_cultureUiInfo = new CultureInfo(value.Trim(), false);
 				} catch (Exception ex) {
 					Log.Exception(ex);

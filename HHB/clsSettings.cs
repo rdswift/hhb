@@ -32,6 +32,8 @@ namespace HHBuilder
 		private static int _logsToKeep = 5;
 		private static string _uiCulture = String.Empty;
 		private static bool _cleanup = true;
+		private static string _hhcDirectory = String.Empty;
+		private static bool _checkUpdates = true;
 
 		private static string NS = typeof(MainForm).Namespace;
 		private static string FNAME = NS + ".cfg";		
@@ -150,6 +152,7 @@ namespace HHBuilder
 			filecontents.AppendLine();
 			filecontents.AppendLine("; Language:  The default language code");
 			filecontents.AppendLine("; UserInterface:  The user interface language code (blank for current Windows setting)");
+			filecontents.AppendLine("; CheckForUpdates:  Check for program updates at during startup (Yes|No)");
 			filecontents.AppendLine("; CleanOnExit:  Remove temporary files and directories at program shutdown (Yes|No)");
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
@@ -158,6 +161,15 @@ namespace HHBuilder
 			filecontents.AppendLine(language);
 			filecontents.Append("UserInterface=");
 			filecontents.AppendLine(uiCulture);
+			filecontents.Append("CheckForUpdates=");
+			if ( checkForUpdates )
+			{
+				filecontents.AppendLine("Yes");
+			}
+			else
+			{
+				filecontents.AppendLine("No");
+			}
 			filecontents.Append("CleanOnExit=");
 			if ( cleanOnExit )
 			{
@@ -195,12 +207,15 @@ namespace HHBuilder
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
 			filecontents.AppendLine("; Working:  The default working directory");
+			filecontents.AppendLine("; Compiler:  Location of the hhc.exe program file");
 			filecontents.AppendLine("; Template:  Directory to search for help template files");
 			filecontents.Append(";");
 			filecontents.Append('-', 69);
 			filecontents.AppendLine();
 			filecontents.Append("Working=");
 			filecontents.AppendLine(workingDir);
+			filecontents.Append("Compiler=");
+			filecontents.AppendLine(compilerDir);
 			filecontents.Append("Template=");
 			filecontents.AppendLine(templateDir);
 			
@@ -275,6 +290,15 @@ namespace HHBuilder
 				_templateDir = value.Trim();
 				HHBTemplate.ReadAvailableTemplates();
 			}
+		}
+		
+		/// <summary>
+		/// Directory where the hhc.exe file is located
+		/// </summary>
+		public static string compilerDir
+		{
+			get{ return _hhcDirectory.Trim(); }
+			set{ _hhcDirectory = value.Trim(); }
 		}
 		
 		/// <summary>
@@ -376,6 +400,15 @@ namespace HHBuilder
 			get{ return _cleanup; }
 			set{ _cleanup = value; }
 		}
+		
+		/// <summary>
+		/// Whether to check for program updates during program startup.
+		/// </summary>
+		public static bool checkForUpdates
+		{
+			get{ return _checkUpdates; }
+			set{ _checkUpdates = value; }
+		}
 		#endregion
 		
 		#region Public Methods
@@ -389,6 +422,7 @@ namespace HHBuilder
 		{
 			workingDir = String.Empty;
 			templateDir = String.Empty;
+			compilerDir = String.Empty;
 			author = String.Empty;
 			company = String.Empty;
 			copyrightTemplate = String.Empty;
@@ -399,6 +433,7 @@ namespace HHBuilder
 			uiCulture = String.Empty;
 			cfgFileName = GetFileName();
 			cleanOnExit = true;
+			checkForUpdates = true;
 			return !String.IsNullOrEmpty(cfgFileName);
 		}
 		
@@ -480,6 +515,7 @@ namespace HHBuilder
 				uiCulture = IniFile.IniReadValue("Settings", "UserInterface");
 				logDir = IniFile.IniReadValue("Logging", "LogDir");
 				workingDir = IniFile.IniReadValue("Directories", "Working");
+				compilerDir = IniFile.IniReadValue("Directories", "Compiler");
 				templateDir = IniFile.IniReadValue("Directories", "Template");
 				logsToKeep = Convert.ToInt32("0" + IniFile.IniReadValue("Logging", "LogFileCount"));
 				int tempLogLevel = Convert.ToInt32("0" + IniFile.IniReadValue("Logging", "LogLevel"));
@@ -502,6 +538,8 @@ namespace HHBuilder
 				}
 				string tCleanup = IniFile.IniReadValue("Settings", "CleanOnExit");
 				cleanOnExit = (tCleanup.Trim() + "Y").ToUpper().StartsWith("Y");
+				string tCheckUpdates = IniFile.IniReadValue("Settings", "CheckForUpdates");
+				checkForUpdates = (tCheckUpdates.Trim() + "Y").ToUpper().StartsWith("Y");
 				return true;
 			}
 			catch (Exception ex)
@@ -551,12 +589,23 @@ namespace HHBuilder
 			tempString.AppendLine(Copyright());
 			tempString.Append("Working Dir: ");
 			tempString.AppendLine(workingDir);
+			tempString.Append("Compiler Dir: ");
+			tempString.AppendLine(compilerDir);
 			tempString.Append("Template Dir: ");
 			tempString.AppendLine(templateDir);
 			tempString.Append("Default Project Language: ");
 			tempString.AppendLine(language);
 			tempString.Append("User Interface Language: ");
 			tempString.AppendLine(uiCulture);
+			tempString.Append("Check for Program Updates on Startup: ");
+			if ( checkForUpdates )
+			{
+				tempString.AppendLine("Yes");
+			}
+			else
+			{
+				tempString.AppendLine("No");
+			}
 			tempString.Append("Remove working files on exit: ");
 			if ( cleanOnExit )
 			{

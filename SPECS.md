@@ -1,4 +1,4 @@
-# HHB Specifications (v0.06) - DRAFT
+# HHB Specifications (v0.07) - DRAFT
 ## Interactive HTML Help Builder Development Specifications
 
 The following are the specifications for the development of the application. These specifications are developed and managed by the project team members and are subject to change.
@@ -58,13 +58,16 @@ Information to include in this file:
 * default help project company name
 * default help project copyright template
 * default help project language
-* full path and name of log file (if used)
-* logging information level (if used)
+* default user interface language
+* indicator to remove all working files and directories on exit
+* directory to write log files (if used)
+* maximum number of log files to keep (if used)
+* logging information level
 * location of template files (May be relative to program directory by starting with ".\" to accommodate portable application.)
 * location of hhc.exe compiler executable (May be relative to program directory by starting with ".\" to accommodate portable application.)
 * location of working directory (May be relative to program directory by starting with ".\" to accommodate portable application. Blank entry will use the directory for all users' application-specific data.)
 * check for updates at startup indicator
-* last 5 help projects (Perhaps this would be better stored in the registry because it may not apply if application is run from a USB stick on a different computer.)
+* last 5 help projects (?) (Perhaps this would be better stored in the registry because it may not apply if application is run from a USB stick on a different computer.)
 * default template file (?)
 * other items?
 
@@ -90,7 +93,7 @@ Information to include in this file:
 * help screen information (one record per screen)
     * id (unique id assigned by the program)
 	* index path (location in project tree assigned by the program)
-    * screen type (listed in ToC or popup)
+    * screen type (?) (listed in ToC or popup)
     * title (used in the ToC and the template "Title" section)
 	* file name (?)
 	* display screen indicator (actual screen or just ToC folder entry)
@@ -107,23 +110,24 @@ Information to include in this file:
 * additional (non-template) CSS files
 	* id (unique id assigned by the program)
 	* title
-	* file name
+	* file name (?) (Generate automatically from id)
 	* file contents
 * additional (non-template) script files
 	* id (unique id assigned by the program)
 	* title
-	* file name
+	* file name (?) (Generate automatically from id)
 	* file contents
 * additional (non-template) image files
 	* id (unique id assigned by the program)
 	* title
-	* file name
+	* file extension, including the leading period
+	* file name (?) (Generate automatically from id and file extension)
 	* file contents (stored in Base 64 format)
     
 &nbsp;
 ### 5.3 Template Files
 * stored in a zip format file with the extension changed to ".hhbt", containing the internal directory structure:
-	* \ (contains: template.xml, template.htm)
+	* \ (contains: template.xml, template.htm, LICENSE, README)
 	* \tpl_css\ (contains: all CSS files used with the template)
 	* \tpl_images\ (contains: all image files used with the template)
 	* \tpl_scripts\ (contains: all script files used with the template)
@@ -166,7 +170,13 @@ Information to include in this file:
 		* ***{NUMBER}*** will be replaced with the number of the entry in the Table of Contents (e.g. the third subtopic of the second topic would be number 2.3).  For popup screens this will be "".
 		* ***{YEAR}*** will be replaced with the four digit year when the help project was compiled.
 		* ***{DATE}*** will be replaced with the date in the format "yyyy-mm-dd" when the help project was compiled.
+		* ***{AUTHOR}*** will be replaced with the help project's "Author" setting.
+		* ***{COMPANY}*** will be replaced with the help project's "Company" setting.
+		* ***{COPYRIGHT}*** will be replaced with the help project's "Copyright" setting.
 	
+* LICENSE is a text file containing the text of the license terms for the use of the template.  This is displayed to the user when requested.
+
+* README is a text file containing notes regarding the template (e.g.: instructions for use, where to look for updates, anything else).  This file is displayed to the user when selecting a template and in the help project's "Template" section.
 	
 * For linking purposes, note that all HTML files generated will be placed in the root directory (same directory as the template.htm file).
 
