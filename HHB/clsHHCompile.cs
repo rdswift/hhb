@@ -647,16 +647,26 @@ namespace HHBuilder
 			}
 			else
 			{
-				try
+				int retryCount = 3;
+				while ( (retryCount > 0) && (Directory.Exists(dirToRemove)) )
 				{
-					Directory.Delete(dirToRemove, true);
-				}
-				catch (Exception ex)
-				{
-					string error = "Error removing working directory: " + dirToRemove;
-					Log.Error(error);
-					Log.Exception(ex);
-					return false;
+					retryCount--;
+					try
+					{
+						Directory.Delete(dirToRemove, true);
+					}
+					catch (Exception ex)
+					{
+						string error = "Error removing working directory: " + dirToRemove;
+						Log.Error(error);
+						Log.Exception(ex);
+						if (retryCount < 1)
+						{
+							//Log.ErrorBox(errorMessage);
+							return false;
+						}
+						System.Threading.Thread.Sleep(250);
+					}
 				}
 			}
 			Log.Debug(dirToRemove + " removed successfully.");

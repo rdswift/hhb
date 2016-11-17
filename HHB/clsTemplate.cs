@@ -201,7 +201,7 @@ namespace HHBuilder
 				if ( Directory.Exists(subdirectoryName) )
 				{
 					// Remove the existing directory to clear out any files and subdirectories
-					Directory.Delete(subdirectoryName, true);
+					RemoveDir(subdirectoryName);
 				}
 				
 				// Create the working directory.
@@ -362,16 +362,26 @@ namespace HHBuilder
 			}
 			else
 			{
-				try
+				int retryCount = 3;
+				while ( (retryCount > 0) && (Directory.Exists(dirToRemove)) )
 				{
-					Directory.Delete(dirToRemove, true);
-				}
-				catch (Exception ex)
-				{
-					string error = "Error removing working directory: " + dirToRemove;
-					Log.Error(error);
-					Log.Exception(ex);
-					return false;
+					retryCount--;
+					try
+					{
+						Directory.Delete(dirToRemove, true);
+					}
+					catch (Exception ex)
+					{
+						string error = "Error removing working directory: " + dirToRemove;
+						Log.Error(error);
+						Log.Exception(ex);
+						if (retryCount < 1)
+						{
+							//Log.ErrorBox(errorMessage);
+							return false;
+						}
+						System.Threading.Thread.Sleep(250);
+					}
 				}
 			}
 			Log.Debug(dirToRemove + " removed successfully.");
@@ -800,26 +810,12 @@ namespace HHBuilder
 			}
 			
 			// Remove working directory to ensure it is empty (required by ExtractToDirectory() method)
-			int retryCount = 3;
-			while ( (retryCount > 0) && (Directory.Exists(unpackToDir)) )
+			if ( !RemoveDir(unpackToDir) )
 			{
-				retryCount--;
-				try 
-				{
-					Directory.Delete(unpackToDir, true);
-				} 
-				catch (Exception ex)
-				{
-					errorMessage = "Unable to access working directory: " + unpackToDir;
-					Log.Error(errorMessage);
-					Log.Exception(ex);
-					if (retryCount < 1)
-					{
-						Log.ErrorBox(errorMessage);
-						return false;
-					}
-					System.Threading.Thread.Sleep(250);
-				}
+				errorMessage = "Unable to access working directory: " + unpackToDir;
+				Log.Error(errorMessage);
+				Log.ErrorBox(errorMessage);
+				return false;
 			}
 			
 			// Unpack the files and directories from the template file

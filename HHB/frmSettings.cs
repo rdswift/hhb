@@ -266,6 +266,14 @@ namespace HHBuilder
 		private string SelectDirectory(string startingDirectory, string directoryTitle)
 		{
 			string dir = startingDirectory;
+			if ( System.IO.Directory.Exists(dir) )
+			{
+				dir = System.IO.Path.GetFullPath(dir);
+			}
+			else
+			{
+				dir = String.Empty;
+			}
 			folderBrowserDialog1.SelectedPath = dir.Trim();
 			folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
 			if ( String.IsNullOrWhiteSpace(directoryTitle) )

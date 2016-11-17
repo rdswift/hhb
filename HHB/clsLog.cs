@@ -49,7 +49,8 @@ namespace HHBuilder
 		};
 		
 		#region Private Member Variables
-		private static string _logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+		//private static string _logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+		private static string _logDir = String.Empty;
 		private static string _logFile = String.Format("{0}_{1}.log", Assembly.GetExecutingAssembly().GetName().Name, DateTime.Now.ToString("yyyyMMddHHmmss"));
 		private static int _logsToKeep = 5;
 		private static LogLevel _level = LogLevel.Normal;
@@ -59,6 +60,55 @@ namespace HHBuilder
 		#endregion
 		
 		#region Private Methods
+		// ==============================================================================
+		
+		private static bool MoveLogFiles(string fromDir, string toDir)
+		{
+			if ( String.IsNullOrWhiteSpace(fromDir) || String.IsNullOrWhiteSpace(toDir) )
+			{
+				return false;
+			}
+			
+			//string pathToCheck = Path.Combine(fromDir, String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
+			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(fromDir);
+			System.IO.FileInfo[] logFiles = directorySelected.GetFiles(String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
+			bool success = true;
+			Exception tEx = new Exception("No exception");
+			foreach (FileInfo logFile in logFiles) {
+				try
+				{
+					string fromFile = logFile.FullName;
+					string toFile = Path.Combine(toDir, logFile.Name);
+					File.Copy(fromFile, toFile, true);
+					if ( File.Exists(toFile) )
+					{
+						File.Delete(fromFile);
+					}
+					else
+					{
+						tEx = new FileNotFoundException("Unable to move file", logFile.Name);
+						tEx.Source = String.Format("{0}.Log", Assembly.GetExecutingAssembly().GetName().Name);
+						success = false;
+					}
+					//logFile.MoveTo(toDir);
+				}
+				catch (Exception ex)
+				{
+					tEx = ex;
+					success = false;
+					//throw;
+				}
+			}
+			if ( !success )
+			{
+				string errorMessage = "Problem moving existing log files to new location.";
+				Log.Error(errorMessage);
+				Log.Exception(tEx);
+				Log.ErrorBox(errorMessage);
+			}
+			return success;
+		}
+		
 		// ==============================================================================
 		
 		private static void writeToLog( string lineToWrite )
@@ -89,8 +139,45 @@ namespace HHBuilder
 		/// </summary>
 		public static string logDir
 		{
-			get{ return _logDir.Trim(); }
-			set{ _logDir = value.Trim(); }
+			get{
+				if ( String.IsNullOrWhiteSpace(_logDir) )
+				{
+					_logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+				}
+				return _logDir.Trim();
+			}
+			set
+			{
+				string tValue = value.Trim();
+				if ( !Directory.Exists(tValue) )
+				{
+					try
+					{
+						Directory.CreateDirectory(tValue);
+					}
+					catch (Exception ex)
+					{
+						string errorMessage = String.Format("Unable to access log directory {0}", tValue);
+						Log.Error(errorMessage);
+						Log.Exception(ex);
+						Log.ErrorBox(errorMessage);
+						tValue = String.Empty;
+						//throw;
+					}
+				}
+				if ( String.IsNullOrWhiteSpace(tValue) )
+				{
+					tValue = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+				}
+				if ( !String.IsNullOrWhiteSpace(_logDir) )		// Don't try to move files during startup
+				{
+					if ( Path.GetFullPath(_logDir.Trim()).ToUpper() != Path.GetFullPath(tValue).ToUpper() )
+					{
+						MoveLogFiles(_logDir.Trim(), Path.GetFullPath(tValue));
+					}
+				}
+				_logDir = tValue;
+			}
 		}
 		
 		/// <summary>
@@ -235,7 +322,7 @@ namespace HHBuilder
 		/// </summary>
 		public static void CleanLogFiles()
 		{
-			string pathToCheck = Path.Combine(logDir, String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
+			//string pathToCheck = Path.Combine(logDir, String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
 			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(logDir);
 			System.IO.FileInfo[] logFiles = directorySelected.GetFiles(String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
 			Array.Sort(logFiles, (f1, f2) => f1.Name.CompareTo(f2.Name));
