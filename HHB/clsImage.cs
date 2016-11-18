@@ -7,8 +7,10 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace HHBuilder
 {
@@ -191,6 +193,32 @@ namespace HHBuilder
 			{
 				return Image.FromStream(ms);
 			}
+		}
+		
+		// ==============================================================================
+		public static DataTable GetAvailableImages(TreeNode node)
+		{
+			DataTable dt = new DataTable();
+			dt.TableName = "Images";
+			DataColumn dc = new DataColumn("ID", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Title", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("FileName", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
+			
+			foreach (TreeNode tNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile].Nodes)
+			{
+				ImageItem tItem = (ImageItem) tNode.Tag;
+				DataRow dr = dt.NewRow();
+				dr["ID"] = tItem.id;
+				dr["Title"] = tItem.title;
+				dr["FileName"] = tItem.fileName;
+				dt.Rows.Add(dr);
+			}
+			
+			return dt;
 		}
 		#endregion
 	}

@@ -573,7 +573,7 @@ namespace HHBuilder
 			this.bExit.Name = "bExit";
 			this.bExit.Size = new System.Drawing.Size(75, 23);
 			this.bExit.TabIndex = 33;
-			this.bExit.Text = "Exit";
+			this.bExit.Text = "Cancel";
 			this.bExit.UseVisualStyleBackColor = true;
 			this.bExit.Click += new System.EventHandler(this.BExitClick);
 			// 

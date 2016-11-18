@@ -28,7 +28,7 @@ namespace HHBuilder
 		private TreeNode savedNode = null;
 		private string helpProjectFilePathAndName = "";
 		private static string _returnedString;
-		private bool _showScreenSettingsPage = true;
+		private bool _showScreenSettingsPage;
 		
 		public const int _MaxLevels = 7;
 		
@@ -52,6 +52,7 @@ namespace HHBuilder
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
+			_showScreenSettingsPage = true;
 			string errorMessage = "";
 			if ( !HBSettings.Initialize() )
 			{
@@ -1516,16 +1517,18 @@ namespace HHBuilder
 		private void BPreviewScreenClick(object sender, EventArgs e)
 		{
 			PreviewScreen();
+			_showScreenSettingsPage = true;
 		}
 		
 		private void BPreviewScreen2Click(object sender, EventArgs e)
 		{
 			PreviewScreen();
+			_showScreenSettingsPage = false;
 		}
 		
 		private void PreviewScreen()
 		{
-			TreeNode node = treeView1.Nodes[0];
+			TreeNode node = HelpNode.GetRootNode(treeView1.SelectedNode);
 			HHCompile.MakeFiles(node);
 			TreeNode tNode = treeView1.SelectedNode;
 			HelpItem tHelp = (HelpItem) tNode.Tag;
@@ -1572,6 +1575,26 @@ namespace HHBuilder
 		private void HiLinkIDLeave(object sender, EventArgs e)
 		{
 			hiLinkID.Text = Convert.ToUInt32("0" + hiLinkID.Text.Trim()).ToString().Trim();
+		}
+		
+		private void ToolStripButtonInsertImageClick(object sender, EventArgs e)
+		{
+			InsertImage();
+		}
+		
+		private void InsertImage()
+		{
+			parameterString = String.Empty;
+			Form frm = new SelectImage(treeView1.SelectedNode);
+			frm.ShowDialog();
+			if ( !String.IsNullOrWhiteSpace(parameterString) )
+			{
+				int idx = hiBody.SelectionStart;
+				hiBody.Paste(parameterString);
+				//hiBody.Text = hiBody.Text.Insert(idx, parameterString);
+				hiBody.SelectionStart = idx + parameterString.Length;
+				parameterString = String.Empty;
+			}
 		}
 		
 		private void ToolStripButton1Click(object sender, EventArgs e)
@@ -1637,11 +1660,12 @@ namespace HHBuilder
 //				//throw;
 //			}
 			
-			// Test saving project items
-			TreeNode node = treeView1.Nodes[0];
-			HHCompile.MakeFiles(node);
+//			// Test saving project items
+//			TreeNode node = treeView1.Nodes[0];
+//			HHCompile.MakeFiles(node);
 			
 		}
+		
 		
 		
 		

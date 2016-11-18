@@ -9,6 +9,7 @@
 using System;
 using System.Data;
 using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -186,6 +187,8 @@ namespace HHBuilder
 					
 					
 					
+					// Process links
+					repBody = ProcessLinks(repBody);
 					
 					// Process image links
 					repBody = ProcessImageLinks(repBody);
@@ -233,6 +236,31 @@ namespace HHBuilder
 			}
 			
 			return ret;
+		}
+		
+		// ==============================================================================
+		private static string ProcessLinks(string bodyText)
+		{
+			string repBody = bodyText;
+			Regex regExImages = new System.Text.RegularExpressions.Regex(@"\{Link:([^\}]*)\}", RegexOptions.IgnoreCase);
+			MatchCollection matches = regExImages.Matches(repBody);
+			foreach (Match match in matches)
+			{
+				//Log.ErrorBox("Found: " + match.Groups[1].Value);
+				string[] screenInfo = match.Groups[1].Value.Split('|');
+				string linkURL = screenInfo[0];
+				string linkText = String.Empty;
+				if ( screenInfo.Length > 1 )
+				{
+					linkText = String.Join("|", screenInfo, 1, (screenInfo.Length - 1));
+				}
+				string screenID = match.Groups[1].Value;
+				string sOld = String.Format("{0}Link:{1}{2}", "{", match.Groups[1].Value, "}");
+				string sNew = String.Format("<a href=\"{0}\">{1}</a>", linkURL, linkText);
+				//Log.ErrorBox(String.Format("Old: {0}\nNew: {1}\n", sOld, sNew));
+				repBody = repBody.Replace(sOld, sNew);
+			}
+			return repBody;
 		}
 		
 		// ==============================================================================

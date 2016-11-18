@@ -38,19 +38,19 @@ namespace HHBuilder
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Table of Contents");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Popup Text");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("CSS Files");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Script Files");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Image Files");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
-									treeNode1,
-									treeNode2,
-									treeNode3,
-									treeNode4,
-									treeNode5,
-									treeNode6});
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Table of Contents");
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Popup Text");
+			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("CSS Files");
+			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Script Files");
+			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Image Files");
+			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
+									treeNode8,
+									treeNode9,
+									treeNode10,
+									treeNode11,
+									treeNode12,
+									treeNode13});
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,6 +165,10 @@ namespace HHBuilder
 			this.tbTemplateID = new System.Windows.Forms.TextBox();
 			this.label35 = new System.Windows.Forms.Label();
 			this.tabPageScreen = new System.Windows.Forms.TabPage();
+			this.lvScripts = new System.Windows.Forms.ListView();
+			this.lvScriptsID = new System.Windows.Forms.ColumnHeader();
+			this.lvScriptsTitle = new System.Windows.Forms.ColumnHeader();
+			this.label11 = new System.Windows.Forms.Label();
 			this.lvCSS = new System.Windows.Forms.ListView();
 			this.lvCSSID = new System.Windows.Forms.ColumnHeader();
 			this.lvCSSTitle = new System.Windows.Forms.ColumnHeader();
@@ -188,6 +192,8 @@ namespace HHBuilder
 			this.label7 = new System.Windows.Forms.Label();
 			this.hiTitle = new System.Windows.Forms.TextBox();
 			this.tabPageScreen2 = new System.Windows.Forms.TabPage();
+			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+			this.toolStripButtonInsertImage = new System.Windows.Forms.ToolStripButton();
 			this.bPreviewScreen2 = new System.Windows.Forms.Button();
 			this.bUpdateScreenSettings2 = new System.Windows.Forms.Button();
 			this.hiID2 = new System.Windows.Forms.TextBox();
@@ -245,10 +251,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.lvScripts = new System.Windows.Forms.ListView();
-			this.lvScriptsID = new System.Windows.Forms.ColumnHeader();
-			this.lvScriptsTitle = new System.Windows.Forms.ColumnHeader();
-			this.label11 = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -268,11 +271,13 @@ namespace HHBuilder
 			this.tabPageScreen.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).BeginInit();
 			this.tabPageScreen2.SuspendLayout();
+			this.toolStrip2.SuspendLayout();
 			this.tabPagePopupText.SuspendLayout();
 			this.tabPageCSS.SuspendLayout();
 			this.tabPageScripts.SuspendLayout();
 			this.tabPageImages.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// contextMenuStrip1
@@ -838,35 +843,35 @@ namespace HHBuilder
 			this.treeView1.HideSelection = false;
 			this.treeView1.Location = new System.Drawing.Point(0, 0);
 			this.treeView1.Name = "treeView1";
-			treeNode1.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode1.Name = "Node0";
-			treeNode1.Text = "Table of Contents";
-			treeNode2.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode2.Name = "Node1";
-			treeNode2.Text = "Popup HTML Screens";
-			treeNode3.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Popup Text";
-			treeNode4.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode4.ForeColor = System.Drawing.Color.Green;
-			treeNode4.Name = "Node2";
-			treeNode4.Text = "CSS Files";
-			treeNode5.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode5.ForeColor = System.Drawing.Color.Purple;
-			treeNode5.Name = "Node3";
-			treeNode5.Text = "Script Files";
-			treeNode6.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode6.ForeColor = System.Drawing.Color.Blue;
-			treeNode6.Name = "Node5";
-			treeNode6.Text = "Image Files";
-			treeNode7.BackColor = System.Drawing.Color.White;
-			treeNode7.ForeColor = System.Drawing.Color.Blue;
-			treeNode7.Name = "Node0";
-			treeNode7.Text = "New Project";
+			treeNode8.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode8.Name = "Node0";
+			treeNode8.Text = "Table of Contents";
+			treeNode9.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode9.Name = "Node1";
+			treeNode9.Text = "Popup HTML Screens";
+			treeNode10.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode10.Name = "Node0";
+			treeNode10.Text = "Popup Text";
+			treeNode11.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode11.ForeColor = System.Drawing.Color.Green;
+			treeNode11.Name = "Node2";
+			treeNode11.Text = "CSS Files";
+			treeNode12.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode12.ForeColor = System.Drawing.Color.Purple;
+			treeNode12.Name = "Node3";
+			treeNode12.Text = "Script Files";
+			treeNode13.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode13.ForeColor = System.Drawing.Color.Blue;
+			treeNode13.Name = "Node5";
+			treeNode13.Text = "Image Files";
+			treeNode14.BackColor = System.Drawing.Color.White;
+			treeNode14.ForeColor = System.Drawing.Color.Blue;
+			treeNode14.Name = "Node0";
+			treeNode14.Text = "New Project";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-									treeNode7});
+									treeNode14});
 			this.treeView1.Size = new System.Drawing.Size(326, 512);
 			this.treeView1.TabIndex = 0;
 			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1ItemDrag);
@@ -1387,6 +1392,39 @@ namespace HHBuilder
 			this.tabPageScreen.Text = "Page Settings";
 			this.tabPageScreen.UseVisualStyleBackColor = true;
 			// 
+			// lvScripts
+			// 
+			this.lvScripts.CheckBoxes = true;
+			this.lvScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.lvScriptsID,
+									this.lvScriptsTitle});
+			this.lvScripts.GridLines = true;
+			this.lvScripts.Location = new System.Drawing.Point(8, 360);
+			this.lvScripts.Name = "lvScripts";
+			this.lvScripts.Size = new System.Drawing.Size(280, 112);
+			this.lvScripts.TabIndex = 34;
+			this.lvScripts.UseCompatibleStateImageBehavior = false;
+			this.lvScripts.View = System.Windows.Forms.View.Details;
+			// 
+			// lvScriptsID
+			// 
+			this.lvScriptsID.Text = "";
+			this.lvScriptsID.Width = 20;
+			// 
+			// lvScriptsTitle
+			// 
+			this.lvScriptsTitle.Text = "Title";
+			this.lvScriptsTitle.Width = 260;
+			// 
+			// label11
+			// 
+			this.label11.Location = new System.Drawing.Point(8, 344);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(176, 16);
+			this.label11.TabIndex = 33;
+			this.label11.Text = "Script Files to Load:";
+			this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// lvCSS
 			// 
 			this.lvCSS.CheckBoxes = true;
@@ -1574,6 +1612,7 @@ namespace HHBuilder
 			// 
 			// tabPageScreen2
 			// 
+			this.tabPageScreen2.Controls.Add(this.panel1);
 			this.tabPageScreen2.Controls.Add(this.bPreviewScreen2);
 			this.tabPageScreen2.Controls.Add(this.bUpdateScreenSettings2);
 			this.tabPageScreen2.Controls.Add(this.hiID2);
@@ -1594,6 +1633,28 @@ namespace HHBuilder
 			this.tabPageScreen2.TabIndex = 8;
 			this.tabPageScreen2.Text = "Page Content";
 			this.tabPageScreen2.UseVisualStyleBackColor = true;
+			// 
+			// toolStrip2
+			// 
+			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolStripButtonInsertImage});
+			this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip2.Name = "toolStrip2";
+			this.toolStrip2.Size = new System.Drawing.Size(622, 30);
+			this.toolStrip2.Stretch = true;
+			this.toolStrip2.TabIndex = 51;
+			this.toolStrip2.Text = "toolStrip2";
+			// 
+			// toolStripButtonInsertImage
+			// 
+			this.toolStripButtonInsertImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButtonInsertImage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonInsertImage.Image")));
+			this.toolStripButtonInsertImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonInsertImage.Name = "toolStripButtonInsertImage";
+			this.toolStripButtonInsertImage.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButtonInsertImage.Text = "Insert Image";
+			this.toolStripButtonInsertImage.Click += new System.EventHandler(this.ToolStripButtonInsertImageClick);
 			// 
 			// bPreviewScreen2
 			// 
@@ -1715,11 +1776,11 @@ namespace HHBuilder
 			this.hiBody.AcceptsReturn = true;
 			this.hiBody.AcceptsTab = true;
 			this.hiBody.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.hiBody.Location = new System.Drawing.Point(8, 64);
+			this.hiBody.Location = new System.Drawing.Point(8, 112);
 			this.hiBody.Multiline = true;
 			this.hiBody.Name = "hiBody";
 			this.hiBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.hiBody.Size = new System.Drawing.Size(624, 408);
+			this.hiBody.Size = new System.Drawing.Size(624, 360);
 			this.hiBody.TabIndex = 36;
 			// 
 			// tabPagePopupText
@@ -2121,38 +2182,14 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// lvScripts
+			// panel1
 			// 
-			this.lvScripts.CheckBoxes = true;
-			this.lvScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.lvScriptsID,
-									this.lvScriptsTitle});
-			this.lvScripts.GridLines = true;
-			this.lvScripts.Location = new System.Drawing.Point(8, 360);
-			this.lvScripts.Name = "lvScripts";
-			this.lvScripts.Size = new System.Drawing.Size(280, 112);
-			this.lvScripts.TabIndex = 34;
-			this.lvScripts.UseCompatibleStateImageBehavior = false;
-			this.lvScripts.View = System.Windows.Forms.View.Details;
-			// 
-			// lvScriptsID
-			// 
-			this.lvScriptsID.Text = "";
-			this.lvScriptsID.Width = 20;
-			// 
-			// lvScriptsTitle
-			// 
-			this.lvScriptsTitle.Text = "Title";
-			this.lvScriptsTitle.Width = 260;
-			// 
-			// label11
-			// 
-			this.label11.Location = new System.Drawing.Point(8, 344);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(176, 16);
-			this.label11.TabIndex = 33;
-			this.label11.Text = "Script Files to Load:";
-			this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel1.Controls.Add(this.toolStrip2);
+			this.panel1.Location = new System.Drawing.Point(8, 72);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(624, 32);
+			this.panel1.TabIndex = 51;
 			// 
 			// MainForm
 			// 
@@ -2195,6 +2232,8 @@ namespace HHBuilder
 			((System.ComponentModel.ISupportInitialize)(this.dgvIndexEntries)).EndInit();
 			this.tabPageScreen2.ResumeLayout(false);
 			this.tabPageScreen2.PerformLayout();
+			this.toolStrip2.ResumeLayout(false);
+			this.toolStrip2.PerformLayout();
 			this.tabPagePopupText.ResumeLayout(false);
 			this.tabPagePopupText.PerformLayout();
 			this.tabPageCSS.ResumeLayout(false);
@@ -2204,9 +2243,14 @@ namespace HHBuilder
 			this.tabPageImages.ResumeLayout(false);
 			this.tabPageImages.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.ToolStripButton toolStripButtonInsertImage;
+		private System.Windows.Forms.ToolStrip toolStrip2;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.ColumnHeader lvScriptsTitle;
 		private System.Windows.Forms.ColumnHeader lvScriptsID;

@@ -93,6 +93,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectImage.cs" />
+    <Compile Include="SelectImage.Designer.cs">
+      <DependentUpon>SelectImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="TemplateSelector.cs" />
     <Compile Include="TemplateSelector.Designer.cs">
       <DependentUpon>TemplateSelector.cs</DependentUpon>
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PreviewHTML.resx">
       <DependentUpon>PreviewHTML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectImage.resx">
+      <DependentUpon>SelectImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TemplateSelector.resx">
       <DependentUpon>TemplateSelector.cs</DependentUpon>
