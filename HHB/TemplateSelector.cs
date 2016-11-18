@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-11-14
  * Time: 16:17
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Data;
@@ -14,25 +12,19 @@ using System.Windows.Forms;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of TemplateSelector.
+	/// Form to select a template to use with a help project.
 	/// </summary>
 	public partial class TemplateSelector : Form
 	{
+		#region Private Member Variables
 		private DataSet _templateDS;
-		
+		#endregion
+
+		#region Private Properties
 		// ==============================================================================
-		public TemplateSelector()
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-		}
+		#endregion
 		
+		#region Private Methods
 		// ==============================================================================
 		private void InitializeData()
 		{
@@ -58,7 +50,27 @@ namespace HHBuilder
 				}
 			}
 		}
+		#endregion
 		
+		#region Constructors
+		// ==============================================================================
+		/// <summary>
+		/// Select a template to use with a help project.
+		/// </summary>
+		public TemplateSelector()
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+		}
+		#endregion
+		
+		#region Public Properties
+		// ==============================================================================
+		#endregion
+		
+		#region Public Methods
 		// ==============================================================================
 		void TemplateSelectorLoad(object sender, EventArgs e)
 		{
@@ -111,6 +123,7 @@ namespace HHBuilder
 		// ==============================================================================
 		void BExitClick(object sender, EventArgs e)
 		{
+			MainForm.parameterString = String.Empty;
 			Close();
 		}
 		
@@ -135,5 +148,6 @@ namespace HHBuilder
 			Form frm = new ViewLicense(tLicense);
 			frm.ShowDialog();
 		}
+		#endregion
 	}
 }

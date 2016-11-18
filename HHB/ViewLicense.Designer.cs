@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-11-14
  * Time: 15:20
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 namespace HHBuilder
 {
@@ -59,6 +57,7 @@ namespace HHBuilder
 			this.Controls.Add(this.textBox1);
 			this.Name = "ViewLicense";
 			this.Text = "Template License";
+			this.Load += new System.EventHandler(this.ViewLicenseLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}

@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-08-10
  * Time: 15:03
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
@@ -18,7 +16,6 @@ namespace HHBuilder
 	{
 		#region Private Member Variables
 		private string _id;
-		//private string _fileName;
 		private string _title;
 		private string _content;
 		#endregion
@@ -87,6 +84,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Unique ID
 		/// </summary>
@@ -96,15 +94,16 @@ namespace HHBuilder
 			set{ _id = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Name of output CSS file
 		/// </summary>
 		public string fileName
 		{
 			get{ return (id + ".css"); }
-			//set{ _fileName = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Title of CSS object
 		/// </summary>
@@ -114,6 +113,7 @@ namespace HHBuilder
 			set{ _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Content of the CSS file
 		/// </summary>

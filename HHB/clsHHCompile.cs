@@ -3,9 +3,8 @@
  * User: Bob Swift
  * Date: 2016-10-22
  * Time: 12:31
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Data;
 using System.IO;
@@ -21,7 +20,7 @@ namespace HHBuilder
 	public static class HHCompile
 	{
 		#region Private Member Variables
-		//private static string _workingDir;
+		// ==============================================================================
 		private static string _templateFile = String.Empty;
 		private static string _homeID = String.Empty;
 		private static DataSet _nodeDS = InitializeNodeDataset();
@@ -29,6 +28,7 @@ namespace HHBuilder
 		#endregion
 
 		#region Private Properties
+		// ==============================================================================
 		#endregion
 		
 		#region Private Methods
@@ -177,6 +177,8 @@ namespace HHBuilder
 					
 					
 					
+					
+					
 					// TODO: Insert body text preprocessing here.
 					
 					
@@ -246,7 +248,6 @@ namespace HHBuilder
 			MatchCollection matches = regExImages.Matches(repBody);
 			foreach (Match match in matches)
 			{
-				//Log.ErrorBox("Found: " + match.Groups[1].Value);
 				string[] screenInfo = match.Groups[1].Value.Split('|');
 				string linkURL = screenInfo[0];
 				string linkText = String.Empty;
@@ -257,7 +258,6 @@ namespace HHBuilder
 				string screenID = match.Groups[1].Value;
 				string sOld = String.Format("{0}Link:{1}{2}", "{", match.Groups[1].Value, "}");
 				string sNew = String.Format("<a href=\"{0}\">{1}</a>", linkURL, linkText);
-				//Log.ErrorBox(String.Format("Old: {0}\nNew: {1}\n", sOld, sNew));
 				repBody = repBody.Replace(sOld, sNew);
 			}
 			return repBody;
@@ -271,7 +271,6 @@ namespace HHBuilder
 			MatchCollection matches = regExImages.Matches(repBody);
 			foreach (Match match in matches)
 			{
-				//Log.ErrorBox("Found: " + match.Groups[1].Value);
 				string imageID = match.Groups[1].Value;
 				string sOld = String.Format("{0}Image:{1}{2}", "{", imageID, "}");
 				string sNew;
@@ -284,7 +283,6 @@ namespace HHBuilder
 				{
 					sNew = String.Format("<img src=\"{0}/{1}\" alt=\"{2}\">", imageDirName, dr["FileName"].ToString(), System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
 				}
-				//Log.ErrorBox(String.Format("Old: {0}\nNew: {1}\n", sOld, sNew));
 				repBody = repBody.Replace(sOld, sNew);
 			}
 			return repBody;
@@ -690,7 +688,6 @@ namespace HHBuilder
 						Log.Exception(ex);
 						if (retryCount < 1)
 						{
-							//Log.ErrorBox(errorMessage);
 							return false;
 						}
 						System.Threading.Thread.Sleep(250);
@@ -712,13 +709,6 @@ namespace HHBuilder
 		{
 			string errorMessage = "Error removing / creating the working directory: ";
 			
-//			// Clean out template directory by removing and recreating it
-//			if ( !RecreateDirectory(HBSettings.templateBuildDir) )
-//			{
-//				Log.ErrorBox(errorMessage + HBSettings.templateBuildDir);
-//				return false;
-//			}
-			
 			// Clean out project build directory by removing and recreating it
 			if ( !RecreateDirectory(HBSettings.projectBuildDir) )
 			{
@@ -735,28 +725,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
-
-//		/// <summary>
-//		/// Working directory (will be deleted and recreated on compile operations)
-//		/// </summary>
-//		public static string workingDir
-//		{
-//			get
-//			{
-//				if ( String.IsNullOrWhiteSpace(_workingDir) ) {
-//					return Path.Combine( System.IO.Path.GetTempPath(), typeof(MainForm).Namespace + "_working" );
-//				}
-//				else
-//				{
-//					return _workingDir.Trim();
-//				}
-//			}
-//			set
-//			{
-//				_workingDir = value.Trim();
-//			}
-//		}
-		
+		// ==============================================================================
 		/// <summary>
 		/// Template file currently unpacked in the working directory.
 		/// </summary>
@@ -778,37 +747,59 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The standard subdirectory name containing the project's additional CSS files.
+		/// </summary>
 		public static string cssDirName
 		{
 			get{ return "css"; }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The standard subdirectory name containing the project's additional Javascript files. 
+		/// </summary>
 		public static string scriptDirName
 		{
 			get{ return "scripts"; }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The standard subdirectory name containing the project's additional image files. 
+		/// </summary>
 		public static string imageDirName
 		{
 			get{ return "images"; }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The full path name of the subdirectory containing the project's additional CSS files. 
+		/// </summary>
 		public static string cssDir
 		{
 			get{ return Path.Combine(HBSettings.projectBuildDir, cssDirName); }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The full path name of the subdirectory containing the project's additional Javascript files. 
+		/// </summary>
 		public static string scriptDir
 		{
 			get{ return Path.Combine(HBSettings.projectBuildDir, scriptDirName); }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The full path name of the subdirectory containing the project's additional image files. 
+		/// </summary>
 		public static string imageDir
 		{
 			get{ return Path.Combine(HBSettings.projectBuildDir, imageDirName); }
 		}
-		
-		
 		#endregion
 		
 		#region Public Methods
@@ -832,6 +823,11 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		/// <summary>
+		/// Create the files required for the creation of the compiled help file (.chm) 
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>True on success, otherwise false.</returns>
 		public static bool MakeFiles( System.Windows.Forms.TreeNode node )
 		{
 			string errorMessage = String.Empty;
@@ -868,27 +864,12 @@ namespace HHBuilder
 			
 			// Save Script files
 			ret = ret & ( SaveScripts(node) );
-//			if ( !SaveScripts(node) )
-//			{
-//				Cleanup();
-//				return false;
-//			}
 			
 			// Save Image files
 			ret = ret & ( SaveImages(node) );
-//			if ( !SaveImages(node) )
-//			{
-//				Cleanup();
-//				return false;
-//			}
 			
 			// Save CSS files
 			ret = ret & ( SaveCSS(node) );
-//			if ( !SaveCSS(node) )
-//			{
-//				Cleanup();
-//				return false;
-//			}
 			
 			if ( !ret )
 			{
@@ -923,6 +904,12 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		/// <summary>
+		/// Creates and compiles the project files to a compiled HTML Help file (.chm) 
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="outputFile">Path and name of the compiled output file.</param>
+		/// <returns></returns>
 		public static bool Compile( System.Windows.Forms.TreeNode node, string outputFile )
 		{
 			bool ret = true;
@@ -942,6 +929,5 @@ namespace HHBuilder
 			return ret;
 		}
 		#endregion
-		
 	}
 }

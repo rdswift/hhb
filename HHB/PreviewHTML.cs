@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-11-13
  * Time: 18:28
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Drawing;
@@ -13,12 +11,32 @@ using System.Windows.Forms;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of PreviewHTML.
+	/// Form for previewing an HTML help item.
 	/// </summary>
 	public partial class PreviewHTML : Form
 	{
+		#region Private Member Variables
 		private string _fileName;
+		#endregion
+
+		#region Private Properties
+		// ==============================================================================
+		#endregion
 		
+		#region Private Methods
+		// ==============================================================================
+		void PreviewHTMLLoad(object sender, EventArgs e)
+		{
+			webBrowser1.Navigate(_fileName);
+		}
+		#endregion
+		
+		#region Constructors
+		// ==============================================================================
+		/// <summary>
+		/// Form for previewing an HTML help item.
+		/// </summary>
+		/// <param name="fileName">Full path and name of the HTML file to display.</param>
 		public PreviewHTML(string fileName)
 		{
 			//
@@ -26,16 +44,16 @@ namespace HHBuilder
 			//
 			InitializeComponent();
 			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-			
 			_fileName = fileName;
 		}
+		#endregion
 		
-		void PreviewHTMLLoad(object sender, EventArgs e)
-		{
-			webBrowser1.Navigate(_fileName);
-		}
+		#region Public Properties
+		// ==============================================================================
+		#endregion
+		
+		#region Public Methods
+		// ==============================================================================
+		#endregion
 	}
 }

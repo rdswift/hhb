@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-10-14
  * Time: 11:13
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.IO;
@@ -23,7 +21,6 @@ namespace HHBuilder
 		#region Private Member Variables
 		private string _id;
 		private string _fileName;
-		//private static string _workingDir = "";		// Should be the same value for all template objects.  Only needs to be set once.
 		private string _title;
 		private string _description;
 		private string _author;
@@ -324,6 +321,7 @@ namespace HHBuilder
 			if ( dt.Rows.Count > 0 )
 			{
 				DataRow dr = dt.Rows[0];
+				// Convert any null entries to empty string to avoid null assignment errors.
 				foreach (DataColumn tDC in dt.Columns) {
 					object value = dr[tDC.ColumnName];
 					if (value == DBNull.Value)
@@ -377,7 +375,6 @@ namespace HHBuilder
 						Log.Exception(ex);
 						if (retryCount < 1)
 						{
-							//Log.ErrorBox(errorMessage);
 							return false;
 						}
 						System.Threading.Thread.Sleep(250);
@@ -414,6 +411,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Unique identifier for the template
 		/// </summary>
@@ -423,6 +421,7 @@ namespace HHBuilder
 			set{ _id = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Full path and file name of the template file (.hhbt)
 		/// </summary>
@@ -431,7 +430,8 @@ namespace HHBuilder
 			get{ return _fileName.Trim(); }
 			set{ _fileName = value.Trim(); }
 		}
-			
+		
+		// ==============================================================================
 		/// <summary>
 		/// Title of the HHBuilder template
 		/// </summary>
@@ -441,6 +441,7 @@ namespace HHBuilder
 			set{ _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Description of the HHBuilder template
 		/// </summary>
@@ -450,6 +451,7 @@ namespace HHBuilder
 			set{ _description = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Author of the HHBuilder template
 		/// </summary>
@@ -459,6 +461,7 @@ namespace HHBuilder
 			set{ _author = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Company providing the HHBuilder template
 		/// </summary>
@@ -468,6 +471,7 @@ namespace HHBuilder
 			set{ _company = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Contact name regarding the HHBuilder template
 		/// </summary>
@@ -476,7 +480,8 @@ namespace HHBuilder
 			get{ return _contact.Trim(); }
 			set{ _contact = value.Trim(); }
 		}
-
+		
+		// ==============================================================================
 		/// <summary>
 		/// Contact email regarding the HHBuilder template
 		/// </summary>
@@ -486,6 +491,7 @@ namespace HHBuilder
 			set{ _email = value.Trim(); }
 		}
 
+		// ==============================================================================
 		/// <summary>
 		/// Contact website regarding the HHBuilder template
 		/// </summary>
@@ -495,6 +501,7 @@ namespace HHBuilder
 			set{ _website = value.Trim(); }
 		}
 
+		// ==============================================================================
 		/// <summary>
 		/// Version of the HHBuilder template
 		/// </summary>
@@ -504,6 +511,7 @@ namespace HHBuilder
 			set{ _version = value.Trim(); }
 		}
 
+		// ==============================================================================
 		/// <summary>
 		/// Revision date of the HHBuilder template
 		/// </summary>
@@ -513,6 +521,7 @@ namespace HHBuilder
 			set{ _date = value.Trim(); }
 		}
 
+		// ==============================================================================
 		/// <summary>
 		/// Title / description of the license terms for use of the HHBuilder template
 		/// </summary>
@@ -524,16 +533,6 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Methods
-//		// ==============================================================================
-//		/// <summary>
-//		/// Sets the working directory for all HHTemplate objects
-//		/// </summary>
-//		/// <param name="workingDirectory">Working directory to use.</param>
-//		public static void SetWorkingDir(string workingDirectory)
-//		{
-//			_workingDir = workingDirectory.Trim();
-//		}
-		
 		// ==============================================================================
 		/// <summary>
 		/// Loads information from the template file
@@ -565,8 +564,6 @@ namespace HHBuilder
 		// ==============================================================================
 		/// <summary>
 		/// Builds the HTML Help Builder template file (.hhbt)
-		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
-		/// workingDir property is empty, a default working directory will be used.</para>
 		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
 		/// <para>If the output file exists, it will be overwritten.</para>
 		/// </summary>
@@ -577,27 +574,9 @@ namespace HHBuilder
 			return PackTemplatePackage(htmlDirectory, this.fileName);
 		}
 
-//		// ==============================================================================
-//		/// <summary>
-//		/// Builds the HTML Help Builder template file (.hhbt)
-//		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
-//		/// workingDir property is empty, a default working directory will be used.</para>
-//		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
-//		/// </summary>
-//		/// <param name="htmlDirectory">The directory containing the template.htm and LICENSE files and HTML support files subdirectories.</param>
-//		/// <param name="workingDirectory">The directory used for assembling the help template package.</param>
-//		/// <para>If the output file exists, it will be overwritten.</para>
-//		/// <returns>True on success, otherwise false.</returns>
-//		public bool PackTemplatePackage(string htmlDirectory, string workingDirectory)
-//		{
-//			return PackTemplatePackage(htmlDirectory, workingDirectory, this.fileName);
-//		}
-
 		// ==============================================================================
 		/// <summary>
 		/// Builds the HTML Help Builder template file (.hhbt)
-		/// <para>If the working directory is not provided, the workingDir property of the current HHBTemplate object will be used. If the 
-		/// workingDir property is empty, a default working directory will be used.</para>
 		/// <para>If the output path and filename is not provided, the fileName property of the current HHBTemplate object will be used.</para>
 		/// <para>If the output file exists, it will be overwritten.</para>
 		/// </summary>
@@ -796,12 +775,7 @@ namespace HHBuilder
 				errorMessage = "Output directory not specified."; 
 			}
 			
-//			// Confirm output directory exists
-//			if ( ( String.IsNullOrWhiteSpace(errorMessage) ) && ( !Directory.Exists(unpackToDir) ) )
-//			{
-//				errorMessage = String.Format("Output directory {0} does not exist.", unpackToDir);
-//			}
-			
+			// Log and display error, and exit
 			if ( !String.IsNullOrWhiteSpace(errorMessage) )
 			{
 				Log.Error(errorMessage);
@@ -873,7 +847,8 @@ namespace HHBuilder
 		/// <returns>The specified template if found, otherwise a new empty template.</returns>
 		public static HHBTemplate GetTemplate(string templateID)
 		{
-			foreach (HHBTemplate tTemplate in HHBTemplate.AvailableTemplates()) {
+			foreach (HHBTemplate tTemplate in HHBTemplate.AvailableTemplates())
+			{
 				if (tTemplate.id == templateID)
 				{
 					return tTemplate;

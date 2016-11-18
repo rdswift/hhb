@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-10-16
  * Time: 13:46
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.IO;
@@ -18,10 +16,93 @@ namespace HHBuilder
 	///  * Store the log file path and create the file if necessary<br />
 	///  * Store the preferred logging level<br />
 	///  * Log entries based on specified logging level<br />
+	///  * Remove log files as required to retain the specified number of session logs<br />
 	///  * Display specified error messages in a standard error messagebox
 	/// </summary>
 	public static class Log
 	{
+		
+		#region Private Member Variables
+		private static string _logDir = String.Empty;
+		private static string _logFile = String.Format("{0}_{1}.log", Assembly.GetExecutingAssembly().GetName().Name, DateTime.Now.ToString("yyyyMMddHHmmss"));
+		private static int _logsToKeep = 5;
+		private static LogLevel _level = LogLevel.Normal;
+		#endregion
+
+		#region Private Properties
+		#endregion
+		
+		#region Private Methods
+		// ==============================================================================
+		private static bool MoveLogFiles(string fromDir, string toDir)
+		{
+			if ( String.IsNullOrWhiteSpace(fromDir) || String.IsNullOrWhiteSpace(toDir) )
+			{
+				return false;
+			}
+			
+			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(fromDir);
+			System.IO.FileInfo[] logFiles = directorySelected.GetFiles(String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
+			bool success = true;
+			Exception tEx = new Exception("No exception");
+			foreach (FileInfo logFile in logFiles) {
+				try
+				{
+					string fromFile = logFile.FullName;
+					string toFile = Path.Combine(toDir, logFile.Name);
+					File.Copy(fromFile, toFile, true);
+					if ( File.Exists(toFile) )
+					{
+						File.Delete(fromFile);
+					}
+					else
+					{
+						tEx = new FileNotFoundException("Unable to move file", logFile.Name);
+						tEx.Source = String.Format("{0}.Log", Assembly.GetExecutingAssembly().GetName().Name);
+						success = false;
+					}
+				}
+				catch (Exception ex)
+				{
+					tEx = ex;
+					success = false;
+					//throw;
+				}
+			}
+			if ( !success )
+			{
+				string errorMessage = "Problem moving existing log files to new location.";
+				Log.Error(errorMessage);
+				Log.Exception(tEx);
+				Log.ErrorBox(errorMessage);
+			}
+			return success;
+		}
+		
+		// ==============================================================================
+		private static void writeToLog( string lineToWrite )
+		{
+			if ( !String.IsNullOrEmpty(fileName) )
+			{
+				try
+				{
+					string output = String.Format("{0} {1}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), lineToWrite);
+					System.IO.File.AppendAllText(fileName, output);
+				}
+				catch
+				{
+					ErrorBox("Unable to write to the specified log file.\n");
+				}
+			}
+		}
+		#endregion
+		
+		#region Constructors
+		// ==============================================================================
+		#endregion
+		
+		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Available levels of program logging
 		/// </summary>
@@ -48,92 +129,7 @@ namespace HHBuilder
 			Debug = 3
 		};
 		
-		#region Private Member Variables
-		//private static string _logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
-		private static string _logDir = String.Empty;
-		private static string _logFile = String.Format("{0}_{1}.log", Assembly.GetExecutingAssembly().GetName().Name, DateTime.Now.ToString("yyyyMMddHHmmss"));
-		private static int _logsToKeep = 5;
-		private static LogLevel _level = LogLevel.Normal;
-		#endregion
-
-		#region Private Properties
-		#endregion
-		
-		#region Private Methods
 		// ==============================================================================
-		
-		private static bool MoveLogFiles(string fromDir, string toDir)
-		{
-			if ( String.IsNullOrWhiteSpace(fromDir) || String.IsNullOrWhiteSpace(toDir) )
-			{
-				return false;
-			}
-			
-			//string pathToCheck = Path.Combine(fromDir, String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
-			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(fromDir);
-			System.IO.FileInfo[] logFiles = directorySelected.GetFiles(String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
-			bool success = true;
-			Exception tEx = new Exception("No exception");
-			foreach (FileInfo logFile in logFiles) {
-				try
-				{
-					string fromFile = logFile.FullName;
-					string toFile = Path.Combine(toDir, logFile.Name);
-					File.Copy(fromFile, toFile, true);
-					if ( File.Exists(toFile) )
-					{
-						File.Delete(fromFile);
-					}
-					else
-					{
-						tEx = new FileNotFoundException("Unable to move file", logFile.Name);
-						tEx.Source = String.Format("{0}.Log", Assembly.GetExecutingAssembly().GetName().Name);
-						success = false;
-					}
-					//logFile.MoveTo(toDir);
-				}
-				catch (Exception ex)
-				{
-					tEx = ex;
-					success = false;
-					//throw;
-				}
-			}
-			if ( !success )
-			{
-				string errorMessage = "Problem moving existing log files to new location.";
-				Log.Error(errorMessage);
-				Log.Exception(tEx);
-				Log.ErrorBox(errorMessage);
-			}
-			return success;
-		}
-		
-		// ==============================================================================
-		
-		private static void writeToLog( string lineToWrite )
-		{
-			if ( !String.IsNullOrEmpty(fileName) )
-			{
-				try
-				{
-					string output = String.Format("{0} {1}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), lineToWrite);
-					System.IO.File.AppendAllText(fileName, output);
-				}
-				catch
-				{
-					ErrorBox("Unable to write to the specified log file.\n");
-				}
-			}
-		}
-		#endregion
-		
-		#region Constructors
-		// ==============================================================================
-		#endregion
-		
-		#region Public Properties
-		
 		/// <summary>
 		/// The directory to store the log files.
 		/// </summary>
@@ -180,6 +176,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The level of information to log.
 		/// </summary>
@@ -189,6 +186,7 @@ namespace HHBuilder
 			set{ _level = value; }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The maximum number of log files to keep.
 		/// </summary>
@@ -208,6 +206,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The full path and file name of the current log file.
 		/// </summary>
@@ -317,12 +316,12 @@ namespace HHBuilder
 			MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Removes older log files leaving only the specified number of remaining files.
 		/// </summary>
 		public static void CleanLogFiles()
 		{
-			//string pathToCheck = Path.Combine(logDir, String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
 			System.IO.DirectoryInfo directorySelected = new System.IO.DirectoryInfo(logDir);
 			System.IO.FileInfo[] logFiles = directorySelected.GetFiles(String.Format("{0}_*.log", Assembly.GetExecutingAssembly().GetName().Name));
 			Array.Sort(logFiles, (f1, f2) => f1.Name.CompareTo(f2.Name));
@@ -353,7 +352,6 @@ namespace HHBuilder
 		{
 			if ( String.IsNullOrEmpty(ex.Source) )
 			{
-				//ex.Source = this.Name;
 				ex.Source = "Undefined Source";
 			}
 			Log.Exception(ex);

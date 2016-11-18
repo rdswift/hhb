@@ -3,19 +3,19 @@
  * User: Bob Swift
  * Date: 2016-11-03
  * Time: 17:13
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of clsPopupText.
+	/// The PopupTextItem class is used to manage the information associated with popup<br />
+	/// text entries used in a help project.
 	/// </summary>
 	public class PopupTextItem
 	{
 		#region Private Member Variables
+		// ==============================================================================
 		private string _id;
 		private string _title;
 		private uint _linkID;
@@ -23,6 +23,7 @@ namespace HHBuilder
 		#endregion
 
 		#region Private Properties
+		// ==============================================================================
 		#endregion
 		
 		#region Private Methods
@@ -45,6 +46,9 @@ namespace HHBuilder
 		
 		#region Constructors
 		// ==============================================================================
+		/// <summary>
+		/// Information associated with a popup text entry used in a help project. 
+		/// </summary>
 		public PopupTextItem()
 		{
 			id = GetID();
@@ -55,24 +59,40 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
+		/// <summary>
+		/// Unique identifier for the item
+		/// </summary>
 		public string id
 		{ 
 			get{ return _id.Trim(); }
 			set{ _id = value.Trim(); }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// Title of the item
+		/// </summary>
 		public string title
 		{
 			get{ return _title.Trim(); }
 			set{ _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// Number assigned to the topic when called from an external application 
+		/// </summary>
 		public uint linkID
 		{
 			get{ return _linkID; }
 			set{ _linkID = System.Math.Max( 0, value );	}
 		}
 		
+		// ==============================================================================
+		/// <summary>
+		/// The line of text to display in the popup.
+		/// </summary>
 		public string helpText
 		{
 			get{ return _helpText.Trim(); }
@@ -83,8 +103,5 @@ namespace HHBuilder
 		#region Public Methods
 		// ==============================================================================
 		#endregion
-		
-		
-		
 	}
 }

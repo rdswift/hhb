@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-08-11
  * Time: 14:25
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
@@ -45,7 +43,7 @@ namespace HHBuilder
 		#region Constructors
 		// ==============================================================================
 		/// <summary>
-		/// Create a new scriptItem object
+		/// Create a new ScriptItem object
 		/// </summary>
 		public ScriptItem()
 		{
@@ -57,7 +55,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Create a new scriptItem object
+		/// Create a new ScriptItem object
 		/// </summary>
 		/// <param name="itemTitle">Title of script object</param>
 		/// <param name="itemContent">Contents of the script file</param>
@@ -71,7 +69,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Create a new scriptItem object
+		/// Create a new ScriptItem object
 		/// </summary>
 		/// <param name="itemFileName">Name of output script file</param>
 		/// <param name="itemTitle">Title of script object</param>
@@ -86,7 +84,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Create a new scriptItem object
+		/// Create a new ScriptItem object
 		/// </summary>
 		/// <param name="itemID">Unique ID</param>
 		/// <param name="itemFileName">Name of output script file</param>
@@ -102,6 +100,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Unique ID
 		/// </summary>
@@ -111,6 +110,7 @@ namespace HHBuilder
 			set{ _id = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Name of output script file
 		/// </summary>
@@ -120,6 +120,7 @@ namespace HHBuilder
 			set{ _fileName = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Title of script object
 		/// </summary>
@@ -129,6 +130,7 @@ namespace HHBuilder
 			set{ _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Content of the script file
 		/// </summary>

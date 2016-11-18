@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-11-04
  * Time: 13:35
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
@@ -54,6 +52,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// The title of the project
 		/// </summary>
@@ -63,6 +62,7 @@ namespace HHBuilder
 			set { _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The full path and name of the project file (.hhb)
 		/// </summary>
@@ -72,6 +72,7 @@ namespace HHBuilder
 			set { _fileName = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The author of the help project
 		/// </summary>
@@ -81,6 +82,7 @@ namespace HHBuilder
 			set { _author = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The company developing the help project
 		/// </summary>
@@ -90,6 +92,7 @@ namespace HHBuilder
 			set { _company = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The copyright notice for the project
 		/// </summary>
@@ -99,6 +102,7 @@ namespace HHBuilder
 			set { _copyright = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The language used for the project
 		/// </summary>
@@ -108,6 +112,7 @@ namespace HHBuilder
 			set { _language = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The default topic to display for the project
 		/// </summary>
@@ -117,6 +122,7 @@ namespace HHBuilder
 			set { _defaultTopic = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Determines whether the project is compiled with full text search capability 
 		/// </summary>
@@ -126,6 +132,7 @@ namespace HHBuilder
 			set { _useFullTextSearch = value; }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The template used when compiling the project
 		/// </summary>
@@ -139,8 +146,5 @@ namespace HHBuilder
 		#region Public Methods
 		// ==============================================================================
 		#endregion
-		
-		
-		
 	}
 }

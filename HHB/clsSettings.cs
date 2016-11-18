@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-10-04
  * Time: 17:25
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.IO;
@@ -15,7 +13,7 @@ using Ini;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of clsSettings.
+	/// The HBSettings class holds and serves all program and user settings.
 	/// </summary>
 	public static class HBSettings
 	{
@@ -228,7 +226,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
-		
+		// ==============================================================================
 		/// <summary>
 		/// Working directory
 		/// </summary>
@@ -255,6 +253,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Working directory used for building templates
 		/// </summary>
@@ -263,6 +262,7 @@ namespace HHBuilder
 			get{ return Path.Combine(workingDir, "BuildTemplate"); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Working directory used for extracting tgemplates
 		/// </summary>
@@ -271,6 +271,7 @@ namespace HHBuilder
 			get{ return Path.Combine(workingDir, "ExtractTemplate"); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Working directory used for building projects
 		/// </summary>
@@ -279,6 +280,7 @@ namespace HHBuilder
 			get{ return Path.Combine(workingDir, "BuildProject"); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Directory where the template files are stored
 		/// </summary>
@@ -292,6 +294,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Directory where the hhc.exe file is located
 		/// </summary>
@@ -301,6 +304,7 @@ namespace HHBuilder
 			set{ _hhcDirectory = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Default help project author name
 		/// </summary>
@@ -310,6 +314,7 @@ namespace HHBuilder
 			set{ _author = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Default help project company name
 		/// </summary>
@@ -319,6 +324,7 @@ namespace HHBuilder
 			set{ _company = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Template to use for generating the help project copyright notice
 		/// </summary>
@@ -328,6 +334,7 @@ namespace HHBuilder
 			set{ _copyrightTemplate = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Default help project language
 		/// </summary>
@@ -337,6 +344,7 @@ namespace HHBuilder
 			set{ _language = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Default program user interface culture
 		/// </summary>
@@ -346,6 +354,7 @@ namespace HHBuilder
 			set{ _uiCulture = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Path and name of the configuration file
 		/// </summary>
@@ -355,6 +364,7 @@ namespace HHBuilder
 			set{ _cfgFileName = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Directory to store the log files
 		/// </summary>
@@ -364,6 +374,7 @@ namespace HHBuilder
 			set{ _logPath = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Amount of detail to write to log file
 		/// </summary>
@@ -373,6 +384,7 @@ namespace HHBuilder
 			set{ _logLevel = value; }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Number of log files to keep
 		/// </summary>
@@ -392,6 +404,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Whether to remove working files and directories during program shutdown.
 		/// </summary>
@@ -401,6 +414,7 @@ namespace HHBuilder
 			set{ _cleanup = value; }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Whether to check for program updates during program startup.
 		/// </summary>
@@ -547,7 +561,6 @@ namespace HHBuilder
 				Log.Exception(ex);
 				return false;
 			}
-			
 		}
 
 		// ==============================================================================
@@ -570,7 +583,7 @@ namespace HHBuilder
 			}
 		}
 
-		// --------------------------------------------------------------------------------------------------------------------
+		// ==============================================================================
 		/// <summary>
 		/// Displays the current configuration settings
 		/// </summary>
@@ -618,6 +631,5 @@ namespace HHBuilder
 			MessageBox.Show( tempString.ToString(), "Current Settings");
 		}
 		#endregion
-		
 	}
 }

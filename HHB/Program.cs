@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-06-23
  * Time: 10:21
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Windows.Forms;

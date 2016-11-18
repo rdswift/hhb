@@ -16,25 +16,18 @@ using System.Globalization;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of frmSettings.
+	/// The form used to display and modify the program settings.
 	/// </summary>
 	public partial class frmSettings : Form
 	{
-		ResourceManager rmText = new ResourceManager("HHBuilder.LanguageText", Assembly.GetExecutingAssembly());
-		//ResourceManager rmText = MainForm.rmText;
+		#region Private Member Variables
+		#endregion
+
+		#region Private Properties
+		// ==============================================================================
+		#endregion
 		
-		public frmSettings()
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-		}
-		
+		#region Private Methods
 		// ==============================================================================
 		/// <summary>
 		/// Handles the Load event for the form
@@ -44,10 +37,10 @@ namespace HHBuilder
 		void FrmSettingsLoad(object sender, EventArgs e)
 		{
 			// Set form title
-			this.Text = rmText.GetString("frmSettingsTitle");
+			this.Text = Language.GetString("frmSettingsTitle");
 			
 			// Set label text
-			lAuthor.Text = rmText.GetString("labels001");
+			lAuthor.Text = Language.GetString("labels001");
 			
 			// Display current settings 
 			tbAuthor.Text = HBSettings.author;
@@ -80,7 +73,6 @@ namespace HHBuilder
 					ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException("logLevel", exString);
 					ex.Source = this.Name;
 					Log.ErrorExit(ex);
-					//throw new Exception("Invalid value for LogLevel");
 					break;
 			}
 			string defaultLanguage = HBSettings.language;
@@ -109,11 +101,13 @@ namespace HHBuilder
 		{
 			int idx = treeView1.SelectedNode.Index;
 			
+			// Remove all tab pages
 			foreach (TabPage tPage in tabControl1.TabPages)
 			{
 				tabControl1.TabPages.Remove(tPage);
 			}
 			
+			// Display the selected tab page
 			switch (idx) {
 				case 0:
 					tabControl1.TabPages.Add(tabPageIdentification);
@@ -236,24 +230,25 @@ namespace HHBuilder
 			}
 			else
 			{
-				MessageBox.Show(String.Format(rmText.GetString("errorMessage003"), HBSettings.cfgFileName), 
-				                rmText.GetString("errorMessage000"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show(String.Format(Language.GetString("errorMessage003"), HBSettings.cfgFileName), 
+				                Language.GetString("errorMessage000"), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
 		
 		
-		
+		// ==============================================================================
 		void TreeView1AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			ShowSelectedTab();
 		}
 		
+		// ==============================================================================
 		void BExitClick(object sender, EventArgs e)
 		{
 			Close();
 		}
 		
-		
+		// ==============================================================================
 		void BBrowseForWorkingDirectoryClick(object sender, EventArgs e)
 		{
 			string dir = SelectDirectory(tbWorkingDir.Text.Trim(), "Working");
@@ -263,6 +258,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		private string SelectDirectory(string startingDirectory, string directoryTitle)
 		{
 			string dir = startingDirectory;
@@ -294,6 +290,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		void BBrowseForCompilerDirectoryClick(object sender, EventArgs e)
 		{
 			string dir = SelectDirectory(tbHhcDirectory.Text.Trim(), "hhc.exe");
@@ -303,6 +300,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		void BBrowseForTemplatesDirectoryClick(object sender, EventArgs e)
 		{
 			string dir = SelectDirectory(tbTemplatesDir.Text.Trim(), "Templates");
@@ -312,6 +310,7 @@ namespace HHBuilder
 			}
 		}
 		
+		// ==============================================================================
 		void BBrowseForLogDirectoryClick(object sender, EventArgs e)
 		{
 			string dir = SelectDirectory(tbLogFileDir.Text.Trim(), "Log File");
@@ -320,5 +319,28 @@ namespace HHBuilder
 				tbLogFileDir.Text = dir;
 			}
 		}
+		#endregion
+		
+		#region Constructors
+		// ==============================================================================
+		/// <summary>
+		/// The form used to display and modify the program settings.
+		/// </summary>
+		public frmSettings()
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+		}
+		#endregion
+		
+		#region Public Properties
+		// ==============================================================================
+		#endregion
+		
+		#region Public Methods
+		// ==============================================================================
+		#endregion
 	}
 }

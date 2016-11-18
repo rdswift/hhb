@@ -3,8 +3,6 @@
  * User: Bob Swift
  * Date: 2016-10-10
  * Time: 11:27
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Collections.Generic;
@@ -19,9 +17,8 @@ namespace HHBuilder
 	/// </summary>
 	public class Language
 	{
-		
 		#region Private Member Variables
-		
+		// ==============================================================================
 		/// <summary>
 		/// Resource manager for localization information
 		/// </summary>
@@ -29,9 +26,9 @@ namespace HHBuilder
 		private static CultureInfo _cultureInfo = CultureInfo.CurrentCulture;
 		private static CultureInfo _cultureUiInfo = CultureInfo.CurrentUICulture;
 		
+		// ==============================================================================
 		private string _title;
 		private string _code;
-		
 		#endregion
 
 		#region Private Properties
@@ -46,6 +43,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Title and location (if applicable) of the language
 		/// </summary>
@@ -55,6 +53,7 @@ namespace HHBuilder
 			set { _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Hexidecimal code for the language in the form 0x0000
 		/// </summary>
@@ -64,6 +63,7 @@ namespace HHBuilder
 			set { _code = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The current culture setting
 		/// </summary>

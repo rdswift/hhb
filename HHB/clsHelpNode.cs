@@ -18,44 +18,7 @@ namespace HHBuilder
 	/// </summary>
 	public static class HelpNode
 	{
-		/// <summary>
-		/// Types of branches in the HTML Help project tree
-		/// </summary>
-		public enum branches
-		{
-			/// <summary>
-			/// Table of Contents entry
-			/// </summary>
-			tocEntry = 0,
-			
-			/// <summary>
-			/// HTML Popup Screen entry
-			/// </summary>
-			htmlPopup = 1,
-			
-			/// <summary>
-			/// Text Popup Screen entry
-			/// </summary>
-			textPopup = 2,
-			
-			/// <summary>
-			/// Cascading Style Sheet File entry
-			/// </summary>
-			cssFile = 3,
-			
-			/// <summary>
-			/// Script File entry
-			/// </summary>
-			scriptFile = 4,
-			
-			/// <summary>
-			/// Image File entry
-			/// </summary>
-			imageFile = 5
-		}
-		
 		#region Private Member Variables
-//		private static DataSet ds = new DataSet();
 		#endregion
 
 		#region Private Properties
@@ -142,7 +105,6 @@ namespace HHBuilder
 			ds.Tables[0].Rows.Clear();
 			DataRow dr = ds.Tables[0].NewRow();
 			dr["ProjectName"] = proj.title;
-			//dr["FileName"] = proj.filename;
 			dr["Author"] = proj.author;
 			dr["Company"] = proj.company;
 			dr["Copyright"] = proj.copyright;
@@ -231,7 +193,6 @@ namespace HHBuilder
 				DataRow dr = ds.Tables[1].NewRow();
 				dr["ID"] = tnItem.id;
 				dr["IndexPath"] = NodeIndexPath(tNode).Split(' ')[0];
-				//dr["ScreenType"] = tnItem.screenType.ToString();
 				switch (nIdx) {
 					case (int) branches.tocEntry :
 						dr["ScreenType"] = "TOC";
@@ -244,7 +205,6 @@ namespace HHBuilder
 						Log.Error("Unknown HTML screen type.");
 						break;
 				}
-				//dr["ScreenType"] = ( (nIdx < 1) ? "TOC" : "Popup" );
 				dr["FileName"] = tnItem.fileName;
 				dr["HasScreen"] = tnItem.hasScreen.ToString();
 				dr["UseTitle"] = tnItem.usesTitle.ToString();
@@ -284,8 +244,6 @@ namespace HHBuilder
 			
 			dc = new DataColumn("ProjectName", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
-			//dc = new DataColumn("FileName", Type.GetType("System.String"));
-			//dt.Columns.Add(dc);
 			dc = new DataColumn("Author", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
 			dc = new DataColumn("Company", Type.GetType("System.String"));
@@ -305,7 +263,6 @@ namespace HHBuilder
 			HHBProject proj = new HHBProject();
 			DataRow dr = dt.NewRow();
 			dr["ProjectName"] = proj.title;
-			//dr["FileName"] = proj.filename;
 			dr["Author"] = proj.author;
 			dr["Company"] = proj.company;
 			dr["Copyright"] = proj.copyright;
@@ -487,14 +444,13 @@ namespace HHBuilder
 				{
 					tHI.screenType = HelpItem.ScreenType.Popup;
 				}
-				//tHI.fileName = (string) tDR["FileName"];
 				tHI.hasScreen = String.Equals(tDR["HasScreen"].ToString().Trim().ToLower(), "true");
 				tHI.usesTitle = String.Equals(tDR["UseTitle"].ToString().Trim().ToLower(), "true");
 				tHI.usesHeader = String.Equals(tDR["UseHeader"].ToString().Trim().ToLower(), "true");
 				tHI.usesFooter = String.Equals(tDR["UseFooter"].ToString().Trim().ToLower(), "true");
 				tHI.title = (string) tDR["Title"];
 				tHI.indexEntries = (string) tDR["IndexEntries"];
-				tHI.linkID = System.Convert.ToUInt32("0" + tDR["LinkID"].ToString().Trim());
+				tHI.linkID = System.Convert.ToInt32("0" + tDR["LinkID"].ToString().Trim());
 				tHI.linkDescription = (string) tDR["LinkDesc"];
 				tHI.linkList = (string) tDR["LinkList"];
 				tHI.cssList = (string) tDR["CssList"];
@@ -532,7 +488,6 @@ namespace HHBuilder
 				CSSItem tItem = new CSSItem();
 				tItem.id = tdr["ID"].ToString().Trim();
 				tItem.title = tdr["Title"].ToString().Trim();
-				//tItem.fileName = tdr["FileName"].ToString().Trim();
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes.Add(tItem.title);
 				tTN.Tag = tItem;
@@ -543,7 +498,7 @@ namespace HHBuilder
 			{
 				ScriptItem tItem = new ScriptItem();
 				tItem.id = tdr["ID"].ToString().Trim();
-				tItem.title = tdr["Title"].ToString().Trim();
+				tItem.title = tdr["Title"].ToString().Trim();	// TODO: Confirm the title is still needed to be stored in the project file.
 				tItem.fileName = tdr["FileName"].ToString().Trim();
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes.Add(tItem.title);
@@ -556,7 +511,6 @@ namespace HHBuilder
 				ImageItem tItem = new ImageItem();
 				tItem.id = tdr["ID"].ToString().Trim();
 				tItem.title = tdr["Title"].ToString().Trim();
-				//tItem.fileName = tdr["FileName"].ToString().Trim();
 				tItem.extension = Path.GetExtension(tdr["FileName"].ToString().Trim());
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes.Add(tItem.title);
@@ -575,15 +529,71 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		/// <summary>
+		/// Types of branches in the HTML Help project tree
+		/// </summary>
+		public enum branches
+		{
+			/// <summary>
+			/// Table of Contents entry
+			/// </summary>
+			tocEntry = 0,
+			
+			/// <summary>
+			/// HTML Popup Screen entry
+			/// </summary>
+			htmlPopup = 1,
+			
+			/// <summary>
+			/// Text Popup Screen entry
+			/// </summary>
+			textPopup = 2,
+			
+			/// <summary>
+			/// Cascading Style Sheet File entry
+			/// </summary>
+			cssFile = 3,
+			
+			/// <summary>
+			/// Script File entry
+			/// </summary>
+			scriptFile = 4,
+			
+			/// <summary>
+			/// Image File entry
+			/// </summary>
+			imageFile = 5
+		}
 		#endregion
 		
 		#region Public Methods
+		// ==============================================================================
+		/// <summary>
+		/// Gets the index of the specified level ancestor of a node.
+		/// </summary>
+		/// <param name="NodeToCheck">Node to process.</param>
+		/// <param name="AncestorLevel">Level of the ancestor to check.</param>
+		/// <returns>The index of the specified ancestor on success, otherwise -1.</returns>
+		public static int GetAncestorIndex(TreeNode NodeToCheck, int AncestorLevel)
+		{
+			if ((NodeToCheck == null) || (NodeToCheck.Level <= AncestorLevel) || (AncestorLevel < 0))
+			{
+				return -1;
+			}
+			TreeNode tempNode = NodeToCheck;
+			while (tempNode.Level > AncestorLevel)
+			{
+				tempNode = tempNode.Parent;
+			}
+			return tempNode.Index;
+		}
+		
+		// ==============================================================================
 		/// <summary>
 		/// Gets the root (level 0) ancestor of the specified node.
 		/// </summary>
 		/// <param name="node">Node to process.</param>
 		/// <returns>The level 0 ancestor node.</returns>
-		// ==============================================================================
 		public static System.Windows.Forms.TreeNode GetRootNode(System.Windows.Forms.TreeNode node)
 		{
 			System.Windows.Forms.TreeNode tNode = node;
@@ -632,7 +642,7 @@ namespace HHBuilder
 		/// Get's the branch index of the specified node.
 		/// </summary>
 		/// <param name="NodeToCheck">The node to process.</param>
-		/// <returns>The project tree branch of the specified node.</returns>
+		/// <returns>The project tree branch of the specified node on success, otherwise -1.</returns>
 		public static int GetBranchIndex(TreeNode NodeToCheck)
 		{
 			if ((NodeToCheck == null) || (NodeToCheck.Level < 1))
@@ -645,6 +655,31 @@ namespace HHBuilder
 				tempNode = tempNode.Parent;
 			}
 			return tempNode.Index;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Determine whether one node is a parent or ancestor of a second node.
+		/// </summary>
+		/// <param name="node1">Node to check.</param>
+		/// <param name="node2">Ancestor branch node to check.</param>
+		/// <returns>True if the first node is a decendent of the second node's root node, otherwise false.</returns>
+		public static bool ContainsNode(TreeNode node1, TreeNode node2)
+		{
+			// Check the parent node of the second node.
+			if (node2.Parent == null)
+			{
+				return false;
+			}
+			if (node2.Parent.Equals(node1))
+			{
+				return true;
+			}
+
+			// If the parent node is not null or equal to the first node,
+			// call the ContainsNode method recursively using the parent of
+			// the second node.
+			return ContainsNode(node1, node2.Parent);
 		}
 
 		// ==============================================================================
@@ -816,6 +851,11 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		/// <summary>
+		/// List of the HTML screens for the selected project.
+		/// </summary>
+		/// <param name="node">A node in the project to use for locating the topics.</param>
+		/// <returns>A dataset of all topics with an associated HTML screen.</returns>
 		public static DataSet ScreenLinks(TreeNode node)
 		{
 			DataSet ds = new DataSet();
@@ -834,7 +874,6 @@ namespace HHBuilder
 			ds.Tables.Add(dt);
 			
 			TreeNode tNode = new TreeNode();
-//			tNode = topNode.Nodes[0];
 			tNode = GetRootNode(node);
 			RecurseTreeToLinkList(ref ds, tNode);
 			
@@ -850,7 +889,6 @@ namespace HHBuilder
 		private static void RecurseTreeToLinkList(ref DataSet dsLinks, TreeNode tNode)
 		{
 			int nIdx = HelpNode.GetBranchIndex(tNode);
-//			if ((tNode.Level > 1) && ((HelpNode.GetBranchIndex == branches.tocEntry) || (HelpNode.GetBranchIndex == branches.htmlPopup)))
 			if ((tNode.Level > 1) && ((nIdx == (int) branches.tocEntry) || (nIdx == (int) branches.htmlPopup)))
 			{
 				HelpItem tnItem = (HelpItem) tNode.Tag;
@@ -874,14 +912,7 @@ namespace HHBuilder
 				RecurseTreeToLinkList(ref dsLinks, cNode);
 			}
 		}
-		
-		
 		// ==============================================================================
 		#endregion
-		
-		
-		
-		
-		
 	}
 }

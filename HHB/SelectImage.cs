@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-11-17
  * Time: 15:42
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Drawing;
@@ -13,30 +11,26 @@ using System.Windows.Forms;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of SelectImage.
+	/// Form to select an image to insert into an HTML help item.
 	/// </summary>
 	public partial class SelectImage : Form
 	{
+		#region Private Member Variables
 		private TreeNode _node;
-		public SelectImage(TreeNode node)
-		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-			
-			_node = node;
-		}
+		#endregion
+
+		#region Private Properties
+		// ==============================================================================
+		#endregion
 		
+		#region Private Methods
+		// ==============================================================================
 		void BCancelClick(object sender, EventArgs e)
 		{
 			Close();
 		}
 		
+		// ==============================================================================
 		void SelectImageLoad(object sender, EventArgs e)
 		{
 			dataGridView1.DataSource = ImageItem.GetAvailableImages(_node);
@@ -49,10 +43,37 @@ namespace HHBuilder
 			dataGridView1.Rows[0].Selected = true;
 		}
 		
+		// ==============================================================================
 		void BInsertClick(object sender, EventArgs e)
 		{
 			MainForm.parameterString = String.Format("{0}Image:{1}{2}", "{", dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString().Trim(), "}");
 			Close();
 		}
+		#endregion
+		
+		#region Constructors
+		// ==============================================================================
+		/// <summary>
+		/// Select an image to insert into an HTML help item.
+		/// </summary>
+		/// <param name="node">Node in the help project.</param>
+		public SelectImage(TreeNode node)
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+			
+			_node = node;
+		}
+		#endregion
+		
+		#region Public Properties
+		// ==============================================================================
+		#endregion
+		
+		#region Public Methods
+		// ==============================================================================
+		#endregion
 	}
 }

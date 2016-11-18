@@ -3,9 +3,8 @@
  * User: Bob Swift
  * Date: 2016-08-11
  * Time: 14:26
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+
 using System;
 using System.Data;
 using System.Drawing;
@@ -15,13 +14,13 @@ using System.Windows.Forms;
 namespace HHBuilder
 {
 	/// <summary>
-	/// Description of ImageItem class.
 	/// The ImageItem class is used to manage the information associated with additional<br />
 	/// images used in a help project.
 	/// </summary>
 	public class ImageItem
 	{
 		#region Private Member Variables
+		// ==============================================================================
 		private string _id;
 		private string _extension;
 		private string _title;
@@ -29,6 +28,7 @@ namespace HHBuilder
 		#endregion
 
 		#region Private Properties
+		// ==============================================================================
 		#endregion
 		
 		#region Private Methods
@@ -76,6 +76,7 @@ namespace HHBuilder
 		#endregion
 		
 		#region Public Properties
+		// ==============================================================================
 		/// <summary>
 		/// Unique identifier.
 		/// </summary>
@@ -85,6 +86,7 @@ namespace HHBuilder
 			set{ _id = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// Name used for the image file produced.
 		/// </summary>
@@ -93,6 +95,7 @@ namespace HHBuilder
 			get{ return id + extension; }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The extension of the image file (including the period).
 		/// </summary>
@@ -102,6 +105,7 @@ namespace HHBuilder
 			set{ _extension = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The title of the image file.
 		/// </summary>
@@ -111,6 +115,7 @@ namespace HHBuilder
 			set{ _title = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The content of the image file in Base 64 format.
 		/// </summary>
@@ -120,6 +125,7 @@ namespace HHBuilder
 			set{ _content = value.Trim(); }
 		}
 		
+		// ==============================================================================
 		/// <summary>
 		/// The content of the image file as an image object.
 		/// </summary>
@@ -144,7 +150,6 @@ namespace HHBuilder
 				if ( !String.IsNullOrEmpty(tempContent) )
 				{
 					_content = tempContent;
-					//_fileName = "Img_" + id + System.IO.Path.GetExtension(imageFileName);
 					_extension = System.IO.Path.GetExtension(imageFileName);
 					return true;
 				}
@@ -196,6 +201,11 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		/// <summary>
+		/// Images available in the help project.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>A datatable containing the list of images in the project.</returns>
 		public static DataTable GetAvailableImages(TreeNode node)
 		{
 			DataTable dt = new DataTable();

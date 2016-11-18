@@ -1,10 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: bob
+ * User: Bob Swift
  * Date: 2016-11-17
  * Time: 15:42
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 namespace HHBuilder
 {

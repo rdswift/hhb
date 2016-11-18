@@ -3,10 +3,7 @@
  * User: Bob Swift
  * Date: 2016-10-09
  * Time: 13:04
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-
 
 using System;
 using System.Runtime.InteropServices;
@@ -20,6 +17,7 @@ namespace Ini
 	public static class IniFile
 	{
 		#region Private Member Variables
+		// ==============================================================================
 		/// <summary>
 		/// Full path and filename of the INI file
 		/// </summary>
@@ -30,9 +28,11 @@ namespace Ini
 		#endregion
 		
 		#region Private Methods
+		// ==============================================================================
 		[DllImport("kernel32")]
 		private static extern long WritePrivateProfileString( string section, string key, string val, string filePath );
 		
+		// ==============================================================================
 		[DllImport("kernel32")]
 		private static extern int GetPrivateProfileString( string section, string key, string def, StringBuilder retVal, int size, string filePath );
 		#endregion
@@ -41,7 +41,7 @@ namespace Ini
 		#endregion
 		
 		#region Public Properties
-		
+		// ==============================================================================
 		/// <summary>
 		/// The full path and file name of the INI file to read / write.
 		/// </summary>
