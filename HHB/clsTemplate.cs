@@ -143,15 +143,24 @@ namespace HHBuilder
 			bool ret = true;
 			if ( !String.IsNullOrWhiteSpace(fileNameToDelete) )
 			{
-				try
+				int retryCount = 3;
+				while ( (retryCount > 0) && (File.Exists(fileNameToDelete)) )
 				{
-					System.IO.File.Delete(fileNameToDelete);
-				}
-				catch (Exception ex)
-				{
-					Log.Error("Error deleting file: " + fileNameToDelete);
-					Log.Exception(ex);
-					ret = false;
+					retryCount--;
+					try
+					{
+						System.IO.File.Delete(fileNameToDelete);
+					}
+					catch (Exception ex)
+					{
+						if (retryCount < 1)
+						{
+							Log.Error("Error deleting file: " + fileNameToDelete);
+							Log.Exception(ex);
+							ret = false;
+						}
+					}
+					System.Threading.Thread.Sleep(250);
 				}
 			}
 			return ret;
@@ -241,7 +250,7 @@ namespace HHBuilder
 			sb.AppendFormat("    <Company>{0}</Company>\n", SecurityElement.Escape(this.company));
 			sb.AppendFormat("    <ContactName>{0}</ContactName>\n", SecurityElement.Escape(this.contactName));
 			sb.AppendFormat("    <ContactEmail>{0}</ContactEmail>\n", SecurityElement.Escape(this.contactEmail));
-			sb.AppendFormat("    <ContactWebsite>{0}</ContactWebsite\n", SecurityElement.Escape(this.contactWebsite));
+			sb.AppendFormat("    <ContactWebsite>{0}</ContactWebsite>\n", SecurityElement.Escape(this.contactWebsite));
 			sb.AppendFormat("    <Version>{0}</Version>\n", SecurityElement.Escape(this.version));
 			sb.AppendFormat("    <RevisionDate>{0}</RevisionDate>\n", SecurityElement.Escape(this.revisionDate));
 			sb.AppendFormat("    <LicenseTitle>{0}</LicenseTitle>\n", SecurityElement.Escape(this.licenseTitle));
@@ -370,11 +379,11 @@ namespace HHBuilder
 					}
 					catch (Exception ex)
 					{
-						string error = "Error removing working directory: " + dirToRemove;
-						Log.Error(error);
-						Log.Exception(ex);
 						if (retryCount < 1)
 						{
+							string error = "Error removing working directory: " + dirToRemove;
+							Log.Error(error);
+							Log.Exception(ex);
 							return false;
 						}
 						System.Threading.Thread.Sleep(250);
@@ -604,9 +613,9 @@ namespace HHBuilder
 			}
 			
 			// Confirm template.htm file exists
-			if ( !File.Exists(Path.Combine(htmlDirectory, "template.htm")) )
+			if ( !File.Exists(Path.Combine(htmlDirectory, "template.html")) )
 			{
-				string error = "Missing template.htm file.";
+				string error = "Missing template.html file.";
 				Log.Error(error);
 				Log.ErrorBox(error);
 				return false;
@@ -616,6 +625,15 @@ namespace HHBuilder
 			if ( !File.Exists(Path.Combine(htmlDirectory, "LICENSE")) )
 			{
 				string error = "Missing LICENSE file.";
+				Log.Error(error);
+				Log.ErrorBox(error);
+				return false;
+			}
+			
+			// Confirm README file exists
+			if ( !File.Exists(Path.Combine(htmlDirectory, "README")) )
+			{
+				string error = "Missing README file.";
 				Log.Error(error);
 				Log.ErrorBox(error);
 				return false;
@@ -709,12 +727,12 @@ namespace HHBuilder
 				return false;
 			}
 			
-			// Clean up temporary working files and directory
-			if ( !Cleanup() )
-			{
-				string error = "Problem removing the temporary files and working directory: " + workingSub;
-				Log.Error(error);
-			}
+//			// Clean up temporary working files and directory
+//			if ( !Cleanup() )
+//			{
+//				string error = "Problem removing the temporary files and working directory: " + workingSub;
+//				Log.Error(error);
+//			}
 			
 			Log.Info("HTML Help template file created successfully: " + outputPathAndFileName);
 			
@@ -730,7 +748,7 @@ namespace HHBuilder
 		{
 			Log.Debug("Cleaning up temporary template build files and directories.");
 			bool ret = true;
-			foreach ( string tDir in new string[] { HBSettings.templateBuildDir, HBSettings.templateExtractDir } ) 
+			foreach ( string tDir in new string[] { HBSettings.templateHtmlDir, HBSettings.templateBuildDir, HBSettings.templateExtractDir } ) 
 			{
 				ret = ret & RemoveDir(tDir);
 			}
@@ -806,7 +824,13 @@ namespace HHBuilder
 				return false;
 			}
 			
-			string templateFile = Path.Combine(unpackToDir, "template.html");
+			string templateFile = Path.Combine(unpackToDir, "template.xml");
+			if ( File.Exists(templateFile) )
+			{
+				DeleteTempFile(templateFile);
+			}
+			
+			templateFile = Path.Combine(unpackToDir, "template.html");
 			if ( !System.IO.File.Exists(templateFile) )
 			{
 				errorMessage = "Missing template.html file in the working directory: " + unpackToDir;
@@ -957,6 +981,28 @@ namespace HHBuilder
 			}
 			
 			return notesText;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Create a clone of the template.
+		/// </summary>
+		/// <returns>A clone of the template with a new ID and blank file name.</returns>
+		public HHBTemplate Clone()
+		{
+			HHBTemplate tTemplate = new HHBTemplate();
+			tTemplate.author = this.author;
+			tTemplate.company = this.company;
+			tTemplate.contactEmail = this.contactEmail;
+			tTemplate.contactName = this.contactName;
+			tTemplate.contactWebsite = this.contactWebsite;
+			tTemplate.description = this.description;
+			tTemplate.licenseTitle = this.licenseTitle;
+			tTemplate.revisionDate = this.revisionDate;
+			tTemplate.title = this.title;
+			tTemplate.version = this.version;
+			
+			return tTemplate;
 		}
 		#endregion
 	}

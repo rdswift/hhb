@@ -1205,6 +1205,16 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		private void SelectAllButton(object sender, EventArgs e)
+		{
+			Control tControl = FindFocusedControl(this);
+			if (tControl.GetType() == typeof(TextBox))
+			{
+				((TextBox) tControl).SelectAll();
+			}
+		}
+		
+		// ==============================================================================
 		private void PastePopupNodes(TreeView tvTree, TreeNode tvNode)
 		{
 			// TODO: Modify to allow dropping to a different project.
@@ -1434,6 +1444,13 @@ namespace HHBuilder
 				hiBody.SelectionStart = idx + parameterString.Length;
 				parameterString = String.Empty;
 			}
+		}
+		
+		// ==============================================================================
+		void TemplateEditorToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			Form frm = new TemplateEditor();
+			frm.ShowDialog();
 		}
 		#endregion
 		

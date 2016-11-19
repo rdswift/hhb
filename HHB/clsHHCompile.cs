@@ -683,11 +683,11 @@ namespace HHBuilder
 					}
 					catch (Exception ex)
 					{
-						string error = "Error removing working directory: " + dirToRemove;
-						Log.Error(error);
-						Log.Exception(ex);
 						if (retryCount < 1)
 						{
+							string error = "Error removing working directory: " + dirToRemove;
+							Log.Error(error);
+							Log.Exception(ex);
 							return false;
 						}
 						System.Threading.Thread.Sleep(250);
@@ -909,7 +909,7 @@ namespace HHBuilder
 		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <param name="outputFile">Path and name of the compiled output file.</param>
-		/// <returns></returns>
+		/// <returns>True on success, otherwise false.</returns>
 		public static bool Compile( System.Windows.Forms.TreeNode node, string outputFile )
 		{
 			bool ret = true;

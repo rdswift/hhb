@@ -370,7 +370,7 @@ namespace HHBuilder
 		/// <summary>
 		/// Create a copy of the HelpItem
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A copy of the HelpItem with a new ID.</returns>
 		public HelpItem Copy()
 		{
 			HelpItem newItem = new HelpItem();

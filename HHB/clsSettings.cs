@@ -264,7 +264,16 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Working directory used for extracting tgemplates
+		/// Working directory used for extracting template HTML files
+		/// </summary>
+		public static string templateHtmlDir
+		{
+			get{ return Path.Combine(workingDir, "TemplateHTML"); }
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Working directory used for extracting templates
 		/// </summary>
 		public static string templateExtractDir
 		{

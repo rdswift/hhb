@@ -11,31 +11,36 @@
 <link rel="stylesheet" type="text/css" href="tpl_css/template.css" />
 </head>
 <body>
-<!-- This is the Header section -->
+<!-- Start of Header section -->
 <div class="HEADER" style="width: 100%; font-size: 75%; clear: both;"><span style="width: 49%; float: left; text-align: left;"><span class="HEADERNUMBER">{NUMBER}:</span> {TITLE}</span><span style="width: 49%; float: right; text-align: right;"><script type="text/javascript" language="javascript">
   PrintHome("{HOMELINK}", "{HOMETEXT}", "{HOMENUMBER}");
 </script></span>
 <hr style="clear: both;" /></div>
+<!-- End of Header section -->
 
-<!-- This is the Title section -->
-<div class="TITLE" style="width: 100%;"><h3><span class="TITLENUMBER">{NUMBER}</span> {TITLE}</h3></div>
+<!-- Start of Title section -->
+<div class="TITLE" style="width: 100%;"><h3><span class="TITLENUMBER">{NUMBER}: </span>{TITLE}</h3></div>
+<!-- End of Title section -->
 
-<!-- This is the Body section -->
+<!-- Start of Body section -->
 <div class="SCREENBODY">{BODY}</div>
+<!-- End of Body section -->
 
-<!-- This is the References section -->
+<!-- Start of References section -->
 <div class="REFERENCES" style="width: 100%;"><p>References:
 <ul>
 {REFERENCES}
 </ul>
 </p></div>
+<!-- End of References section -->
 
-<!-- This is the Footer section -->
+<!-- Start of Footer section -->
 <div class="FOOTER" style="width: 100%;"><hr />
 <div style="width: 100%; font-size: 75%; clear: both;"><span style="width: 49%; float: left; text-align: left;"><script type="text/javascript" language="javascript">
   PrintPrevious("{PREVLINK}", "{PREVTEXT}", "{PREVNUMBER}");
 </script></span><span style="width: 49%; float: right; text-align: right;"><script type="text/javascript" language="javascript">
   PrintNext("{NEXTLINK}", "{NEXTTEXT}", "{NEXTNUMBER}");
 </script></span></div></div>
+<!-- End of Footer section -->
 </body>
 </html>
