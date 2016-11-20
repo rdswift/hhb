@@ -193,6 +193,7 @@ namespace HHBuilder
 					repBody = ProcessLinks(repBody);
 					
 					// Process image links
+					_imageDS = ImageParsingDataset(node);
 					repBody = ProcessImageLinks(repBody);
 					
 					string tHTML = htmlTemplate;
@@ -257,7 +258,7 @@ namespace HHBuilder
 				}
 				string screenID = match.Groups[1].Value;
 				string sOld = String.Format("{0}Link:{1}{2}", "{", match.Groups[1].Value, "}");
-				string sNew = String.Format("<a href=\"{0}\">{1}</a>", linkURL, linkText);
+				string sNew = String.Format("<a href=\"{0}\">{1}</a>", linkURL, System.Net.WebUtility.HtmlEncode(linkText));
 				repBody = repBody.Replace(sOld, sNew);
 			}
 			return repBody;
@@ -308,6 +309,24 @@ namespace HHBuilder
 			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
 			
 			ds.Tables.Add(dt);
+			
+			return ds;
+		}
+		
+		// ==============================================================================
+		private static DataSet ImageParsingDataset(TreeNode node)
+		{
+			DataSet ds = InitializeImageDataset();
+			TreeNode topNode = HelpNode.GetRootNode(node);
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes)
+			{
+				DataRow dr = ds.Tables[0].NewRow();
+				ImageItem tItem = (ImageItem) tNode.Tag;
+				dr["ID"] = tItem.id;
+				dr["Title"] = tItem.title;
+				dr["FileName"] = tItem.fileName;
+				ds.Tables[0].Rows.Add(dr);
+			}
 			
 			return ds;
 		}

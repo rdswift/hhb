@@ -38,19 +38,19 @@ namespace HHBuilder
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Table of Contents");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Popup Text");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("CSS Files");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Script Files");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Image Files");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
-									treeNode1,
-									treeNode2,
-									treeNode3,
-									treeNode4,
-									treeNode5,
-									treeNode6});
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Table of Contents");
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Popup Text");
+			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("CSS Files");
+			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Script Files");
+			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Image Files");
+			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
+									treeNode8,
+									treeNode9,
+									treeNode10,
+									treeNode11,
+									treeNode12,
+									treeNode13});
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -253,6 +253,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.toolStripButtonInsertLink = new System.Windows.Forms.ToolStripButton();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -535,7 +536,7 @@ namespace HHBuilder
 			// 
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
 			this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.undoToolStripMenuItem.Text = "&Undo";
 			this.undoToolStripMenuItem.Visible = false;
 			// 
@@ -543,14 +544,14 @@ namespace HHBuilder
 			// 
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
 			this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.redoToolStripMenuItem.Text = "&Redo";
 			this.redoToolStripMenuItem.Visible = false;
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(141, 6);
 			// 
 			// cutToolStripMenuItem
 			// 
@@ -558,7 +559,7 @@ namespace HHBuilder
 			this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
 			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.cutToolStripMenuItem.Text = "Cu&t";
 			this.cutToolStripMenuItem.Click += new System.EventHandler(this.CutButton);
 			// 
@@ -568,7 +569,7 @@ namespace HHBuilder
 			this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
 			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.copyToolStripMenuItem.Text = "&Copy";
 			this.copyToolStripMenuItem.Click += new System.EventHandler(this.CopyButton);
 			// 
@@ -578,19 +579,19 @@ namespace HHBuilder
 			this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
 			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.pasteToolStripMenuItem.Text = "&Paste";
 			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.PasteButton);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(141, 6);
 			// 
 			// selectAllToolStripMenuItem
 			// 
 			this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.selectAllToolStripMenuItem.Text = "Select &All";
 			this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllButton);
 			// 
@@ -852,35 +853,35 @@ namespace HHBuilder
 			this.treeView1.HideSelection = false;
 			this.treeView1.Location = new System.Drawing.Point(0, 0);
 			this.treeView1.Name = "treeView1";
-			treeNode1.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode1.Name = "Node0";
-			treeNode1.Text = "Table of Contents";
-			treeNode2.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode2.Name = "Node1";
-			treeNode2.Text = "Popup HTML Screens";
-			treeNode3.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Popup Text";
-			treeNode4.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode4.ForeColor = System.Drawing.Color.Green;
-			treeNode4.Name = "Node2";
-			treeNode4.Text = "CSS Files";
-			treeNode5.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode5.ForeColor = System.Drawing.Color.Purple;
-			treeNode5.Name = "Node3";
-			treeNode5.Text = "Script Files";
-			treeNode6.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode6.ForeColor = System.Drawing.Color.Blue;
-			treeNode6.Name = "Node5";
-			treeNode6.Text = "Image Files";
-			treeNode7.BackColor = System.Drawing.Color.White;
-			treeNode7.ForeColor = System.Drawing.Color.Blue;
-			treeNode7.Name = "Node0";
-			treeNode7.Text = "New Project";
+			treeNode8.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode8.Name = "Node0";
+			treeNode8.Text = "Table of Contents";
+			treeNode9.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode9.Name = "Node1";
+			treeNode9.Text = "Popup HTML Screens";
+			treeNode10.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode10.Name = "Node0";
+			treeNode10.Text = "Popup Text";
+			treeNode11.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode11.ForeColor = System.Drawing.Color.Green;
+			treeNode11.Name = "Node2";
+			treeNode11.Text = "CSS Files";
+			treeNode12.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode12.ForeColor = System.Drawing.Color.Purple;
+			treeNode12.Name = "Node3";
+			treeNode12.Text = "Script Files";
+			treeNode13.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode13.ForeColor = System.Drawing.Color.Blue;
+			treeNode13.Name = "Node5";
+			treeNode13.Text = "Image Files";
+			treeNode14.BackColor = System.Drawing.Color.White;
+			treeNode14.ForeColor = System.Drawing.Color.Blue;
+			treeNode14.Name = "Node0";
+			treeNode14.Text = "New Project";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-									treeNode7});
+									treeNode14});
 			this.treeView1.Size = new System.Drawing.Size(326, 512);
 			this.treeView1.TabIndex = 0;
 			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1ItemDrag);
@@ -1656,7 +1657,8 @@ namespace HHBuilder
 			// 
 			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolStripButtonInsertImage});
+									this.toolStripButtonInsertImage,
+									this.toolStripButtonInsertLink});
 			this.toolStrip2.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Size = new System.Drawing.Size(622, 30);
@@ -2200,6 +2202,17 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// toolStripButtonInsertLink
+			// 
+			this.toolStripButtonInsertLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButtonInsertLink.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonInsertLink.Image")));
+			this.toolStripButtonInsertLink.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonInsertLink.Name = "toolStripButtonInsertLink";
+			this.toolStripButtonInsertLink.Size = new System.Drawing.Size(23, 27);
+			this.toolStripButtonInsertLink.Text = "toolStripButton2";
+			this.toolStripButtonInsertLink.ToolTipText = "Insert Link";
+			this.toolStripButtonInsertLink.Click += new System.EventHandler(this.ToolStripButtonInsertLinkClick);
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -2257,6 +2270,7 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripButton toolStripButtonInsertLink;
 		private System.Windows.Forms.ToolStripMenuItem templateEditorToolStripMenuItem;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.ToolStripButton toolStripButtonInsertImage;

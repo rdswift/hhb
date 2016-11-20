@@ -873,7 +873,16 @@ namespace HHBuilder
 		// ==============================================================================
 		private void SaveProjectFile()
 		{
-			HelpNode.Save(HelpNode.GetRootNode(treeView1.SelectedNode), helpProjectFilePathAndName);
+			try
+			{
+				HelpNode.Save(HelpNode.GetRootNode(treeView1.SelectedNode), helpProjectFilePathAndName);
+				MessageBox.Show("Project file saved successfully.", "Success");
+			} 
+			catch (Exception)
+			{
+				Log.ErrorBox("Project file not saved.  See log file for details.");
+				//throw;
+			}
 		}
 		
 		// ==============================================================================
@@ -1447,6 +1456,27 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		private void ToolStripButtonInsertLinkClick(object sender, EventArgs e)
+		{
+			InsertLink();
+		}
+		
+		// ==============================================================================
+		private void InsertLink()
+		{
+			parameterString = String.Empty;
+			Form frm = new SelectLink(treeView1.SelectedNode);
+			frm.ShowDialog();
+			if ( !String.IsNullOrWhiteSpace(parameterString) )
+			{
+				int idx = hiBody.SelectionStart;
+				hiBody.Paste(parameterString);
+				hiBody.SelectionStart = idx + parameterString.Length;
+				parameterString = String.Empty;
+			}
+		}
+		
+		// ==============================================================================
 		void TemplateEditorToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			Form frm = new TemplateEditor();
@@ -1569,5 +1599,6 @@ namespace HHBuilder
 //			HHCompile.MakeFiles(node);
 			
 		}
+		
 	}
 }

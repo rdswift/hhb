@@ -522,6 +522,41 @@ namespace HHBuilder
 			return topNode;
 			
 		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Recurses the project tree to a dataset of links.  Used by the ScreenLinks method.
+		/// </summary>
+		/// <param name="dsLinks">Dataset to update.  Passed by reference.</param>
+		/// <param name="tNode">Node to process.</param>
+		private static void RecurseTreeToLinkList(ref DataSet dsLinks, TreeNode tNode)
+		{
+			int nIdx = HelpNode.GetBranchIndex(tNode);
+			if ((tNode.Level > 1) && ((nIdx == (int) branches.tocEntry) || (nIdx == (int) branches.htmlPopup)))
+			{
+				HelpItem tnItem = (HelpItem) tNode.Tag;
+				DataRow dr = dsLinks.Tables[0].NewRow();
+				dr["ID"] = tnItem.id;
+				dr["Title"] = tnItem.title;
+				dr["Checked"] = false;
+				if (nIdx == (int) branches.tocEntry)
+				{
+					dr["Index"] = HelpNode.NodeTocIndex(tNode);
+				}
+				else
+				{
+					dr["Index"] = "Popup";
+				}
+				dr["FileName"] = tnItem.fileName;
+				dr["LinkText"] = tnItem.linkDescription;
+				dsLinks.Tables[0].Rows.Add(dr);
+			}
+			
+			foreach (TreeNode cNode in tNode.Nodes)
+			{
+				RecurseTreeToLinkList(ref dsLinks, cNode);
+			}
+		}
 		#endregion
 		
 		#region Constructors
@@ -870,6 +905,10 @@ namespace HHBuilder
 			dt.Columns.Add(dc);
 			dc = new DataColumn("Index", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
+			dc = new DataColumn("FileName", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("LinkText", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
 			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
 			ds.Tables.Add(dt);
 			
@@ -878,39 +917,6 @@ namespace HHBuilder
 			RecurseTreeToLinkList(ref ds, tNode);
 			
 			return ds;
-		}
-		
-		// ==============================================================================
-		/// <summary>
-		/// Recurses the project tree to a dataset of links.  Used by the ScreenLinks method.
-		/// </summary>
-		/// <param name="dsLinks">Dataset to update.  Passed by reference.</param>
-		/// <param name="tNode">Node to process.</param>
-		private static void RecurseTreeToLinkList(ref DataSet dsLinks, TreeNode tNode)
-		{
-			int nIdx = HelpNode.GetBranchIndex(tNode);
-			if ((tNode.Level > 1) && ((nIdx == (int) branches.tocEntry) || (nIdx == (int) branches.htmlPopup)))
-			{
-				HelpItem tnItem = (HelpItem) tNode.Tag;
-				DataRow dr = dsLinks.Tables[0].NewRow();
-				dr["ID"] = tnItem.id;
-				dr["Title"] = tnItem.title;
-				dr["Checked"] = false;
-				if (nIdx == (int) branches.tocEntry)
-				{
-					dr["Index"] = HelpNode.NodeTocIndex(tNode);
-				}
-				else
-				{
-					dr["Index"] = "Popup";
-				}
-				dsLinks.Tables[0].Rows.Add(dr);
-			}
-			
-			foreach (TreeNode cNode in tNode.Nodes)
-			{
-				RecurseTreeToLinkList(ref dsLinks, cNode);
-			}
 		}
 		// ==============================================================================
 		#endregion
