@@ -33,6 +33,32 @@ namespace HHBuilder
 		
 		#region Private Methods
 		// ==============================================================================
+		private static string ParseHtmlBody(string body)
+		{
+			string repBody = body;
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// TODO: Insert body text preprocessing here.
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			return repBody;
+		}
+		
+		// ==============================================================================
 		private static bool MakeHTMLFiles(TreeNode node)
 		{
 			bool ret = true;	// Return code
@@ -169,25 +195,7 @@ namespace HHBuilder
 						headerScripts = sbScript.ToString();
 					}
 					
-					string repBody = dr["Body"].ToString();
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					// TODO: Insert body text preprocessing here.
-					
-					
-					
-					
-					
-					
-					
-					
+					string repBody = ParseHtmlBody(dr["Body"].ToString());
 					
 					// Process links
 					repBody = ProcessLinks(repBody);
@@ -824,40 +832,19 @@ namespace HHBuilder
 		#region Public Methods
 		// ==============================================================================
 		/// <summary>
-		/// Removes working directory and all contents (files and subdirectories)
-		/// </summary>
-		/// <returns>True on success, otherwise false.</returns>
-		public static bool Cleanup()
-		{
-			Log.Debug("Cleaning up temporary project build files and directories.");
-			bool ret = true;
-			templateFile = String.Empty;
-			foreach ( string tDir in new string[] { HBSettings.projectBuildDir } ) 
-			{
-				ret = ret & RemoveDir(tDir);
-			}
-			System.Threading.Thread.Sleep(1000);
-			
-			return ret;
-		}
-		
-		// ==============================================================================
-		/// <summary>
-		/// Create the files required for the creation of the compiled help file (.chm) 
+		/// Initialize the build directory including unpacking the template.
 		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public static bool MakeFiles( System.Windows.Forms.TreeNode node )
+		public static bool InitializeBuildDirectory(TreeNode node)
 		{
-			string errorMessage = String.Empty;
-			bool ret = true;
 			HHBProject project = (HHBProject) HelpNode.GetRootNode(node).Tag;
 			HHBTemplate template = HHBTemplate.GetTemplate(project.template);
 			
 			// Check for missing template filename
 			if ( String.IsNullOrWhiteSpace(template.fileName) )
 			{
-				errorMessage = "Invalid project template.  The template was not found.";
+				string errorMessage = "Invalid project template.  The template was not found.";
 				Log.Error(errorMessage);
 				Log.ErrorBox(errorMessage);
 				return false;
@@ -878,6 +865,352 @@ namespace HHBuilder
 			if ( !MakeSubdirectories() )
 			{
 				Cleanup();
+				return false;
+			}
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Removes working directory and all contents (files and subdirectories)
+		/// </summary>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool Cleanup()
+		{
+			Log.Debug("Cleaning up temporary project build files and directories.");
+			bool ret = true;
+			templateFile = String.Empty;
+			foreach ( string tDir in new string[] { HBSettings.projectBuildDir } ) 
+			{
+				ret = ret & RemoveDir(tDir);
+			}
+			System.Threading.Thread.Sleep(1000);
+			
+			return ret;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Delete the specified file.
+		/// </summary>
+		/// <param name="FilePathAndName">File to delete.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool DeleteFile(string FilePathAndName)
+		{
+			if ( File.Exists(FilePathAndName) )
+			{
+				try
+				{
+					Log.Debug(String.Format("Deleting {0}", FilePathAndName));
+					File.Delete(FilePathAndName);
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Error deleting {0}", FilePathAndName));
+					Log.Exception(ex);
+					return false;
+					//throw;
+				}
+			}
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified script file.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="id">ID of the script.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeScriptFile(TreeNode node, string id)
+		{
+			TreeNode tNode = null;
+			foreach (TreeNode cNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.scriptFile].Nodes)
+			{
+				if ( ( (ScriptItem) cNode.Tag).id == id )
+				{
+					tNode = cNode;
+				}
+			}
+			if ( tNode == null )
+			{
+				Log.Error(String.Format("Unable to make script {0}.  Node information not found.", id));
+				return false;
+			}
+			else
+			{
+				return MakeScriptFile(tNode);
+			}
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified script file.
+		/// </summary>
+		/// <param name="node">Node containing the script information.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeScriptFile(TreeNode node)
+		{
+			ScriptItem tItem = (ScriptItem) node.Tag;
+			string outFile = Path.Combine(HHCompile.scriptDir, tItem.fileName);
+			if ( File.Exists(outFile) )
+			{
+				return true;
+			}
+			
+			if ( !File.Exists(Path.Combine(HBSettings.projectBuildDir, "template.html")) )
+			{
+				if ( !InitializeBuildDirectory(node) )
+				{
+					return false;
+				}
+			}
+			
+			try
+			{
+				File.WriteAllText(outFile, tItem.content);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Unable to create the script file {0}.", outFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified CSS file.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="id">ID of the CSS file.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeCssFile(TreeNode node, string id)
+		{
+			TreeNode tNode = null;
+			foreach (TreeNode cNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.cssFile].Nodes)
+			{
+				if ( ( (CSSItem) cNode.Tag).id == id )
+				{
+					tNode = cNode;
+				}
+			}
+			if ( tNode == null )
+			{
+				Log.Error(String.Format("Unable to make CSS file {0}.  Node information not found.", id));
+				return false;
+			}
+			else
+			{
+				return MakeCssFile(tNode);
+			}
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified CSS file.
+		/// </summary>
+		/// <param name="node">Node containing the CSS information.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeCssFile(TreeNode node)
+		{
+			CSSItem tItem = (CSSItem) node.Tag;
+			string outFile = Path.Combine(HHCompile.cssDir, tItem.fileName);
+			if ( File.Exists(outFile) )
+			{
+				return true;
+			}
+			
+			if ( !File.Exists(Path.Combine(HBSettings.projectBuildDir, "template.html")) )
+			{
+				if ( !InitializeBuildDirectory(node) )
+				{
+					return false;
+				}
+			}
+			
+			try
+			{
+				File.WriteAllText(outFile, tItem.content);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Unable to create the CSS file {0}.", outFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified image file.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="id">ID of the image.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeImageFile(TreeNode node, string id)
+		{
+			TreeNode tNode = null;
+			foreach (TreeNode cNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile].Nodes)
+			{
+				if ( ( (ImageItem) cNode.Tag).id == id )
+				{
+					tNode = cNode;
+				}
+			}
+			if ( tNode == null )
+			{
+				Log.Error(String.Format("Unable to make image {0}.  Node information not found.", id));
+				return false;
+			}
+			else
+			{
+				return MakeImageFile(tNode);
+			}
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified image file.
+		/// </summary>
+		/// <param name="node">Node containing the image information.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeImageFile(TreeNode node)
+		{
+			ImageItem tItem = (ImageItem) node.Tag;
+			string outFile = Path.Combine(HHCompile.imageDir, tItem.fileName);
+			if ( File.Exists(outFile) )
+			{
+				return true;
+			}
+			
+			if ( !File.Exists(Path.Combine(HBSettings.projectBuildDir, "template.html")) )
+			{
+				if ( !InitializeBuildDirectory(node) )
+				{
+					return false;
+				}
+			}
+			
+			try
+			{
+				byte[] imageBytes = Convert.FromBase64String(tItem.content);
+				File.WriteAllBytes(outFile, imageBytes);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Unable to create the image file {0}.", outFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified HTML file.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="id">ID of the HTML item.</param>
+		/// <param name="rebuildIndices">Rebuild all index data tables.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeHtmlFile(TreeNode node, string id, bool rebuildIndices)
+		{
+			TreeNode tNode = null;
+			int[] branches = { (int) HelpNode.branches.tocEntry, (int) HelpNode.branches.htmlPopup };
+			foreach (int branch in branches)
+			{
+				foreach (TreeNode cNode in HelpNode.GetRootNode(node).Nodes[branch].Nodes)
+				{
+					if ( ( (ImageItem) cNode.Tag).id == id )
+					{
+						tNode = cNode;
+					}
+				}
+			}
+			if ( tNode == null )
+			{
+				Log.Error(String.Format("Unable to make HTML file {0}.  Node information not found.", id));
+				return false;
+			}
+			else
+			{
+				return MakeHtmlFile(tNode, rebuildIndices);
+			}
+			
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified HTML file.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <param name="id">ID of the HTML item.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeHtmlFile(TreeNode node, string id)
+		{
+			return MakeHtmlFile(node, id, true);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified HTML file.
+		/// </summary>
+		/// <param name="node">Node containing the HTML item information.</param>
+		/// <param name="rebuildIndices">Rebuild all index data tables.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeHtmlFile(TreeNode node, bool rebuildIndices)
+		{
+			if ( rebuildIndices )
+			{
+				// TODO: Rebuild the index tables.
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified HTML file.
+		/// </summary>
+		/// <param name="node">Node containing the HTML item information.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeHtmlFile(TreeNode node)
+		{
+			return MakeHtmlFile(node, true);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Create the files required for the creation of the compiled help file (.chm) 
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeFiles( System.Windows.Forms.TreeNode node )
+		{
+			string errorMessage = String.Empty;
+			bool ret = true;
+			
+			if ( !InitializeBuildDirectory(node) )
+			{
 				return false;
 			}
 			

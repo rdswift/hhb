@@ -378,6 +378,9 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>225, 17</value>
   </metadata>
+  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1014, 17</value>
   </metadata>
@@ -399,30 +402,24 @@
   <data name="toolStripButtonInsertLink.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        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
+        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
 </value>
   </data>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>482, 17</value>
   </metadata>
