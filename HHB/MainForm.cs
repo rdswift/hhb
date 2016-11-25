@@ -1485,8 +1485,7 @@ namespace HHBuilder
 				{
 					pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
 				}
-				tbImageSize.Text = String.Format("{0} x {1}", pictureBox1.Image.PhysicalDimension.Width, 
-				                                 pictureBox1.Image.PhysicalDimension.Height);
+				tbImageSize.Text = String.Format("{0} x {1}", pictureBox1.Image.Size.Width, pictureBox1.Image.Size.Height);
 			}
 			else
 			{

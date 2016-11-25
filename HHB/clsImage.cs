@@ -133,6 +133,19 @@ namespace HHBuilder
 		{
 			get{ return GetImage(content); }
 		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// The size of the image in pixels
+		/// </summary>
+		public string size
+		{
+			get
+			{
+				Image img = this.image;
+				return String.Format("{0} x {1}", img.Size.Width, img.Size.Height);
+			}
+		}
 		#endregion
 		
 		#region Public Methods
@@ -216,16 +229,32 @@ namespace HHBuilder
 			dt.Columns.Add(dc);
 			dc = new DataColumn("FileName", Type.GetType("System.String"));
 			dt.Columns.Add(dc);
+			dc = new DataColumn("ImageSize", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Thumbnail", Type.GetType("System.Byte[]"));
+			dt.Columns.Add(dc);
 			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
 			
+			ImageConverter ic = new ImageConverter();
 			foreach (TreeNode tNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile].Nodes)
 			{
 				ImageItem tItem = (ImageItem) tNode.Tag;
-				DataRow dr = dt.NewRow();
-				dr["ID"] = tItem.id;
-				dr["Title"] = tItem.title;
-				dr["FileName"] = tItem.fileName;
-				dt.Rows.Add(dr);
+				try
+				{
+					DataRow dr = dt.NewRow();
+					dr["ID"] = tItem.id;
+					dr["Title"] = tItem.title;
+					dr["FileName"] = tItem.fileName;
+					dr["ImageSize"] = tItem.size;
+					dr["Thumbnail"] = Convert.FromBase64String(tItem.content);
+					dt.Rows.Add(dr);
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Problem retreiving image: {0} - {1}", tItem.id, tItem.title));
+					Log.Exception(ex);
+					//throw;
+				}
 			}
 			
 			return dt;
