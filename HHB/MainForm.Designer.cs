@@ -254,6 +254,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.bSelectDefaultTopic = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -923,6 +924,7 @@ namespace HHBuilder
 			// 
 			// tabPageProject
 			// 
+			this.tabPageProject.Controls.Add(this.bSelectDefaultTopic);
 			this.tabPageProject.Controls.Add(this.cbFullTextSearch);
 			this.tabPageProject.Controls.Add(this.cbLanguage);
 			this.tabPageProject.Controls.Add(this.tbDefaultTopic);
@@ -976,7 +978,8 @@ namespace HHBuilder
 			// 
 			this.tbDefaultTopic.Location = new System.Drawing.Point(120, 192);
 			this.tbDefaultTopic.Name = "tbDefaultTopic";
-			this.tbDefaultTopic.Size = new System.Drawing.Size(328, 20);
+			this.tbDefaultTopic.ReadOnly = true;
+			this.tbDefaultTopic.Size = new System.Drawing.Size(248, 20);
 			this.tbDefaultTopic.TabIndex = 16;
 			// 
 			// label28
@@ -2223,6 +2226,16 @@ namespace HHBuilder
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
+			// bSelectDefaultTopic
+			// 
+			this.bSelectDefaultTopic.Location = new System.Drawing.Point(376, 192);
+			this.bSelectDefaultTopic.Name = "bSelectDefaultTopic";
+			this.bSelectDefaultTopic.Size = new System.Drawing.Size(75, 23);
+			this.bSelectDefaultTopic.TabIndex = 21;
+			this.bSelectDefaultTopic.Text = "Select";
+			this.bSelectDefaultTopic.UseVisualStyleBackColor = true;
+			this.bSelectDefaultTopic.Click += new System.EventHandler(this.BSelectDefaultTopicClick);
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
@@ -2280,6 +2293,7 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button bSelectDefaultTopic;
 		private System.Windows.Forms.ToolStripButton toolStripButtonInsertLink;
 		private System.Windows.Forms.ToolStripMenuItem templateEditorToolStripMenuItem;
 		private System.Windows.Forms.Panel panel1;

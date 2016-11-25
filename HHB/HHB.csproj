@@ -101,6 +101,10 @@
     <Compile Include="SelectLink.Designer.cs">
       <DependentUpon>SelectLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectTopic.cs" />
+    <Compile Include="SelectTopic.Designer.cs">
+      <DependentUpon>SelectTopic.cs</DependentUpon>
+    </Compile>
     <Compile Include="TemplateEditor.cs" />
     <Compile Include="TemplateEditor.Designer.cs">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
@@ -130,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SelectLink.resx">
       <DependentUpon>SelectLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectTopic.resx">
+      <DependentUpon>SelectTopic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TemplateEditor.resx">
       <DependentUpon>TemplateEditor.cs</DependentUpon>

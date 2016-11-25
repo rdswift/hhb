@@ -1711,6 +1711,26 @@ namespace HHBuilder
 		{
 			_showScreenSettingsPage = true;
 		}
+		
+		// ==============================================================================
+		private void BSelectDefaultTopicClick(object sender, EventArgs e)
+		{
+			parameterString = String.Empty;
+			Form frm = new SelectTopic(treeView1.SelectedNode, tbDefaultTopic.Text);
+			frm.ShowDialog();
+			if ( !String.IsNullOrWhiteSpace(parameterString) )
+			{
+				if ( parameterString == "CLEAR" )
+				{
+					tbDefaultTopic.Text = String.Empty;
+				}
+				else
+				{
+					tbDefaultTopic.Text = parameterString;
+				}
+			}
+			parameterString = String.Empty;
+		}
 		#endregion
 		
 		#region Constructors
