@@ -1597,9 +1597,10 @@ namespace HHBuilder
 		{
 			UpdateScreenSettings();
 			TreeNode node = HelpNode.GetRootNode(treeView1.SelectedNode);
-			HHCompile.MakeFiles(node);
+//			HHCompile.MakeFiles(node);
 			TreeNode tNode = treeView1.SelectedNode;
 			HelpItem tHelp = (HelpItem) tNode.Tag;
+			HHCompile.MakeHtmlFile(treeView1.SelectedNode);
 			string fileName = System.IO.Path.Combine(HBSettings.projectBuildDir, tHelp.fileName);
 			if ( System.IO.File.Exists(fileName) )
 			{

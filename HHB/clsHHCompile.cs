@@ -23,6 +23,10 @@ namespace HHBuilder
 		// ==============================================================================
 		private static string _templateFile = String.Empty;
 		private static string _homeID = String.Empty;
+		private static string _homeFileName = String.Empty;
+		private static string _homeText = String.Empty;
+		private static string _homeNumber = String.Empty;
+		private static string _htmlTemplate = String.Empty;
 		private static DataSet _nodeDS = InitializeNodeDataset();
 		private static DataSet _imageDS = InitializeImageDataset();
 		#endregion
@@ -33,9 +37,58 @@ namespace HHBuilder
 		
 		#region Private Methods
 		// ==============================================================================
-		private static string ParseHtmlBody(string body)
+		private static bool MakeProjectTOC(TreeNode node)
 		{
-			string repBody = body;
+			
+			
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		private static bool MakeProjectIndex(TreeNode node)
+		{
+			
+			
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		private static bool MakeProjectPopupText(TreeNode node)
+		{
+			
+			
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		private static bool MakeProjectCompilerFile(TreeNode node)
+		{
+			
+			
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		// ==============================================================================
+		private static string ParseHtmlBody(TreeNode node, HelpItem hItem)
+		{
+			string repBody = hItem.body;
 			
 			
 			
@@ -54,199 +107,149 @@ namespace HHBuilder
 			
 			
 			
-			
-			return repBody;
-		}
-		
-		// ==============================================================================
-		private static bool MakeHTMLFiles(TreeNode node)
-		{
-			bool ret = true;	// Return code
-			
-			HHBProject project = (HHBProject) HelpNode.GetRootNode(node).Tag;
-			
-			// Load template file
-			string htmlTemplate = String.Empty;
-			try
+			// Create style entry to hide unwanted sections
+			bool bTest = false;
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			sb.AppendLine("<style>");
+			if ( !hItem.usesTitle )
 			{
-				htmlTemplate = File.ReadAllText(Path.Combine(HBSettings.projectBuildDir, "template.html"));
+				sb.AppendLine(".TITLE { display: none; }");
+				bTest = true;
 			}
-			catch (Exception ex)
+			if ( !hItem.usesHeader )
 			{
-				string err = "Invalid template.  Unable to read the template.html file.";
-				Log.Error(err);
-				Log.Exception(ex);
-				Log.ErrorBox(err);
-				return false;
-				//throw;
+				sb.AppendLine(".HEADER { display: none; }");
+				bTest = true;
+			}
+			if ( !hItem.usesFooter )
+			{
+				sb.AppendLine(".FOOTER { display: none; }");
+				bTest = true;
 			}
 			
-			string homeLink = String.Empty;
-			string homeText = String.Empty;
-			string homeNumber = String.Empty;
-			DataRow tHomeDR = _nodeDS.Tables[0].Rows.Find(_homeID);
-			if ( tHomeDR != null )
+			string references = "";
+			if ( String.IsNullOrWhiteSpace(hItem.linkList) )
 			{
-				homeLink = tHomeDR["FileName"].ToString();
-				homeText = tHomeDR["Title"].ToString();
-				homeNumber = tHomeDR["IndexPath"].ToString().TrimStart('0');
+				sb.AppendLine(".REFERENCES { display: none; }");
+				bTest = true;
 			}
-			
-			// Process each row in the HTML items dataset
-			foreach (DataRow dr in _nodeDS.Tables[0].Rows) {
-				if ( (bool) dr["ShowScreen"] )
+			else
+			{
+				System.Text.StringBuilder sbRef = new System.Text.StringBuilder();
+				string[] refArray = hItem.linkArray;
+				foreach (string tRef in refArray)
 				{
-					// Set home link information
-					if ( String.IsNullOrWhiteSpace(homeLink) )
+					string tRefLink = String.Empty;
+					string tRefText = "Error! Missing reference.";
+					DataRow tRefDR = _nodeDS.Tables[0].Rows.Find(tRef);
+					if ( tRefDR != null )
 					{
-						homeLink = dr["FileName"].ToString();
-						homeText = dr["Title"].ToString();
-						homeNumber = dr["IndexPath"].ToString().TrimStart('0');
+						tRefLink = tRefDR["FileName"].ToString();
+						tRefText = System.Net.WebUtility.HtmlEncode(tRefDR["LinkDesc"].ToString());
 					}
-					
-					// Create style entry to hide unwanted sections
-					bool bTest = false;
-					System.Text.StringBuilder sb = new System.Text.StringBuilder();
-					sb.AppendLine("<style>");
-					if ( !( (bool) dr["ShowTitle"] ) )
+					sbRef.AppendFormat("<li class=\"REFERENCE\"><a href=\"{0}\">{1}</a></li>\n", tRefLink, tRefText);
+				}
+				references = sbRef.ToString();
+			}
+			sb.AppendLine("</style>");
+			
+			string hideItems = "";
+			if ( bTest )
+			{
+				hideItems = sb.ToString();
+			}
+			
+			string headerCSS = String.Empty;
+			if ( !String.IsNullOrWhiteSpace(hItem.cssList) )
+			{
+				System.Text.StringBuilder sbCSS = new System.Text.StringBuilder();
+				string[] CssArray = hItem.cssArray;
+				foreach (string tCSS in CssArray)
+				{
+					if ( !File.Exists(Path.Combine(cssDir, tCSS + ".css")) )
 					{
-						sb.AppendLine(".TITLE { display: none; }");
-						bTest = true;
+						MakeCssFile(node, tCSS);
 					}
-					if ( !( (bool) dr["ShowHeader"] ) )
+					if ( File.Exists(Path.Combine(cssDir, tCSS + ".css")) )
 					{
-						sb.AppendLine(".HEADER { display: none; }");
-						bTest = true;
-					}
-					if ( !( (bool) dr["ShowFooter"] ) )
-					{
-						sb.AppendLine(".FOOTER { display: none; }");
-						bTest = true;
-					}
-					
-					string references = "";
-					if ( String.IsNullOrWhiteSpace(dr["ReferenceLinks"].ToString()) )
-					{
-						sb.AppendLine(".REFERENCES { display: none; }");
-						bTest = true;
+						sbCSS.AppendFormat("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}/{1}\" />\n", cssDirName, tCSS + ".css");
 					}
 					else
 					{
-						System.Text.StringBuilder sbRef = new System.Text.StringBuilder();
-						string[] refArray = dr["ReferenceLinks"].ToString().Split('|');
-						foreach (string tRef in refArray)
-						{
-							string tRefLink = String.Empty;
-							string tRefText = "Error! Missing reference.";
-							DataRow tRefDR = _nodeDS.Tables[0].Rows.Find(tRef);
-							if ( tRefDR != null )
-							{
-								tRefLink = tRefDR["FileName"].ToString();
-								tRefText = System.Net.WebUtility.HtmlEncode(tRefDR["LinkDesc"].ToString());
-							}
-							sbRef.AppendFormat("<li class=\"REFERENCE\"><a href=\"{0}\">{1}</a></li>\n", tRefLink, tRefText);
-						}
-						references = sbRef.ToString();
-					}
-					sb.AppendLine("</style>");
-					
-					string hideItems = "";
-					if ( bTest )
-					{
-						hideItems = sb.ToString();
-					}
-					
-					string headerCSS = String.Empty;
-					if ( !String.IsNullOrWhiteSpace(dr["CssLinks"].ToString()) )
-					{
-						System.Text.StringBuilder sbCSS = new System.Text.StringBuilder();
-						string[] CssArray = dr["CssLinks"].ToString().Split('|');
-						foreach (string tCSS in CssArray)
-						{
-							if ( File.Exists(Path.Combine(cssDir, tCSS + ".css")) )
-							{
-								sbCSS.AppendFormat("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}/{1}\" />\n", cssDirName, tCSS + ".css");
-							}
-							else
-							{
-								Log.Error("Missing CSS file " + tCSS + ".css");
-							}
-						}
-						headerCSS = sbCSS.ToString();
-					}
-					
-					
-					string headerScripts = String.Empty;
-					if ( !String.IsNullOrWhiteSpace(dr["ScriptLinks"].ToString()) )
-					{
-						System.Text.StringBuilder sbScript = new System.Text.StringBuilder();
-						string[] scriptArray = dr["ScriptLinks"].ToString().Split('|');
-						foreach (string tScript in scriptArray)
-						{
-							if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
-							{
-								sbScript.AppendFormat("<script type=\"text/javascript\" src=\"{0}/{1}\"></script>\n", scriptDirName, tScript + ".js");
-							}
-							else
-							{
-								Log.Error("Missing script file " + tScript + ".js");
-							}
-						}
-						headerScripts = sbScript.ToString();
-					}
-					
-					string repBody = ParseHtmlBody(dr["Body"].ToString());
-					
-					// Process links
-					repBody = ProcessLinks(repBody);
-					
-					// Process image links
-					_imageDS = ImageParsingDataset(node);
-					repBody = ProcessImageLinks(repBody);
-					
-					string tHTML = htmlTemplate;
-					tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
-					tHTML = tHTML.Replace("{BODY}", repBody);
-					tHTML = tHTML.Replace("{TITLE}", System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
-					tHTML = tHTML.Replace("{PREVLINK}", System.Net.WebUtility.HtmlEncode(dr["PrevLink"].ToString()));
-					tHTML = tHTML.Replace("{NEXTLINK}", System.Net.WebUtility.HtmlEncode(dr["NextLink"].ToString()));
-					tHTML = tHTML.Replace("{PREVTEXT}", System.Net.WebUtility.HtmlEncode(dr["PrevText"].ToString()));
-					tHTML = tHTML.Replace("{NEXTTEXT}", System.Net.WebUtility.HtmlEncode(dr["NextText"].ToString()));
-					tHTML = tHTML.Replace("{PREVNUMBER}", System.Net.WebUtility.HtmlEncode(dr["PrevNumber"].ToString()));
-					tHTML = tHTML.Replace("{NEXTNUMBER}", System.Net.WebUtility.HtmlEncode(dr["NextNumber"].ToString()));
-					tHTML = tHTML.Replace("{NUMBER}", System.Net.WebUtility.HtmlEncode(dr["IndexPath"].ToString().TrimStart('0')));
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					//tHTML = tHTML.Replace("{}", dr[""]);
-					tHTML = tHTML.Replace("{HOMELINK}", System.Net.WebUtility.HtmlEncode(homeLink));
-					tHTML = tHTML.Replace("{HOMETEXT}", System.Net.WebUtility.HtmlEncode(homeText));
-					tHTML = tHTML.Replace("{HOMENUMBER}", System.Net.WebUtility.HtmlEncode(homeNumber));
-					tHTML = tHTML.Replace("{AUTHOR}", System.Net.WebUtility.HtmlEncode(project.author));
-					tHTML = tHTML.Replace("{COMPANY}", System.Net.WebUtility.HtmlEncode(project.company));
-					tHTML = tHTML.Replace("{COPYRIGHT}", System.Net.WebUtility.HtmlEncode(project.copyright));
-					tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
-					tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
-					tHTML = tHTML.Replace("{REFERENCES}", references);
-					
-					Log.Debug(String.Format("Saving HTML file {0} - {1}", dr["FileName"].ToString(), dr["Title"].ToString()));
-					try
-					{
-						File.WriteAllText(Path.Combine(HBSettings.projectBuildDir, dr["FileName"].ToString()), tHTML);
-					}
-					catch (Exception ex)
-					{
-						Log.Error(String.Format("Error saving HTML file {0}", dr["FileName"].ToString()));
-						Log.Exception(ex);
-						ret = false;
-						//throw;
+						Log.Error("Missing CSS file " + tCSS + ".css");
 					}
 				}
+				headerCSS = sbCSS.ToString();
 			}
 			
-			return ret;
+			
+			string headerScripts = String.Empty;
+			if ( !String.IsNullOrWhiteSpace(hItem.scriptList) )
+			{
+				System.Text.StringBuilder sbScript = new System.Text.StringBuilder();
+				string[] scriptArray = hItem.scriptArray;
+				foreach (string tScript in scriptArray)
+				{
+					if ( !File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					{
+						MakeScriptFile(node, tScript);
+					}
+					if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					{
+						sbScript.AppendFormat("<script type=\"text/javascript\" src=\"{0}/{1}\"></script>\n", scriptDirName, tScript + ".js");
+					}
+					else
+					{
+						Log.Error("Missing script file " + tScript + ".js");
+					}
+				}
+				headerScripts = sbScript.ToString();
+			}
+			
+//			string repBody = ParseHtmlBody(dr["Body"].ToString());
+			
+			// Process links
+			repBody = ProcessLinks(repBody);
+			
+			// Process image links
+			repBody = ProcessImageLinks(node, repBody);
+			
+			string tHTML = _htmlTemplate;
+			tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
+			tHTML = tHTML.Replace("{BODY}", repBody);
+
+			DataRow dr = _nodeDS.Tables[0].Rows.Find(hItem.id);
+			if ( dr != null )
+			{
+				tHTML = tHTML.Replace("{TITLE}", System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
+				tHTML = tHTML.Replace("{PREVLINK}", System.Net.WebUtility.HtmlEncode(dr["PrevLink"].ToString()));
+				tHTML = tHTML.Replace("{NEXTLINK}", System.Net.WebUtility.HtmlEncode(dr["NextLink"].ToString()));
+				tHTML = tHTML.Replace("{PREVTEXT}", System.Net.WebUtility.HtmlEncode(dr["PrevText"].ToString()));
+				tHTML = tHTML.Replace("{NEXTTEXT}", System.Net.WebUtility.HtmlEncode(dr["NextText"].ToString()));
+				tHTML = tHTML.Replace("{PREVNUMBER}", System.Net.WebUtility.HtmlEncode(dr["PrevNumber"].ToString()));
+				tHTML = tHTML.Replace("{NEXTNUMBER}", System.Net.WebUtility.HtmlEncode(dr["NextNumber"].ToString()));
+				tHTML = tHTML.Replace("{NUMBER}", System.Net.WebUtility.HtmlEncode(dr["IndexPath"].ToString().TrimStart('0')));
+				//tHTML = tHTML.Replace("{}", dr[""]);
+				//tHTML = tHTML.Replace("{}", dr[""]);
+				//tHTML = tHTML.Replace("{}", dr[""]);
+				//tHTML = tHTML.Replace("{}", dr[""]);
+				//tHTML = tHTML.Replace("{}", dr[""]);
+				//tHTML = tHTML.Replace("{}", dr[""]);
+			}
+			tHTML = tHTML.Replace("{HOMELINK}", System.Net.WebUtility.HtmlEncode(_homeFileName));
+			tHTML = tHTML.Replace("{HOMETEXT}", System.Net.WebUtility.HtmlEncode(_homeText));
+			tHTML = tHTML.Replace("{HOMENUMBER}", System.Net.WebUtility.HtmlEncode(_homeNumber));
+			
+			HHBProject project = (HHBProject) HelpNode.GetRootNode(node).Tag;
+			tHTML = tHTML.Replace("{AUTHOR}", System.Net.WebUtility.HtmlEncode(project.author));
+			tHTML = tHTML.Replace("{COMPANY}", System.Net.WebUtility.HtmlEncode(project.company));
+			tHTML = tHTML.Replace("{COPYRIGHT}", System.Net.WebUtility.HtmlEncode(project.copyright));
+			
+			tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
+			tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
+			tHTML = tHTML.Replace("{REFERENCES}", references);
+			
+			return tHTML;
 		}
 		
 		// ==============================================================================
@@ -273,7 +276,7 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
-		private static string ProcessImageLinks(string bodyText)
+		private static string ProcessImageLinks(TreeNode node, string bodyText)
 		{
 			string repBody = bodyText;
 			Regex regExImages = new System.Text.RegularExpressions.Regex(@"\{Image:([^\}]*)\}", RegexOptions.IgnoreCase);
@@ -290,7 +293,9 @@ namespace HHBuilder
 				}
 				else
 				{
-					sNew = String.Format("<img src=\"{0}/{1}\" alt=\"{2}\">", imageDirName, dr["FileName"].ToString(), System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
+					string fileName = dr["FileName"].ToString().Trim();
+					sNew = String.Format("<img src=\"{0}/{1}\" alt=\"{2}\">", imageDirName, fileName, System.Net.WebUtility.HtmlEncode(dr["Title"].ToString()));
+					MakeImageFile(node, imageID);
 				}
 				repBody = repBody.Replace(sOld, sNew);
 			}
@@ -319,6 +324,40 @@ namespace HHBuilder
 			ds.Tables.Add(dt);
 			
 			return ds;
+		}
+		
+		// ==============================================================================
+		private static void SetHomeScreen(TreeNode node)
+		{
+			_homeID = ((HHBProject) HelpNode.GetRootNode(node).Tag).defaultTopic.Trim().Split(' ')[0];
+			_homeFileName = String.Empty;
+			_homeNumber = String.Empty;
+			_homeText = String.Empty;
+			
+			DataRow tHomeDR = _nodeDS.Tables[0].Rows.Find(_homeID);
+			if ( tHomeDR != null )
+			{
+				_homeFileName = tHomeDR["FileName"].ToString();
+				_homeText = tHomeDR["Title"].ToString();
+				_homeNumber = tHomeDR["IndexPath"].ToString().TrimStart('0');
+			}
+			else
+			{
+				// Process each row in the HTML items dataset
+				foreach (DataRow dr in _nodeDS.Tables[0].Rows)
+				{
+					if ( (bool) dr["ShowScreen"] )
+					{
+						// Set home link information
+						if ( String.IsNullOrWhiteSpace(_homeFileName) )
+						{
+							_homeFileName = dr["FileName"].ToString();
+							_homeText = dr["Title"].ToString();
+							_homeNumber = dr["IndexPath"].ToString().TrimStart('0');
+						}
+					}
+				}
+			}
 		}
 		
 		// ==============================================================================
@@ -534,7 +573,8 @@ namespace HHBuilder
 		{
 			bool ret = true;
 			TreeNode topNode =  HelpNode.GetRootNode(node);
-			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes) {
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.cssFile].Nodes)
+			{
 				CSSItem tItem = (CSSItem) tNode.Tag;
 				string fileToWrite = Path.Combine(cssDir, tItem.fileName);
 				Log.Debug(String.Format("Saving CSS file {0} - {1}", tItem.fileName, tItem.title));
@@ -559,7 +599,8 @@ namespace HHBuilder
 		{
 			bool ret = true;
 			TreeNode topNode =  HelpNode.GetRootNode(node);
-			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes) {
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes)
+			{
 				ScriptItem tItem = (ScriptItem) tNode.Tag;
 				string fileToWrite = Path.Combine(scriptDir, tItem.fileName);
 				Log.Debug(String.Format("Saving script file {0} - {1}", tItem.fileName, tItem.title));
@@ -585,7 +626,8 @@ namespace HHBuilder
 			_imageDS = InitializeImageDataset();
 			bool ret = true;
 			TreeNode topNode =  HelpNode.GetRootNode(node);
-			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes) {
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.imageFile].Nodes)
+			{
 				ImageItem tItem = (ImageItem) tNode.Tag;
 				DataRow dr = _imageDS.Tables[0].NewRow();
 				dr["ID"] = tItem.id;
@@ -955,6 +997,7 @@ namespace HHBuilder
 		{
 			ScriptItem tItem = (ScriptItem) node.Tag;
 			string outFile = Path.Combine(HHCompile.scriptDir, tItem.fileName);
+			Log.Debug(String.Format("Writing script file {0} : {1}", tItem.fileName, tItem.title));
 			if ( File.Exists(outFile) )
 			{
 				return true;
@@ -1019,6 +1062,7 @@ namespace HHBuilder
 		public static bool MakeCssFile(TreeNode node)
 		{
 			CSSItem tItem = (CSSItem) node.Tag;
+			Log.Debug(String.Format("Writing CSS file {0} : {1}", tItem.fileName, tItem.title));
 			string outFile = Path.Combine(HHCompile.cssDir, tItem.fileName);
 			if ( File.Exists(outFile) )
 			{
@@ -1084,6 +1128,7 @@ namespace HHBuilder
 		public static bool MakeImageFile(TreeNode node)
 		{
 			ImageItem tItem = (ImageItem) node.Tag;
+			Log.Debug(String.Format("Writing image file {0} : {1}", tItem.fileName, tItem.title));
 			string outFile = Path.Combine(HHCompile.imageDir, tItem.fileName);
 			if ( File.Exists(outFile) )
 			{
@@ -1117,6 +1162,17 @@ namespace HHBuilder
 		/// <summary>
 		/// Write the specified HTML file.
 		/// </summary>
+		/// <param name="node">Node containing the HTML item information.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeHtmlFile(TreeNode node)
+		{
+			return MakeHtmlFile(node, true);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Write the specified HTML file.
+		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <param name="id">ID of the HTML item.</param>
 		/// <param name="rebuildIndices">Rebuild all index data tables.</param>
@@ -1144,7 +1200,6 @@ namespace HHBuilder
 			{
 				return MakeHtmlFile(tNode, rebuildIndices);
 			}
-			
 		}
 		
 		// ==============================================================================
@@ -1170,32 +1225,81 @@ namespace HHBuilder
 		{
 			if ( rebuildIndices )
 			{
-				// TODO: Rebuild the index tables.
+				MakeIndices(node);
 			}
 			
+			HelpItem tItem = (HelpItem) node.Tag;
+			Log.Debug(String.Format("Writing HTML file {0} : {1}", tItem.fileName, tItem.title));
+			string fileToWrite = Path.Combine(HBSettings.projectBuildDir, tItem.fileName);
+			DeleteFile(fileToWrite);
 			
+			// Check that the template has been unpacked.
+			if ( !File.Exists(Path.Combine(HBSettings.projectBuildDir, "template.html")) )
+			{
+				if ( !InitializeBuildDirectory(node) )
+				{
+					Log.ErrorBox(String.Format("Template not unpacked.  Unable to create HTML file: {0}", fileToWrite));
+					return false;
+				}
+			}
 			
+			// Parse the HTML screen body content
+			string tHTML = ParseHtmlBody(node, tItem);
 			
-			
-			
-			
-			
-			
-			
-			
+			Log.Debug(String.Format("Saving HTML file {0} - {1}", tItem.fileName, tItem.title));
+			try
+			{
+				File.WriteAllText(Path.Combine(HBSettings.projectBuildDir, tItem.fileName), tHTML);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Error saving HTML file {0}", tItem.fileName));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
 			
 			return true;
 		}
 		
 		// ==============================================================================
 		/// <summary>
-		/// Write the specified HTML file.
+		/// Builds the project index tables.
 		/// </summary>
-		/// <param name="node">Node containing the HTML item information.</param>
-		/// <returns>True on success, otherwise false.</returns>
-		public static bool MakeHtmlFile(TreeNode node)
+		/// <param name="node">Node in the project tree.</param>
+		public static void MakeIndices(TreeNode node)
 		{
-			return MakeHtmlFile(node, true);
+			// Make HTML nodes index 
+			_nodeDS = InitializeNodeDataset();
+			DatasetAddTOC(node);
+			DatasetAddPopup(node);
+			
+			// Make images index
+			_imageDS = ImageParsingDataset(node);
+			
+			// Set home screen
+			SetHomeScreen(node);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Creates all HTML files for the specified project.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>True on success, otherwise false.</returns>
+		public static bool MakeAllHTML(TreeNode node)
+		{
+			MakeIndices(node);
+			bool retValue = InitializeBuildDirectory(node);
+			foreach (DataRow dr in _nodeDS.Tables[0].Rows)
+			{
+				if ( (bool) dr["ShowScreen"] )
+				{
+					retValue = retValue & MakeHtmlFile(node, dr["ID"].ToString().Trim());
+				}
+			}
+			
+			return retValue;
 		}
 		
 		// ==============================================================================
@@ -1229,28 +1333,43 @@ namespace HHBuilder
 			}
 			
 			// Create node information list (ID, Prev Link, Next Link, etc)
-			_nodeDS = InitializeNodeDataset();
-			DatasetAddTOC(node);
-			DatasetAddPopup(node);
+			// and the images information list
+			MakeIndices(node);
 			
 			// Create HTML files
-			if ( !MakeHTMLFiles(node) )
+			if ( !MakeAllHTML(node) )
 			{
 				Log.ErrorBox("Problem creating one or more HTML files.  Please see the log file for details.");
 				ret = false;
 			}
 			
-			// TODO: Create ToC file
+			// Create ToC file
+			if ( !MakeProjectTOC(node) )
+			{
+				Log.ErrorBox("Problem creating the project Table of Contents file.  Please see the log file for details.");
+				ret = false;
+			}
 			
+			// Create Text Popup file
+			if ( !MakeProjectPopupText(node) )
+			{
+				Log.ErrorBox("Problem creating the project Popup Text file.  Please see the log file for details.");
+				ret = false;
+			}
 			
-			// TODO: Create Text Popup file
+			// Create Index File
+			if ( !MakeProjectIndex(node) )
+			{
+				Log.ErrorBox("Problem creating the project Index file.  Please see the log file for details.");
+				ret = false;
+			}
 			
-			
-			// TODO: Create Index File
-			
-			
-			// TODO: Create Compiler Project file
-
+			// Create Compiler Project file
+			if ( !MakeProjectCompilerFile(node) )
+			{
+				Log.ErrorBox("Problem creating the Project file for the compiler.  Please see the log file for details.");
+				ret = false;
+			}
 
 			return ret;
 		}
