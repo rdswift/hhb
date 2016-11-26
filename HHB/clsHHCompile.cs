@@ -39,10 +39,70 @@ namespace HHBuilder
 		// ==============================================================================
 		private static bool MakeProjectTOC(TreeNode node)
 		{
+			System.Text.StringBuilder toc = new System.Text.StringBuilder();
+			toc.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
+			toc.AppendLine("<HTML>");
+			toc.AppendLine("<HEAD>");
+			System.Reflection.AssemblyName tempAssembly = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+			toc.AppendFormat("<meta name=\"GENERATOR\" content=\"HTML Help Builder ({0} v{1}.{2:00})\">\n", tempAssembly.Name, tempAssembly.Version.Major, tempAssembly.Version.Minor);
+			toc.AppendLine("<!-- Sitemap 1.0 -->");
+			toc.AppendLine("</HEAD><BODY>");
+			toc.AppendLine("<OBJECT type=\"text/site properties\">");
+			toc.AppendLine("	<param name=\"Window Styles\" value=\"0x800025\">");
+			toc.AppendLine("	<param name=\"ImageType\" value=\"Folder\">");
+			toc.AppendLine("</OBJECT>");
 			
+			TreeNode tNode = HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry];
+			recurseTOC(ref toc, tNode, 0);
 			
+			toc.AppendLine("</BODY></HTML>");
+			
+			string outputFile = Path.Combine(HBSettings.projectBuildDir, "toc.hhc");
+			try
+			{
+				Log.Debug(String.Format("Creating Table of Contents file {0}", outputFile));
+				File.WriteAllText(outputFile, toc.ToString());
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Problem writing Table of Contents file {0}", outputFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
 			
 			return true;
+		}
+		
+		// ==============================================================================
+		private static void recurseTOC(ref System.Text.StringBuilder sb, TreeNode node, int offset)
+		{
+			if ( node.Nodes.Count > 0 )
+			{
+				string tSpace = new String(' ', offset);
+				sb.AppendFormat("{0}<UL>\n", tSpace);
+				offset += 4;
+				tSpace = new String(' ', offset);
+				foreach (TreeNode tNode in node.Nodes)
+				{
+					HelpItem tItem = (HelpItem) tNode.Tag;
+					sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", tSpace);
+					tSpace = new String(' ', offset + 4);
+					sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", tSpace, System.Net.WebUtility.HtmlEncode(tItem.title));
+					string tFileName = String.Empty;
+					if ( tItem.hasScreen )
+					{
+						tFileName = tItem.fileName;
+					}
+					sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", tSpace, tFileName);
+					sb.AppendFormat("{0}</OBJECT>\n", tSpace);
+					tSpace = new String(' ', offset);
+					recurseTOC(ref sb, tNode, offset);
+				}
+				offset -= 4;
+				tSpace = new String(' ', offset);
+				sb.AppendFormat("{0}</UL>\n", tSpace);
+			}
 		}
 		
 		// ==============================================================================
@@ -55,12 +115,45 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
-		private static bool MakeProjectPopupText(TreeNode node)
+		private static int MakeProjectPopupText(TreeNode node)
 		{
+			int topicCount = 0;
 			
+			System.Text.StringBuilder popupText = new System.Text.StringBuilder();
+			System.Text.StringBuilder popupMap = new System.Text.StringBuilder();
 			
+			foreach (TreeNode tNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.textPopup].Nodes)
+			{
+				PopupTextItem tItem = (PopupTextItem) tNode.Tag;
+				popupText.AppendFormat(".topic IDH_{0}\n{1}\n\n", tItem.id, tItem.helpText.Trim());
+				popupMap.AppendFormat("#define IDH_{0}  {1}\n", tItem.id, tItem.linkID.ToString().Trim());
+				topicCount++;
+			}
 			
-			return true;
+			if ( topicCount > 0 )
+			{
+				string outputFile = String.Empty;
+				try
+				{
+					string msgText = "Creating popup text file {0}";
+					outputFile = Path.Combine(HBSettings.projectBuildDir, "textpopups.txt");
+					Log.Debug(String.Format(msgText, outputFile));
+					File.WriteAllText(outputFile, popupText.ToString());
+					
+					outputFile = Path.Combine(HBSettings.projectBuildDir, "textpopups.h");
+					Log.Debug(String.Format(msgText, outputFile));
+					File.WriteAllText(outputFile, popupMap.ToString());
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Problem writing popup text file {0}", outputFile));
+					Log.Exception(ex);
+					topicCount = 0;
+					//throw;
+				}
+			}
+			
+			return topicCount;
 		}
 		
 		// ==============================================================================
@@ -900,7 +993,24 @@ namespace HHBuilder
 			if ( !template.UnpackTemplatePackage() )
 			{
 				templateFile = String.Empty;
+				_htmlTemplate = String.Empty;
 				return false;
+			}
+			else
+			{
+				try
+				{
+					_htmlTemplate = File.ReadAllText(Path.Combine(HBSettings.projectBuildDir, "template.html"));
+				}
+				catch (Exception ex)
+				{
+					string errMessage = "Problem reading the template.html file.";
+					Log.Error(errMessage);
+					Log.Exception(ex);
+					Log.ErrorBox(errMessage + "  Please see the log file for details.");
+					return false;
+					//throw;
+				}
 			}
 			
 			// Create the other standard subdirectories
@@ -1229,6 +1339,11 @@ namespace HHBuilder
 			}
 			
 			HelpItem tItem = (HelpItem) node.Tag;
+			if ( !tItem.hasScreen )
+			{
+				Log.ErrorBox("Selected node setting is that it has no screen to display.");
+				return false;
+			}
 			Log.Debug(String.Format("Writing HTML file {0} : {1}", tItem.fileName, tItem.title));
 			string fileToWrite = Path.Combine(HBSettings.projectBuildDir, tItem.fileName);
 			DeleteFile(fileToWrite);
@@ -1351,11 +1466,7 @@ namespace HHBuilder
 			}
 			
 			// Create Text Popup file
-			if ( !MakeProjectPopupText(node) )
-			{
-				Log.ErrorBox("Problem creating the project Popup Text file.  Please see the log file for details.");
-				ret = false;
-			}
+			int popupTextCount = MakeProjectPopupText(node);
 			
 			// Create Index File
 			if ( !MakeProjectIndex(node) )
