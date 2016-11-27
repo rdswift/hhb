@@ -1732,6 +1732,68 @@ namespace HHBuilder
 			}
 			parameterString = String.Empty;
 		}
+		
+		// ==============================================================================
+		private void BuildProjectFilesToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			MakeProjectFiles();
+		}
+		
+		// ==============================================================================
+		private void MakeProjectFiles()
+		{
+			if ( HHCompile.MakeFiles(treeView1.SelectedNode) )
+			{
+				MessageBox.Show(String.Format("Project files successfully created in {0}", HBSettings.projectBuildDir), "Success");
+			}
+			else
+			{
+				Log.ErrorBox("There was a problem creating all of the project files.  Please see the log file for more information.");
+			}
+		}
+		
+		// ==============================================================================
+		private void CompileToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			CompileProject();
+		}
+		
+		// ==============================================================================
+		private void CompileProject()
+		{
+			string fileToSave = GetCompiledProjectSaveAsName();
+			if ( String.IsNullOrWhiteSpace(fileToSave) )
+			{
+				return;
+			}
+			
+			if ( HHCompile.Compile(treeView1.SelectedNode, fileToSave) )
+			{
+				MessageBox.Show("Project successfully compiled and saved.", "Success");
+			}
+		}
+		
+		// ==============================================================================
+		private string GetCompiledProjectSaveAsName()
+		{
+			saveFileDialog1.Filter = "Compiled Help Project files (*.chm)|*.chm|All files (*.*)|*.*";
+			saveFileDialog1.FilterIndex = 1;
+			if (helpProjectFilePathAndName.Trim().Length > 0)
+			{
+				saveFileDialog1.FileName = System.IO.Path.GetFileNameWithoutExtension(helpProjectFilePathAndName) + ".chm";
+				saveFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(helpProjectFilePathAndName);
+			}
+			else
+			{
+				saveFileDialog1.FileName = "HHB_Project.chm";
+				saveFileDialog1.InitialDirectory = Environment.SpecialFolder.CommonDocuments.ToString();
+			}
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				return saveFileDialog1.FileName;
+			}
+			return String.Empty;
+		}
 		#endregion
 		
 		#region Constructors
@@ -1845,13 +1907,20 @@ namespace HHBuilder
 //			}
 			
 //			// Test saving project items
-//			TreeNode node = treeView1.Nodes[0];
-//			HHCompile.MakeFiles(node);
+//			TreeNode node = treeView1.SelectedNode;
+//			if ( HHCompile.MakeFiles(node) )
+//			{
+//				Log.ErrorBox("Files successfully created.");
+//			}
 			
+//			// Test compiling a project
+//			TreeNode node = treeView1.SelectedNode;
+//			if ( HHCompile.Compile(node, System.IO.Path.Combine(HBSettings.workingDir, "TestOutput.chm")) )
+//			{
+//				Log.ErrorBox("Project successfully compiled.");
+//			}
+//			
 		}
-		
-		
-		
-		
+
 	}
 }

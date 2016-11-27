@@ -233,7 +233,7 @@ namespace HHBuilder
 		{
 			if ( (level == LogLevel.Normal) || (level == LogLevel.Debug) )
 			{
-				writeToLog("- " + lineToWriteToLogFile);
+				writeToLog("  " + lineToWriteToLogFile);
 			}
 		}
 
@@ -259,7 +259,7 @@ namespace HHBuilder
 		{
 			if ( level == LogLevel.Debug )
 			{
-				writeToLog("  " + lineToWriteToLogFile);
+				writeToLog("* " + lineToWriteToLogFile);
 			}
 		}
 

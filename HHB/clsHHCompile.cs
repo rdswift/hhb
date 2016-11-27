@@ -9,6 +9,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -39,12 +40,11 @@ namespace HHBuilder
 		// ==============================================================================
 		private static bool MakeProjectTOC(TreeNode node)
 		{
-			System.Text.StringBuilder toc = new System.Text.StringBuilder();
+			StringBuilder toc = new StringBuilder();
 			toc.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
 			toc.AppendLine("<HTML>");
 			toc.AppendLine("<HEAD>");
-			System.Reflection.AssemblyName tempAssembly = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-			toc.AppendFormat("<meta name=\"GENERATOR\" content=\"HTML Help Builder ({0} v{1}.{2:00})\">\n", tempAssembly.Name, tempAssembly.Version.Major, tempAssembly.Version.Minor);
+			toc.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">\n");
 			toc.AppendLine("<!-- Sitemap 1.0 -->");
 			toc.AppendLine("</HEAD><BODY>");
 			toc.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -75,7 +75,7 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
-		private static void recurseTOC(ref System.Text.StringBuilder sb, TreeNode node, int offset)
+		private static void recurseTOC(ref StringBuilder sb, TreeNode node, int offset)
 		{
 			if ( node.Nodes.Count > 0 )
 			{
@@ -108,10 +108,152 @@ namespace HHBuilder
 		// ==============================================================================
 		private static bool MakeProjectIndex(TreeNode node)
 		{
+			DataTable dt = MakeIndexTable(node);
 			
+			// Sort index entry heierarchy
+			DataView dv = dt.DefaultView;
+			dv.Sort = "AlphaSort";
+			DataTable sDT = dv.ToTable();
 			
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
+			sb.AppendLine("<HTML>");
+			sb.AppendLine("<HEAD>");
+			sb.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">\n");
+			sb.AppendLine("<!-- Sitemap 1.0 -->");
+			sb.AppendLine("</HEAD><BODY>");
+			sb.AppendLine("<OBJECT type=\"text/site properties\">");
+			sb.AppendLine("	<param name=\"FrameName\" value=\"current\">");
+			sb.AppendLine("</OBJECT>");
+			sb.AppendLine("<UL>");
+			
+			string oGroup = String.Empty;
+			int indent = 4;
+			foreach (DataRow dr in sDT.Rows)
+			{
+				if ( dr["Group"].ToString().ToUpper() != oGroup )
+				{
+					if ( String.IsNullOrWhiteSpace(oGroup) )
+					{
+						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
+						sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+						sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
+						indent += 4;
+					}
+					else
+					{
+						indent -= 4;
+						sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
+						if ( !String.IsNullOrWhiteSpace(dr["group"].ToString()) )
+						{
+							sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+							sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
+							sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+							sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
+							indent += 4;
+						}
+					}
+					oGroup = dr["Group"].ToString().ToUpper();
+				}
+				
+				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
+				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
+				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+				
+			}
+			
+			while ( indent > 4 )
+			{
+				indent -= 4;
+				sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
+			}
+			
+			sb.AppendLine("</UL>");
+			sb.AppendLine("</BODY></HTML>");
+			
+			string outputFile = Path.Combine(HBSettings.projectBuildDir, "index.hhk");
+			try
+			{
+				Log.Debug(String.Format("Creating Index file {0}", outputFile));
+				File.WriteAllText(outputFile, sb.ToString());
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Problem writing Index file {0}", outputFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
 			
 			return true;
+		}
+		
+		// ==============================================================================
+		private static DataTable MakeIndexTable(TreeNode node)
+		{
+			DataTable dt;
+			DataColumn dc;
+			
+			dt = new DataTable();
+			dt.TableName = "IndexTable";
+			dc = new DataColumn("ID", Type.GetType("System.Int32"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("AlphaSort", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Group", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Topic", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("Title", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			dc = new DataColumn("FileName", Type.GetType("System.String"));
+			dt.Columns.Add(dc);
+			
+			dt.PrimaryKey = new DataColumn[] { dt.Columns["ID"] };
+			dt.Rows.Clear();
+			
+			int indexCount = 0;
+			RecurseIndexTable(ref dt, HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], ref indexCount);
+			RecurseIndexTable(ref dt, HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], ref indexCount);
+			
+			return dt;
+		}
+		
+		// ==============================================================================
+		private static void RecurseIndexTable(ref DataTable dt, TreeNode node, ref int indexCount)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				HelpItem tItem = (HelpItem) tNode.Tag;
+				if ( tItem.hasScreen )
+				{
+					string[] tArray = tItem.indexArray;
+					foreach (string indexLine in tArray)
+					{
+						indexCount++;
+						DataRow dr = dt.NewRow();
+						dr["ID"] = indexCount;
+						dr["AlphaSort"] = indexLine.Trim().ToUpper();
+						dr["Title"] = tItem.title;
+						dr["FileName"] = tItem.fileName;
+						int splitPointer = indexLine.IndexOf('`');
+						if ( splitPointer < 0 )
+						{
+							dr["Group"] = String.Empty;
+							dr["Topic"] = indexLine;
+						}
+						else
+						{
+							dr["Group"] = indexLine.Substring(0, splitPointer);
+							dr["Topic"] = indexLine.Substring(splitPointer + 1);
+						}
+						dt.Rows.Add(dr);
+					}
+				}
+				RecurseIndexTable(ref dt, tNode, ref indexCount);
+			}
 		}
 		
 		// ==============================================================================
@@ -119,8 +261,8 @@ namespace HHBuilder
 		{
 			int topicCount = 0;
 			
-			System.Text.StringBuilder popupText = new System.Text.StringBuilder();
-			System.Text.StringBuilder popupMap = new System.Text.StringBuilder();
+			StringBuilder popupText = new StringBuilder();
+			StringBuilder popupMap = new StringBuilder();
 			
 			foreach (TreeNode tNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.textPopup].Nodes)
 			{
@@ -157,27 +299,85 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
-		private static bool MakeProjectCompilerFile(TreeNode node)
+		private static bool MakeProjectCompilerFile(TreeNode node, bool includePopupText)
 		{
+			HHBProject project = (HHBProject) HelpNode.GetRootNode(node).Tag;
+			
+			StringBuilder sbFiles = new StringBuilder();
+			StringBuilder sbAlias = new StringBuilder();
+			StringBuilder sbMap = new StringBuilder();
+			
+			sbFiles.AppendLine("[FILES]");
+			sbAlias.AppendLine("[ALIAS]");
+			sbMap.AppendLine("[MAP]");
+			
+			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], ref sbFiles, ref sbAlias, ref sbMap);
+			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], ref sbFiles, ref sbAlias, ref sbMap);
+			
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("[OPTIONS]");
+			sb.AppendLine("Compatibility=1.1 or later");
+			sb.AppendFormat("Language={0}\n", project.language);
+			sb.AppendLine("Compiled file=HHBuilder.chm");
+			sb.AppendLine("Contents file=toc.hhc");
+			sb.AppendLine("Index file=index.hhk");
+			sb.AppendLine("Error Log file=HHBuilder.log");
+			sb.AppendLine("Display compile notes=Yes");
+			sb.AppendLine("Display compile progress=Yes");
+			sb.AppendFormat("Full-text search={0}\n", project.useFullTextSearch ? "Yes" : "No");
+			sb.AppendFormat("Default topic={0}\n", _homeFileName);
+			sb.AppendLine("Default Font=Arial,8,0");
+			sb.AppendFormat("Title={0}\n", project.title);
+			sb.AppendLine("");
+			sb.AppendLine(sbFiles.ToString());
+			sb.AppendLine(sbAlias.ToString());
+			sb.AppendLine(sbMap.ToString());
+			
+			if ( includePopupText )
+			{
+				sb.AppendLine("[TEXT POPUPS]");
+				sb.AppendLine("textpopups.txt");
+				sb.AppendLine("textpopups.h");
+				sb.AppendLine("");
+			}
 			
 			
+			string outputFile = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.hhp");
+			try
+			{
+				Log.Debug(String.Format("Creating compiler project file {0}", outputFile));
+				File.WriteAllText(outputFile, sb.ToString());
+			}
+			catch (Exception ex)
+			{
+				Log.Error(String.Format("Problem writing compiler project file {0}", outputFile));
+				Log.Exception(ex);
+				return false;
+				//throw;
+			}
 			
 			return true;
 		}
 		
 		// ==============================================================================
+		private static void RecurseFileAndMapList(TreeNode node, ref StringBuilder sbFiles, ref StringBuilder sbAlias, ref StringBuilder sbMap)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				HelpItem tItem = (HelpItem) tNode.Tag;
+				if ( tItem.hasScreen )
+				{
+					sbFiles.AppendLine(tItem.fileName);
+					sbAlias.AppendFormat("H_{0}={1}\n", tItem.id, tItem.fileName);
+					if ( tItem.linkID > 0 )
+					{
+						sbMap.AppendFormat("#define H_{0} {1}\n", tItem.id, tItem.linkID);
+					}
+				}
+				RecurseFileAndMapList(tNode, ref sbFiles, ref sbAlias, ref sbMap);
+			}
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
 		// ==============================================================================
 		private static string ParseHtmlBody(TreeNode node, HelpItem hItem)
 		{
@@ -202,7 +402,7 @@ namespace HHBuilder
 			
 			// Create style entry to hide unwanted sections
 			bool bTest = false;
-			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("<style>");
 			if ( !hItem.usesTitle )
 			{
@@ -228,7 +428,7 @@ namespace HHBuilder
 			}
 			else
 			{
-				System.Text.StringBuilder sbRef = new System.Text.StringBuilder();
+				StringBuilder sbRef = new StringBuilder();
 				string[] refArray = hItem.linkArray;
 				foreach (string tRef in refArray)
 				{
@@ -255,7 +455,7 @@ namespace HHBuilder
 			string headerCSS = String.Empty;
 			if ( !String.IsNullOrWhiteSpace(hItem.cssList) )
 			{
-				System.Text.StringBuilder sbCSS = new System.Text.StringBuilder();
+				StringBuilder sbCSS = new StringBuilder();
 				string[] CssArray = hItem.cssArray;
 				foreach (string tCSS in CssArray)
 				{
@@ -279,7 +479,7 @@ namespace HHBuilder
 			string headerScripts = String.Empty;
 			if ( !String.IsNullOrWhiteSpace(hItem.scriptList) )
 			{
-				System.Text.StringBuilder sbScript = new System.Text.StringBuilder();
+				StringBuilder sbScript = new StringBuilder();
 				string[] scriptArray = hItem.scriptArray;
 				foreach (string tScript in scriptArray)
 				{
@@ -298,8 +498,6 @@ namespace HHBuilder
 				}
 				headerScripts = sbScript.ToString();
 			}
-			
-//			string repBody = ParseHtmlBody(dr["Body"].ToString());
 			
 			// Process links
 			repBody = ProcessLinks(repBody);
@@ -1289,17 +1487,10 @@ namespace HHBuilder
 		/// <returns>True on success, otherwise false.</returns>
 		public static bool MakeHtmlFile(TreeNode node, string id, bool rebuildIndices)
 		{
-			TreeNode tNode = null;
-			int[] branches = { (int) HelpNode.branches.tocEntry, (int) HelpNode.branches.htmlPopup };
-			foreach (int branch in branches)
+			TreeNode tNode = FindScreenNode(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], id);
+			if ( tNode == null )
 			{
-				foreach (TreeNode cNode in HelpNode.GetRootNode(node).Nodes[branch].Nodes)
-				{
-					if ( ( (ImageItem) cNode.Tag).id == id )
-					{
-						tNode = cNode;
-					}
-				}
+				tNode = FindScreenNode(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], id);
 			}
 			if ( tNode == null )
 			{
@@ -1310,6 +1501,24 @@ namespace HHBuilder
 			{
 				return MakeHtmlFile(tNode, rebuildIndices);
 			}
+		}
+		
+		// ==============================================================================
+		private static TreeNode FindScreenNode(TreeNode node, string id)
+		{
+			foreach (TreeNode cNode in node.Nodes)
+			{
+				if ( ( (HelpItem) cNode.Tag).id == id )
+				{
+					return cNode;
+				}
+				TreeNode tNode = FindScreenNode(cNode, id);
+				if ( tNode != null )
+				{
+					return tNode;
+				}
+			}
+			return null;
 		}
 		
 		// ==============================================================================
@@ -1405,12 +1614,13 @@ namespace HHBuilder
 		public static bool MakeAllHTML(TreeNode node)
 		{
 			MakeIndices(node);
-			bool retValue = InitializeBuildDirectory(node);
+			bool retValue = true;
+//			retValue = retValue & InitializeBuildDirectory(node);
 			foreach (DataRow dr in _nodeDS.Tables[0].Rows)
 			{
 				if ( (bool) dr["ShowScreen"] )
 				{
-					retValue = retValue & MakeHtmlFile(node, dr["ID"].ToString().Trim());
+					retValue = retValue & MakeHtmlFile(node, dr["ID"].ToString().Trim(), false);
 				}
 			}
 			
@@ -1423,7 +1633,7 @@ namespace HHBuilder
 		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public static bool MakeFiles( System.Windows.Forms.TreeNode node )
+		public static bool MakeFiles(TreeNode node)
 		{
 			string errorMessage = String.Empty;
 			bool ret = true;
@@ -1476,7 +1686,7 @@ namespace HHBuilder
 			}
 			
 			// Create Compiler Project file
-			if ( !MakeProjectCompilerFile(node) )
+			if ( !MakeProjectCompilerFile(node, (popupTextCount > 0)) )
 			{
 				Log.ErrorBox("Problem creating the Project file for the compiler.  Please see the log file for details.");
 				ret = false;
@@ -1492,23 +1702,72 @@ namespace HHBuilder
 		/// <param name="node">Node in the project tree.</param>
 		/// <param name="outputFile">Path and name of the compiled output file.</param>
 		/// <returns>True on success, otherwise false.</returns>
-		public static bool Compile( System.Windows.Forms.TreeNode node, string outputFile )
+		public static bool Compile(TreeNode node, string outputFile)
 		{
-			bool ret = true;
-			
 			// make files
 			if ( !MakeFiles(node) )
 			{
-				// TODO: Display error message 
-				ret = false;
+				string errMsg = "Problem making all of the project files.";
+				Log.Error(errMsg);
+				Log.ErrorBox(errMsg + "  Please see the log file for more information.");
+				return false;
 			}
 			
 			// check files
+			// TODO: Check the validity of the generated files
+			
+			
+			
+			
+			
 			
 			
 			// run compile
+			string hhCompiler = Path.Combine(HBSettings.compilerDir, "hhc.exe"); 
+			if ( !File.Exists(hhCompiler) )
+			{
+				string errMsg = String.Format("Unable to find HTML Help Compiler {0}", hhCompiler);
+				Log.Error(errMsg);
+				Log.ErrorBox(errMsg);
+				return false;
+			}
 			
-			return ret;
+			System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(hhCompiler);
+			psi.Arguments = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.hhp");
+			psi.WorkingDirectory = HBSettings.projectBuildDir;
+			
+			System.Diagnostics.Process compiler = new System.Diagnostics.Process();
+			compiler.StartInfo = psi;
+			compiler.Start();
+			compiler.WaitForExit();
+			int eCode = compiler.ExitCode;	// For the hhc.exe program 1=success and 0=error
+			
+//			Log.ErrorBox(String.Format("Compiler exit code: {0}", eCode));
+			
+			if ( eCode == 0 )
+			{
+				string eMessage = "The Help Compiler reported an error.";
+				Log.Error(eMessage);
+				Log.ErrorBox(String.Format("{0}  Please check the compiler log file for more information.\n\n{1}", eMessage, Path.Combine(HBSettings.projectBuildDir, "HHBuilder.log")));
+				return false;
+			}
+			
+			// copy compiled output to specified file
+			try
+			{
+				File.Copy(Path.Combine(HBSettings.projectBuildDir, "HHBuilder.chm"), outputFile, true);
+			}
+			catch (Exception ex)
+			{
+				string eMessage = String.Format("Problem copying the compiled file to the specified output file {0}", outputFile);
+				Log.Error(eMessage);
+				Log.Exception(ex);
+				Log.ErrorBox(eMessage);
+				return false;
+				//throw;
+			}
+			
+			return true;
 		}
 		#endregion
 	}
