@@ -131,37 +131,50 @@ namespace HHBuilder
 			int indent = 4;
 			foreach (DataRow dr in sDT.Rows)
 			{
-				if ( dr["Group"].ToString().ToUpper() != oGroup )
+				// TODO: Review issues regarding index item grouping.
+//				if ( dr["Group"].ToString().ToUpper() != oGroup )
+//				{
+//					if ( String.IsNullOrWhiteSpace(oGroup) )
+//					{
+//						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+//						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
+//						sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
+//						sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+//						sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
+//						indent += 4;
+//					}
+//					else
+//					{
+//						indent -= 4;
+//						sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
+//						if ( !String.IsNullOrWhiteSpace(dr["group"].ToString()) )
+//						{
+//							sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+//							sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
+//							sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
+//							sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+//							sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
+//							indent += 4;
+//						}
+//					}
+//					oGroup = dr["Group"].ToString().ToUpper();
+//				}
+//
+//				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
+//				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
+//				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
+//				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+
+				// above temporary disabled and replaced with the following to avoid index grouping problems.
+				string indexEntry = dr["Topic"].ToString();
+				if ( !String.IsNullOrWhiteSpace(dr["Group"].ToString()) )
 				{
-					if ( String.IsNullOrWhiteSpace(oGroup) )
-					{
-						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-						sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-						sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-						indent += 4;
-					}
-					else
-					{
-						indent -= 4;
-						sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
-						if ( !String.IsNullOrWhiteSpace(dr["group"].ToString()) )
-						{
-							sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-							sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-							sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-							sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-							indent += 4;
-						}
-					}
-					oGroup = dr["Group"].ToString().ToUpper();
+					indexEntry = String.Format("{0}: {1}", dr["Group"].ToString(), dr["Topic"].ToString());
 				}
-				
 				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
+				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(indexEntry));
 				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
 				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-				
 			}
 			
 			while ( indent > 4 )
@@ -313,21 +326,49 @@ namespace HHBuilder
 			
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], ref sbFiles, ref sbAlias, ref sbMap);
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], ref sbFiles, ref sbAlias, ref sbMap);
-			
+
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("[OPTIONS]");
+			sb.AppendLine("Auto Index=Yes");
 			sb.AppendLine("Compatibility=1.1 or later");
-			sb.AppendFormat("Language={0}\n", project.language);
 			sb.AppendLine("Compiled file=HHBuilder.chm");
 			sb.AppendLine("Contents file=toc.hhc");
-			sb.AppendLine("Index file=index.hhk");
-			sb.AppendLine("Error Log file=HHBuilder.log");
+			sb.AppendLine("Default Font=Arial,8,0");
+			sb.AppendLine("Default Window=Main");
+			//sb.AppendFormat("Default topic={0}\n", _homeFileName);		// Need include in window definition and not in options
 			sb.AppendLine("Display compile notes=Yes");
 			sb.AppendLine("Display compile progress=Yes");
-			sb.AppendFormat("Full-text search={0}\n", project.useFullTextSearch ? "Yes" : "No");
-			sb.AppendFormat("Default topic={0}\n", _homeFileName);
-			sb.AppendLine("Default Font=Arial,8,0");
-			sb.AppendFormat("Title={0}\n", project.title);
+			sb.AppendLine("Error Log file=HHBuilder.log");
+			if ( project.useFullTextSearch )
+			{
+				sb.AppendLine("Full text search stop list file=HHBuilder.stp");
+				sb.AppendLine("Full-text search=Yes");
+				string stopList = "a\nan\nand\nare\nas\nat\nbe\nby\nfor\nhe\nher\nhis\nin\nis\nit\nits\nme\nof\non\nor\nshe\nsome\nsuch\nthan\nthat\nthe\ntheir\nthen\nthere\nthese\nthey\nthis\nthrough\nto\nunder\nuntil\nuse\nwas\nwe\nwere\nwhen\nwhere\nwhich\nwho\nwith\nyou\n";
+				string stopFile = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.stp");
+				try
+				{
+					Log.Debug(String.Format("Creating compiler project text search stop file {0}", stopFile));
+					File.WriteAllText(stopFile, stopList);
+				}
+				catch (Exception ex)
+				{
+					Log.Error(String.Format("Problem writing compiler project text search stop file {0}", stopFile));
+					Log.Exception(ex);
+					return false;
+					//throw;
+				}
+				
+			}
+			sb.AppendLine("Index file=index.hhk");
+			sb.AppendFormat("Language={0}\n", project.language);
+			//sb.AppendFormat("Title={0}\n", project.title);
+			sb.AppendLine("");
+			sb.AppendLine("");
+			sb.AppendLine("[WINDOWS]");
+			sb.AppendFormat("Main=\"{0}\",\"toc.hhc\",\"index.hhk\",\"{1}\",,,,,,0x22520,,0x3006,[568,222,1338,738],,,,,,,0", project.title, _homeFileName);
+			//sb.AppendFormat("Main=\"{0}\",\"toc.hhc\",\"index.hhk\",,,,,,,0x22520,,0x3006,[568,222,1338,738],,,,,,,0", project.title);
+			sb.AppendLine("");
+			sb.AppendLine("");
 			sb.AppendLine("");
 			sb.AppendLine(sbFiles.ToString());
 			sb.AppendLine(sbAlias.ToString());
@@ -341,6 +382,8 @@ namespace HHBuilder
 				sb.AppendLine("");
 			}
 			
+			sb.AppendLine("[INFOTYPES]");
+			sb.AppendLine("");
 			
 			string outputFile = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.hhp");
 			try
@@ -1118,7 +1161,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// The standard subdirectory name containing the project's additional Javascript files. 
+		/// The standard subdirectory name containing the project's additional Javascript files.
 		/// </summary>
 		public static string scriptDirName
 		{
@@ -1127,7 +1170,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// The standard subdirectory name containing the project's additional image files. 
+		/// The standard subdirectory name containing the project's additional image files.
 		/// </summary>
 		public static string imageDirName
 		{
@@ -1136,7 +1179,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// The full path name of the subdirectory containing the project's additional CSS files. 
+		/// The full path name of the subdirectory containing the project's additional CSS files.
 		/// </summary>
 		public static string cssDir
 		{
@@ -1145,7 +1188,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// The full path name of the subdirectory containing the project's additional Javascript files. 
+		/// The full path name of the subdirectory containing the project's additional Javascript files.
 		/// </summary>
 		public static string scriptDir
 		{
@@ -1154,7 +1197,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// The full path name of the subdirectory containing the project's additional image files. 
+		/// The full path name of the subdirectory containing the project's additional image files.
 		/// </summary>
 		public static string imageDir
 		{
@@ -1231,7 +1274,7 @@ namespace HHBuilder
 			Log.Debug("Cleaning up temporary project build files and directories.");
 			bool ret = true;
 			templateFile = String.Empty;
-			foreach ( string tDir in new string[] { HBSettings.projectBuildDir } ) 
+			foreach ( string tDir in new string[] { HBSettings.projectBuildDir } )
 			{
 				ret = ret & RemoveDir(tDir);
 			}
@@ -1593,7 +1636,7 @@ namespace HHBuilder
 		/// <param name="node">Node in the project tree.</param>
 		public static void MakeIndices(TreeNode node)
 		{
-			// Make HTML nodes index 
+			// Make HTML nodes index
 			_nodeDS = InitializeNodeDataset();
 			DatasetAddTOC(node);
 			DatasetAddPopup(node);
@@ -1629,7 +1672,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Create the files required for the creation of the compiled help file (.chm) 
+		/// Create the files required for the creation of the compiled help file (.chm)
 		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <returns>True on success, otherwise false.</returns>
@@ -1697,7 +1740,7 @@ namespace HHBuilder
 		
 		// ==============================================================================
 		/// <summary>
-		/// Creates and compiles the project files to a compiled HTML Help file (.chm) 
+		/// Creates and compiles the project files to a compiled HTML Help file (.chm)
 		/// </summary>
 		/// <param name="node">Node in the project tree.</param>
 		/// <param name="outputFile">Path and name of the compiled output file.</param>
@@ -1723,7 +1766,7 @@ namespace HHBuilder
 			
 			
 			// run compile
-			string hhCompiler = Path.Combine(HBSettings.compilerDir, "hhc.exe"); 
+			string hhCompiler = Path.Combine(HBSettings.compilerDir, "hhc.exe");
 			if ( !File.Exists(hhCompiler) )
 			{
 				string errMsg = String.Format("Unable to find HTML Help Compiler {0}", hhCompiler);

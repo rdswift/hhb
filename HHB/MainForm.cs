@@ -298,7 +298,8 @@ namespace HHBuilder
 						hiLinkID.Text = tempItem.linkID.ToString();
 						hiLinkDesc.Text = tempItem.linkDescription;
 						hiBody.Text = tempItem.body;
-						hiHasScreen.Checked = tempItem.hasScreen;
+						//hiHasScreen.Checked = tempItem.hasScreen;
+						hiHasScreen.Checked = true;			// TODO: Review issue regarding non-display items in ToC and Index.
 						hiIncludeTitle.Checked = tempItem.usesTitle;
 						hiIncludeHeader.Checked = tempItem.usesHeader;
 						hiIncludeFooter.Checked = tempItem.usesFooter;

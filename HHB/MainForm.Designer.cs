@@ -38,19 +38,19 @@ namespace HHBuilder
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Table of Contents");
-			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Popup Text");
-			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("CSS Files");
-			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Script Files");
-			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Image Files");
-			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
-									treeNode8,
-									treeNode9,
-									treeNode10,
-									treeNode11,
-									treeNode12,
-									treeNode13});
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Table of Contents");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Popup HTML Screens");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Popup Text");
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("CSS Files");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Script Files");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Image Files");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("New Project", new System.Windows.Forms.TreeNode[] {
+									treeNode1,
+									treeNode2,
+									treeNode3,
+									treeNode4,
+									treeNode5,
+									treeNode6});
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addChildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -864,35 +864,35 @@ namespace HHBuilder
 			this.treeView1.HideSelection = false;
 			this.treeView1.Location = new System.Drawing.Point(0, 0);
 			this.treeView1.Name = "treeView1";
-			treeNode8.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode8.Name = "Node0";
-			treeNode8.Text = "Table of Contents";
-			treeNode9.ContextMenuStrip = this.contextMenuStrip1;
-			treeNode9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode9.Name = "Node1";
-			treeNode9.Text = "Popup HTML Screens";
-			treeNode10.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode10.Name = "Node0";
-			treeNode10.Text = "Popup Text";
-			treeNode11.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode11.ForeColor = System.Drawing.Color.Green;
-			treeNode11.Name = "Node2";
-			treeNode11.Text = "CSS Files";
-			treeNode12.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode12.ForeColor = System.Drawing.Color.Purple;
-			treeNode12.Name = "Node3";
-			treeNode12.Text = "Script Files";
-			treeNode13.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode13.ForeColor = System.Drawing.Color.Blue;
-			treeNode13.Name = "Node5";
-			treeNode13.Text = "Image Files";
-			treeNode14.BackColor = System.Drawing.Color.White;
-			treeNode14.ForeColor = System.Drawing.Color.Blue;
-			treeNode14.Name = "Node0";
-			treeNode14.Text = "New Project";
+			treeNode1.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode1.Name = "Node0";
+			treeNode1.Text = "Table of Contents";
+			treeNode2.ContextMenuStrip = this.contextMenuStrip1;
+			treeNode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			treeNode2.Name = "Node1";
+			treeNode2.Text = "Popup HTML Screens";
+			treeNode3.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode3.Name = "Node0";
+			treeNode3.Text = "Popup Text";
+			treeNode4.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode4.ForeColor = System.Drawing.Color.Green;
+			treeNode4.Name = "Node2";
+			treeNode4.Text = "CSS Files";
+			treeNode5.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode5.ForeColor = System.Drawing.Color.Purple;
+			treeNode5.Name = "Node3";
+			treeNode5.Text = "Script Files";
+			treeNode6.ContextMenuStrip = this.contextMenuStrip2;
+			treeNode6.ForeColor = System.Drawing.Color.Blue;
+			treeNode6.Name = "Node5";
+			treeNode6.Text = "Image Files";
+			treeNode7.BackColor = System.Drawing.Color.White;
+			treeNode7.ForeColor = System.Drawing.Color.Blue;
+			treeNode7.Name = "Node0";
+			treeNode7.Text = "New Project";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-									treeNode14});
+									treeNode7});
 			this.treeView1.Size = new System.Drawing.Size(326, 512);
 			this.treeView1.TabIndex = 0;
 			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1ItemDrag);
@@ -1804,6 +1804,7 @@ namespace HHBuilder
 			this.hiHasScreen.TabIndex = 38;
 			this.hiHasScreen.Text = "Has Screen";
 			this.hiHasScreen.UseVisualStyleBackColor = true;
+			this.hiHasScreen.Visible = false;
 			// 
 			// label8
 			// 
