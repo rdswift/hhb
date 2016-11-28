@@ -429,7 +429,7 @@ namespace HHBuilder
 			
 			
 			
-			
+			repBody = CommonMark.CommonMarkConverter.Convert(repBody);
 			
 			
 			

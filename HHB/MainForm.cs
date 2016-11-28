@@ -1033,38 +1033,41 @@ namespace HHBuilder
 		// ==============================================================================
 		private void OpenProject(object sender, EventArgs e)
 		{
-			openFileDialog1.Filter = "Help Project files (*.hhb)|*.hhb|All files (*.*)|*.*";
-			openFileDialog1.FilterIndex = 1;
-			if (helpProjectFilePathAndName.Trim().Length > 0)
+			if ( !CheckSaveProject() )
 			{
-				openFileDialog1.InitialDirectory = System.IO.Path.GetFullPath(helpProjectFilePathAndName);
-			}
-			else
-			{
-				openFileDialog1.InitialDirectory = Environment.SpecialFolder.CommonDocuments.ToString();
-			}
-			openFileDialog1.FileName = "";
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				helpProjectFilePathAndName = openFileDialog1.FileName;
-				TreeNode tNode;
-				try
+				openFileDialog1.Filter = "Help Project files (*.hhb)|*.hhb|All files (*.*)|*.*";
+				openFileDialog1.FilterIndex = 1;
+				if (helpProjectFilePathAndName.Trim().Length > 0)
 				{
-					tNode = HelpNode.Load(helpProjectFilePathAndName);
-					treeView1.Nodes.Clear();
-					treeView1.Nodes.Add(tNode);
-					treeView1.ExpandAll();
-					treeView1.SelectedNode = treeView1.Nodes[0];
-					_dirtyProject = false;
-					DisplayNodeInfo();
+					openFileDialog1.InitialDirectory = System.IO.Path.GetFullPath(helpProjectFilePathAndName);
 				}
-				catch (Exception ex)
+				else
 				{
-					string error = "Problem reading the selected project file.";
-					Log.Error(error);
-					Log.Exception(ex);
-					Log.ErrorBox(error);
-					//throw;
+					openFileDialog1.InitialDirectory = Environment.SpecialFolder.CommonDocuments.ToString();
+				}
+				openFileDialog1.FileName = "";
+				if (openFileDialog1.ShowDialog() == DialogResult.OK)
+				{
+					helpProjectFilePathAndName = openFileDialog1.FileName;
+					TreeNode tNode;
+					try
+					{
+						tNode = HelpNode.Load(helpProjectFilePathAndName);
+						treeView1.Nodes.Clear();
+						treeView1.Nodes.Add(tNode);
+						treeView1.ExpandAll();
+						treeView1.SelectedNode = treeView1.Nodes[0];
+						_dirtyProject = false;
+						DisplayNodeInfo();
+					}
+					catch (Exception ex)
+					{
+						string error = "Problem reading the selected project file.";
+						Log.Error(error);
+						Log.Exception(ex);
+						Log.ErrorBox(error);
+						//throw;
+					}
 				}
 			}
 		}
@@ -1072,21 +1075,26 @@ namespace HHBuilder
 		// ==============================================================================
 		private void NewProject(object sender, EventArgs e)
 		{
-			InitDataSet();
-			
-			TreeNode tNode;
-			try
+			if ( !CheckSaveProject() )
 			{
-				tNode = HelpNode.Initialize();
-				treeView1.Nodes.Clear();
-				treeView1.Nodes.Add(tNode);
-				treeView1.ExpandAll();
-				_dirtyProject = false;
-			}
-			catch (Exception)
-			{
-				Log.ErrorBox("Problem initializing the project file.");
-				//throw;
+				InitDataSet();
+				
+				TreeNode tNode;
+				try
+				{
+					tNode = HelpNode.Initialize();
+					treeView1.Nodes.Clear();
+					treeView1.Nodes.Add(tNode);
+					treeView1.ExpandAll();
+					_dirtyProject = false;
+					treeView1.SelectedNode = treeView1.Nodes[0];
+					DisplayNodeInfo();
+				}
+				catch (Exception)
+				{
+					Log.ErrorBox("Problem initializing the project file.");
+					//throw;
+				}
 			}
 		}
 		
@@ -1425,19 +1433,6 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
-		private bool ProcessProject()
-		{
-			// Handle this in the compiler class?
-			
-			// TODO Prepare Image Collection
-			// TODO Prepare CSS Collection
-			// TODO Prepare Scripts Collection
-			// TODO Prepare Popup Collection
-			
-			return true;
-		}
-		
-		// ==============================================================================
 		private void LPictureBoxDragDrop(object sender, DragEventArgs e)
 		{
 			string[] theFiles = (string[]) e.Data.GetData("FileDrop", true);
@@ -1528,11 +1523,15 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		/// <summary>
+		/// Checks if the project has been modified and offers to save it.
+		/// </summary>
+		/// <returns>False if action (new, load, exit) should proceed, or true if action should be cancelled.</returns>
 		private bool CheckSaveProject()
 		{
 			if ( _dirtyProject )
 			{
-				DialogResult result = MessageBox.Show("The project has been modified.  Would you like to save it before exiting?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+				DialogResult result = MessageBox.Show("The project has been modified.  Would you like to save it?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 				if ( result == DialogResult.Cancel )
 				{
 					return true;

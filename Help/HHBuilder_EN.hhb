@@ -315,7 +315,13 @@ with this program. If not, see
     <LinkList />
     <CssList>c20161127075452884|c20161127075622260</CssList>
     <ScriptList />
-    <Body />
+    <Body>Specifies the amount of inforwation written to the log file.
+
+There are four levels of logging:
+* *None* - No information will be written to the log.
+* *Errors* - Only error information will be written to the log.
+* *Normal* - Errors and general event information will be written to the log.
+* *Debug* - All event information will be written to the log.</Body>
   </Screens>
   <Screens>
     <ID>h20161127080614404</ID>
@@ -2193,6 +2199,67 @@ to permit their use in free software.
     <CssList>c20161127075452884|c20161127075622260</CssList>
     <ScriptList />
     <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161128122937965</ID>
+    <IndexPath>0.00.05.03.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161128122937965.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>CommonMark.NET</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>New Item ID: h20161128122937965</LinkDesc>
+    <LinkList>h20161128123013357</LinkList>
+    <CssList>c20161018155659888|c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>An implementation of the CommonMark specification in C# for converting Markdown documents to HTML.  The package is available as source or compiled binary (dll) files at [https://github.com/Knagis/CommonMark.NET](https://github.com/Knagis/CommonMark.NET "https://github.com/Knagis/CommonMark.NET").</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161128123013357</ID>
+    <IndexPath>0.00.05.03.00.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161128123013357.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>License</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>CommonMark.NET License</LinkDesc>
+    <LinkList />
+    <CssList />
+    <ScriptList />
+    <Body>Copyright (c) 2014, Karlis Gangis.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+
+   * Neither the name of Karlis Gangis nor the names of other contributors 
+     may be used to endorse or promote products derived from this software 
+     without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</Body>
   </Screens>
   <Screens>
     <ID>h20161127083923134</ID>
