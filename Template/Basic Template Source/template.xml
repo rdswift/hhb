@@ -9,8 +9,8 @@
     <ContactName>Bob Swift</ContactName>
     <ContactEmail>bswift@users.sourceforge.net</ContactEmail>
     <ContactWebsite>https://sourceforge.net/projects/oshhb/</ContactWebsite>
-    <Version>1.03</Version>
-    <RevisionDate>2016-11-19</RevisionDate>
+    <Version>1.04</Version>
+    <RevisionDate>2016-11-28</RevisionDate>
     <LicenseTitle>GPLv3</LicenseTitle>
   </TemplateInfo>
 </HelpTemplate>
