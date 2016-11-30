@@ -6,12 +6,14 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
 using System.Globalization;
 using System.Resources;
 using System.Reflection;
+using System.IO;
 
 namespace HHBuilder
 {
@@ -29,6 +31,9 @@ namespace HHBuilder
 		private static string _returnedString;
 		private bool _showScreenSettingsPage;
 		private bool _dirtyProject;
+		private static int _progressCount = 0;
+		private static int _progressLineCount = 0;
+		private System.Text.StringBuilder _progressSB = new System.Text.StringBuilder();
 		#endregion
 
 		#region Private Properties
@@ -1742,13 +1747,21 @@ namespace HHBuilder
 		// ==============================================================================
 		private void MakeProjectFiles()
 		{
+			if (tabControl1.TabPages.Contains(tabPageProgress) == false)
+			{
+				tabControl1.TabPages.Add(tabPageProgress);
+			}
+			tabControl1.SelectedTab = tabPageProgress;
+			
 			if ( HHCompile.MakeFiles(treeView1.SelectedNode) )
 			{
+				progressBar1.Value = progressBar1.Maximum;
+				progressBar1.Refresh();
 				MessageBox.Show(String.Format("Project files successfully created in {0}", HBSettings.projectBuildDir), "Success");
 			}
 			else
 			{
-				Log.ErrorBox("There was a problem creating all of the project files.  Please see the log file for more information.");
+				Log.ErrorBox("There was a problem creating all of the project files.  Please see the log for more information.");
 			}
 		}
 		
@@ -1767,10 +1780,44 @@ namespace HHBuilder
 				return;
 			}
 			
-			if ( HHCompile.Compile(treeView1.SelectedNode, fileToSave) )
+			if (tabControl1.TabPages.Contains(tabPageProgress) == false)
 			{
-				MessageBox.Show("Project successfully compiled and saved.", "Success");
+				tabControl1.TabPages.Add(tabPageProgress);
 			}
+			tabControl1.SelectedTab = tabPageProgress;
+			
+			if ( !HHCompile.Compile(treeView1.SelectedNode, fileToSave) )
+			{
+				return;
+			}
+			
+			progressBar1.Value = progressBar1.Maximum;
+			progressBar1.Refresh();
+			MessageBox.Show("Project successfully compiled and saved.", "Success");
+			
+			return;
+		}
+		
+		// ==============================================================================
+		private void procOutputReceived(object sendingProcess, DataReceivedEventArgs e)
+		{
+			if ( !String.IsNullOrEmpty(e.Data) )
+			{
+				if ( tbProgress.InvokeRequired )
+				{
+					string[] textLine = { e.Data };
+					tbProgress.BeginInvoke(new myDelegate(procDataReceived), textLine);
+				}
+			}
+		}
+		
+		// ==============================================================================
+		private delegate void myDelegate(string textLine);
+		
+		// ==============================================================================
+		private void procDataReceived(string textLine)
+		{
+			((MainForm) Form.ActiveForm).ProgressAddLine(textLine);
 		}
 		
 		// ==============================================================================
@@ -1833,9 +1880,61 @@ namespace HHBuilder
 		
 		#region Public Methods
 		// ==============================================================================
+		/// <summary>
+		/// Initializes the Make / Compile progress bar.
+		/// </summary>
+		/// <param name="progressMaximum">The maximum value of the progress bar.</param>
+		public void ProgressInitialize(int progressMaximum)
+		{
+			_progressSB.Clear();
+			_progressLineCount = 0;
+			progressBar1.Minimum = 0;
+			progressBar1.Maximum = Math.Max(1, progressMaximum);
+			progressBar1.Value = 0;
+			tbProgress.Text = String.Empty;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Add a line of text to the progress log window.
+		/// </summary>
+		/// <param name="lineToAdd">Text to add.</param>
+		public void ProgressAddLine(string lineToAdd)
+		{
+			_progressLineCount++;
+			string tLine = lineToAdd.TrimEnd();
+			tLine = tLine.Replace(Environment.NewLine, "");
+			tLine = tLine.Replace("\n", "");
+			tLine = tLine.Replace("\r", "");
+			_progressSB.AppendFormat("[{0:0000}] {1}\t{2}{3}", _progressLineCount, DateTime.Now.ToString("HH:mm:ss.fff"), tLine, Environment.NewLine);
+			tbProgress.Text = _progressSB.ToString();
+			tbProgress.Select(tbProgress.Text.Length, 0);
+			tbProgress.ScrollToCaret();
+			Application.DoEvents();
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Increments the progress bar by one step.
+		/// </summary>
+		public void ProgressAddStep()
+		{
+			ProgressAddStep(1);
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Increments the progress bar by the specified number of steps.
+		/// </summary>
+		/// <param name="stepsToAdd">Number of steps to increment.</param>
+		public void ProgressAddStep(int stepsToAdd)
+		{
+			_progressCount += Math.Max(0, stepsToAdd);
+			progressBar1.Value = Math.Min(progressBar1.Maximum, _progressCount);
+			progressBar1.Refresh();
+			Application.DoEvents();
+		}
 		#endregion
-		
-		
 		
 		// ==============================================================================
 		/// <summary>
@@ -1922,5 +2021,15 @@ namespace HHBuilder
 //			
 		}
 
+		
+		void BMakeFilesClick(object sender, EventArgs e)
+		{
+			MakeProjectFiles();
+		}
+		
+		void BCompileProjectClick(object sender, EventArgs e)
+		{
+			CompileProject();
+		}
 	}
 }

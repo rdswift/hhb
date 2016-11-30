@@ -253,6 +253,11 @@ namespace HHBuilder
 			this.bImageSave = new System.Windows.Forms.Button();
 			this.label23 = new System.Windows.Forms.Label();
 			this.tbImageContent = new System.Windows.Forms.TextBox();
+			this.tabPageProgress = new System.Windows.Forms.TabPage();
+			this.tbProgress = new System.Windows.Forms.TextBox();
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.bMakeFiles = new System.Windows.Forms.Button();
+			this.bCompileProject = new System.Windows.Forms.Button();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
@@ -282,6 +287,7 @@ namespace HHBuilder
 			this.tabPageScripts.SuspendLayout();
 			this.tabPageImages.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.tabPageProgress.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// contextMenuStrip1
@@ -925,6 +931,7 @@ namespace HHBuilder
 			this.tabControl1.Controls.Add(this.tabPageCSS);
 			this.tabControl1.Controls.Add(this.tabPageScripts);
 			this.tabControl1.Controls.Add(this.tabPageImages);
+			this.tabControl1.Controls.Add(this.tabPageProgress);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
@@ -2243,6 +2250,58 @@ namespace HHBuilder
 			this.tbImageContent.TabIndex = 10;
 			this.tbImageContent.Visible = false;
 			// 
+			// tabPageProgress
+			// 
+			this.tabPageProgress.Controls.Add(this.tbProgress);
+			this.tabPageProgress.Controls.Add(this.progressBar1);
+			this.tabPageProgress.Controls.Add(this.bMakeFiles);
+			this.tabPageProgress.Controls.Add(this.bCompileProject);
+			this.tabPageProgress.Location = new System.Drawing.Point(4, 22);
+			this.tabPageProgress.Name = "tabPageProgress";
+			this.tabPageProgress.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageProgress.Size = new System.Drawing.Size(641, 517);
+			this.tabPageProgress.TabIndex = 9;
+			this.tabPageProgress.Text = "Progress";
+			this.tabPageProgress.UseVisualStyleBackColor = true;
+			// 
+			// tbProgress
+			// 
+			this.tbProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbProgress.Location = new System.Drawing.Point(8, 8);
+			this.tbProgress.Multiline = true;
+			this.tbProgress.Name = "tbProgress";
+			this.tbProgress.ReadOnly = true;
+			this.tbProgress.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.tbProgress.Size = new System.Drawing.Size(624, 440);
+			this.tbProgress.TabIndex = 3;
+			// 
+			// progressBar1
+			// 
+			this.progressBar1.Location = new System.Drawing.Point(8, 456);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(628, 23);
+			this.progressBar1.TabIndex = 2;
+			// 
+			// bMakeFiles
+			// 
+			this.bMakeFiles.Location = new System.Drawing.Point(480, 488);
+			this.bMakeFiles.Name = "bMakeFiles";
+			this.bMakeFiles.Size = new System.Drawing.Size(75, 23);
+			this.bMakeFiles.TabIndex = 1;
+			this.bMakeFiles.Text = "Make";
+			this.bMakeFiles.UseVisualStyleBackColor = true;
+			this.bMakeFiles.Click += new System.EventHandler(this.BMakeFilesClick);
+			// 
+			// bCompileProject
+			// 
+			this.bCompileProject.Location = new System.Drawing.Point(560, 488);
+			this.bCompileProject.Name = "bCompileProject";
+			this.bCompileProject.Size = new System.Drawing.Size(75, 23);
+			this.bCompileProject.TabIndex = 0;
+			this.bCompileProject.Text = "Compile";
+			this.bCompileProject.UseVisualStyleBackColor = true;
+			this.bCompileProject.Click += new System.EventHandler(this.BCompileProjectClick);
+			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
@@ -2301,9 +2360,16 @@ namespace HHBuilder
 			this.tabPageImages.ResumeLayout(false);
 			this.tabPageImages.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.tabPageProgress.ResumeLayout(false);
+			this.tabPageProgress.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button bCompileProject;
+		private System.Windows.Forms.Button bMakeFiles;
+		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.TextBox tbProgress;
+		private System.Windows.Forms.TabPage tabPageProgress;
 		private System.Windows.Forms.ToolStripMenuItem buildProjectFilesToolStripMenuItem;
 		private System.Windows.Forms.Button bSelectDefaultTopic;
 		private System.Windows.Forms.ToolStripButton toolStripButtonInsertLink;

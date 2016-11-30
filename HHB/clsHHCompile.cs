@@ -7,6 +7,7 @@
 
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -911,15 +912,19 @@ namespace HHBuilder
 			{
 				CSSItem tItem = (CSSItem) tNode.Tag;
 				string fileToWrite = Path.Combine(cssDir, tItem.fileName);
-				Log.Debug(String.Format("Saving CSS file {0} - {1}", tItem.fileName, tItem.title));
+				string info = String.Format("Saving CSS file {0} - {1}", tItem.fileName, tItem.title); 
+				Log.Debug(info);
+				((MainForm) Form.ActiveForm).ProgressAddLine(info);
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
 				}
 				catch (Exception ex)
 				{
-					Log.Error(String.Format("Error writing CSS file {0}", fileToWrite));
+					string errorMessage = String.Format("Error writing CSS file {0}", fileToWrite);
+					Log.Error(errorMessage);
 					Log.Exception(ex);
+					((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
 					ret = false;
 					//throw;
 				}
@@ -937,15 +942,20 @@ namespace HHBuilder
 			{
 				ScriptItem tItem = (ScriptItem) tNode.Tag;
 				string fileToWrite = Path.Combine(scriptDir, tItem.fileName);
-				Log.Debug(String.Format("Saving script file {0} - {1}", tItem.fileName, tItem.title));
+				string info = String.Format("Saving script file {0} - {1}", tItem.fileName, tItem.title); 
+				Log.Debug(info);
+				((MainForm) Form.ActiveForm).ProgressAddLine(info);
 				try
 				{
 					File.WriteAllText(fileToWrite, tItem.content);
+					((MainForm) Form.ActiveForm).ProgressAddStep();
 				}
 				catch (Exception ex)
 				{
-					Log.Error(String.Format("Error writing script file {0}", fileToWrite));
+					string errorMessage = String.Format("Error writing script file {0}", fileToWrite);
+					Log.Error(errorMessage);
 					Log.Exception(ex);
+					((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
 					ret = false;
 					//throw;
 				}
@@ -969,16 +979,21 @@ namespace HHBuilder
 				dr["FileName"] = tItem.fileName;
 				_imageDS.Tables[0].Rows.Add(dr);
 				string fileToWrite = Path.Combine(imageDir, tItem.fileName);
-				Log.Debug(String.Format("Saving image file {0} - {1}", tItem.fileName, tItem.title));
+				string info = String.Format("Saving image file {0} - {1}", tItem.fileName, tItem.title);
+				Log.Debug(info);
+				((MainForm) Form.ActiveForm).ProgressAddLine(info);
 				try
 				{
 					byte[] imageBytes = Convert.FromBase64String(tItem.content);
 					File.WriteAllBytes(fileToWrite, imageBytes);
+					((MainForm) Form.ActiveForm).ProgressAddStep();
 				}
 				catch (Exception ex)
 				{
-					Log.Error(String.Format("Error writing image file {0}", fileToWrite));
+					string errorMessage = String.Format("Error writing image file {0}", fileToWrite);
+					Log.Error(errorMessage);
 					Log.Exception(ex);
+					((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
 					ret = false;
 					//throw;
 				}
@@ -1620,8 +1635,10 @@ namespace HHBuilder
 			}
 			catch (Exception ex)
 			{
-				Log.Error(String.Format("Error saving HTML file {0}", tItem.fileName));
+				string errorMessage = String.Format("Error saving HTML file {0}", tItem.fileName);
+				Log.Error(errorMessage);
 				Log.Exception(ex);
+				((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
 				return false;
 				//throw;
 			}
@@ -1658,15 +1675,16 @@ namespace HHBuilder
 		{
 			MakeIndices(node);
 			bool retValue = true;
-//			retValue = retValue & InitializeBuildDirectory(node);
 			foreach (DataRow dr in _nodeDS.Tables[0].Rows)
 			{
 				if ( (bool) dr["ShowScreen"] )
 				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Writing {0}.html - {1}", dr["ID"].ToString().Trim(), dr["Title"].ToString().Trim()));
 					retValue = retValue & MakeHtmlFile(node, dr["ID"].ToString().Trim(), false);
+					((MainForm) Form.ActiveForm).ProgressAddStep();
 				}
 			}
-			
+
 			return retValue;
 		}
 		
@@ -1681,30 +1699,44 @@ namespace HHBuilder
 			string errorMessage = String.Empty;
 			bool ret = true;
 			
+			((MainForm) Form.ActiveForm).ProgressInitialize(HelpNode.NodeCount(HelpNode.GetRootNode(node)));
+			//((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Making files started at {0}", DateTime.Now.ToString("HH:mm:ss.fff")));
+			((MainForm) Form.ActiveForm).ProgressAddLine("Starting Make of all help project files.");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Initializing build directory {0}", HBSettings.projectBuildDir));
+			
 			if ( !InitializeBuildDirectory(node) )
 			{
 				return false;
 			}
+			((MainForm) Form.ActiveForm).ProgressAddLine("Build directory initialized.");
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			// Save Script files
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Saving {0} script files", HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.scriptFile].Nodes.Count));
 			ret = ret & ( SaveScripts(node) );
 			
 			// Save Image files
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Saving {0} image files", HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile].Nodes.Count));
 			ret = ret & ( SaveImages(node) );
 			
 			// Save CSS files
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Saving {0} Style Sheet (CSS) files", HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.cssFile].Nodes.Count));
 			ret = ret & ( SaveCSS(node) );
 			
 			if ( !ret )
 			{
-				Log.ErrorBox("Problem saving one or more files.  Please see the log file for details.");
+				Log.ErrorBox("Problem saving one or more files.  Please see the log for details.");
 			}
 			
 			// Create node information list (ID, Prev Link, Next Link, etc)
 			// and the images information list
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing topic and image indices.");
 			MakeIndices(node);
+			((MainForm) Form.ActiveForm).ProgressAddLine("Topic and image indices complete.");
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			// Create HTML files
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Format("Saving {0} HTML files", _nodeDS.Tables[0].Rows.Count));
 			if ( !MakeAllHTML(node) )
 			{
 				Log.ErrorBox("Problem creating one or more HTML files.  Please see the log file for details.");
@@ -1712,28 +1744,57 @@ namespace HHBuilder
 			}
 			
 			// Create ToC file
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing Table of Contents file.");
 			if ( !MakeProjectTOC(node) )
 			{
 				Log.ErrorBox("Problem creating the project Table of Contents file.  Please see the log file for details.");
 				ret = false;
 			}
+			((MainForm) Form.ActiveForm).ProgressAddLine("Table of Contents file complete.");
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			// Create Text Popup file
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing popup text file.");
 			int popupTextCount = MakeProjectPopupText(node);
+			if ( popupTextCount < 1 )
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("Popup text file not required.  There were no entries found.");
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("Popup text file complete.");
+			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			// Create Index File
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing project Index file.");
 			if ( !MakeProjectIndex(node) )
 			{
-				Log.ErrorBox("Problem creating the project Index file.  Please see the log file for details.");
+				errorMessage = "Problem creating the project Index file.  Please see the log for details.";
+				((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
+				Log.ErrorBox(errorMessage);
 				ret = false;
 			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("Project Index file complete.");
+			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			// Create Compiler Project file
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing compiler project file.");
 			if ( !MakeProjectCompilerFile(node, (popupTextCount > 0)) )
 			{
-				Log.ErrorBox("Problem creating the Project file for the compiler.  Please see the log file for details.");
+				errorMessage = "Problem creating the Project file for the compiler.  Please see the log for details.";
+				((MainForm) Form.ActiveForm).ProgressAddLine(errorMessage);
+				Log.ErrorBox(errorMessage);
 				ret = false;
 			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("Compiler project file complete.");
+			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 
 			return ret;
 		}
@@ -1752,9 +1813,14 @@ namespace HHBuilder
 			{
 				string errMsg = "Problem making all of the project files.";
 				Log.Error(errMsg);
-				Log.ErrorBox(errMsg + "  Please see the log file for more information.");
+				Log.ErrorBox(errMsg + "  Please see the log for more information.");
 				return false;
 			}
+			
+			
+			
+			
+			
 			
 			// check files
 			// TODO: Check the validity of the generated files
@@ -1765,25 +1831,45 @@ namespace HHBuilder
 			
 			
 			
+			
 			// run compile
+			((MainForm) Form.ActiveForm).ProgressAddLine("Compiling the help project.");
 			string hhCompiler = Path.Combine(HBSettings.compilerDir, "hhc.exe");
 			if ( !File.Exists(hhCompiler) )
 			{
 				string errMsg = String.Format("Unable to find HTML Help Compiler {0}", hhCompiler);
 				Log.Error(errMsg);
+				((MainForm) Form.ActiveForm).ProgressAddLine(errMsg);
 				Log.ErrorBox(errMsg);
 				return false;
 			}
 			
-			System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(hhCompiler);
+			ProcessStartInfo psi = new ProcessStartInfo(hhCompiler);
 			psi.Arguments = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.hhp");
 			psi.WorkingDirectory = HBSettings.projectBuildDir;
+			psi.RedirectStandardOutput = true;
+			psi.RedirectStandardError = true;
+			psi.UseShellExecute = false;
+			psi.CreateNoWindow = true;
 			
-			System.Diagnostics.Process compiler = new System.Diagnostics.Process();
+			Process compiler = new System.Diagnostics.Process();
 			compiler.StartInfo = psi;
+			compiler.OutputDataReceived += new DataReceivedEventHandler(procOutputReceived);
+			compiler.ErrorDataReceived += new DataReceivedEventHandler(procOutputReceived);
 			compiler.Start();
+			compiler.BeginErrorReadLine();
+			compiler.BeginOutputReadLine();
+			while ( !compiler.HasExited )
+			{
+				Application.DoEvents();
+			}
+			
 			compiler.WaitForExit();
 			int eCode = compiler.ExitCode;	// For the hhc.exe program 1=success and 0=error
+			compiler.WaitForExit();
+			compiler.Close();
+			((MainForm) Form.ActiveForm).ProgressAddStep();
+			((MainForm) Form.ActiveForm).ProgressAddLine("Compile complete.");
 			
 //			Log.ErrorBox(String.Format("Compiler exit code: {0}", eCode));
 			
@@ -1791,11 +1877,13 @@ namespace HHBuilder
 			{
 				string eMessage = "The Help Compiler reported an error.";
 				Log.Error(eMessage);
+				((MainForm) Form.ActiveForm).ProgressAddLine(eMessage);
 				Log.ErrorBox(String.Format("{0}  Please check the compiler log file for more information.\n\n{1}", eMessage, Path.Combine(HBSettings.projectBuildDir, "HHBuilder.log")));
 				return false;
 			}
 			
 			// copy compiled output to specified file
+			((MainForm) Form.ActiveForm).ProgressAddLine("Copying compiled output to specified output file.");
 			try
 			{
 				File.Copy(Path.Combine(HBSettings.projectBuildDir, "HHBuilder.chm"), outputFile, true);
@@ -1805,12 +1893,36 @@ namespace HHBuilder
 				string eMessage = String.Format("Problem copying the compiled file to the specified output file {0}", outputFile);
 				Log.Error(eMessage);
 				Log.Exception(ex);
+				((MainForm) Form.ActiveForm).ProgressAddLine(eMessage);
 				Log.ErrorBox(eMessage);
 				return false;
 				//throw;
 			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			return true;
+		}
+		
+		// ==============================================================================
+		private static void procOutputReceived(object sendingProcess, DataReceivedEventArgs e)
+		{
+			if ( !String.IsNullOrEmpty(e.Data) )
+			{
+				if ( Application.OpenForms["MainForm"].InvokeRequired )
+				{
+					string[] textLine = { e.Data };
+					Application.OpenForms["MainForm"].BeginInvoke(new myDelegate(procDataReceived), textLine);
+				}
+			}
+		}
+		
+		// ==============================================================================
+		private delegate void myDelegate(string textLine);
+		
+		// ==============================================================================
+		private static void procDataReceived(string textLine)
+		{
+			((MainForm) Form.ActiveForm).ProgressAddLine(textLine);
 		}
 		#endregion
 	}
