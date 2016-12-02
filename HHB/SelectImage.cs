@@ -47,6 +47,7 @@ namespace HHBuilder
 		void BInsertClick(object sender, EventArgs e)
 		{
 			MainForm.parameterString = String.Format("{0}Image:{1}{2}", "{", dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString().Trim(), "}");
+			//MainForm.parameterString = String.Format("![{0}]({1})", dataGridView1.SelectedRows[0].Cells["Title"].Value.ToString().Trim(), dataGridView1.SelectedRows[0].Cells["FileName"].Value.ToString().Trim());
 			Close();
 		}
 		#endregion

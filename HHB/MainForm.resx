@@ -378,12 +378,6 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>225, 17</value>
   </metadata>
-  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1014, 17</value>
-  </metadata>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -408,22 +402,22 @@
   <data name="toolStripButtonInsertLink.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        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
+        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
 </value>
   </data>
   <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

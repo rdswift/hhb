@@ -151,7 +151,8 @@ namespace HHBuilder
 		public bool hasScreen
 		{
 			get{ return _hasScreen; }
-			set{ _hasScreen = value; }
+			//set{ _hasScreen = value; }		// TODO: Review issue regarding non-display items in ToC and Index. 
+			set{ _hasScreen = true; }
 		}
 		
 		// ==============================================================================

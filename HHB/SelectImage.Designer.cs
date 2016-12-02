@@ -39,13 +39,15 @@ namespace HHBuilder
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ImageSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Thumbnail = new System.Windows.Forms.DataGridViewImageColumn();
 			this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// bInsert
 			// 
-			this.bInsert.Location = new System.Drawing.Point(296, 200);
+			this.bInsert.Location = new System.Drawing.Point(472, 200);
 			this.bInsert.Name = "bInsert";
 			this.bInsert.Size = new System.Drawing.Size(75, 23);
 			this.bInsert.TabIndex = 0;
@@ -55,7 +57,7 @@ namespace HHBuilder
 			// 
 			// bCancel
 			// 
-			this.bCancel.Location = new System.Drawing.Point(376, 200);
+			this.bCancel.Location = new System.Drawing.Point(552, 200);
 			this.bCancel.Name = "bCancel";
 			this.bCancel.Size = new System.Drawing.Size(75, 23);
 			this.bCancel.TabIndex = 1;
@@ -71,14 +73,17 @@ namespace HHBuilder
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
 									this.ID,
 									this.Title,
+									this.ImageSize,
+									this.Thumbnail,
 									this.FileName});
 			this.dataGridView1.Location = new System.Drawing.Point(8, 8);
 			this.dataGridView1.MultiSelect = false;
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.RowHeadersVisible = false;
+			this.dataGridView1.RowTemplate.Height = 50;
 			this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGridView1.Size = new System.Drawing.Size(440, 184);
+			this.dataGridView1.Size = new System.Drawing.Size(616, 184);
 			this.dataGridView1.TabIndex = 2;
 			// 
 			// ID
@@ -97,6 +102,22 @@ namespace HHBuilder
 			this.Title.ReadOnly = true;
 			this.Title.Width = 300;
 			// 
+			// ImageSize
+			// 
+			this.ImageSize.DataPropertyName = "ImageSize";
+			this.ImageSize.HeaderText = "Size";
+			this.ImageSize.Name = "ImageSize";
+			this.ImageSize.ReadOnly = true;
+			// 
+			// Thumbnail
+			// 
+			this.Thumbnail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.Thumbnail.DataPropertyName = "Thumbnail";
+			this.Thumbnail.HeaderText = "Thumbnail";
+			this.Thumbnail.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+			this.Thumbnail.Name = "Thumbnail";
+			this.Thumbnail.ReadOnly = true;
+			// 
 			// FileName
 			// 
 			this.FileName.DataPropertyName = "FileName";
@@ -109,7 +130,7 @@ namespace HHBuilder
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(458, 232);
+			this.ClientSize = new System.Drawing.Size(632, 232);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.bCancel);
 			this.Controls.Add(this.bInsert);
@@ -119,6 +140,8 @@ namespace HHBuilder
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.DataGridViewTextBoxColumn ImageSize;
+		private System.Windows.Forms.DataGridViewImageColumn Thumbnail;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Title;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ID;

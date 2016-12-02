@@ -84,6 +84,7 @@ namespace HHBuilder
 				else
 				{
 					MainForm.parameterString = String.Format("{0}Link:{1}|{2}{3}", "{", tbLinkURL.Text.Trim(), tbLinkText.Text.Trim(), "}");
+					//MainForm.parameterString = String.Format("[{0}]({1} \"{2}\")", tbLinkText.Text.Trim(), tbLinkURL.Text.Trim(), tbLinkText.Text.Trim());
 					Close();
 				}
 			}
@@ -126,8 +127,5 @@ namespace HHBuilder
 		#region Public Methods
 		// ==============================================================================
 		#endregion
-		
-		
-		
 	}
 }

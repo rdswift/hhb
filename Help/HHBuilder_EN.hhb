@@ -1,0 +1,2497 @@
+<?xml version="1.0" standalone="yes"?>
+<HelpData>
+  <Settings>
+    <ProjectName>HTML Help Builder</ProjectName>
+    <Author>Bob Swift</Author>
+    <Company />
+    <Copyright>Copyright 2016 Bob Swift.  All rights reserved.</Copyright>
+    <Language>0x1009 English (Canada)</Language>
+    <DefaultTopic />
+    <FullTextSearch>True</FullTextSearch>
+    <Template>t00000000000000000</Template>
+  </Settings>
+  <Screens>
+    <ID>h20161018155607120</ID>
+    <IndexPath>0.00.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018155607120.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>HTML Help Builder</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>Title Page</LinkDesc>
+    <LinkList />
+    <CssList />
+    <ScriptList />
+    <Body>&lt;p&gt;&lt;table cellpadding="5"&gt;&lt;tr style="vertical-align: top; padding: 5px;"&gt;
+&lt;td style="vertical-align: top;"&gt;{Image:i20161112194139917}&lt;br&gt; &lt;br&gt;{Image:i20161018155935592}&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;HHBuilder&lt;/b&gt; - HTML Help File Builder.&lt;br&gt;
+Copyright &amp;copy; 2016 Bob Swift &amp;lt;&lt;a href="mailto:bswift@users.sourceforge.net"&gt;bswift@users.sourceforge.net&lt;/a&gt;&amp;gt;
+&lt;/p&gt;&lt;p&gt;
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+&lt;/p&gt;&lt;p&gt;
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+&lt;/p&gt;&lt;p&gt;
+You should have received a copy of the GNU General Public License along
+with this program. If not, see
+&amp;lt;http://www.gnu.org/licenses/&amp;gt;.
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/p&gt;</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127081908787</ID>
+    <IndexPath>0.00.00.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127081908787.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>About the Program</Title>
+    <IndexEntries>About HTMLHelp Builder Program</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>New Item ID: h20161127081908787</LinkDesc>
+    <LinkList>h20161127083720984|h20161127083758679|h20161127083838923</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082026219</ID>
+    <IndexPath>0.00.00.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082026219.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>About the Documentation</Title>
+    <IndexEntries>About the HTMLHelp Builder Documentation</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>New Item ID: h20161127082026219</LinkDesc>
+    <LinkList>h20161127083822161</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161018160204316</ID>
+    <IndexPath>0.00.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018160204316.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Program Settings</Title>
+    <IndexEntries>Program Settings|Settings`Program</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings</LinkDesc>
+    <LinkList>h20161018162958191|h20161018163820608|h20161018163828280|h20161127080231848|h20161127080252003|h20161127080308635|h20161127080405117|h20161127080436628|h20161127080449812|h20161127080511064|h20161127080547212|h20161127080602765|h20161127080614404</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>These are the user customizable settings for the HTML Help Builder program.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161018162958191</ID>
+    <IndexPath>0.00.01.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018162958191.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Author</Title>
+    <IndexEntries>Author Program Setting|Program Settings`Author</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Author</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>The default author name to set in any new help projects.  This is also used as the replaceable parameter AUTHOR in the copyright template.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161018163820608</ID>
+    <IndexPath>0.00.01.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018163820608.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Company</Title>
+    <IndexEntries>Program Settings`Company|Company Program Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Company</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>The default company name to set in any new help projects.  This is also used as the replaceable parameter COMPANY in the copyright template.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161018163828280</ID>
+    <IndexPath>0.00.01.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018163828280.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Copyright Template</Title>
+    <IndexEntries>Program Settings`Copyright Template|Copyright Template</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Copyright Template</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>The default template to use to create a copyright notice to set in any new help projects.  This may include the replaceable parameters AUTHOR, COMPANY and YEAR.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127080231848</ID>
+    <IndexPath>0.00.01.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080231848.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>True</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Interface Language</Title>
+    <IndexEntries>Program Settings`Interface Language|Interface Language Program Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Interface Language</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080252003</ID>
+    <IndexPath>0.00.01.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080252003.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Check for Updates</Title>
+    <IndexEntries>Program Settings`Check for Updates|Check for Updates Program Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Check for Updates</LinkDesc>
+    <LinkList>h20161018160038399</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080308635</ID>
+    <IndexPath>0.00.01.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080308635.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Remove Working Files</Title>
+    <IndexEntries>Program Settings`Remove Working Files|Remove Working Files Program Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Remove Working Files</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080405117</ID>
+    <IndexPath>0.00.01.06</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080405117.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Default Language</Title>
+    <IndexEntries>Program Settings`Default Language|Default Language Program Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Default Language</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080436628</ID>
+    <IndexPath>0.00.01.07</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080436628.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Working Directory</Title>
+    <IndexEntries>Working Directory Program Setting|Program Settings`Working Directory</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Working Directory</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080449812</ID>
+    <IndexPath>0.00.01.08</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080449812.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Compiler Directory</Title>
+    <IndexEntries>Compiler Directory Program Setting|Program Settings`Compiler Directory</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Compiler Directory</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080511064</ID>
+    <IndexPath>0.00.01.09</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080511064.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Template Directory</Title>
+    <IndexEntries>Template Directory Program Setting|Program Settings`Template Directory</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Template Directory</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080547212</ID>
+    <IndexPath>0.00.01.10</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080547212.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Log File Directory</Title>
+    <IndexEntries>Log File Directory Program Setting|Program Settings`Log File Directory</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Log File Directory</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127080602765</ID>
+    <IndexPath>0.00.01.11</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080602765.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Log Level</Title>
+    <IndexEntries>Log Level Program Setting|Program Settings`Log Level</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Log Level</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>Specifies the amount of inforwation written to the log file.
+
+There are four levels of logging:
+* *None* - No information will be written to the log.
+* *Errors* - Only error information will be written to the log.
+* *Normal* - Errors and general event information will be written to the log.
+* *Debug* - All event information will be written to the log.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127080614404</ID>
+    <IndexPath>0.00.01.12</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127080614404.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Log Files to Keep</Title>
+    <IndexEntries>Log Files to Keep Program Setting|Program Settings`Log Files to Keep</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Settings: Log Files to Keep</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161018163426920</ID>
+    <IndexPath>0.00.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018163426920.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Templates</Title>
+    <IndexEntries>HTML Help Builder Templates|Templates`HTML Help Builder</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Help Builder Templates</LinkDesc>
+    <LinkList>h20161018164720071|h20161018164723681</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>This will be ignored because the selection has been made to not produce a screen for this item.  It will appear in the Table of Contents as a folder entry rather than a topic entry.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161018164720071</ID>
+    <IndexPath>0.00.02.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018164720071.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Selecting a Template</Title>
+    <IndexEntries>Selecting a Template|Templates`Selecting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Selecting a Template</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161018164723681</ID>
+    <IndexPath>0.00.02.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161018164723681.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Template Editor</Title>
+    <IndexEntries>Templates`Editing|HHBuilder Template Editor</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HHBuilder Template Editor</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082108814</ID>
+    <IndexPath>0.00.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082108814.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Help Project Design</Title>
+    <IndexEntries>Help Project Design|Designing a Help Project</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Designing a Help Project</LinkDesc>
+    <LinkList>h20161127082150682|h20161127082236786|h20161127082337973|h20161127083037748|h20161127083144116|h20161127083202687|h20161127083224371</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150682</ID>
+    <IndexPath>0.00.03.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150682.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Project Settings</Title>
+    <IndexEntries>Project Settings|Settings`Project</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings</LinkDesc>
+    <LinkList>h20161127082150692|h20161127082150702|h20161127082150712|h20161127082150722|h20161127082150732|h20161127082150742|h20161127082150752</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>General description of project settings.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127082150692</ID>
+    <IndexPath>0.00.03.00.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150692.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Project Name</Title>
+    <IndexEntries>Project Settings`Project Name|Project Name Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings: Project Name</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150702</ID>
+    <IndexPath>0.00.03.00.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150702.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Author</Title>
+    <IndexEntries>Author Project Setting|Project Settings`Author</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings: Author</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150712</ID>
+    <IndexPath>0.00.03.00.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150712.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Company</Title>
+    <IndexEntries>Project Settings`Company|Company Project Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings: Company</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150722</ID>
+    <IndexPath>0.00.03.00.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150722.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Copyright</Title>
+    <IndexEntries>Project Settings`Copyright|Copyright Project Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Setting: Copyright</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150732</ID>
+    <IndexPath>0.00.03.00.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150732.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Language</Title>
+    <IndexEntries>Project Settings`Language|Language Project Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Setting: Language</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150742</ID>
+    <IndexPath>0.00.03.00.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150742.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Default Topic</Title>
+    <IndexEntries>Project Settings`Default Topic|Default Topic Project Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings: Default Topic</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082150752</ID>
+    <IndexPath>0.00.03.00.06</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082150752.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Full Text Search</Title>
+    <IndexEntries>Project Settings`Full Text Search|Full Text Search Project Setting</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Project Settings: Full Text Search</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082236786</ID>
+    <IndexPath>0.00.03.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082236786.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>HTML Topic Screens</Title>
+    <IndexEntries>HTMLTopic Screens|Topic Screens</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screens</LinkDesc>
+    <LinkList>h20161127082409487|h20161127082540068|h20161127082557419|h20161127082615939|h20161127082638491|h20161127082659275|h20161127082716471|h20161127082806659|h20161127082939106</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082409487</ID>
+    <IndexPath>0.00.03.01.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082409487.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Topic Title</Title>
+    <IndexEntries>HTML Topic Screen`Title|Topic Title</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Title</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082540068</ID>
+    <IndexPath>0.00.03.01.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082540068.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Description</Title>
+    <IndexEntries>Topic Description</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Description</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082557419</ID>
+    <IndexPath>0.00.03.01.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082557419.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Link ID</Title>
+    <IndexEntries>Topic Link ID|HTML Topic Screen`Link ID</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Link ID</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082615939</ID>
+    <IndexPath>0.00.03.01.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082615939.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Index Entries</Title>
+    <IndexEntries>Topic Index Entries|HTML Topic Screen`Index Entries</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Index Entries</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082638491</ID>
+    <IndexPath>0.00.03.01.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082638491.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Custom CSS</Title>
+    <IndexEntries>Topic Custom CSS|HTML Topic Screen`Custom CSS</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Custom CSS</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082659275</ID>
+    <IndexPath>0.00.03.01.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082659275.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Custom Scripts</Title>
+    <IndexEntries>Topic Custom Scripts|HTML Topic Screen`Custom Scripts</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Custom Scripts</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082716471</ID>
+    <IndexPath>0.00.03.01.06</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082716471.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Links to Other Topics</Title>
+    <IndexEntries>Links to Other Topics|HTML Topic Screen`Links to Other Topics</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Links to Other Topics</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082806659</ID>
+    <IndexPath>0.00.03.01.07</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082806659.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Screen Settings</Title>
+    <IndexEntries>Settings`Topic Screen|Topic Screen Settings|HTML Topic Screen`Screen Settings</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Screen Settings</LinkDesc>
+    <LinkList>h20161127082830492|h20161127082842623|h20161127082858026|h20161127082911162</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082830492</ID>
+    <IndexPath>0.00.03.01.07.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082830492.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Has Screen</Title>
+    <IndexEntries>HTML Topic Screen`Has Screen</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Has Screen</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082842623</ID>
+    <IndexPath>0.00.03.01.07.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082842623.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Include Title</Title>
+    <IndexEntries>HTML Topic Screen`Include Title</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Include Title</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082858026</ID>
+    <IndexPath>0.00.03.01.07.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082858026.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Include Header</Title>
+    <IndexEntries>HTML Topic Screen`Include Header</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Include Header</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082911162</ID>
+    <IndexPath>0.00.03.01.07.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082911162.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Include Footer</Title>
+    <IndexEntries>HTML Topic Screen`Include Footer</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Include Footer</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082939106</ID>
+    <IndexPath>0.00.03.01.08</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082939106.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Screen Content</Title>
+    <IndexEntries>HTML Topic Screen`Screen Content</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HTML Topic Screen: Screen Content</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127082337973</ID>
+    <IndexPath>0.00.03.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127082337973.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Table of Contents</Title>
+    <IndexEntries>Help Project`Table of Contents</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Table of Contents</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083037748</ID>
+    <IndexPath>0.00.03.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083037748.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Popup Text</Title>
+    <IndexEntries>Help Project`Popup Text</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Popup Text</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083144116</ID>
+    <IndexPath>0.00.03.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083144116.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>CSS Files</Title>
+    <IndexEntries>Help Project`CSS Files</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: CSS Files</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083202687</ID>
+    <IndexPath>0.00.03.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083202687.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Script Files</Title>
+    <IndexEntries>Help Project`Script Files</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Script Files</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083224371</ID>
+    <IndexPath>0.00.03.06</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083224371.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Image Files</Title>
+    <IndexEntries>Help Project`Image Files</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Image Files</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083512220</ID>
+    <IndexPath>0.00.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083512220.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Building a Help Project</Title>
+    <IndexEntries>Building a Help Project|Help Project`Building</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Building a Help Project</LinkDesc>
+    <LinkList>h20161127083541402|h20161127083607195</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083541402</ID>
+    <IndexPath>0.00.04.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083541402.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Making the Project Files</Title>
+    <IndexEntries>Making the Project Files|Help Project`Making the Project Files</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Making the Project Files</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083607195</ID>
+    <IndexPath>0.00.04.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083607195.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>True</UseFooter>
+    <Title>Compiling the Project</Title>
+    <IndexEntries>Compiling the Project|Help Project`Compiling the Project</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Help Project: Compiling the Project</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083649901</ID>
+    <IndexPath>0.00.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083649901.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Appendices</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>Appendices</LinkDesc>
+    <LinkList>h20161127083720984|h20161127083758679|h20161127083822161|h20161127083838923|h20161127083923134|h20161127083956668</LinkList>
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083720984</ID>
+    <IndexPath>0.00.05.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083720984.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Program Credits</Title>
+    <IndexEntries>Program Credits|Credits, Program</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Program Credits</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083758679</ID>
+    <IndexPath>0.00.05.01</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083758679.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Software License</Title>
+    <IndexEntries>Software License|License`Software</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Software License</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260|c20161127100513391</CssList>
+    <ScriptList />
+    <Body>&lt;h3 style="text-align: center;"&gt;GNU GENERAL PUBLIC LICENSE&lt;/h3&gt;
+&lt;p style="text-align: center;"&gt;Version 3, 29 June 2007&lt;/p&gt;
+
+&lt;p&gt;Copyright &amp;copy; 2007 Free Software Foundation, Inc.
+ &amp;lt;&lt;a href="http://fsf.org/"&gt;http://fsf.org/&lt;/a&gt;&amp;gt;&lt;/p&gt;&lt;p&gt;
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.&lt;/p&gt;
+
+&lt;h3&gt;&lt;a name="preamble"&gt;&lt;/a&gt;Preamble&lt;/h3&gt;
+
+&lt;p&gt;The GNU General Public License is a free, copyleft license for
+software and other kinds of works.&lt;/p&gt;
+
+&lt;p&gt;The licenses for most software and other practical works are designed
+to take away your freedom to share and change the works.  By contrast,
+the GNU General Public License is intended to guarantee your freedom to
+share and change all versions of a program--to make sure it remains free
+software for all its users.  We, the Free Software Foundation, use the
+GNU General Public License for most of our software; it applies also to
+any other work released this way by its authors.  You can apply it to
+your programs, too.&lt;/p&gt;
+
+&lt;p&gt;When we speak of free software, we are referring to freedom, not
+price.  Our General Public Licenses are designed to make sure that you
+have the freedom to distribute copies of free software (and charge for
+them if you wish), that you receive source code or can get it if you
+want it, that you can change the software or use pieces of it in new
+free programs, and that you know you can do these things.&lt;/p&gt;
+
+&lt;p&gt;To protect your rights, we need to prevent others from denying you
+these rights or asking you to surrender the rights.  Therefore, you have
+certain responsibilities if you distribute copies of the software, or if
+you modify it: responsibilities to respect the freedom of others.&lt;/p&gt;
+
+&lt;p&gt;For example, if you distribute copies of such a program, whether
+gratis or for a fee, you must pass on to the recipients the same
+freedoms that you received.  You must make sure that they, too, receive
+or can get the source code.  And you must show them these terms so they
+know their rights.&lt;/p&gt;
+
+&lt;p&gt;Developers that use the GNU GPL protect your rights with two steps:
+(1) assert copyright on the software, and (2) offer you this License
+giving you legal permission to copy, distribute and/or modify it.&lt;/p&gt;
+
+&lt;p&gt;For the developers' and authors' protection, the GPL clearly explains
+that there is no warranty for this free software.  For both users' and
+authors' sake, the GPL requires that modified versions be marked as
+changed, so that their problems will not be attributed erroneously to
+authors of previous versions.&lt;/p&gt;
+
+&lt;p&gt;Some devices are designed to deny users access to install or run
+modified versions of the software inside them, although the manufacturer
+can do so.  This is fundamentally incompatible with the aim of
+protecting users' freedom to change the software.  The systematic
+pattern of such abuse occurs in the area of products for individuals to
+use, which is precisely where it is most unacceptable.  Therefore, we
+have designed this version of the GPL to prohibit the practice for those
+products.  If such problems arise substantially in other domains, we
+stand ready to extend this provision to those domains in future versions
+of the GPL, as needed to protect the freedom of users.&lt;/p&gt;
+
+&lt;p&gt;Finally, every program is threatened constantly by software patents.
+States should not allow patents to restrict development and use of
+software on general-purpose computers, but in those that do, we wish to
+avoid the special danger that patents applied to a free program could
+make it effectively proprietary.  To prevent this, the GPL assures that
+patents cannot be used to render the program non-free.&lt;/p&gt;
+
+&lt;p&gt;The precise terms and conditions for copying, distribution and
+modification follow.&lt;/p&gt;
+
+&lt;h3&gt;&lt;a name="terms"&gt;&lt;/a&gt;TERMS AND CONDITIONS&lt;/h3&gt;
+
+&lt;h4&gt;&lt;a name="section0"&gt;&lt;/a&gt;0. Definitions.&lt;/h4&gt;
+
+&lt;p&gt;&amp;ldquo;This License&amp;rdquo; refers to version 3 of the GNU General Public License.&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;Copyright&amp;rdquo; also means copyright-like laws that apply to other kinds of
+works, such as semiconductor masks.&lt;/p&gt;
+ 
+&lt;p&gt;&amp;ldquo;The Program&amp;rdquo; refers to any copyrightable work licensed under this
+License.  Each licensee is addressed as &amp;ldquo;you&amp;rdquo;.  &amp;ldquo;Licensees&amp;rdquo; and
+&amp;ldquo;recipients&amp;rdquo; may be individuals or organizations.&lt;/p&gt;
+
+&lt;p&gt;To &amp;ldquo;modify&amp;rdquo; a work means to copy from or adapt all or part of the work
+in a fashion requiring copyright permission, other than the making of an
+exact copy.  The resulting work is called a &amp;ldquo;modified version&amp;rdquo; of the
+earlier work or a work &amp;ldquo;based on&amp;rdquo; the earlier work.&lt;/p&gt;
+
+&lt;p&gt;A &amp;ldquo;covered work&amp;rdquo; means either the unmodified Program or a work based
+on the Program.&lt;/p&gt;
+
+&lt;p&gt;To &amp;ldquo;propagate&amp;rdquo; a work means to do anything with it that, without
+permission, would make you directly or secondarily liable for
+infringement under applicable copyright law, except executing it on a
+computer or modifying a private copy.  Propagation includes copying,
+distribution (with or without modification), making available to the
+public, and in some countries other activities as well.&lt;/p&gt;
+
+&lt;p&gt;To &amp;ldquo;convey&amp;rdquo; a work means any kind of propagation that enables other
+parties to make or receive copies.  Mere interaction with a user through
+a computer network, with no transfer of a copy, is not conveying.&lt;/p&gt;
+
+&lt;p&gt;An interactive user interface displays &amp;ldquo;Appropriate Legal Notices&amp;rdquo;
+to the extent that it includes a convenient and prominently visible
+feature that (1) displays an appropriate copyright notice, and (2)
+tells the user that there is no warranty for the work (except to the
+extent that warranties are provided), that licensees may convey the
+work under this License, and how to view a copy of this License.  If
+the interface presents a list of user commands or options, such as a
+menu, a prominent item in the list meets this criterion.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section1"&gt;&lt;/a&gt;1. Source Code.&lt;/h4&gt;
+
+&lt;p&gt;The &amp;ldquo;source code&amp;rdquo; for a work means the preferred form of the work
+for making modifications to it.  &amp;ldquo;Object code&amp;rdquo; means any non-source
+form of a work.&lt;/p&gt;
+
+&lt;p&gt;A &amp;ldquo;Standard Interface&amp;rdquo; means an interface that either is an official
+standard defined by a recognized standards body, or, in the case of
+interfaces specified for a particular programming language, one that
+is widely used among developers working in that language.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;System Libraries&amp;rdquo; of an executable work include anything, other
+than the work as a whole, that (a) is included in the normal form of
+packaging a Major Component, but which is not part of that Major
+Component, and (b) serves only to enable use of the work with that
+Major Component, or to implement a Standard Interface for which an
+implementation is available to the public in source code form.  A
+&amp;ldquo;Major Component&amp;rdquo;, in this context, means a major essential component
+(kernel, window system, and so on) of the specific operating system
+(if any) on which the executable work runs, or a compiler used to
+produce the work, or an object code interpreter used to run it.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;Corresponding Source&amp;rdquo; for a work in object code form means all
+the source code needed to generate, install, and (for an executable
+work) run the object code and to modify the work, including scripts to
+control those activities.  However, it does not include the work's
+System Libraries, or general-purpose tools or generally available free
+programs which are used unmodified in performing those activities but
+which are not part of the work.  For example, Corresponding Source
+includes interface definition files associated with source files for
+the work, and the source code for shared libraries and dynamically
+linked subprograms that the work is specifically designed to require,
+such as by intimate data communication or control flow between those
+subprograms and other parts of the work.&lt;/p&gt;
+
+&lt;p&gt;The Corresponding Source need not include anything that users
+can regenerate automatically from other parts of the Corresponding
+Source.&lt;/p&gt;
+
+&lt;p&gt;The Corresponding Source for a work in source code form is that
+same work.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section2"&gt;&lt;/a&gt;2. Basic Permissions.&lt;/h4&gt;
+
+&lt;p&gt;All rights granted under this License are granted for the term of
+copyright on the Program, and are irrevocable provided the stated
+conditions are met.  This License explicitly affirms your unlimited
+permission to run the unmodified Program.  The output from running a
+covered work is covered by this License only if the output, given its
+content, constitutes a covered work.  This License acknowledges your
+rights of fair use or other equivalent, as provided by copyright law.&lt;/p&gt;
+
+&lt;p&gt;You may make, run and propagate covered works that you do not
+convey, without conditions so long as your license otherwise remains
+in force.  You may convey covered works to others for the sole purpose
+of having them make modifications exclusively for you, or provide you
+with facilities for running those works, provided that you comply with
+the terms of this License in conveying all material for which you do
+not control copyright.  Those thus making or running the covered works
+for you must do so exclusively on your behalf, under your direction
+and control, on terms that prohibit them from making any copies of
+your copyrighted material outside their relationship with you.&lt;/p&gt;
+
+&lt;p&gt;Conveying under any other circumstances is permitted solely under
+the conditions stated below.  Sublicensing is not allowed; section 10
+makes it unnecessary.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section3"&gt;&lt;/a&gt;3. Protecting Users' Legal Rights From Anti-Circumvention Law.&lt;/h4&gt;
+
+&lt;p&gt;No covered work shall be deemed part of an effective technological
+measure under any applicable law fulfilling obligations under article
+11 of the WIPO copyright treaty adopted on 20 December 1996, or
+similar laws prohibiting or restricting circumvention of such
+measures.&lt;/p&gt;
+
+&lt;p&gt;When you convey a covered work, you waive any legal power to forbid
+circumvention of technological measures to the extent such circumvention
+is effected by exercising rights under this License with respect to
+the covered work, and you disclaim any intention to limit operation or
+modification of the work as a means of enforcing, against the work's
+users, your or third parties' legal rights to forbid circumvention of
+technological measures.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section4"&gt;&lt;/a&gt;4. Conveying Verbatim Copies.&lt;/h4&gt;
+
+&lt;p&gt;You may convey verbatim copies of the Program's source code as you
+receive it, in any medium, provided that you conspicuously and
+appropriately publish on each copy an appropriate copyright notice;
+keep intact all notices stating that this License and any
+non-permissive terms added in accord with section 7 apply to the code;
+keep intact all notices of the absence of any warranty; and give all
+recipients a copy of this License along with the Program.&lt;/p&gt;
+
+&lt;p&gt;You may charge any price or no price for each copy that you convey,
+and you may offer support or warranty protection for a fee.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section5"&gt;&lt;/a&gt;5. Conveying Modified Source Versions.&lt;/h4&gt;
+
+&lt;p&gt;You may convey a work based on the Program, or the modifications to
+produce it from the Program, in the form of source code under the
+terms of section 4, provided that you also meet all of these conditions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a) The work must carry prominent notices stating that you modified
+    it, and giving a relevant date.&lt;/li&gt;
+
+&lt;li&gt;b) The work must carry prominent notices stating that it is
+    released under this License and any conditions added under section
+    7.  This requirement modifies the requirement in section 4 to
+    &amp;ldquo;keep intact all notices&amp;rdquo;.&lt;/li&gt;
+
+&lt;li&gt;c) You must license the entire work, as a whole, under this
+    License to anyone who comes into possession of a copy.  This
+    License will therefore apply, along with any applicable section 7
+    additional terms, to the whole of the work, and all its parts,
+    regardless of how they are packaged.  This License gives no
+    permission to license the work in any other way, but it does not
+    invalidate such permission if you have separately received it.&lt;/li&gt;
+
+&lt;li&gt;d) If the work has interactive user interfaces, each must display
+    Appropriate Legal Notices; however, if the Program has interactive
+    interfaces that do not display Appropriate Legal Notices, your
+    work need not make them do so.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A compilation of a covered work with other separate and independent
+works, which are not by their nature extensions of the covered work,
+and which are not combined with it such as to form a larger program,
+in or on a volume of a storage or distribution medium, is called an
+&amp;ldquo;aggregate&amp;rdquo; if the compilation and its resulting copyright are not
+used to limit the access or legal rights of the compilation's users
+beyond what the individual works permit.  Inclusion of a covered work
+in an aggregate does not cause this License to apply to the other
+parts of the aggregate.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section6"&gt;&lt;/a&gt;6. Conveying Non-Source Forms.&lt;/h4&gt;
+
+&lt;p&gt;You may convey a covered work in object code form under the terms
+of sections 4 and 5, provided that you also convey the
+machine-readable Corresponding Source under the terms of this License,
+in one of these ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a) Convey the object code in, or embodied in, a physical product
+    (including a physical distribution medium), accompanied by the
+    Corresponding Source fixed on a durable physical medium
+    customarily used for software interchange.&lt;/li&gt;
+
+&lt;li&gt;b) Convey the object code in, or embodied in, a physical product
+    (including a physical distribution medium), accompanied by a
+    written offer, valid for at least three years and valid for as
+    long as you offer spare parts or customer support for that product
+    model, to give anyone who possesses the object code either (1) a
+    copy of the Corresponding Source for all the software in the
+    product that is covered by this License, on a durable physical
+    medium customarily used for software interchange, for a price no
+    more than your reasonable cost of physically performing this
+    conveying of source, or (2) access to copy the
+    Corresponding Source from a network server at no charge.&lt;/li&gt;
+
+&lt;li&gt;c) Convey individual copies of the object code with a copy of the
+    written offer to provide the Corresponding Source.  This
+    alternative is allowed only occasionally and noncommercially, and
+    only if you received the object code with such an offer, in accord
+    with subsection 6b.&lt;/li&gt;
+
+&lt;li&gt;d) Convey the object code by offering access from a designated
+    place (gratis or for a charge), and offer equivalent access to the
+    Corresponding Source in the same way through the same place at no
+    further charge.  You need not require recipients to copy the
+    Corresponding Source along with the object code.  If the place to
+    copy the object code is a network server, the Corresponding Source
+    may be on a different server (operated by you or a third party)
+    that supports equivalent copying facilities, provided you maintain
+    clear directions next to the object code saying where to find the
+    Corresponding Source.  Regardless of what server hosts the
+    Corresponding Source, you remain obligated to ensure that it is
+    available for as long as needed to satisfy these requirements.&lt;/li&gt;
+
+&lt;li&gt;e) Convey the object code using peer-to-peer transmission, provided
+    you inform other peers where the object code and Corresponding
+    Source of the work are being offered to the general public at no
+    charge under subsection 6d.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A separable portion of the object code, whose source code is excluded
+from the Corresponding Source as a System Library, need not be
+included in conveying the object code work.&lt;/p&gt;
+
+&lt;p&gt;A &amp;ldquo;User Product&amp;rdquo; is either (1) a &amp;ldquo;consumer product&amp;rdquo;, which means any
+tangible personal property which is normally used for personal, family,
+or household purposes, or (2) anything designed or sold for incorporation
+into a dwelling.  In determining whether a product is a consumer product,
+doubtful cases shall be resolved in favor of coverage.  For a particular
+product received by a particular user, &amp;ldquo;normally used&amp;rdquo; refers to a
+typical or common use of that class of product, regardless of the status
+of the particular user or of the way in which the particular user
+actually uses, or expects or is expected to use, the product.  A product
+is a consumer product regardless of whether the product has substantial
+commercial, industrial or non-consumer uses, unless such uses represent
+the only significant mode of use of the product.&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;Installation Information&amp;rdquo; for a User Product means any methods,
+procedures, authorization keys, or other information required to install
+and execute modified versions of a covered work in that User Product from
+a modified version of its Corresponding Source.  The information must
+suffice to ensure that the continued functioning of the modified object
+code is in no case prevented or interfered with solely because
+modification has been made.&lt;/p&gt;
+
+&lt;p&gt;If you convey an object code work under this section in, or with, or
+specifically for use in, a User Product, and the conveying occurs as
+part of a transaction in which the right of possession and use of the
+User Product is transferred to the recipient in perpetuity or for a
+fixed term (regardless of how the transaction is characterized), the
+Corresponding Source conveyed under this section must be accompanied
+by the Installation Information.  But this requirement does not apply
+if neither you nor any third party retains the ability to install
+modified object code on the User Product (for example, the work has
+been installed in ROM).&lt;/p&gt;
+
+&lt;p&gt;The requirement to provide Installation Information does not include a
+requirement to continue to provide support service, warranty, or updates
+for a work that has been modified or installed by the recipient, or for
+the User Product in which it has been modified or installed.  Access to a
+network may be denied when the modification itself materially and
+adversely affects the operation of the network or violates the rules and
+protocols for communication across the network.&lt;/p&gt;
+
+&lt;p&gt;Corresponding Source conveyed, and Installation Information provided,
+in accord with this section must be in a format that is publicly
+documented (and with an implementation available to the public in
+source code form), and must require no special password or key for
+unpacking, reading or copying.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section7"&gt;&lt;/a&gt;7. Additional Terms.&lt;/h4&gt;
+
+&lt;p&gt;&amp;ldquo;Additional permissions&amp;rdquo; are terms that supplement the terms of this
+License by making exceptions from one or more of its conditions.
+Additional permissions that are applicable to the entire Program shall
+be treated as though they were included in this License, to the extent
+that they are valid under applicable law.  If additional permissions
+apply only to part of the Program, that part may be used separately
+under those permissions, but the entire Program remains governed by
+this License without regard to the additional permissions.&lt;/p&gt;
+
+&lt;p&gt;When you convey a copy of a covered work, you may at your option
+remove any additional permissions from that copy, or from any part of
+it.  (Additional permissions may be written to require their own
+removal in certain cases when you modify the work.)  You may place
+additional permissions on material, added by you to a covered work,
+for which you have or can give appropriate copyright permission.&lt;/p&gt;
+
+&lt;p&gt;Notwithstanding any other provision of this License, for material you
+add to a covered work, you may (if authorized by the copyright holders of
+that material) supplement the terms of this License with terms:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a) Disclaiming warranty or limiting liability differently from the
+    terms of sections 15 and 16 of this License; or&lt;/li&gt;
+
+&lt;li&gt;b) Requiring preservation of specified reasonable legal notices or
+    author attributions in that material or in the Appropriate Legal
+    Notices displayed by works containing it; or&lt;/li&gt;
+
+&lt;li&gt;c) Prohibiting misrepresentation of the origin of that material, or
+    requiring that modified versions of such material be marked in
+    reasonable ways as different from the original version; or&lt;/li&gt;
+
+&lt;li&gt;d) Limiting the use for publicity purposes of names of licensors or
+    authors of the material; or&lt;/li&gt;
+
+&lt;li&gt;e) Declining to grant rights under trademark law for use of some
+    trade names, trademarks, or service marks; or&lt;/li&gt;
+
+&lt;li&gt;f) Requiring indemnification of licensors and authors of that
+    material by anyone who conveys the material (or modified versions of
+    it) with contractual assumptions of liability to the recipient, for
+    any liability that these contractual assumptions directly impose on
+    those licensors and authors.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All other non-permissive additional terms are considered &amp;ldquo;further
+restrictions&amp;rdquo; within the meaning of section 10.  If the Program as you
+received it, or any part of it, contains a notice stating that it is
+governed by this License along with a term that is a further
+restriction, you may remove that term.  If a license document contains
+a further restriction but permits relicensing or conveying under this
+License, you may add to a covered work material governed by the terms
+of that license document, provided that the further restriction does
+not survive such relicensing or conveying.&lt;/p&gt;
+
+&lt;p&gt;If you add terms to a covered work in accord with this section, you
+must place, in the relevant source files, a statement of the
+additional terms that apply to those files, or a notice indicating
+where to find the applicable terms.&lt;/p&gt;
+
+&lt;p&gt;Additional terms, permissive or non-permissive, may be stated in the
+form of a separately written license, or stated as exceptions;
+the above requirements apply either way.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section8"&gt;&lt;/a&gt;8. Termination.&lt;/h4&gt;
+
+&lt;p&gt;You may not propagate or modify a covered work except as expressly
+provided under this License.  Any attempt otherwise to propagate or
+modify it is void, and will automatically terminate your rights under
+this License (including any patent licenses granted under the third
+paragraph of section 11).&lt;/p&gt;
+
+&lt;p&gt;However, if you cease all violation of this License, then your
+license from a particular copyright holder is reinstated (a)
+provisionally, unless and until the copyright holder explicitly and
+finally terminates your license, and (b) permanently, if the copyright
+holder fails to notify you of the violation by some reasonable means
+prior to 60 days after the cessation.&lt;/p&gt;
+
+&lt;p&gt;Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.&lt;/p&gt;
+
+&lt;p&gt;Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, you do not qualify to receive new licenses for the same
+material under section 10.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section9"&gt;&lt;/a&gt;9. Acceptance Not Required for Having Copies.&lt;/h4&gt;
+
+&lt;p&gt;You are not required to accept this License in order to receive or
+run a copy of the Program.  Ancillary propagation of a covered work
+occurring solely as a consequence of using peer-to-peer transmission
+to receive a copy likewise does not require acceptance.  However,
+nothing other than this License grants you permission to propagate or
+modify any covered work.  These actions infringe copyright if you do
+not accept this License.  Therefore, by modifying or propagating a
+covered work, you indicate your acceptance of this License to do so.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section10"&gt;&lt;/a&gt;10. Automatic Licensing of Downstream Recipients.&lt;/h4&gt;
+
+&lt;p&gt;Each time you convey a covered work, the recipient automatically
+receives a license from the original licensors, to run, modify and
+propagate that work, subject to this License.  You are not responsible
+for enforcing compliance by third parties with this License.&lt;/p&gt;
+
+&lt;p&gt;An &amp;ldquo;entity transaction&amp;rdquo; is a transaction transferring control of an
+organization, or substantially all assets of one, or subdividing an
+organization, or merging organizations.  If propagation of a covered
+work results from an entity transaction, each party to that
+transaction who receives a copy of the work also receives whatever
+licenses to the work the party's predecessor in interest had or could
+give under the previous paragraph, plus a right to possession of the
+Corresponding Source of the work from the predecessor in interest, if
+the predecessor has it or can get it with reasonable efforts.&lt;/p&gt;
+
+&lt;p&gt;You may not impose any further restrictions on the exercise of the
+rights granted or affirmed under this License.  For example, you may
+not impose a license fee, royalty, or other charge for exercise of
+rights granted under this License, and you may not initiate litigation
+(including a cross-claim or counterclaim in a lawsuit) alleging that
+any patent claim is infringed by making, using, selling, offering for
+sale, or importing the Program or any portion of it.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section11"&gt;&lt;/a&gt;11. Patents.&lt;/h4&gt;
+
+&lt;p&gt;A &amp;ldquo;contributor&amp;rdquo; is a copyright holder who authorizes use under this
+License of the Program or a work on which the Program is based.  The
+work thus licensed is called the contributor's &amp;ldquo;contributor version&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;A contributor's &amp;ldquo;essential patent claims&amp;rdquo; are all patent claims
+owned or controlled by the contributor, whether already acquired or
+hereafter acquired, that would be infringed by some manner, permitted
+by this License, of making, using, or selling its contributor version,
+but do not include claims that would be infringed only as a
+consequence of further modification of the contributor version.  For
+purposes of this definition, &amp;ldquo;control&amp;rdquo; includes the right to grant
+patent sublicenses in a manner consistent with the requirements of
+this License.&lt;/p&gt;
+
+&lt;p&gt;Each contributor grants you a non-exclusive, worldwide, royalty-free
+patent license under the contributor's essential patent claims, to
+make, use, sell, offer for sale, import and otherwise run, modify and
+propagate the contents of its contributor version.&lt;/p&gt;
+
+&lt;p&gt;In the following three paragraphs, a &amp;ldquo;patent license&amp;rdquo; is any express
+agreement or commitment, however denominated, not to enforce a patent
+(such as an express permission to practice a patent or covenant not to
+sue for patent infringement).  To &amp;ldquo;grant&amp;rdquo; such a patent license to a
+party means to make such an agreement or commitment not to enforce a
+patent against the party.&lt;/p&gt;
+
+&lt;p&gt;If you convey a covered work, knowingly relying on a patent license,
+and the Corresponding Source of the work is not available for anyone
+to copy, free of charge and under the terms of this License, through a
+publicly available network server or other readily accessible means,
+then you must either (1) cause the Corresponding Source to be so
+available, or (2) arrange to deprive yourself of the benefit of the
+patent license for this particular work, or (3) arrange, in a manner
+consistent with the requirements of this License, to extend the patent
+license to downstream recipients.  &amp;ldquo;Knowingly relying&amp;rdquo; means you have
+actual knowledge that, but for the patent license, your conveying the
+covered work in a country, or your recipient's use of the covered work
+in a country, would infringe one or more identifiable patents in that
+country that you have reason to believe are valid.&lt;/p&gt;
+  
+&lt;p&gt;If, pursuant to or in connection with a single transaction or
+arrangement, you convey, or propagate by procuring conveyance of, a
+covered work, and grant a patent license to some of the parties
+receiving the covered work authorizing them to use, propagate, modify
+or convey a specific copy of the covered work, then the patent license
+you grant is automatically extended to all recipients of the covered
+work and works based on it.&lt;/p&gt;
+
+&lt;p&gt;A patent license is &amp;ldquo;discriminatory&amp;rdquo; if it does not include within
+the scope of its coverage, prohibits the exercise of, or is
+conditioned on the non-exercise of one or more of the rights that are
+specifically granted under this License.  You may not convey a covered
+work if you are a party to an arrangement with a third party that is
+in the business of distributing software, under which you make payment
+to the third party based on the extent of your activity of conveying
+the work, and under which the third party grants, to any of the
+parties who would receive the covered work from you, a discriminatory
+patent license (a) in connection with copies of the covered work
+conveyed by you (or copies made from those copies), or (b) primarily
+for and in connection with specific products or compilations that
+contain the covered work, unless you entered into that arrangement,
+or that patent license was granted, prior to 28 March 2007.&lt;/p&gt;
+
+&lt;p&gt;Nothing in this License shall be construed as excluding or limiting
+any implied license or other defenses to infringement that may
+otherwise be available to you under applicable patent law.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section12"&gt;&lt;/a&gt;12. No Surrender of Others' Freedom.&lt;/h4&gt;
+
+&lt;p&gt;If conditions are imposed on you (whether by court order, agreement or
+otherwise) that contradict the conditions of this License, they do not
+excuse you from the conditions of this License.  If you cannot convey a
+covered work so as to satisfy simultaneously your obligations under this
+License and any other pertinent obligations, then as a consequence you may
+not convey it at all.  For example, if you agree to terms that obligate you
+to collect a royalty for further conveying from those to whom you convey
+the Program, the only way you could satisfy both those terms and this
+License would be to refrain entirely from conveying the Program.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section13"&gt;&lt;/a&gt;13. Use with the GNU Affero General Public License.&lt;/h4&gt;
+
+&lt;p&gt;Notwithstanding any other provision of this License, you have
+permission to link or combine any covered work with a work licensed
+under version 3 of the GNU Affero General Public License into a single
+combined work, and to convey the resulting work.  The terms of this
+License will continue to apply to the part which is the covered work,
+but the special requirements of the GNU Affero General Public License,
+section 13, concerning interaction through a network will apply to the
+combination as such.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section14"&gt;&lt;/a&gt;14. Revised Versions of this License.&lt;/h4&gt;
+
+&lt;p&gt;The Free Software Foundation may publish revised and/or new versions of
+the GNU General Public License from time to time.  Such new versions will
+be similar in spirit to the present version, but may differ in detail to
+address new problems or concerns.&lt;/p&gt;
+
+&lt;p&gt;Each version is given a distinguishing version number.  If the
+Program specifies that a certain numbered version of the GNU General
+Public License &amp;ldquo;or any later version&amp;rdquo; applies to it, you have the
+option of following the terms and conditions either of that numbered
+version or of any later version published by the Free Software
+Foundation.  If the Program does not specify a version number of the
+GNU General Public License, you may choose any version ever published
+by the Free Software Foundation.&lt;/p&gt;
+
+&lt;p&gt;If the Program specifies that a proxy can decide which future
+versions of the GNU General Public License can be used, that proxy's
+public statement of acceptance of a version permanently authorizes you
+to choose that version for the Program.&lt;/p&gt;
+
+&lt;p&gt;Later license versions may give you additional or different
+permissions.  However, no additional obligations are imposed on any
+author or copyright holder as a result of your choosing to follow a
+later version.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section15"&gt;&lt;/a&gt;15. Disclaimer of Warranty.&lt;/h4&gt;
+
+&lt;p&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM &amp;ldquo;AS IS&amp;rdquo; WITHOUT WARRANTY
+OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ALL NECESSARY SERVICING, REPAIR OR CORRECTION.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section16"&gt;&lt;/a&gt;16. Limitation of Liability.&lt;/h4&gt;
+
+&lt;p&gt;IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section17"&gt;&lt;/a&gt;17. Interpretation of Sections 15 and 16.&lt;/h4&gt;
+
+&lt;p&gt;If the disclaimer of warranty and limitation of liability provided
+above cannot be given local legal effect according to their terms,
+reviewing courts shall apply local law that most closely approximates
+an absolute waiver of all civil liability in connection with the
+Program, unless a warranty or assumption of liability accompanies a
+copy of the Program in return for a fee.&lt;/p&gt;
+
+&lt;p&gt;END OF TERMS AND CONDITIONS&lt;/p&gt;
+
+&lt;h3&gt;&lt;a name="howto"&gt;&lt;/a&gt;How to Apply These Terms to Your New Programs&lt;/h3&gt;
+
+&lt;p&gt;If you develop a new program, and you want it to be of the greatest
+possible use to the public, the best way to achieve this is to make it
+free software which everyone can redistribute and change under these terms.&lt;/p&gt;
+
+&lt;p&gt;To do so, attach the following notices to the program.  It is safest
+to attach them to the start of each source file to most effectively
+state the exclusion of warranty; and each file should have at least
+the &amp;ldquo;copyright&amp;rdquo; line and a pointer to where the full notice is found.&lt;/p&gt;
+
+&lt;pre&gt;    &amp;lt;one line to give the program's name and a brief idea of what it does.&amp;gt;
+    Copyright (C) &amp;lt;year&amp;gt;  &amp;lt;name of author&amp;gt;
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &amp;lt;http://www.gnu.org/licenses/&amp;gt;.
+&lt;/pre&gt;
+
+&lt;p&gt;Also add information on how to contact you by electronic and paper mail.&lt;/p&gt;
+
+&lt;p&gt;If the program does terminal interaction, make it output a short
+notice like this when it starts in an interactive mode:&lt;/p&gt;
+
+&lt;pre&gt;    &amp;lt;program&amp;gt;  Copyright (C) &amp;lt;year&amp;gt;  &amp;lt;name of author&amp;gt;
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This is free software, and you are welcome to redistribute it
+    under certain conditions; type `show c' for details.
+&lt;/pre&gt;
+
+&lt;p&gt;The hypothetical commands `show w' and `show c' should show the appropriate
+parts of the General Public License.  Of course, your program's commands
+might be different; for a GUI interface, you would use an &amp;ldquo;about box&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;You should also get your employer (if you work as a programmer) or school,
+if any, to sign a &amp;ldquo;copyright disclaimer&amp;rdquo; for the program, if necessary.
+For more information on this, and how to apply and follow the GNU GPL, see
+&amp;lt;&lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;&amp;gt;.&lt;/p&gt;
+
+&lt;p&gt;The GNU General Public License does not permit incorporating your program
+into proprietary programs.  If your program is a subroutine library, you
+may consider it more useful to permit linking proprietary applications with
+the library.  If this is what you want to do, use the GNU Lesser General
+Public License instead of this License.  But first, please read
+&amp;lt;&lt;a href="http://www.gnu.org/philosophy/why-not-lgpl.html"&gt;http://www.gnu.org/philosophy/why-not-lgpl.html&lt;/a&gt;&amp;gt;.&lt;/p&gt;</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127083822161</ID>
+    <IndexPath>0.00.05.02</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083822161.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Documentation License</Title>
+    <IndexEntries>Documentation License|License`Documentation</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Documentation License</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260|c20161127100513391</CssList>
+    <ScriptList />
+    <Body>&lt;h3 style="text-align: center;"&gt;GNU Free Documentation License&lt;/h3&gt;
+
+&lt;p style="text-align: center;"&gt;Version 1.3, 3 November 2008&lt;/p&gt;
+
+&lt;p&gt; Copyright &amp;copy; 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+     &amp;lt;&lt;a href="http://fsf.org/"&gt;http://fsf.org/&lt;/a&gt;&amp;gt;
+ &lt;/p&gt;&lt;p&gt;Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section0"&gt;&lt;/a&gt;0. PREAMBLE&lt;/h4&gt;
+
+&lt;p&gt;The purpose of this License is to make a manual, textbook, or other
+functional and useful document &amp;quot;free&amp;quot; in the sense of freedom: to
+assure everyone the effective freedom to copy and redistribute it,
+with or without modifying it, either commercially or noncommercially.
+Secondarily, this License preserves for the author and publisher a way
+to get credit for their work, while not being considered responsible
+for modifications made by others.&lt;/p&gt;
+
+&lt;p&gt;This License is a kind of &amp;quot;copyleft&amp;quot;, which means that derivative
+works of the document must themselves be free in the same sense.  It
+complements the GNU General Public License, which is a copyleft
+license designed for free software.&lt;/p&gt;
+
+&lt;p&gt;We have designed this License in order to use it for manuals for free
+software, because free software needs free documentation: a free
+program should come with manuals providing the same freedoms that the
+software does.  But this License is not limited to software manuals;
+it can be used for any textual work, regardless of subject matter or
+whether it is published as a printed book.  We recommend this License
+principally for works whose purpose is instruction or reference.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section1"&gt;&lt;/a&gt;1. APPLICABILITY AND DEFINITIONS&lt;/h4&gt;
+
+&lt;p&gt;This License applies to any manual or other work, in any medium, that
+contains a notice placed by the copyright holder saying it can be
+distributed under the terms of this License.  Such a notice grants a
+world-wide, royalty-free license, unlimited in duration, to use that
+work under the conditions stated herein.  The &amp;quot;Document&amp;quot;, below,
+refers to any such manual or work.  Any member of the public is a
+licensee, and is addressed as &amp;quot;you&amp;quot;.  You accept the license if you
+copy, modify or distribute the work in a way requiring permission
+under copyright law.&lt;/p&gt;
+
+&lt;p&gt;A &amp;quot;Modified Version&amp;quot; of the Document means any work containing the
+Document or a portion of it, either copied verbatim, or with
+modifications and/or translated into another language.&lt;/p&gt;
+
+&lt;p&gt;A &amp;quot;Secondary Section&amp;quot; is a named appendix or a front-matter section of
+the Document that deals exclusively with the relationship of the
+publishers or authors of the Document to the Document's overall
+subject (or to related matters) and contains nothing that could fall
+directly within that overall subject.  (Thus, if the Document is in
+part a textbook of mathematics, a Secondary Section may not explain
+any mathematics.)  The relationship could be a matter of historical
+connection with the subject or with related matters, or of legal,
+commercial, philosophical, ethical or political position regarding
+them.&lt;/p&gt;
+
+&lt;p&gt;The &amp;quot;Invariant Sections&amp;quot; are certain Secondary Sections whose titles
+are designated, as being those of Invariant Sections, in the notice
+that says that the Document is released under this License.  If a
+section does not fit the above definition of Secondary then it is not
+allowed to be designated as Invariant.  The Document may contain zero
+Invariant Sections.  If the Document does not identify any Invariant
+Sections then there are none.&lt;/p&gt;
+
+&lt;p&gt;The &amp;quot;Cover Texts&amp;quot; are certain short passages of text that are listed,
+as Front-Cover Texts or Back-Cover Texts, in the notice that says that
+the Document is released under this License.  A Front-Cover Text may
+be at most 5 words, and a Back-Cover Text may be at most 25 words.&lt;/p&gt;
+
+&lt;p&gt;A &amp;quot;Transparent&amp;quot; copy of the Document means a machine-readable copy,
+represented in a format whose specification is available to the
+general public, that is suitable for revising the document
+straightforwardly with generic text editors or (for images composed of
+pixels) generic paint programs or (for drawings) some widely available
+drawing editor, and that is suitable for input to text formatters or
+for automatic translation to a variety of formats suitable for input
+to text formatters.  A copy made in an otherwise Transparent file
+format whose markup, or absence of markup, has been arranged to thwart
+or discourage subsequent modification by readers is not Transparent.
+An image format is not Transparent if used for any substantial amount
+of text.  A copy that is not &amp;quot;Transparent&amp;quot; is called &amp;quot;Opaque&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;Examples of suitable formats for Transparent copies include plain
+ASCII without markup, Texinfo input format, LaTeX input format, SGML
+or XML using a publicly available DTD, and standard-conforming simple
+HTML, PostScript or PDF designed for human modification.  Examples of
+transparent image formats include PNG, XCF and JPG.  Opaque formats
+include proprietary formats that can be read and edited only by
+proprietary word processors, SGML or XML for which the DTD and/or
+processing tools are not generally available, and the
+machine-generated HTML, PostScript or PDF produced by some word
+processors for output purposes only.&lt;/p&gt;
+
+&lt;p&gt;The &amp;quot;Title Page&amp;quot; means, for a printed book, the title page itself,
+plus such following pages as are needed to hold, legibly, the material
+this License requires to appear in the title page.  For works in
+formats which do not have any title page as such, &amp;quot;Title Page&amp;quot; means
+the text near the most prominent appearance of the work's title,
+preceding the beginning of the body of the text.&lt;/p&gt;
+
+&lt;p&gt;The &amp;quot;publisher&amp;quot; means any person or entity that distributes copies of
+the Document to the public.&lt;/p&gt;
+
+&lt;p&gt;A section &amp;quot;Entitled XYZ&amp;quot; means a named subunit of the Document whose
+title either is precisely XYZ or contains XYZ in parentheses following
+text that translates XYZ in another language.  (Here XYZ stands for a
+specific section name mentioned below, such as &amp;quot;Acknowledgements&amp;quot;,
+&amp;quot;Dedications&amp;quot;, &amp;quot;Endorsements&amp;quot;, or &amp;quot;History&amp;quot;.)  To &amp;quot;Preserve the Title&amp;quot;
+of such a section when you modify the Document means that it remains a
+section &amp;quot;Entitled XYZ&amp;quot; according to this definition.&lt;/p&gt;
+
+&lt;p&gt;The Document may include Warranty Disclaimers next to the notice which
+states that this License applies to the Document.  These Warranty
+Disclaimers are considered to be included by reference in this
+License, but only as regards disclaiming warranties: any other
+implication that these Warranty Disclaimers may have is void and has
+no effect on the meaning of this License.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section2"&gt;&lt;/a&gt;2. VERBATIM COPYING&lt;/h4&gt;
+
+&lt;p&gt;You may copy and distribute the Document in any medium, either
+commercially or noncommercially, provided that this License, the
+copyright notices, and the license notice saying this License applies
+to the Document are reproduced in all copies, and that you add no
+other conditions whatsoever to those of this License.  You may not use
+technical measures to obstruct or control the reading or further
+copying of the copies you make or distribute.  However, you may accept
+compensation in exchange for copies.  If you distribute a large enough
+number of copies you must also follow the conditions in section 3.&lt;/p&gt;
+
+&lt;p&gt;You may also lend copies, under the same conditions stated above, and
+you may publicly display copies.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section3"&gt;&lt;/a&gt;3. COPYING IN QUANTITY&lt;/h4&gt;
+
+&lt;p&gt;If you publish printed copies (or copies in media that commonly have
+printed covers) of the Document, numbering more than 100, and the
+Document's license notice requires Cover Texts, you must enclose the
+copies in covers that carry, clearly and legibly, all these Cover
+Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
+the back cover.  Both covers must also clearly and legibly identify
+you as the publisher of these copies.  The front cover must present
+the full title with all words of the title equally prominent and
+visible.  You may add other material on the covers in addition.
+Copying with changes limited to the covers, as long as they preserve
+the title of the Document and satisfy these conditions, can be treated
+as verbatim copying in other respects.&lt;/p&gt;
+
+&lt;p&gt;If the required texts for either cover are too voluminous to fit
+legibly, you should put the first ones listed (as many as fit
+reasonably) on the actual cover, and continue the rest onto adjacent
+pages.&lt;/p&gt;
+
+&lt;p&gt;If you publish or distribute Opaque copies of the Document numbering
+more than 100, you must either include a machine-readable Transparent
+copy along with each Opaque copy, or state in or with each Opaque copy
+a computer-network location from which the general network-using
+public has access to download using public-standard network protocols
+a complete Transparent copy of the Document, free of added material.
+If you use the latter option, you must take reasonably prudent steps,
+when you begin distribution of Opaque copies in quantity, to ensure
+that this Transparent copy will remain thus accessible at the stated
+location until at least one year after the last time you distribute an
+Opaque copy (directly or through your agents or retailers) of that
+edition to the public.&lt;/p&gt;
+
+&lt;p&gt;It is requested, but not required, that you contact the authors of the
+Document well before redistributing any large number of copies, to
+give them a chance to provide you with an updated version of the
+Document.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section4"&gt;&lt;/a&gt;4. MODIFICATIONS&lt;/h4&gt;
+
+&lt;p&gt;You may copy and distribute a Modified Version of the Document under
+the conditions of sections 2 and 3 above, provided that you release
+the Modified Version under precisely this License, with the Modified
+Version filling the role of the Document, thus licensing distribution
+and modification of the Modified Version to whoever possesses a copy
+of it.  In addition, you must do these things in the Modified Version:&lt;/p&gt;
+
+&lt;ul&gt;
+
+
+&lt;li&gt;A. Use in the Title Page (and on the covers, if any) a title distinct
+   from that of the Document, and from those of previous versions
+   (which should, if there were any, be listed in the History section
+   of the Document).  You may use the same title as a previous version
+   if the original publisher of that version gives permission.
+&lt;/li&gt;
+
+&lt;li&gt;B. List on the Title Page, as authors, one or more persons or entities
+   responsible for authorship of the modifications in the Modified
+   Version, together with at least five of the principal authors of the
+   Document (all of its principal authors, if it has fewer than five),
+   unless they release you from this requirement.
+&lt;/li&gt;
+
+&lt;li&gt;C. State on the Title page the name of the publisher of the
+   Modified Version, as the publisher.
+&lt;/li&gt;
+
+&lt;li&gt;D. Preserve all the copyright notices of the Document.
+&lt;/li&gt;
+
+&lt;li&gt;E. Add an appropriate copyright notice for your modifications
+   adjacent to the other copyright notices.
+&lt;/li&gt;
+
+&lt;li&gt;F. Include, immediately after the copyright notices, a license notice
+   giving the public permission to use the Modified Version under the
+   terms of this License, in the form shown in the Addendum below.
+&lt;/li&gt;
+
+&lt;li&gt;G. Preserve in that license notice the full lists of Invariant Sections
+   and required Cover Texts given in the Document's license notice.
+&lt;/li&gt;
+
+&lt;li&gt;H. Include an unaltered copy of this License.
+&lt;/li&gt;
+
+&lt;li&gt;I. Preserve the section Entitled &amp;quot;History&amp;quot;, Preserve its Title, and add
+   to it an item stating at least the title, year, new authors, and
+   publisher of the Modified Version as given on the Title Page.  If
+   there is no section Entitled &amp;quot;History&amp;quot; in the Document, create one
+   stating the title, year, authors, and publisher of the Document as
+   given on its Title Page, then add an item describing the Modified
+   Version as stated in the previous sentence.
+&lt;/li&gt;
+
+&lt;li&gt;J. Preserve the network location, if any, given in the Document for
+   public access to a Transparent copy of the Document, and likewise
+   the network locations given in the Document for previous versions
+   it was based on.  These may be placed in the &amp;quot;History&amp;quot; section.
+   You may omit a network location for a work that was published at
+   least four years before the Document itself, or if the original
+   publisher of the version it refers to gives permission.
+&lt;/li&gt;
+
+&lt;li&gt;K. For any section Entitled &amp;quot;Acknowledgements&amp;quot; or &amp;quot;Dedications&amp;quot;,
+   Preserve the Title of the section, and preserve in the section all
+   the substance and tone of each of the contributor acknowledgements
+   and/or dedications given therein.
+&lt;/li&gt;
+
+&lt;li&gt;L. Preserve all the Invariant Sections of the Document,
+   unaltered in their text and in their titles.  Section numbers
+   or the equivalent are not considered part of the section titles.
+&lt;/li&gt;
+
+&lt;li&gt;M. Delete any section Entitled &amp;quot;Endorsements&amp;quot;.  Such a section
+   may not be included in the Modified Version.
+&lt;/li&gt;
+
+&lt;li&gt;N. Do not retitle any existing section to be Entitled &amp;quot;Endorsements&amp;quot;
+   or to conflict in title with any Invariant Section.
+&lt;/li&gt;
+
+&lt;li&gt;O. Preserve any Warranty Disclaimers.&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;p&gt;If the Modified Version includes new front-matter sections or
+appendices that qualify as Secondary Sections and contain no material
+copied from the Document, you may at your option designate some or all
+of these sections as invariant.  To do this, add their titles to the
+list of Invariant Sections in the Modified Version's license notice.
+These titles must be distinct from any other section titles.&lt;/p&gt;
+
+&lt;p&gt;You may add a section Entitled &amp;quot;Endorsements&amp;quot;, provided it contains
+nothing but endorsements of your Modified Version by various
+parties&amp;mdash;for example, statements of peer review or that the text has
+been approved by an organization as the authoritative definition of a
+standard.&lt;/p&gt;
+
+&lt;p&gt;You may add a passage of up to five words as a Front-Cover Text, and a
+passage of up to 25 words as a Back-Cover Text, to the end of the list
+of Cover Texts in the Modified Version.  Only one passage of
+Front-Cover Text and one of Back-Cover Text may be added by (or
+through arrangements made by) any one entity.  If the Document already
+includes a cover text for the same cover, previously added by you or
+by arrangement made by the same entity you are acting on behalf of,
+you may not add another; but you may replace the old one, on explicit
+permission from the previous publisher that added the old one.&lt;/p&gt;
+
+&lt;p&gt;The author(s) and publisher(s) of the Document do not by this License
+give permission to use their names for publicity for or to assert or
+imply endorsement of any Modified Version.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section5"&gt;&lt;/a&gt;5. COMBINING DOCUMENTS&lt;/h4&gt;
+
+&lt;p&gt;You may combine the Document with other documents released under this
+License, under the terms defined in section 4 above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its
+license notice, and that you preserve all their Warranty Disclaimers.&lt;/p&gt;
+
+&lt;p&gt;The combined work need only contain one copy of this License, and
+multiple identical Invariant Sections may be replaced with a single
+copy.  If there are multiple Invariant Sections with the same name but
+different contents, make the title of each such section unique by
+adding at the end of it, in parentheses, the name of the original
+author or publisher of that section if known, or else a unique number.
+Make the same adjustment to the section titles in the list of
+Invariant Sections in the license notice of the combined work.&lt;/p&gt;
+
+&lt;p&gt;In the combination, you must combine any sections Entitled &amp;quot;History&amp;quot;
+in the various original documents, forming one section Entitled
+&amp;quot;History&amp;quot;; likewise combine any sections Entitled &amp;quot;Acknowledgements&amp;quot;,
+and any sections Entitled &amp;quot;Dedications&amp;quot;.  You must delete all sections
+Entitled &amp;quot;Endorsements&amp;quot;.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section6"&gt;&lt;/a&gt;6. COLLECTIONS OF DOCUMENTS&lt;/h4&gt;
+
+&lt;p&gt;You may make a collection consisting of the Document and other
+documents released under this License, and replace the individual
+copies of this License in the various documents with a single copy
+that is included in the collection, provided that you follow the rules
+of this License for verbatim copying of each of the documents in all
+other respects.&lt;/p&gt;
+
+&lt;p&gt;You may extract a single document from such a collection, and
+distribute it individually under this License, provided you insert a
+copy of this License into the extracted document, and follow this
+License in all other respects regarding verbatim copying of that
+document.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section7"&gt;&lt;/a&gt;7. AGGREGATION WITH INDEPENDENT WORKS&lt;/h4&gt;
+
+&lt;p&gt;A compilation of the Document or its derivatives with other separate
+and independent documents or works, in or on a volume of a storage or
+distribution medium, is called an &amp;quot;aggregate&amp;quot; if the copyright
+resulting from the compilation is not used to limit the legal rights
+of the compilation's users beyond what the individual works permit.
+When the Document is included in an aggregate, this License does not
+apply to the other works in the aggregate which are not themselves
+derivative works of the Document.&lt;/p&gt;
+
+&lt;p&gt;If the Cover Text requirement of section 3 is applicable to these
+copies of the Document, then if the Document is less than one half of
+the entire aggregate, the Document's Cover Texts may be placed on
+covers that bracket the Document within the aggregate, or the
+electronic equivalent of covers if the Document is in electronic form.
+Otherwise they must appear on printed covers that bracket the whole
+aggregate.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section8"&gt;&lt;/a&gt;8. TRANSLATION&lt;/h4&gt;
+
+&lt;p&gt;Translation is considered a kind of modification, so you may
+distribute translations of the Document under the terms of section 4.
+Replacing Invariant Sections with translations requires special
+permission from their copyright holders, but you may include
+translations of some or all Invariant Sections in addition to the
+original versions of these Invariant Sections.  You may include a
+translation of this License, and all the license notices in the
+Document, and any Warranty Disclaimers, provided that you also include
+the original English version of this License and the original versions
+of those notices and disclaimers.  In case of a disagreement between
+the translation and the original version of this License or a notice
+or disclaimer, the original version will prevail.&lt;/p&gt;
+
+&lt;p&gt;If a section in the Document is Entitled &amp;quot;Acknowledgements&amp;quot;,
+&amp;quot;Dedications&amp;quot;, or &amp;quot;History&amp;quot;, the requirement (section 4) to Preserve
+its Title (section 1) will typically require changing the actual
+title.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section9"&gt;&lt;/a&gt;9. TERMINATION&lt;/h4&gt;
+
+&lt;p&gt;You may not copy, modify, sublicense, or distribute the Document
+except as expressly provided under this License.  Any attempt
+otherwise to copy, modify, sublicense, or distribute it is void, and
+will automatically terminate your rights under this License.&lt;/p&gt;
+
+&lt;p&gt;However, if you cease all violation of this License, then your license
+from a particular copyright holder is reinstated (a) provisionally,
+unless and until the copyright holder explicitly and finally
+terminates your license, and (b) permanently, if the copyright holder
+fails to notify you of the violation by some reasonable means prior to
+60 days after the cessation.&lt;/p&gt;
+
+&lt;p&gt;Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.&lt;/p&gt;
+
+&lt;p&gt;Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, receipt of a copy of some or all of the same material does
+not give you any rights to use it.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section10"&gt;&lt;/a&gt;10. FUTURE REVISIONS OF THIS LICENSE&lt;/h4&gt;
+
+&lt;p&gt;The Free Software Foundation may publish new, revised versions of the
+GNU Free Documentation License from time to time.  Such new versions
+will be similar in spirit to the present version, but may differ in
+detail to address new problems or concerns.  See
+&lt;a href="http://www.gnu.org/copyleft/"&gt;http://www.gnu.org/copyleft/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each version of the License is given a distinguishing version number.
+If the Document specifies that a particular numbered version of this
+License &amp;quot;or any later version&amp;quot; applies to it, you have the option of
+following the terms and conditions either of that specified version or
+of any later version that has been published (not as a draft) by the
+Free Software Foundation.  If the Document does not specify a version
+number of this License, you may choose any version ever published (not
+as a draft) by the Free Software Foundation.  If the Document
+specifies that a proxy can decide which future versions of this
+License can be used, that proxy's public statement of acceptance of a
+version permanently authorizes you to choose that version for the
+Document.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a name="section11"&gt;&lt;/a&gt;11. RELICENSING&lt;/h4&gt;
+
+&lt;p&gt;&amp;quot;Massive Multiauthor Collaboration Site&amp;quot; (or &amp;quot;MMC Site&amp;quot;) means any
+World Wide Web server that publishes copyrightable works and also
+provides prominent facilities for anybody to edit those works.  A
+public wiki that anybody can edit is an example of such a server.  A
+&amp;quot;Massive Multiauthor Collaboration&amp;quot; (or &amp;quot;MMC&amp;quot;) contained in the site
+means any set of copyrightable works thus published on the MMC site.&lt;/p&gt;
+
+&lt;p&gt;&amp;quot;CC-BY-SA&amp;quot; means the Creative Commons Attribution-Share Alike 3.0 
+license published by Creative Commons Corporation, a not-for-profit 
+corporation with a principal place of business in San Francisco, 
+California, as well as future copyleft versions of that license 
+published by that same organization.&lt;/p&gt;
+
+&lt;p&gt;&amp;quot;Incorporate&amp;quot; means to publish or republish a Document, in whole or in 
+part, as part of another Document.&lt;/p&gt;
+
+&lt;p&gt;An MMC is &amp;quot;eligible for relicensing&amp;quot; if it is licensed under this 
+License, and if all works that were first published under this License 
+somewhere other than this MMC, and subsequently incorporated in whole or 
+in part into the MMC, (1) had no cover texts or invariant sections, and 
+(2) were thus incorporated prior to November 1, 2008.&lt;/p&gt;
+
+&lt;p&gt;The operator of an MMC Site may republish an MMC contained in the site
+under CC-BY-SA on the same site at any time before August 1, 2009,
+provided the MMC is eligible for relicensing.&lt;/p&gt;
+
+&lt;h3&gt;&lt;a name="addendum"&gt;&lt;/a&gt;ADDENDUM: How to use this License for your documents&lt;/h3&gt;
+
+&lt;p&gt;To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and
+license notices just after the title page:&lt;/p&gt;
+
+&lt;pre&gt;    Copyright (C)  YEAR  YOUR NAME.
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.3
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled &amp;quot;GNU
+    Free Documentation License&amp;quot;.
+&lt;/pre&gt;
+
+&lt;p&gt;If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the &amp;quot;with &amp;hellip; Texts.&amp;quot; line with this:&lt;/p&gt;
+
+&lt;pre&gt;    with the Invariant Sections being LIST THEIR TITLES, with the
+    Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
+&lt;/pre&gt;
+
+&lt;p&gt;If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.&lt;/p&gt;
+
+&lt;p&gt;If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License,
+to permit their use in free software.
+&lt;/p&gt;</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127083838923</ID>
+    <IndexPath>0.00.05.03</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083838923.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Third Party Software</Title>
+    <IndexEntries>Third Party Software</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Third Party Software</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161128122937965</ID>
+    <IndexPath>0.00.05.03.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161128122937965.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>CommonMark.NET</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>New Item ID: h20161128122937965</LinkDesc>
+    <LinkList>h20161128123013357</LinkList>
+    <CssList>c20161018155659888|c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>An implementation of the CommonMark specification in C# for converting Markdown documents to HTML.  The package is available as source or compiled binary (dll) files at [https://github.com/Knagis/CommonMark.NET](https://github.com/Knagis/CommonMark.NET "https://github.com/Knagis/CommonMark.NET").</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161128123013357</ID>
+    <IndexPath>0.00.05.03.00.00</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161128123013357.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>License</Title>
+    <IndexEntries />
+    <LinkID>0</LinkID>
+    <LinkDesc>CommonMark.NET License</LinkDesc>
+    <LinkList />
+    <CssList />
+    <ScriptList />
+    <Body>Copyright (c) 2014, Karlis Gangis.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+
+   * Neither the name of Karlis Gangis nor the names of other contributors 
+     may be used to endorse or promote products derived from this software 
+     without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161127083923134</ID>
+    <IndexPath>0.00.05.04</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083923134.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>HHBuilder Help Project Specification</Title>
+    <IndexEntries>HHBuilder Help Project Specification|Specification`HHBuilder Help Project</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HHBuilder Help Project Specification</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161127083956668</ID>
+    <IndexPath>0.00.05.05</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161127083956668.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>HHBuilder Template Specification</Title>
+    <IndexEntries>HHBuilder Template Specification|Specification`HHBuilder Template</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>HHBuilder Template Specification</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body />
+  </Screens>
+  <Screens>
+    <ID>h20161018160038399</ID>
+    <IndexPath>0.01.00</IndexPath>
+    <ScreenType>Popup</ScreenType>
+    <FileName>h20161018160038399.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>False</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Checking for Updates</Title>
+    <IndexEntries>Checking for Updates|Updates`Checking</IndexEntries>
+    <LinkID>1000</LinkID>
+    <LinkDesc>Checking for Updates</LinkDesc>
+    <LinkList />
+    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <ScriptList />
+    <Body>The program will automatically check for updates at start -up if that option is enabled in the program settings.
+
+To manually check for updates...</Body>
+  </Screens>
+  <CSS>
+    <ID>c20161018155659888</ID>
+    <Title>Don't Display Numbers in Header</Title>
+    <FileName>c20161018155659888.css</FileName>
+    <FileContents>/* User-Defined Additional CSS File */
+.HEADERNUMBER { display: none; }</FileContents>
+  </CSS>
+  <CSS>
+    <ID>c20161127075452884</ID>
+    <Title>Don't Display Numbers in Title</Title>
+    <FileName>c20161127075452884.css</FileName>
+    <FileContents>/* User-Defined Additional CSS File */
+.TITLENUMBER { display: none; }</FileContents>
+  </CSS>
+  <CSS>
+    <ID>c20161127075622260</ID>
+    <Title>Don't Display Numbers in Footer</Title>
+    <FileName>c20161127075622260.css</FileName>
+    <FileContents>/* User-Defined Additional CSS File */
+.FOOTERNUMBER { display: none; }</FileContents>
+  </CSS>
+  <CSS>
+    <ID>c20161127100513391</ID>
+    <Title>Set &lt;pre&gt; Font to 10pt</Title>
+    <FileName>c20161127100513391.css</FileName>
+    <FileContents>/* User-Defined Additional CSS File */
+pre { font-size: 10pt; }</FileContents>
+  </CSS>
+  <Images>
+    <ID>i20161018155935592</ID>
+    <Title>GPL v3 Logo</Title>
+    <FileName>i20161018155935592.png</FileName>
+    <FileContents>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
+KE4LAAAAAElFTkSuQmCC</FileContents>
+  </Images>
+  <Images>
+    <ID>i20161112194139917</ID>
+    <Title>HTML Help Builder Logo</Title>
+    <FileName>i20161112194139917.jpg</FileName>
+    <FileContents>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</FileContents>
+  </Images>
+</HelpData>

@@ -48,6 +48,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonMark">
+      <HintPath>..\References\CommonMark.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -79,53 +82,41 @@
     <Compile Include="clsScript.cs" />
     <Compile Include="clsSettings.cs" />
     <Compile Include="clsTemplate.cs" />
-    <Compile Include="frmSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="frmSettings.cs" />
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PreviewHTML.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="PreviewHTML.cs" />
     <Compile Include="PreviewHTML.Designer.cs">
       <DependentUpon>PreviewHTML.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectImage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="SelectImage.cs" />
     <Compile Include="SelectImage.Designer.cs">
       <DependentUpon>SelectImage.cs</DependentUpon>
     </Compile>
-    <Compile Include="SelectLink.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="SelectLink.cs" />
     <Compile Include="SelectLink.Designer.cs">
       <DependentUpon>SelectLink.cs</DependentUpon>
     </Compile>
-    <Compile Include="TemplateEditor.cs">
-      <SubType>Form</SubType>
+    <Compile Include="SelectTopic.cs" />
+    <Compile Include="SelectTopic.Designer.cs">
+      <DependentUpon>SelectTopic.cs</DependentUpon>
     </Compile>
+    <Compile Include="TemplateEditor.cs" />
     <Compile Include="TemplateEditor.Designer.cs">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="TemplateSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="TemplateSelector.cs" />
     <Compile Include="TemplateSelector.Designer.cs">
       <DependentUpon>TemplateSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewLicense.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="ViewLicense.cs" />
     <Compile Include="ViewLicense.Designer.cs">
       <DependentUpon>ViewLicense.cs</DependentUpon>
     </Compile>
@@ -147,6 +138,9 @@
     <EmbeddedResource Include="SelectLink.resx">
       <DependentUpon>SelectLink.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelectTopic.resx">
+      <DependentUpon>SelectTopic.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TemplateEditor.resx">
       <DependentUpon>TemplateEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +152,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Template\BasicTemplate.hhbt">
+      <Link>BasicTemplate.hhbt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
