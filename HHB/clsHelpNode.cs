@@ -498,7 +498,7 @@ namespace HHBuilder
 			{
 				ScriptItem tItem = new ScriptItem();
 				tItem.id = tdr["ID"].ToString().Trim();
-				tItem.title = tdr["Title"].ToString().Trim();	// TODO: Confirm the title is still needed to be stored in the project file.
+				tItem.title = tdr["Title"].ToString().Trim();
 				tItem.fileName = tdr["FileName"].ToString().Trim();
 				tItem.content = tdr["FileContents"].ToString().Trim();
 				TreeNode tTN = topNode.Nodes[(int) HelpNode.branches.scriptFile].Nodes.Add(tItem.title);

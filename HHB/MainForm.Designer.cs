@@ -872,30 +872,30 @@ namespace HHBuilder
 			this.treeView1.Name = "treeView1";
 			treeNode1.ContextMenuStrip = this.contextMenuStrip1;
 			treeNode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode1.Name = "Node0";
+			treeNode1.Name = "treenodeToC";
 			treeNode1.Text = "Table of Contents";
 			treeNode2.ContextMenuStrip = this.contextMenuStrip1;
 			treeNode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			treeNode2.Name = "Node1";
+			treeNode2.Name = "treenodePopupHTML";
 			treeNode2.Text = "Popup HTML Screens";
 			treeNode3.ContextMenuStrip = this.contextMenuStrip2;
-			treeNode3.Name = "Node0";
+			treeNode3.Name = "treenodePopupText";
 			treeNode3.Text = "Popup Text";
 			treeNode4.ContextMenuStrip = this.contextMenuStrip2;
 			treeNode4.ForeColor = System.Drawing.Color.Green;
-			treeNode4.Name = "Node2";
+			treeNode4.Name = "treenodeCSS";
 			treeNode4.Text = "CSS Files";
 			treeNode5.ContextMenuStrip = this.contextMenuStrip2;
 			treeNode5.ForeColor = System.Drawing.Color.Purple;
-			treeNode5.Name = "Node3";
+			treeNode5.Name = "treenodeScripts";
 			treeNode5.Text = "Script Files";
 			treeNode6.ContextMenuStrip = this.contextMenuStrip2;
 			treeNode6.ForeColor = System.Drawing.Color.Blue;
-			treeNode6.Name = "Node5";
+			treeNode6.Name = "treenodeImages";
 			treeNode6.Text = "Image Files";
 			treeNode7.BackColor = System.Drawing.Color.White;
 			treeNode7.ForeColor = System.Drawing.Color.Blue;
-			treeNode7.Name = "Node0";
+			treeNode7.Name = "treenodeProject";
 			treeNode7.Text = "New Project";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
 									treeNode7});
@@ -1133,8 +1133,12 @@ namespace HHBuilder
 			// 
 			// tbProjectName
 			// 
+			this.helpProvider1.SetHelpKeyword(this.tbProjectName, "1000");
+			this.helpProvider1.SetHelpNavigator(this.tbProjectName, System.Windows.Forms.HelpNavigator.TopicId);
+			this.helpProvider1.SetHelpString(this.tbProjectName, "");
 			this.tbProjectName.Location = new System.Drawing.Point(120, 32);
 			this.tbProjectName.Name = "tbProjectName";
+			this.helpProvider1.SetShowHelp(this.tbProjectName, true);
 			this.tbProjectName.Size = new System.Drawing.Size(328, 20);
 			this.tbProjectName.TabIndex = 0;
 			// 
@@ -2305,6 +2309,10 @@ namespace HHBuilder
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
+			// 
+			// helpProvider1
+			// 
+			this.helpProvider1.HelpNamespace = "HHBuilder_EN.chm";
 			// 
 			// MainForm
 			// 

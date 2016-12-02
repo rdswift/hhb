@@ -85,7 +85,19 @@ namespace HHBuilder
 			cbUILanguage.SelectedIndex = -1;
 			if ( !String.IsNullOrEmpty(uiLanguage) )
 			{
-				cbLanguage.SelectedIndex = cbUILanguage.FindString(uiLanguage.Substring(7).Trim());
+				int tCount = cbUILanguage.Items.Count;
+				while ( (cbUILanguage.SelectedIndex < 0) && (tCount > 0 ) )
+				{
+					tCount--;
+					if ( uiLanguage == ((Language) cbUILanguage.Items[tCount]).code )
+					{
+						cbUILanguage.SelectedIndex = tCount;
+					}
+				}
+			}
+			else
+			{
+				cbUILanguage.SelectedIndex = 0;
 			}
 			cbCleanOnExit.Checked = HBSettings.cleanOnExit;
 			cbCheckUpdates.Checked = HBSettings.checkForUpdates;
@@ -204,7 +216,7 @@ namespace HHBuilder
 			}
 			else
 			{
-				HBSettings.uiCulture = ((Language) cbUILanguage.SelectedItem).CodeText();
+				HBSettings.uiCulture = ((Language) cbUILanguage.SelectedItem).code;
 			}
 
 			HBSettings.cleanOnExit = cbCleanOnExit.Checked;

@@ -281,8 +281,11 @@ namespace HHBuilder
 			foreach (TreeNode tNode in HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.textPopup].Nodes)
 			{
 				PopupTextItem tItem = (PopupTextItem) tNode.Tag;
-				popupText.AppendFormat(".topic IDH_{0}\n{1}\n\n", tItem.id, tItem.helpText.Trim());
-				popupMap.AppendFormat("#define IDH_{0}  {1}\n", tItem.id, tItem.linkID.ToString().Trim());
+				popupText.AppendFormat(".topic IDH_{0}\n{1}", tItem.id, tItem.helpText.Trim());
+				popupText.AppendLine(String.Empty);
+				popupText.AppendLine(String.Empty);
+				popupMap.AppendFormat("#define IDH_{0}  {1}", tItem.id, tItem.linkID.ToString().Trim());
+				popupMap.AppendLine(String.Empty);
 				topicCount++;
 			}
 			
@@ -344,7 +347,8 @@ namespace HHBuilder
 			{
 				sb.AppendLine("Full text search stop list file=HHBuilder.stp");
 				sb.AppendLine("Full-text search=Yes");
-				string stopList = "a\nan\nand\nare\nas\nat\nbe\nby\nfor\nhe\nher\nhis\nin\nis\nit\nits\nme\nof\non\nor\nshe\nsome\nsuch\nthan\nthat\nthe\ntheir\nthen\nthere\nthese\nthey\nthis\nthrough\nto\nunder\nuntil\nuse\nwas\nwe\nwere\nwhen\nwhere\nwhich\nwho\nwith\nyou\n";
+				string stopList = "a an and are as at be by for he her his in is it its me of on or she some such than that the their then there these they this through to under until use was we were when where which who with you ";
+				stopList = stopList.Replace(" ", Environment.NewLine);
 				string stopFile = Path.Combine(HBSettings.projectBuildDir, "HHBuilder.stp");
 				try
 				{
@@ -361,8 +365,9 @@ namespace HHBuilder
 				
 			}
 			sb.AppendLine("Index file=index.hhk");
-			sb.AppendFormat("Language={0}\n", project.language);
+			sb.AppendFormat("Language={0}", project.language);
 			//sb.AppendFormat("Title={0}\n", project.title);
+			sb.AppendLine("");
 			sb.AppendLine("");
 			sb.AppendLine("");
 			sb.AppendLine("[WINDOWS]");
@@ -412,10 +417,12 @@ namespace HHBuilder
 				if ( tItem.hasScreen )
 				{
 					sbFiles.AppendLine(tItem.fileName);
-					sbAlias.AppendFormat("H_{0}={1}\n", tItem.id, tItem.fileName);
+					sbAlias.AppendFormat("H_{0}={1}", tItem.id, tItem.fileName);
+					sbAlias.AppendLine(String.Empty);
 					if ( tItem.linkID > 0 )
 					{
-						sbMap.AppendFormat("#define H_{0} {1}\n", tItem.id, tItem.linkID);
+						sbMap.AppendFormat("#define H_{0} {1}", tItem.id, tItem.linkID);
+						sbMap.AppendLine(String.Empty);
 					}
 				}
 				RecurseFileAndMapList(tNode, ref sbFiles, ref sbAlias, ref sbMap);
@@ -1136,6 +1143,32 @@ namespace HHBuilder
 			
 			return true;
 		}
+		
+		// ==============================================================================
+		private static void procOutputReceived(object sendingProcess, DataReceivedEventArgs e)
+		{
+			if ( !String.IsNullOrEmpty(e.Data) )
+			{
+				if ( Application.OpenForms["MainForm"].InvokeRequired )
+				{
+					string[] textLine = { e.Data };
+					Application.OpenForms["MainForm"].BeginInvoke(new myDelegate(procDataReceived), textLine);
+				}
+				else
+				{
+					((MainForm) Application.OpenForms["MainForm"]).ProgressAddLine(e.Data);
+				}
+			}
+		}
+		
+		// ==============================================================================
+		private delegate void myDelegate(string textLine);
+		
+		// ==============================================================================
+		private static void procDataReceived(string textLine)
+		{
+			((MainForm) Form.ActiveForm).ProgressAddLine(textLine);
+		}
 		#endregion
 		
 		#region Constructors
@@ -1833,6 +1866,7 @@ namespace HHBuilder
 			
 			
 			// run compile
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty.PadLeft(80, '='));
 			((MainForm) Form.ActiveForm).ProgressAddLine("Compiling the help project.");
 			string hhCompiler = Path.Combine(HBSettings.compilerDir, "hhc.exe");
 			if ( !File.Exists(hhCompiler) )
@@ -1901,28 +1935,6 @@ namespace HHBuilder
 			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			return true;
-		}
-		
-		// ==============================================================================
-		private static void procOutputReceived(object sendingProcess, DataReceivedEventArgs e)
-		{
-			if ( !String.IsNullOrEmpty(e.Data) )
-			{
-				if ( Application.OpenForms["MainForm"].InvokeRequired )
-				{
-					string[] textLine = { e.Data };
-					Application.OpenForms["MainForm"].BeginInvoke(new myDelegate(procDataReceived), textLine);
-				}
-			}
-		}
-		
-		// ==============================================================================
-		private delegate void myDelegate(string textLine);
-		
-		// ==============================================================================
-		private static void procDataReceived(string textLine)
-		{
-			((MainForm) Form.ActiveForm).ProgressAddLine(textLine);
 		}
 		#endregion
 	}

@@ -360,7 +360,15 @@ namespace HHBuilder
 		public static string uiCulture
 		{
 			get{ return _uiCulture.Trim(); }
-			set{ _uiCulture = value.Trim(); }
+			set
+			{
+				string oldCulture = _uiCulture;
+				_uiCulture = value.Trim();
+				if ( _uiCulture != oldCulture )
+				{
+					Language.culture = _uiCulture;
+				}
+			}
 		}
 		
 		// ==============================================================================

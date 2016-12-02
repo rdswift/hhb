@@ -74,6 +74,11 @@ namespace HHBuilder
 			{
 				CultureInfo tempCulture = _cultureInfo;
 				CultureInfo tempUiCulture = _cultureUiInfo;
+				string tValue = value.Trim();
+				if ( String.IsNullOrWhiteSpace(tValue) )
+				{
+					tValue = CultureInfo.InstalledUICulture.Name;
+				}
 				try 
 				{
 					_cultureInfo = new CultureInfo(value.Trim(), false);
@@ -101,7 +106,8 @@ namespace HHBuilder
 		{ 
 			return new List<Language>
 			{
-				new Language() { title = "English", code = "en-US" }
+				new Language() { title = "- Windows Default -", code = "" }
+				, new Language() { title = "English", code = "en-US" }
 //				, new Language() { title = "Russian", code = "ru-RU" }
 //				, new Language() { title = "Ukrainian", code = "uk-UA" }
 			};
