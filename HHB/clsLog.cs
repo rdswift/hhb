@@ -138,38 +138,43 @@ namespace HHBuilder
 			get{
 				if ( String.IsNullOrWhiteSpace(_logDir) )
 				{
-					_logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+					//_logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+					_logDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 				}
 				return _logDir.Trim();
 			}
 			set
 			{
 				string tValue = value.Trim();
-				if ( !Directory.Exists(tValue) )
+				if ( !String.IsNullOrWhiteSpace(tValue) )
 				{
-					try
+					if ( !Directory.Exists(tValue) )
 					{
-						Directory.CreateDirectory(tValue);
+						try
+						{
+							Directory.CreateDirectory(tValue);
+						}
+						catch (Exception ex)
+						{
+							string errorMessage = String.Format("Unable to access log directory ({0}).", tValue);
+							Log.Error(errorMessage);
+							Log.Exception(ex);
+							Log.ErrorBox(errorMessage);
+							tValue = String.Empty;
+							//throw;
+						}
 					}
-					catch (Exception ex)
+					if ( String.IsNullOrWhiteSpace(tValue) )
 					{
-						string errorMessage = String.Format("Unable to access log directory {0}", tValue);
-						Log.Error(errorMessage);
-						Log.Exception(ex);
-						Log.ErrorBox(errorMessage);
-						tValue = String.Empty;
-						//throw;
+						//tValue = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+						tValue = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 					}
-				}
-				if ( String.IsNullOrWhiteSpace(tValue) )
-				{
-					tValue = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
-				}
-				if ( !String.IsNullOrWhiteSpace(_logDir) )		// Don't try to move files during startup
-				{
-					if ( Path.GetFullPath(_logDir.Trim()).ToUpper() != Path.GetFullPath(tValue).ToUpper() )
+					if ( !String.IsNullOrWhiteSpace(_logDir) )		// Don't try to move files during startup
 					{
-						MoveLogFiles(_logDir.Trim(), Path.GetFullPath(tValue));
+						if ( Path.GetFullPath(_logDir.Trim()).ToUpper() != Path.GetFullPath(tValue).ToUpper() )
+						{
+							MoveLogFiles(_logDir.Trim(), Path.GetFullPath(tValue));
+						}
 					}
 				}
 				_logDir = tValue;
@@ -216,7 +221,8 @@ namespace HHBuilder
 			{
 				if ( String.IsNullOrWhiteSpace(_logDir) )
 				{
-					_logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+					//_logDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+					_logDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 				}
 				return Path.Combine(_logDir, _logFile);
 			}

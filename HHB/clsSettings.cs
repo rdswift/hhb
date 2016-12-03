@@ -26,7 +26,7 @@ namespace HHBuilder
 		private static string _language = String.Empty;
 		private static string _cfgFileName = String.Empty;
 		private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
-		private static Log.LogLevel _logLevel = Log.LogLevel.Normal;
+		private static Log.LogLevel _logLevel = Log.LogLevel.None;
 		private static int _logsToKeep = 5;
 		private static string _uiCulture = String.Empty;
 		private static bool _cleanup = true;
@@ -459,7 +459,7 @@ namespace HHBuilder
 			copyrightTemplate = String.Empty;
 			language = String.Empty;
 			logDir = String.Empty;
-			logLevel = Log.LogLevel.Normal;
+			logLevel = Log.LogLevel.None;
 			logsToKeep = 5;
 			uiCulture = String.Empty;
 			cfgFileName = GetFileName();
