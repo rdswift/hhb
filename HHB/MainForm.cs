@@ -743,7 +743,17 @@ namespace HHBuilder
         // ==============================================================================
         private void PasteNodeAboveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var tPasteNode = GetPasteNode();
+
+            TreeNode tPasteNode = null;
+            try
+            {
+                tPasteNode = GetPasteNode();
+            }
+            catch (NullReferenceException ex)
+            {
+                //todo use loging
+                return;
+            }
 
 
             //treeView1.SelectedNode.Parent.Nodes.Insert(treeView1.SelectedNode.Index, savedNode);
@@ -760,7 +770,16 @@ namespace HHBuilder
         // ==============================================================================
         private void PasteNodeBelowToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var tPasteNode = GetPasteNode();
+            TreeNode tPasteNode = null;
+            try
+            {
+                tPasteNode = GetPasteNode();
+            }
+            catch (NullReferenceException ex)
+            {
+                //todo use loging
+                return;
+            }
 
             treeView1.SelectedNode.Parent.Nodes.Insert(treeView1.SelectedNode.Index + 1, tPasteNode);
             //treeView1.SelectedNode.Parent.Nodes.Insert(treeView1.SelectedNode.Index + 1, savedNode);
@@ -776,7 +795,16 @@ namespace HHBuilder
         // ==============================================================================
         private void PasteAsChildNodeToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var tPasteNode = GetPasteNode();
+            TreeNode tPasteNode = null;
+            try
+            {
+                tPasteNode = GetPasteNode();
+            }
+            catch (NullReferenceException ex)
+            {
+                //todo use loging
+                return;
+            }
 
             treeView1.SelectedNode.Nodes.Add(tPasteNode);
             //treeView1.SelectedNode.Nodes.Add(savedNode);
