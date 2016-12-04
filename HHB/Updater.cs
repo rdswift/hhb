@@ -284,10 +284,17 @@ namespace HHBuilder
 		/// <summary>
 		/// Gets the version of the currently running program.
 		/// </summary>
-		/// <returns>A formatted string of the Major.Minor.Build.</returns>
+		/// <returns>A formatted string of the Major.Minor or Major.Minor.Build if Build is not zero.</returns>
 		public static string getCurrentVersion()
 		{
-			return String.Format("{0}.{1:00}.{2:00}", _major, _minor, _build);
+			if ( _build < 1 )
+			{
+				return String.Format("{0}.{1:00}", _major, _minor);
+			}
+			else
+			{
+				return String.Format("{0}.{1:00}.{2:00}", _major, _minor, _build);
+			}
 		}
 		
 		// ==============================================================================
@@ -304,11 +311,18 @@ namespace HHBuilder
 		/// <summary>
 		/// Gets the version of the latest version of the program.
 		/// </summary>
-		/// <returns>A formatted string of the Major.Minor.Build.</returns>
+		/// <returns>A formatted string of the Major.Minor or Major.Minor.Build if Build is not zero.</returns>
 		public static string getLatestVersion()
 		{
 			GetLatestVersionInfo();
-			return String.Format("{0}.{1:00}.{2:00}", _currentMajor, _currentMinor, _currentBuild);
+			if ( _currentBuild < 1 )
+			{
+				return String.Format("{0}.{1:00}", _currentMajor, _currentMinor);
+			}
+			else
+			{
+				return String.Format("{0}.{1:00}.{2:00}", _currentMajor, _currentMinor, _currentBuild);
+			}
 		}
 		#endregion
 	}
