@@ -29,3 +29,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
 [assembly: AssemblyVersion("0.1.*")]
+// Remember to add the Build portion for bug fix / maintenance releases
+// in the format "0.1.1.*" and to remove it again at the next Major or
+// Minor release so it goes back to something like "1.0.*".
