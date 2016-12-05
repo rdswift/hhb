@@ -68,7 +68,7 @@ namespace HHBuilder
             }
             if (!String.IsNullOrEmpty(errorMessage))
             {
-                // TODO Add logging
+                // TODO: Add logging
                 Log.ErrorBox(errorMessage);
                 Close();
                 Application.Exit();
@@ -751,7 +751,7 @@ namespace HHBuilder
             }
             catch (NullReferenceException ex)
             {
-                //todo use loging
+                // TODO: use logging
                 return;
             }
 
@@ -777,7 +777,7 @@ namespace HHBuilder
             }
             catch (NullReferenceException ex)
             {
-                //todo use loging
+                // TODO: use logging
                 return;
             }
 
@@ -802,7 +802,7 @@ namespace HHBuilder
             }
             catch (NullReferenceException ex)
             {
-                //todo use loging
+                // TODO: use logging
                 return;
             }
 

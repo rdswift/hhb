@@ -1,7 +1,7 @@
 # HHB - Interactive HTML Help Builder
 ## External References
 
-This directory is used to contain the external references used in HHBuilder.  The appropriate files should be copied to this directory prior to building the project.
+This directory is used to contain the external references used in HHBuilder.  The appropriate files and subdirectories should be copied to this directory prior to building the project.
 
 Current external references are:
 
