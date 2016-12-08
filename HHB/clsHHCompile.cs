@@ -886,7 +886,7 @@ namespace HHBuilder
 				DataRow dr = _nodeDS.Tables[0].NewRow();
 				HelpItem tItem = (HelpItem) tNode.Tag;
 				dr["ID"] = tItem.id;
-				dr["IndexPath"] = String.Empty;
+				dr["IndexPath"] = "Popup HTML";
 				dr["PrevLink"] = String.Empty;
 				dr["PrevText"] = String.Empty;
 				dr["PrevNumber"] = String.Empty;
@@ -906,6 +906,39 @@ namespace HHBuilder
 				dr["FileName"] = tItem.fileName;
 				dr["LinkID"] = tItem.linkID;
 				dr["LinkDesc"] = tItem.linkDescription;
+				_nodeDS.Tables[0].Rows.Add(dr);
+			}
+		}
+		
+		// ==============================================================================
+		private static void DatasetAddText(TreeNode node)
+		{
+			TreeNode topNode = HelpNode.GetRootNode(node);
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.textPopup].Nodes)
+			{
+				DataRow dr = _nodeDS.Tables[0].NewRow();
+				PopupTextItem tItem = (PopupTextItem) tNode.Tag;
+				dr["ID"] = tItem.id;
+				dr["IndexPath"] = "Popup Text";
+				dr["PrevLink"] = String.Empty;
+				dr["PrevText"] = String.Empty;
+				dr["PrevNumber"] = String.Empty;
+				dr["NextLink"] = String.Empty;
+				dr["NextText"] = String.Empty;
+				dr["NextNumber"] = String.Empty;
+				dr["Title"] = tItem.title;
+				dr["IndexEntries"] = String.Empty;
+				dr["ReferenceLinks"] = String.Empty;
+				dr["ScriptLinks"] = String.Empty;
+				dr["ReferenceLinks"] = String.Empty;
+				dr["ShowScreen"] = true;
+				dr["ShowTitle"] = false;
+				dr["ShowHeader"] = false;
+				dr["ShowFooter"] = false;
+				dr["Body"] = String.Empty;
+				dr["FileName"] = String.Empty;
+				dr["LinkID"] = tItem.linkID;
+				dr["LinkDesc"] = String.Empty;
 				_nodeDS.Tables[0].Rows.Add(dr);
 			}
 		}
@@ -1932,6 +1965,178 @@ namespace HHBuilder
 				return false;
 				//throw;
 			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Creates a screen topic map report which is displayed in the progress window.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>True on success, or false if there are no topic entries in the project.</returns>
+		public static bool ShowScreenMap(TreeNode node)
+		{
+			// Make HTML nodes index
+			_nodeDS = InitializeNodeDataset();
+			DatasetAddTOC(node);
+			DatasetAddPopup(node);
+			DatasetAddText(node);
+			
+			if ( _nodeDS.Tables[0].Rows.Count < 1 )
+			{
+				Log.ErrorBox("No screens in the project to map.");
+				return false;
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressInitialize(_nodeDS.Tables[0].Rows.Count * 2);
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing help project topic map report.");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			DataView dv;
+			DataTable sortedDT;
+			
+			// Sort by map number
+			dv = _nodeDS.Tables[0].DefaultView;
+			dv.Sort = "LinkID ASC";
+			sortedDT = dv.ToTable();
+			
+			StringBuilder sbDuplicates = new StringBuilder();
+			StringBuilder sbUnmappedPopups = new StringBuilder();
+			StringBuilder sbMappedByLink = new StringBuilder();
+			int previousLinkID = 0;
+			bool errorLogged = false;
+			foreach (DataRow dr in sortedDT.Rows)
+			{
+				int tLink = Convert.ToInt32(dr["LinkID"].ToString());
+				if ( tLink > 0 )
+				{
+					sbMappedByLink.AppendLine(String.Format("{0,10}\t{1,-25}\t{2}", tLink, dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+					if ( tLink == previousLinkID )
+					{
+						if ( !errorLogged )
+						{
+							sbDuplicates.AppendLine(String.Format("Error:\tLink {0} is mapped to more than one screen.", dr["LinkID"]));
+							errorLogged = true;
+						}
+					}
+					else
+					{
+						errorLogged = false;
+					}
+				}
+				else
+				{
+					if ( dr["IndexPath"].ToString().StartsWith("P") )
+					{
+						sbUnmappedPopups.AppendLine(String.Format("Warning:\tUnmapped {0}: {1}", dr["IndexPath"], dr["Title"]));
+					}
+				}
+				previousLinkID = tLink;
+				((MainForm) Form.ActiveForm).ProgressAddStep();
+			}
+			
+			// Sort help screen heierarchy
+			dv = _nodeDS.Tables[0].DefaultView;
+			dv.Sort = "IndexPath ASC";
+			sortedDT = dv.ToTable();
+			
+			StringBuilder sbMappedByIndex = new StringBuilder();
+			StringBuilder sbNotMapped = new StringBuilder();
+			foreach (DataRow dr in sortedDT.Rows)
+			{
+				int tLink = Convert.ToInt32(dr["LinkID"].ToString());
+				if ( tLink > 0 )
+				{
+					sbMappedByIndex.AppendLine(String.Format("{0,10}\t{1,-25}\t{2}", tLink, dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+				}
+				else
+				{
+					sbNotMapped.AppendLine(String.Format("{0,-25}\t{1}", dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+				}
+				((MainForm) Form.ActiveForm).ProgressAddStep();
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Mapped Screens (sorted by link number)");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbMappedByLink.Length > 0 )
+			{
+				foreach (string tString in sbMappedByLink.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Mapped Screens (sorted by ToC index)");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbMappedByIndex.Length > 0 )
+			{
+				foreach (string tString in sbMappedByIndex.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Unmapped Screens");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbNotMapped.Length > 0 )
+			{
+				foreach (string tString in sbNotMapped.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Errors and Warnings");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbDuplicates.Length > 0 )
+			{
+				foreach (string tString in sbDuplicates.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			
+			if ( sbUnmappedPopups.Length > 0 )
+			{
+				foreach (string tString in sbUnmappedPopups.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			
+			if ( (sbDuplicates.Length + sbUnmappedPopups.Length) > 0 )
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+				((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			}
+			((MainForm) Form.ActiveForm).ProgressAddLine("Help project topic map report complete");
 			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			return true;

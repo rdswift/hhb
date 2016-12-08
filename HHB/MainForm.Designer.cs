@@ -261,6 +261,7 @@ namespace HHBuilder
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.bMakeMap = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.contextMenuStrip2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -2256,6 +2257,7 @@ namespace HHBuilder
 			// 
 			// tabPageProgress
 			// 
+			this.tabPageProgress.Controls.Add(this.bMakeMap);
 			this.tabPageProgress.Controls.Add(this.tbProgress);
 			this.tabPageProgress.Controls.Add(this.progressBar1);
 			this.tabPageProgress.Controls.Add(this.bMakeFiles);
@@ -2313,6 +2315,16 @@ namespace HHBuilder
 			// helpProvider1
 			// 
 			this.helpProvider1.HelpNamespace = "HHBuilder_EN.chm";
+			// 
+			// bMakeMap
+			// 
+			this.bMakeMap.Location = new System.Drawing.Point(400, 488);
+			this.bMakeMap.Name = "bMakeMap";
+			this.bMakeMap.Size = new System.Drawing.Size(75, 23);
+			this.bMakeMap.TabIndex = 4;
+			this.bMakeMap.Text = "Topic Map";
+			this.bMakeMap.UseVisualStyleBackColor = true;
+			this.bMakeMap.Click += new System.EventHandler(this.BMakeMapClick);
 			// 
 			// MainForm
 			// 
@@ -2373,6 +2385,7 @@ namespace HHBuilder
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button bMakeMap;
 		private System.Windows.Forms.Button bCompileProject;
 		private System.Windows.Forms.Button bMakeFiles;
 		private System.Windows.Forms.ProgressBar progressBar1;
