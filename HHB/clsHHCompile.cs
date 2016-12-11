@@ -120,7 +120,8 @@ namespace HHBuilder
 			sb.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
 			sb.AppendLine("<HTML>");
 			sb.AppendLine("<HEAD>");
-			sb.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">\n");
+			sb.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">");
+			sb.AppendLine();
 			sb.AppendLine("<!-- Sitemap 1.0 -->");
 			sb.AppendLine("</HEAD><BODY>");
 			sb.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -132,56 +133,50 @@ namespace HHBuilder
 			int indent = 4;
 			foreach (DataRow dr in sDT.Rows)
 			{
+				string itemGroup = dr["Group"].ToString(); 
 				// TODO: Review issues regarding index item grouping.
-//				if ( dr["Group"].ToString().ToUpper() != oGroup )
-//				{
-//					if ( String.IsNullOrWhiteSpace(oGroup) )
-//					{
-//						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-//						sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
-//						sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-//						sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-//						indent += 4;
-//					}
-//					else
-//					{
-//						indent -= 4;
-//						sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
-//						if ( !String.IsNullOrWhiteSpace(dr["group"].ToString()) )
-//						{
-//							sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//							sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-//							sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
-//							sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-//							sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-//							indent += 4;
-//						}
-//					}
-//					oGroup = dr["Group"].ToString().ToUpper();
-//				}
-//
-//				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
-//				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
-//				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-
-				// above temporary disabled and replaced with the following to avoid index grouping problems.
-				string indexEntry = dr["Topic"].ToString();
-				if ( !String.IsNullOrWhiteSpace(dr["Group"].ToString()) )
+				if ( itemGroup.ToUpper() != oGroup )
 				{
-					indexEntry = String.Format("{0}: {1}", dr["Group"].ToString(), dr["Topic"].ToString());
+					if ( !String.IsNullOrWhiteSpace(oGroup) )
+					{
+						indent -= 4;
+						sb.AppendFormat("{0}</UL>", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+					}
+					
+					if ( !String.IsNullOrWhiteSpace(itemGroup) )
+					{
+						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(itemGroup));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<param name=\"See Also\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(itemGroup));
+						sb.AppendLine();
+						sb.AppendFormat("{0}</OBJECT>", String.Empty.PadLeft(indent + 4));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<UL>", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+						indent += 4;
+					}
+					
+					oGroup = itemGroup.ToUpper();
 				}
-				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(indexEntry));
-				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
-				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+
+				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">", String.Empty.PadLeft(indent));
+				sb.AppendLine();
+				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
+				sb.AppendLine();
+				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), dr["FileName"]);
+				sb.AppendLine();
+				sb.AppendFormat("{0}</OBJECT>", String.Empty.PadLeft(indent + 4));
+				sb.AppendLine();
 			}
 			
 			while ( indent > 4 )
 			{
 				indent -= 4;
-				sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
+				sb.AppendFormat("{0}</UL>", String.Empty.PadLeft(indent));
+				sb.AppendLine();
 			}
 			
 			sb.AppendLine("</UL>");
