@@ -330,6 +330,12 @@ namespace HHBuilder
 			
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], ref sbFiles, ref sbAlias, ref sbMap);
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], ref sbFiles, ref sbAlias, ref sbMap);
+			
+			FilesListAddImages(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile], ref sbFiles);
+			FilesListAddCSS(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.cssFile], ref sbFiles);
+			FilesListAddScripts(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.scriptFile], ref sbFiles);
+			
+			FilesListAddTemplateFiles(ref sbFiles);
 
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("[OPTIONS]");
@@ -406,6 +412,54 @@ namespace HHBuilder
 			}
 			
 			return true;
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddImages(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				ImageItem tItem = (ImageItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", imageDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddCSS(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				CSSItem tItem = (CSSItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", cssDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddScripts(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				ScriptItem tItem = (ScriptItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", scriptDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddTemplateFiles(ref StringBuilder sbFiles)
+		{
+			string[] dirsToCheck = { "tpl_css", "tpl_images", "tpl_scripts", "tpl_other" };
+			foreach (string dir in dirsToCheck)
+			{
+				string searchDir = Path.Combine(HBSettings.projectBuildDir, dir);
+				if ( Directory.Exists(searchDir) )
+				{
+					string[] fileList = Directory.GetFiles(searchDir);
+					foreach (string fileToList in fileList)
+					{
+						sbFiles.AppendLine(String.Format("{0}/{1}", dir, Path.GetFileName(fileToList)));
+					}
+				}
+			}
 		}
 		
 		// ==============================================================================
