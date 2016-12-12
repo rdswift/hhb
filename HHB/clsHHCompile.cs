@@ -134,7 +134,6 @@ namespace HHBuilder
 			foreach (DataRow dr in sDT.Rows)
 			{
 				string itemGroup = dr["Group"].ToString(); 
-				// TODO: Review issues regarding index item grouping.
 				if ( itemGroup.ToUpper() != oGroup )
 				{
 					if ( !String.IsNullOrWhiteSpace(oGroup) )
@@ -583,17 +582,18 @@ namespace HHBuilder
 				string[] scriptArray = hItem.scriptArray;
 				foreach (string tScript in scriptArray)
 				{
-					if ( !File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					string outFile = Path.Combine(scriptDir, tScript + ".js");
+					if ( !File.Exists(outFile) )
 					{
 						MakeScriptFile(node, tScript);
 					}
-					if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					if ( File.Exists(outFile) )
 					{
 						sbScript.AppendFormat("<script type=\"text/javascript\" src=\"{0}/{1}\"></script>\n", scriptDirName, tScript + ".js");
 					}
 					else
 					{
-						Log.Error("Missing script file " + tScript + ".js");
+						Log.Error("Missing script file " + outFile);
 					}
 				}
 				headerScripts = sbScript.ToString();

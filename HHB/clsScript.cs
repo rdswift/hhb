@@ -48,7 +48,8 @@ namespace HHBuilder
 		public ScriptItem()
 		{
 			id = GetID();
-			fileName = "Scr_" + id + ".js";
+			//fileName = "Scr_" + id + ".js";
+			_fileName = id + ".js";
 			title = string.Format("Script ID: {0}", id);
 			content = "// User-Defined Additional Script File\n\n";
 		}
@@ -62,7 +63,7 @@ namespace HHBuilder
 		public ScriptItem(string itemTitle, string itemContent)
 		{
 			id = GetID();
-			fileName = id + ".js";
+			_fileName = id + ".js";
 			title = itemTitle;
 			content = itemContent;
 		}
@@ -77,7 +78,8 @@ namespace HHBuilder
 		public ScriptItem(string itemFileName, string itemTitle, string itemContent)
 		{
 			id = GetID();
-			fileName = itemFileName;
+			_fileName = itemFileName;	// TODO: Remove this line
+			_fileName = id + ".js";
 			title = itemTitle;
 			content = itemContent;
 		}
@@ -93,7 +95,8 @@ namespace HHBuilder
 		public ScriptItem(string itemID, string itemFileName, string itemTitle, string itemContent)
 		{
 			id = itemID;
-			fileName = itemFileName;
+			_fileName = itemFileName;	// TODO: Remove this line
+			_fileName = id + ".js";
 			title = itemTitle;
 			content = itemContent;
 		}
@@ -116,8 +119,17 @@ namespace HHBuilder
 		/// </summary>
 		public string fileName
 		{
-			get{ return _fileName.Trim(); }
-			set{ _fileName = value.Trim(); }
+			// TODO: Update to disallow assigning a file name (including in Main Form).  Use ID + ".js" for file name.
+
+			//get{ return _fileName.Trim(); }
+			get{ return _id + ".js"; }
+			set
+			{
+				if ( String.IsNullOrWhiteSpace(_fileName) )
+				{
+					_fileName = value.Trim();
+				}
+			}
 		}
 		
 		// ==============================================================================
@@ -162,11 +174,7 @@ namespace HHBuilder
 					return false;
 				}
 			}
-			if (( !String.IsNullOrEmpty(outputPath) ) && ( !outputPath.EndsWith(@"\") ))
-			{
-				outputPath += @"\";
-			}
-			outputPath += fileName;
+			outputPath = System.IO.Path.Combine(outputPath, fileName);
 			try
 			{
 				System.IO.File.WriteAllText(outputPath, content);
