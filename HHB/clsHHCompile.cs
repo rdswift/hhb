@@ -480,21 +480,13 @@ namespace HHBuilder
 		// ==============================================================================
 		private static string ParseHtmlBody(TreeNode node, HelpItem hItem)
 		{
-			string repBody = hItem.body;
-			
-			
-			
-			
+			string repBody = ReplaceParameters(node, hItem, hItem.body);
 			repBody = CommonMark.CommonMarkConverter.Convert(repBody);
 			
 			
 			
 			
 			// TODO: Insert body text preprocessing here.
-			
-			
-			
-			
 			
 			
 			
@@ -605,10 +597,18 @@ namespace HHBuilder
 			// Process image links
 			repBody = ProcessImageLinks(node, repBody);
 			
-			string tHTML = _htmlTemplate;
+			string tHTML = ReplaceParameters(node, hItem, _htmlTemplate);
 			tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
 			tHTML = tHTML.Replace("{BODY}", repBody);
-
+			tHTML = tHTML.Replace("{REFERENCES}", references);
+			
+			return tHTML;
+		}
+		
+		// ==============================================================================
+		private static string ReplaceParameters(TreeNode node, HelpItem hItem, string htmlText)
+		{
+			string tHTML = htmlText;
 			DataRow dr = _nodeDS.Tables[0].Rows.Find(hItem.id);
 			if ( dr != null )
 			{
@@ -638,7 +638,6 @@ namespace HHBuilder
 			
 			tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
 			tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
-			tHTML = tHTML.Replace("{REFERENCES}", references);
 			
 			return tHTML;
 		}
