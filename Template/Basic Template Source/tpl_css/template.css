@@ -10,7 +10,7 @@ h3{font-size: 110%;margin-top:1.2em;margin-bottom:.5em;}
 /* p{margin-top:0pt;margin-bottom:0pt;} */
 p{margin-top:.5em;margin-bottom:.8em;}
 /* img{margin-top: 6pt; margin-bottom: 6pt;} */
-img{margin-top: 1pt; margin-bottom: 1pt;}
+img{margin-top: 1pt; margin-bottom: 1pt; border-style: none;}
 li p{margin-top:.3em;margin-bottom:0em;}
 big{font-weight:bold;font-size:105%;}
 ol{margin-top:.3em;margin-bottom:0em}
@@ -23,8 +23,9 @@ ol dl{margin-top:-1.5em;margin-left:0em;}/*term/def list inside a numbered list*
 ol dl dl{margin-top: 0em;margin-left:.2em;}/*term/def list inside a term/def list*/
 dd{margin-bottom:0em;/*not currently working*/margin-left: 1.5em;}
 dt{padding-top:2em;font-weight: bold; margin-left:1.5em;}
-code{font-family:Courier;}
-pre{margin-top:0em; margin-bottom:1.5em; font-family:Courier;	font-size: 125%}
+code{font-family:Courier; background-color: #dddddd}
+/* pre{margin-top:0em; margin-bottom:1.5em; font-family:Courier;	font-size: 125%} */
+pre{margin: 1em 0em; padding: 0.5em 1em; font-family:Courier; width: 100%; background-color: #dddddd}
 table{font-size:80%;margin-top:1em;margin-bottom:1em;}
 th.center{text-align:center;}
 th{text-align:left;background:#dddddd;margin: 3pt;vertical-align:bottom;}
