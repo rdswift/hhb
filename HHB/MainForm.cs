@@ -1879,6 +1879,27 @@ namespace HHBuilder
         }
 
         // ==============================================================================
+        private void MakeTopicMap()
+        {
+            if (tabControl1.TabPages.Contains(tabPageProgress) == false)
+            {
+                tabControl1.TabPages.Add(tabPageProgress);
+            }
+            tabControl1.SelectedTab = tabPageProgress;
+
+            if (HHCompile.ShowScreenMap(treeView1.SelectedNode))
+            {
+                progressBar1.Value = progressBar1.Maximum;
+                progressBar1.Refresh();
+                MessageBox.Show("Project topic map report complete.", "Success");
+            }
+//            else
+//            {
+//                Log.ErrorBox("There was a problem creating all of the project files.  Please see the log for more information.");
+//            }
+        }
+
+        // ==============================================================================
         private string GetCompiledProjectSaveAsName()
         {
             saveFileDialog1.Filter = "Compiled Help Project files (*.chm)|*.chm|All files (*.*)|*.*";
@@ -2185,5 +2206,10 @@ namespace HHBuilder
         {
             CompileProject();
         }
+		
+		void BMakeMapClick(object sender, EventArgs e)
+		{
+			MakeTopicMap();
+		}
     }
 }

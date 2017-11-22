@@ -120,7 +120,8 @@ namespace HHBuilder
 			sb.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
 			sb.AppendLine("<HTML>");
 			sb.AppendLine("<HEAD>");
-			sb.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">\n");
+			sb.AppendLine("<meta name=\"GENERATOR\" content=\"Microsoft&reg; HTML Help Workshop 4.1\">");
+			sb.AppendLine();
 			sb.AppendLine("<!-- Sitemap 1.0 -->");
 			sb.AppendLine("</HEAD><BODY>");
 			sb.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -132,56 +133,49 @@ namespace HHBuilder
 			int indent = 4;
 			foreach (DataRow dr in sDT.Rows)
 			{
-				// TODO: Review issues regarding index item grouping.
-//				if ( dr["Group"].ToString().ToUpper() != oGroup )
-//				{
-//					if ( String.IsNullOrWhiteSpace(oGroup) )
-//					{
-//						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-//						sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
-//						sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-//						sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-//						indent += 4;
-//					}
-//					else
-//					{
-//						indent -= 4;
-//						sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
-//						if ( !String.IsNullOrWhiteSpace(dr["group"].ToString()) )
-//						{
-//							sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//							sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Group"].ToString()));
-//							sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), String.Empty);
-//							sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-//							sb.AppendFormat("{0}<UL>\n", String.Empty.PadLeft(indent));
-//							indent += 4;
-//						}
-//					}
-//					oGroup = dr["Group"].ToString().ToUpper();
-//				}
-//
-//				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-//				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
-//				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
-//				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
-
-				// above temporary disabled and replaced with the following to avoid index grouping problems.
-				string indexEntry = dr["Topic"].ToString();
-				if ( !String.IsNullOrWhiteSpace(dr["Group"].ToString()) )
+				string itemGroup = dr["Group"].ToString(); 
+				if ( itemGroup.ToUpper() != oGroup )
 				{
-					indexEntry = String.Format("{0}: {1}", dr["Group"].ToString(), dr["Topic"].ToString());
+					if ( !String.IsNullOrWhiteSpace(oGroup) )
+					{
+						indent -= 4;
+						sb.AppendFormat("{0}</UL>", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+					}
+					
+					if ( !String.IsNullOrWhiteSpace(itemGroup) )
+					{
+						sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(itemGroup));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<param name=\"See Also\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(itemGroup));
+						sb.AppendLine();
+						sb.AppendFormat("{0}</OBJECT>", String.Empty.PadLeft(indent + 4));
+						sb.AppendLine();
+						sb.AppendFormat("{0}<UL>", String.Empty.PadLeft(indent));
+						sb.AppendLine();
+						indent += 4;
+					}
+					
+					oGroup = itemGroup.ToUpper();
 				}
-				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">\n", String.Empty.PadLeft(indent));
-				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(indexEntry));
-				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">\n", String.Empty.PadLeft(indent + 4), dr["FileName"]);
-				sb.AppendFormat("{0}</OBJECT>\n", String.Empty.PadLeft(indent + 4));
+
+				sb.AppendFormat("{0}<LI> <OBJECT type=\"text/sitemap\">", String.Empty.PadLeft(indent));
+				sb.AppendLine();
+				sb.AppendFormat("{0}<param name=\"Name\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), WebUtility.HtmlEncode(dr["Topic"].ToString()));
+				sb.AppendLine();
+				sb.AppendFormat("{0}<param name=\"Local\" value=\"{1}\">", String.Empty.PadLeft(indent + 4), dr["FileName"]);
+				sb.AppendLine();
+				sb.AppendFormat("{0}</OBJECT>", String.Empty.PadLeft(indent + 4));
+				sb.AppendLine();
 			}
 			
 			while ( indent > 4 )
 			{
 				indent -= 4;
-				sb.AppendFormat("{0}</UL>\n", String.Empty.PadLeft(indent));
+				sb.AppendFormat("{0}</UL>", String.Empty.PadLeft(indent));
+				sb.AppendLine();
 			}
 			
 			sb.AppendLine("</UL>");
@@ -330,6 +324,12 @@ namespace HHBuilder
 			
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.tocEntry], ref sbFiles, ref sbAlias, ref sbMap);
 			RecurseFileAndMapList(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.htmlPopup], ref sbFiles, ref sbAlias, ref sbMap);
+			
+			FilesListAddImages(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.imageFile], ref sbFiles);
+			FilesListAddCSS(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.cssFile], ref sbFiles);
+			FilesListAddScripts(HelpNode.GetRootNode(node).Nodes[(int) HelpNode.branches.scriptFile], ref sbFiles);
+			
+			FilesListAddTemplateFiles(ref sbFiles);
 
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("[OPTIONS]");
@@ -409,6 +409,54 @@ namespace HHBuilder
 		}
 		
 		// ==============================================================================
+		private static void FilesListAddImages(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				ImageItem tItem = (ImageItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", imageDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddCSS(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				CSSItem tItem = (CSSItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", cssDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddScripts(TreeNode node, ref StringBuilder sbFiles)
+		{
+			foreach (TreeNode tNode in node.Nodes)
+			{
+				ScriptItem tItem = (ScriptItem) tNode.Tag;
+				sbFiles.AppendLine(String.Format("{0}/{1}", scriptDirName, tItem.fileName));
+			}
+		}
+		
+		// ==============================================================================
+		private static void FilesListAddTemplateFiles(ref StringBuilder sbFiles)
+		{
+			string[] dirsToCheck = { "tpl_css", "tpl_images", "tpl_scripts", "tpl_other" };
+			foreach (string dir in dirsToCheck)
+			{
+				string searchDir = Path.Combine(HBSettings.projectBuildDir, dir);
+				if ( Directory.Exists(searchDir) )
+				{
+					string[] fileList = Directory.GetFiles(searchDir);
+					foreach (string fileToList in fileList)
+					{
+						sbFiles.AppendLine(String.Format("{0}/{1}", dir, Path.GetFileName(fileToList)));
+					}
+				}
+			}
+		}
+		
+		// ==============================================================================
 		private static void RecurseFileAndMapList(TreeNode node, ref StringBuilder sbFiles, ref StringBuilder sbAlias, ref StringBuilder sbMap)
 		{
 			foreach (TreeNode tNode in node.Nodes)
@@ -432,21 +480,13 @@ namespace HHBuilder
 		// ==============================================================================
 		private static string ParseHtmlBody(TreeNode node, HelpItem hItem)
 		{
-			string repBody = hItem.body;
-			
-			
-			
-			
+			string repBody = ReplaceParameters(node, hItem, hItem.body);
 			repBody = CommonMark.CommonMarkConverter.Convert(repBody);
 			
 			
 			
 			
 			// TODO: Insert body text preprocessing here.
-			
-			
-			
-			
 			
 			
 			
@@ -534,17 +574,18 @@ namespace HHBuilder
 				string[] scriptArray = hItem.scriptArray;
 				foreach (string tScript in scriptArray)
 				{
-					if ( !File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					string outFile = Path.Combine(scriptDir, tScript + ".js");
+					if ( !File.Exists(outFile) )
 					{
 						MakeScriptFile(node, tScript);
 					}
-					if ( File.Exists(Path.Combine(scriptDir, tScript + ".js")) )
+					if ( File.Exists(outFile) )
 					{
 						sbScript.AppendFormat("<script type=\"text/javascript\" src=\"{0}/{1}\"></script>\n", scriptDirName, tScript + ".js");
 					}
 					else
 					{
-						Log.Error("Missing script file " + tScript + ".js");
+						Log.Error("Missing script file " + outFile);
 					}
 				}
 				headerScripts = sbScript.ToString();
@@ -556,10 +597,18 @@ namespace HHBuilder
 			// Process image links
 			repBody = ProcessImageLinks(node, repBody);
 			
-			string tHTML = _htmlTemplate;
+			string tHTML = ReplaceParameters(node, hItem, _htmlTemplate);
 			tHTML = tHTML.Replace("</head>", headerScripts + headerCSS + hideItems + "</head>");
 			tHTML = tHTML.Replace("{BODY}", repBody);
-
+			tHTML = tHTML.Replace("{REFERENCES}", references);
+			
+			return tHTML;
+		}
+		
+		// ==============================================================================
+		private static string ReplaceParameters(TreeNode node, HelpItem hItem, string htmlText)
+		{
+			string tHTML = htmlText;
 			DataRow dr = _nodeDS.Tables[0].Rows.Find(hItem.id);
 			if ( dr != null )
 			{
@@ -589,7 +638,6 @@ namespace HHBuilder
 			
 			tHTML = tHTML.Replace("{YEAR}", DateTime.Now.ToString("yyyy"));
 			tHTML = tHTML.Replace("{DATE}", DateTime.Now.ToString("yyyy-MM-dd"));
-			tHTML = tHTML.Replace("{REFERENCES}", references);
 			
 			return tHTML;
 		}
@@ -886,7 +934,7 @@ namespace HHBuilder
 				DataRow dr = _nodeDS.Tables[0].NewRow();
 				HelpItem tItem = (HelpItem) tNode.Tag;
 				dr["ID"] = tItem.id;
-				dr["IndexPath"] = String.Empty;
+				dr["IndexPath"] = "Popup HTML";
 				dr["PrevLink"] = String.Empty;
 				dr["PrevText"] = String.Empty;
 				dr["PrevNumber"] = String.Empty;
@@ -906,6 +954,39 @@ namespace HHBuilder
 				dr["FileName"] = tItem.fileName;
 				dr["LinkID"] = tItem.linkID;
 				dr["LinkDesc"] = tItem.linkDescription;
+				_nodeDS.Tables[0].Rows.Add(dr);
+			}
+		}
+		
+		// ==============================================================================
+		private static void DatasetAddText(TreeNode node)
+		{
+			TreeNode topNode = HelpNode.GetRootNode(node);
+			foreach (TreeNode tNode in topNode.Nodes[(int) HelpNode.branches.textPopup].Nodes)
+			{
+				DataRow dr = _nodeDS.Tables[0].NewRow();
+				PopupTextItem tItem = (PopupTextItem) tNode.Tag;
+				dr["ID"] = tItem.id;
+				dr["IndexPath"] = "Popup Text";
+				dr["PrevLink"] = String.Empty;
+				dr["PrevText"] = String.Empty;
+				dr["PrevNumber"] = String.Empty;
+				dr["NextLink"] = String.Empty;
+				dr["NextText"] = String.Empty;
+				dr["NextNumber"] = String.Empty;
+				dr["Title"] = tItem.title;
+				dr["IndexEntries"] = String.Empty;
+				dr["ReferenceLinks"] = String.Empty;
+				dr["ScriptLinks"] = String.Empty;
+				dr["ReferenceLinks"] = String.Empty;
+				dr["ShowScreen"] = true;
+				dr["ShowTitle"] = false;
+				dr["ShowHeader"] = false;
+				dr["ShowFooter"] = false;
+				dr["Body"] = String.Empty;
+				dr["FileName"] = String.Empty;
+				dr["LinkID"] = tItem.linkID;
+				dr["LinkDesc"] = String.Empty;
 				_nodeDS.Tables[0].Rows.Add(dr);
 			}
 		}
@@ -1932,6 +2013,178 @@ namespace HHBuilder
 				return false;
 				//throw;
 			}
+			((MainForm) Form.ActiveForm).ProgressAddStep();
+			
+			return true;
+		}
+		
+		// ==============================================================================
+		/// <summary>
+		/// Creates a screen topic map report which is displayed in the progress window.
+		/// </summary>
+		/// <param name="node">Node in the project tree.</param>
+		/// <returns>True on success, or false if there are no topic entries in the project.</returns>
+		public static bool ShowScreenMap(TreeNode node)
+		{
+			// Make HTML nodes index
+			_nodeDS = InitializeNodeDataset();
+			DatasetAddTOC(node);
+			DatasetAddPopup(node);
+			DatasetAddText(node);
+			
+			if ( _nodeDS.Tables[0].Rows.Count < 1 )
+			{
+				Log.ErrorBox("No screens in the project to map.");
+				return false;
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressInitialize(_nodeDS.Tables[0].Rows.Count * 2);
+			((MainForm) Form.ActiveForm).ProgressAddLine("Preparing help project topic map report.");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			DataView dv;
+			DataTable sortedDT;
+			
+			// Sort by map number
+			dv = _nodeDS.Tables[0].DefaultView;
+			dv.Sort = "LinkID ASC";
+			sortedDT = dv.ToTable();
+			
+			StringBuilder sbDuplicates = new StringBuilder();
+			StringBuilder sbUnmappedPopups = new StringBuilder();
+			StringBuilder sbMappedByLink = new StringBuilder();
+			int previousLinkID = 0;
+			bool errorLogged = false;
+			foreach (DataRow dr in sortedDT.Rows)
+			{
+				int tLink = Convert.ToInt32(dr["LinkID"].ToString());
+				if ( tLink > 0 )
+				{
+					sbMappedByLink.AppendLine(String.Format("{0,10}\t{1,-25}\t{2}", tLink, dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+					if ( tLink == previousLinkID )
+					{
+						if ( !errorLogged )
+						{
+							sbDuplicates.AppendLine(String.Format("Error:\tLink {0} is mapped to more than one screen.", dr["LinkID"]));
+							errorLogged = true;
+						}
+					}
+					else
+					{
+						errorLogged = false;
+					}
+				}
+				else
+				{
+					if ( dr["IndexPath"].ToString().StartsWith("P") )
+					{
+						sbUnmappedPopups.AppendLine(String.Format("Warning:\tUnmapped {0}: {1}", dr["IndexPath"], dr["Title"]));
+					}
+				}
+				previousLinkID = tLink;
+				((MainForm) Form.ActiveForm).ProgressAddStep();
+			}
+			
+			// Sort help screen heierarchy
+			dv = _nodeDS.Tables[0].DefaultView;
+			dv.Sort = "IndexPath ASC";
+			sortedDT = dv.ToTable();
+			
+			StringBuilder sbMappedByIndex = new StringBuilder();
+			StringBuilder sbNotMapped = new StringBuilder();
+			foreach (DataRow dr in sortedDT.Rows)
+			{
+				int tLink = Convert.ToInt32(dr["LinkID"].ToString());
+				if ( tLink > 0 )
+				{
+					sbMappedByIndex.AppendLine(String.Format("{0,10}\t{1,-25}\t{2}", tLink, dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+				}
+				else
+				{
+					sbNotMapped.AppendLine(String.Format("{0,-25}\t{1}", dr["IndexPath"].ToString().TrimStart('0'), dr["Title"]));
+				}
+				((MainForm) Form.ActiveForm).ProgressAddStep();
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Mapped Screens (sorted by link number)");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbMappedByLink.Length > 0 )
+			{
+				foreach (string tString in sbMappedByLink.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Mapped Screens (sorted by ToC index)");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbMappedByIndex.Length > 0 )
+			{
+				foreach (string tString in sbMappedByIndex.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Unmapped Screens");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbNotMapped.Length > 0 )
+			{
+				foreach (string tString in sbNotMapped.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			else
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine("None.");
+			}
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			((MainForm) Form.ActiveForm).ProgressAddLine("Errors and Warnings");
+			((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			
+			if ( sbDuplicates.Length > 0 )
+			{
+				foreach (string tString in sbDuplicates.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			
+			if ( sbUnmappedPopups.Length > 0 )
+			{
+				foreach (string tString in sbUnmappedPopups.ToString().TrimEnd().Split('\n'))
+				{
+					((MainForm) Form.ActiveForm).ProgressAddLine(tString);
+				}
+			}
+			
+			if ( (sbDuplicates.Length + sbUnmappedPopups.Length) > 0 )
+			{
+				((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+				((MainForm) Form.ActiveForm).ProgressAddLine(String.Empty);
+			}
+			((MainForm) Form.ActiveForm).ProgressAddLine("Help project topic map report complete");
 			((MainForm) Form.ActiveForm).ProgressAddStep();
 			
 			return true;

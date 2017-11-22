@@ -10,7 +10,7 @@ function PrintHome(myLink, myText, myNumber) {
 	var textLength = myText.length;
 	if ((linkLength > 0) && (textLength > 0)) {
 		//document.write('<a href="' + myLink + '">Home: <span class="HEADERNUMBER">' + myNumber + '</span> ' + myText + '</a>');
-		document.write('<a href="' + myLink + '"><span class="HEADERNUMBER">' + myNumber + '</span> ' + myText + ' <img alt="Home:" src="tpl_images/UpArrow.png" /></a>');
+		document.write('<a href="' + myLink + '"><span class="HEADERNUMBER">' + myNumber + ':</span> ' + myText + ' <img alt="Home:" src="tpl_images/UpArrow.png" style="vertical-align: middle;" /></a>');
 	}
 	return true;
 }
@@ -20,7 +20,7 @@ function PrintPrevious(myLink, myText, myNumber) {
 	var textLength = myText.length;
 	if ((linkLength > 0) && (textLength > 0)) {
 		//document.write('<a href="' + myLink + '">Previous: <span class="FOOTERNUMBER">' + myNumber + '</span> ' + myText + '</a>');
-		document.write('<a href="' + myLink + '"><img alt="Previous:" src="tpl_images/LeftArrow.png" /> <span class="FOOTERNUMBER">' + myNumber + '</span> ' + myText + '</a>');
+		document.write('<a href="' + myLink + '"><img alt="Previous:" src="tpl_images/LeftArrow.png" style="vertical-align: middle;"/> <span class="FOOTERNUMBER">' + myNumber + ':</span> ' + myText + '</a>');
 	}
 	return true;
 }
@@ -30,7 +30,7 @@ function PrintNext(myLink, myText, myNumber) {
 	var textLength = myText.length;
 	if ((linkLength > 0) && (textLength > 0)) {
 		//document.write('<a href="' + myLink + '">Next: <span class="FOOTERNUMBER">' + myNumber + '</span> ' + myText + '</a>');
-		document.write('<a href="' + myLink + '"><span class="FOOTERNUMBER">' + myNumber + '</span> ' + myText + ' <img alt="Next:" src="tpl_images/RightArrow.png" /></a>');
+		document.write('<a href="' + myLink + '"><span class="FOOTERNUMBER">' + myNumber + ':</span> ' + myText + ' <img alt="Next:" src="tpl_images/RightArrow.png" style="vertical-align: middle;" /></a>');
 	}
 	return true;
 }
