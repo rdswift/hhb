@@ -8,6 +8,6 @@
 
 **The system also supports the use of templates for HTML formatting.**
 
-**The program is written in C#**
+**The program is written in C#.**
 
 **The project is currently in the planning stage and we're looking for people who would like to contribute to the development.  If you're interested, please join us in the** ***[Developers]([discussion:developers])*** **forum.**
