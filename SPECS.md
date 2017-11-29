@@ -10,7 +10,7 @@ The following are the specifications for the development of the application. The
 &nbsp;
 ## 2.0 Development Platform
 * The program will be written in C# with the target framework of .NET Framework 4.5, 32-bit Intel-compatible processor.
-* The program will be developed and compiled using ***[SharpDevelop](https://sourceforge.net/projects/sharpdevelop/ "https://sourceforge.net/projects/sharpdevelop/")*** or a compatible tool such as ***[Microsoft Visual Studio](https://www.visualstudio.com/ "https://www.visualstudio.com/")***.
+* The program will be developed and compiled using ***[Microsoft Visual Studio](https://www.visualstudio.com/ "https://www.visualstudio.com/")*** or a compatable product.
 
 &nbsp;
 ## 3.0 Overview
@@ -19,7 +19,7 @@ The program will be a Windows application
 It will provide the following features:
 
 * graphical user interface (GUI)
-* portable (install and use in any directory)
+* portable (install and use in any directory) (?)
 * may use registry, but does not rely on it
 * all configuration and project data files stored in plain text
 * support templates for help system
@@ -29,8 +29,8 @@ It will provide the following features:
 
 &nbsp;
 ## 4.0 Distribution / Installation
-* source code available via git on Sourceforge (and GitHub)
-* source code available for download as ZIP file (from GitHub)
+* source code available via git on GitHub
+* source code available for download as ZIP file from GitHub
 * executable distributed via ZIP file (?)
 * executable distributed via MSI installer (?)
 * executable distributed via EXE installer (InnoScript)
@@ -47,9 +47,9 @@ Expect there may be three (or more) types of data files:
 &nbsp;
 ### 5.1 Program Configuration Files
 * INI style plain text file
-* read from the first configuration file found in the following locations (checked in order of preference): (1) program directory; (2) the current roaming user app data directory.
+* read from the current user's roaming app data directory
 * created if not found
-* written to the first directory with write access at the following locations (checked in order of preference): (1) program directory; (2) the current roaming user app data directory.
+* written to the current user's roaming app data directory
 
 &nbsp;
 Information to include in this file:
@@ -63,9 +63,9 @@ Information to include in this file:
 * directory to write log files (if used)
 * maximum number of log files to keep (if used)
 * logging information level
-* location of template files (May be relative to program directory by starting with ".\" to accommodate portable application.)
-* location of hhc.exe compiler executable (May be relative to program directory by starting with ".\" to accommodate portable application.)
-* location of working directory (May be relative to program directory by starting with ".\" to accommodate portable application. Blank entry will use the directory for all users' application-specific data.)
+* location of template files (May be relative to program directory by starting with ".\" to accommodate portable application.) (?)
+* location of hhc.exe compiler executable (May be relative to program directory by starting with ".\" to accommodate portable application.) (?)
+* location of working directory (May be relative to program directory by starting with ".\" to accommodate portable application. Blank entry will use the directory for all users' application-specific data.) (?)
 * check for updates at startup indicator
 * last 5 help projects (?) (Perhaps this would be better stored in the registry because it may not apply if application is run from a USB stick on a different computer.)
 * default template file (?)
@@ -182,7 +182,7 @@ Information to include in this file:
 
 &nbsp;
 ## 6.0 User Interface
-The user interface should contain screens for the various functions of the program including:
+The graphical user interface should contain screens for the various functions of the program including:
 
 * opening splash screen (?)
 * program configuration settings screen
@@ -196,11 +196,13 @@ The user interface should contain screens for the various functions of the progr
 * about screen (include list of contributors / team members)
 
 &nbsp;
-The user interface should also include context sensitive help provided by a CHM file.  Ideally, this help system file could be developed using this application.
+The graphical user interface should also include context sensitive help provided by a CHM file.  Ideally, this help system file could be developed using this application.
+
+A command line interface (CLI) will be provided to support batch operations or help file compilation from within an IDE.
 
 &nbsp;
 ## 7.0 Other Considerations
-* multi language support
+* multi language support (?)
 * spell checking support (?)
 * wysiwyg / graphical screen editor (?)
 
