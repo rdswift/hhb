@@ -9,6 +9,6 @@
 
 **The command line interface provides the ability to compile a help project, as well as compile (or decompile) an HHB Template (.hhbt) file.**
 
-**The program is written in C#.**
+**The program is written in C#, and has been developed and compiled using** ***[MS Visual Studio](https://www.visualstudio.com/ "https://www.visualstudio.com/").***
 
-**The project is currently in the planning stage and we're looking for people who would like to contribute to the development.  If you're interested, please join us in the** ***[Developers]([discussion:developers])*** **forum.**
+**The project is currently in the planning stage and we're looking for people who would like to contribute to the development.  If you're interested, please join us in the** ***[Developers](https://sourceforge.net/p/oshhb/discussion/developers/thread/11736c7e/ "https://sourceforge.net/p/oshhb/discussion/developers/thread/11736c7e/")*** **forum.**
