@@ -31,25 +31,27 @@ namespace HHBuilder
 		{
 			MainForm.parameterString = String.Empty;
 			dataGridView1.DataSource = HelpNode.ScreenLinks(_node).Tables[0];
-			if ( dataGridView1.Rows.Count < 1 )
-			{
-				Log.ErrorBox("No help topic screens available for selection.");
-				Close();
-			}
-			
-			dataGridView1.Rows[0].Selected = true;
-			if ( !String.IsNullOrWhiteSpace(_currentTopicID) )
-			{
-				string tID = _currentTopicID.Trim().Split(' ')[0].Trim();
-				foreach (DataGridViewRow tRow in dataGridView1.Rows)
-				{
-					if ( tRow.Cells["nodeID"].Value.ToString().Trim() == tID )
-					{
-						tRow.Selected = true;
-						dataGridView1.CurrentCell = tRow.Cells[0];
-					}
-				}
-			}
+		    if (dataGridView1.Rows.Count < 1)
+		    {
+		        Log.ErrorBox("No help topic screens available for selection.");
+		        Close();
+		    }
+		    else
+		    {
+		        dataGridView1.Rows[0].Selected = true;
+		        if (!String.IsNullOrWhiteSpace(_currentTopicID))
+		        {
+		            string tID = _currentTopicID.Trim().Split(' ')[0].Trim();
+		            foreach (DataGridViewRow tRow in dataGridView1.Rows)
+		            {
+		                if (tRow.Cells["nodeID"].Value.ToString().Trim() == tID)
+		                {
+		                    tRow.Selected = true;
+		                    dataGridView1.CurrentCell = tRow.Cells[0];
+		                }
+		            }
+		        }
+		    }
 		}
 		
 		// ==============================================================================
