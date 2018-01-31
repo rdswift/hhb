@@ -29,7 +29,7 @@
     <Body>&lt;p&gt;&lt;table cellpadding="5"&gt;&lt;tr style="vertical-align: top; padding: 5px;"&gt;
 &lt;td style="vertical-align: top;"&gt;{Image:i20161112194139917}&lt;br&gt; &lt;br&gt;{Image:i20161018155935592}&lt;/td&gt;
 &lt;td&gt;&lt;b&gt;HHBuilder&lt;/b&gt; - HTML Help File Builder.&lt;br&gt;
-Copyright &amp;copy; 2016 Bob Swift &amp;lt;&lt;a href="mailto:bswift@users.sourceforge.net"&gt;bswift@users.sourceforge.net&lt;/a&gt;&amp;gt;
+Copyright &amp;copy; 2016 &lt;a href="mailto:bswift@users.sourceforge.net"&gt;Bob Swift&lt;/a&gt; and &lt;a href="mailto:bigdrone@users.sourceforge.net"&gt;Jarik Voroniak&lt;/a&gt;.
 &lt;/p&gt;&lt;p&gt;
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
@@ -62,8 +62,16 @@ with this program. If not, see
     <LinkDesc>New Item ID: h20161127081908787</LinkDesc>
     <LinkList>h20161127083720984|h20161127083758679|h20161127083838923</LinkList>
     <CssList>c20161127075452884|c20161127075622260</CssList>
-    <ScriptList />
-    <Body />
+    <ScriptList>s20161212112225063</ScriptList>
+    <Body>**HHBuilder** is a free, open source, program to help manage the development of HTML Help (CHM) files.  There are other programs out there that build the HTML Help files, but our experience is that they are either not free and open source, are limited in the format of the resulting help files, or are restrictive in terms of licensing.  Thus the reason for developing HHBuilder.
+
+All help system project files (including configuration options) are stored as plain text (or XML) files. This allows collaboration during help system development, using tools such as &lt;a href="Javascript:openURL('https://git-scm.com/');"&gt;***git***&lt;/a&gt; to manage all changes to the help project source code repository.
+
+The graphical user interface provides for easy management of the help system directory tree, along with WYSIWYG preview for the development of the individual help pages.
+
+The system also supports the use of templates for HTML formatting.
+
+The program is written in C#, and has been developed and compiled using &lt;a href="Javascript:openURL('https://sourceforge.net/projects/sharpdevelop/');"&gt;***SharpDevelop***&lt;/a&gt; and &lt;a href="Javascript:openURL('https://www.visualstudio.com/');"&gt;***Visual Studio***&lt;/a&gt;. Third-party libraries are copyright by their respective owners and are included in accordance with the license terms for the libraries.</Body>
   </Screens>
   <Screens>
     <ID>h20161127082026219</ID>
@@ -80,8 +88,10 @@ with this program. If not, see
     <LinkDesc>New Item ID: h20161127082026219</LinkDesc>
     <LinkList>h20161127083822161</LinkList>
     <CssList>c20161127075452884|c20161127075622260</CssList>
-    <ScriptList />
-    <Body />
+    <ScriptList>s20161212112225063</ScriptList>
+    <Body>The documentation for **HHBuilder** is provided in the form of a compiled HTML Help (.chm) file, and is provided under the GNU Free Documentation License.  A copy of the license can be found in the Appendices section.
+
+The source code for the documentation is available as an HTML Help Builder project (.hhb) file, and can be downloaded from the project source on &lt;a href="Javascript:openURL('https://sourceforge.net/p/oshhb/source/ci/master/tree/Help/');"&gt;SourceForge&lt;/a&gt;.</Body>
   </Screens>
   <Screens>
     <ID>h20161018160204316</ID>
@@ -114,10 +124,10 @@ with this program. If not, see
     <IndexEntries>Author Program Setting|Program Settings`Author</IndexEntries>
     <LinkID>0</LinkID>
     <LinkDesc>Program Settings: Author</LinkDesc>
-    <LinkList />
+    <LinkList>h20161212141726521</LinkList>
     <CssList>c20161127075452884|c20161127075622260</CssList>
     <ScriptList />
-    <Body>The default author name to set in any new help projects.  This is also used as the replaceable parameter AUTHOR in the copyright template.</Body>
+    <Body>The default author name to set in any new help projects.  This is also used as the replaceable parameter &lt;code&gt;\{AUTHOR\}&lt;/code&gt; in the copyright template.</Body>
   </Screens>
   <Screens>
     <ID>h20161018163820608</ID>
@@ -2277,7 +2287,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</Body>
     <LinkList />
     <CssList>c20161127075452884|c20161127075622260</CssList>
     <ScriptList />
-    <Body />
+    <Body>Each HHBuilder project is stored in a single project file with the extension ".hhb".  This file is saved as a plain text (xml format) file and contains the complete information for the help project, with the exception of the contents of the selected template.
+
+Information included in this file:
+
+* project information:
+    * project name
+    * author
+    * company
+    * copyright
+    * language
+    * default topic
+    * full-text search indicator
+    * template used (template ID number)
+* help screen information (one record per screen)
+    * id (unique id assigned by the program)
+    * index path (location in project tree assigned by the program)
+    * title (used in the ToC and the template "Title" section)
+    * file name (Generated automatically from id)
+    * uses template "Title" section indicator
+    * uses template "Header" section indicator
+    * uses template "Footer" section indicator
+    * link id (to call from program context)
+    * link description (to display when referenced from another screen)
+    * links to other screens (id codes of linked screens, separated by "|")
+    * index entries (text entries to use in the index, separated by "|")
+    * body (content to insert into the template "Body" section)
+    * additional css files used (id codes of CSS files, separated by "|")
+    * additional script files used (id codes of script files, separated by "|")
+* additional (non-template) CSS files
+    * id (unique id assigned by the program)
+    * title
+    * file name (Generated automatically from id)
+    * file contents
+* additional (non-template) script files
+    * id (unique id assigned by the program)
+    * title
+    * file name (Generated automatically from id)
+    * file contents
+* additional (non-template) image files
+    * id (unique id assigned by the program)
+    * title
+    * file extension, including the leading period
+    * file name (Generated automatically from id and file extension)
+    * file contents (stored in Base 64 format)</Body>
   </Screens>
   <Screens>
     <ID>h20161127083956668</ID>
@@ -2293,7 +2346,77 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</Body>
     <LinkID>0</LinkID>
     <LinkDesc>HHBuilder Template Specification</LinkDesc>
     <LinkList />
-    <CssList>c20161127075452884|c20161127075622260</CssList>
+    <CssList>c20161127075452884|c20161127075622260|c20161127100513391</CssList>
+    <ScriptList />
+    <Body>* stored in a zip format file with the extension changed to ".hhbt", containing the internal directory structure:
+    * \ (contains: template.xml, template.htm, LICENSE, README)
+    * \tpl_css\ (contains: all CSS files used with the template)
+    * \tpl_images\ (contains: all image files used with the template)
+    * \tpl_scripts\ (contains: all script files used with the template)
+    * \tpl_other\ (contains: any other files to be included with the template)
+
+* template.xml is an XML file with the following format:
+
+~~~
+&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;HelpTemplate&gt;
+  &lt;TemplateInfo&gt;
+    &lt;ID&gt;t00000000000000000&lt;/ID&gt;
+	&lt;Title&gt;Basic HH Builder Template&lt;/Title&gt;
+	&lt;Description&gt;Basic template.
+	&lt;/Description&gt;
+	&lt;Author&gt;Bob Swift&lt;/Author&gt;
+	&lt;Company&gt;&lt;/Company&gt;
+	&lt;ContactName&gt;Bob Swift&lt;/ContactName&gt;
+	&lt;ContactEmail&gt;bswift@users.sourceforge.net&lt;/ContactEmail&gt;
+	&lt;ContactWebsite&gt;https://sourceforge.net/projects/oshhb/&lt;/ContactWebsite&gt;
+	&lt;Version&gt;1.00&lt;/Version&gt;
+	&lt;RevisionDate&gt;2016-11-02&lt;/RevisionDate&gt;
+	&lt;LicenseTitle&gt;GPLv3&lt;/LicenseTitle&gt;
+  &lt;/TemplateInfo&gt;
+&lt;/HelpTemplate&gt;
+~~~
+ 
+* template.html is the HTML file used as a basis for developing the help screens displayed.
+    * Contains sections for optional title, header, footer and references.  These can be in any order, but should appear in the order that they will be displayed. The header, footer, title and references sections are bounded by division tags (e.g. \&lt;div class="HEADER"\&gt;\&lt;/div\&gt;.  Note that the class entries are all upper case (i.e. "HEADER", "TITLE", "REFERENCES" and "FOOTER").  These classes will be displayed or hidden as specified by the settings for each help screen.
+    * The references section contains the replaceable parameter ***REFERENCES*** enclosed within curley braces (\{ \}) which will be replaced by the reference titles and links, each bounded by \&lt;li class="reference"\&gt; ... \&lt;/li\&gt; tags.  Note that the CSS file should include style settings for the "reference" class.
+    * Contains the replaceable parameter ***BODY*** enclosed within curley braces (\{ \}) which will be replaced by the information provided by the help system developer for the screen.  This should appear somewhere between the normal \&lt;body\&gt; ... \&lt;/body\&gt; tags.
+    * May contain any of the following replaceable parameters enclosed within curley braces (\{ \}).  These can appear multiple times if required anywhere within the HTML document.
+        * ***TITLE*** will be replaced by the help screen title.
+        * ***PREVLINK*** will be replaced by a link to the previous screen in the Table of Contents, or "" if no previous page exists.
+        * ***NEXTLINK*** will be replaced by a link to the next screen in the Table of Contents, or "" if no following page exists.
+        * ***HOMELINK*** will be replaced by a link to the user-specified default screen, or the first screen in the Table of Contents if not specified.
+        * ***PREVTEXT*** will be replaced by the title of the previous screen in the Table of Contents, or "" if no previous page exists.
+        * ***NEXTTEXT*** will be replaced by the title of the next screen in the Table of Contents, or "" if no following page exists.
+        * ***HOMETEXT*** will be replaced by the title of the user-specified default screen, or the first screen in the Table of Contents if not specified.
+        * ***NUMBER*** will be replaced with the number of the entry in the Table of Contents (e.g. the third subtopic of the second topic would be number 2.3).  For popup screens this will be "".
+        * ***YEAR*** will be replaced with the four digit year when the help project was compiled.
+        * ***DATE*** will be replaced with the date in the format "yyyy-mm-dd" when the help project was compiled.
+        * ***AUTHOR*** will be replaced with the help project's "Author" setting.
+        * ***COMPANY*** will be replaced with the help project's "Company" setting.
+        * ***COPYRIGHT*** will be replaced with the help project's "Copyright" setting.
+	
+* LICENSE is a text file containing the text of the license terms for the use of the template.  This is displayed to the user when requested.
+
+* README is a text file containing notes regarding the template (e.g.: instructions for use, where to look for updates, anything else).  This file is displayed to the user when selecting a template and in the help project's "Template" section.
+	
+* For linking purposes, note that all HTML files generated will be placed in the root directory (same directory as the template.html file).</Body>
+  </Screens>
+  <Screens>
+    <ID>h20161212141726521</ID>
+    <IndexPath>0.00.05.06</IndexPath>
+    <ScreenType>TOC</ScreenType>
+    <FileName>h20161212141726521.html</FileName>
+    <HasScreen>True</HasScreen>
+    <UseTitle>True</UseTitle>
+    <UseHeader>False</UseHeader>
+    <UseFooter>False</UseFooter>
+    <Title>Replaceable Parameters</Title>
+    <IndexEntries>Replaceable Parameters|Inserting standard information in help screens</IndexEntries>
+    <LinkID>0</LinkID>
+    <LinkDesc>Replaceable Parameters</LinkDesc>
+    <LinkList />
+    <CssList>c20161018155659888|c20161127075452884|c20161127075622260</CssList>
     <ScriptList />
     <Body />
   </Screens>
@@ -2345,6 +2468,18 @@ To manually check for updates...</Body>
     <FileContents>/* User-Defined Additional CSS File */
 pre { font-size: 10pt; }</FileContents>
   </CSS>
+  <Scripts>
+    <ID>s20161212112225063</ID>
+    <Title>Open External Link</Title>
+    <FileName>s20161212112225063.js</FileName>
+    <FileContents>// Load a URL in the default browser
+
+function openURL(urlToLoad)
+{
+	var shell = new ActiveXObject("WScript.Shell");
+	shell.run(urlToLoad);
+}</FileContents>
+  </Scripts>
   <Images>
     <ID>i20161018155935592</ID>
     <Title>GPL v3 Logo</Title>
